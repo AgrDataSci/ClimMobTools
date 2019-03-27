@@ -8,10 +8,9 @@
 # Updated 27Mar2019
 # ................................................................
 # ................................................................
-#system("R-script, climmobv3_analysis.R info.json data.json r.json /output/ TRUE TRUE")
-#args <- c("d39a3c66-5822-4930-a9d4-50e7da041e77", "chocolate", 
-#          "data/data.json", "r4.json", 
-#          "/data/.output", TRUE , TRUE)
+##args <- c("d39a3c66-5822-4930-a9d4-50e7da041e77", "chocolate",
+##          "data/args_proj_chocolate.json", "result.json",
+##         "/data/.output", TRUE, TRUE)
 
 # get the arguments
 args <- commandArgs(trailingOnly = TRUE)
@@ -152,7 +151,15 @@ for(i in seq_along(nameschars)){
   cat("\n\nAnalysing the performance for the characteristic:", char_i , "\n")
   
   # get the rankings for the characteristic to be analysed
-  rank_i <- data[, sort(chars[i, c(2:ncol(chars))])]
+  rank_i <- data[, sort(chars[i, c(2:ncol(chars))]) ]
+  
+  # make sure that in triadic data the
+  # first colunm is allways the positive
+  if(ncomp == 3){
+    best <- which(grepl("_pos", names(rank_i)))
+    worst <- which(grepl("_neg", names(rank_i)))
+    rank_i <- rank_i[c(best, worst)]
+  }
   
   # get the items
   items_i <- data[, grepl("item_", names(data))]
@@ -203,7 +210,7 @@ for(i in seq_along(nameschars)){
                                 add.rank = local_rank, 
                                 all.data = TRUE)
   
-  # Get the rankings
+  # get the rankings
   R <- myrank[[1]]
   
   # get the grouped rankings 
@@ -256,7 +263,7 @@ for(i in seq_along(nameschars)){
   # this will genenerate one plot per node
   # write it and keep the path
   # get plots
-  plots <- gosset::plot_nodes(tree)
+  plots <- gosset::plot_nodes(tree, font.size = c(10, 11))
   #define names
   nodepaths <- paste0(pathname, "/", char_i,"_tree", names(plots) ,".svg")
   #put names in a list

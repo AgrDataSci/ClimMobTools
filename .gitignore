@@ -17,8 +17,7 @@ README.html
 
 # Ignore these folders for a while
 randomization/
-data/
-
+data/.output/
 
 
 
