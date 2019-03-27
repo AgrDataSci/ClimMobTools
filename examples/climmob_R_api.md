@@ -1,7 +1,7 @@
 Fetch ClimMob data using an API key
 ================
 Kauê de Sousa
-27 March 2019
+27 March, 2019
 
 Preparing the data
 ------------------
@@ -139,7 +139,7 @@ print(mydata)
     ## 10 1     assessment1  survey_deviceimei 358624090903126    
     ## # ... with 250 more rows
 
-The project "wageningen" is a valid project by has no data. It returns a message.
+The project "wageningen" is a valid project but has no data. It returns a message.
 
 ``` r
 mydata <- getDataCM(key, "wageningen")

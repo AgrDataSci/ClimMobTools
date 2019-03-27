@@ -1,7 +1,7 @@
 ---
 title: "Fetch ClimMob data using an API key"
 author: "Kauê de Sousa"
-date: "27 March 2019"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: github_document
 ---
 
@@ -69,7 +69,7 @@ mydata <- getDataCM(key, "colours")
 print(mydata)
 ```
 
-The project "wageningen" is a valid project by has no data. It returns a message.
+The project "wageningen" is a valid project but has no data. It returns a message.
 
 
 ```{r}

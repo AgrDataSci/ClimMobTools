@@ -18,13 +18,13 @@ getProjectsCM(key)
 # a project with 4 comparisons
 getDataCM(key, "chocolate")
 
+# return the dataframe in wide format
+getDataCM(key, "chocolate", pivot.wider = TRUE)
+
 # keep the ODK variables codes
 # this format is used internaly in the analysis 
 # of ClimMob data from climmob.net
 getDataCM(key, "chocolate", tidynames = FALSE)
-
-# return the dataframe in wide format
-getDataCM(key, "chocolate", pivot.wider = TRUE)
 
 # data from project colours
 # a project with 3 comparisons
