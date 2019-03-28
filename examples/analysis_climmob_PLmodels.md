@@ -1,7 +1,7 @@
 Analyse the ClimMob tricot data with PlackettLuce models
 ================
 Kauê de Sousa
-27 March, 2019
+28 March, 2019
 
 Breadwheat data
 ===============
@@ -22,20 +22,24 @@ data("breadwheat", package = "gosset")
 print(breadwheat)
 ```
 
-    ## # A tibble: 493 x 8
-    ##    variety_a variety_b variety_c planting_date   lon   lat best  worst
-    ##    <chr>     <chr>     <chr>     <date>        <dbl> <dbl> <chr> <chr>
-    ##  1 CSW18     PBW502    HW2045    2014-12-02     85.3  25.8 A     C    
-    ##  2 WR544     HD2985    PBW550    2014-11-29     85.3  25.8 B     A    
-    ##  3 PBW343    HD2932    RAJ4120   2014-12-07     85.3  25.8 A     C    
-    ##  4 HP1633    DBW17     CSW18     2014-11-28     85.3  25.8 C     A    
-    ##  5 CSW18     DBW17     HD2932    2014-11-23     85.3  25.8 A     C    
-    ##  6 HP1633    HW2045    CSW18     2014-11-29     85.3  25.8 C     B    
-    ##  7 HW2045    HD2824    PBW550    2014-11-28     85.4  25.7 A     B    
-    ##  8 DBW17     HI1563    RAJ4120   2014-11-24     85.3  25.8 C     B    
-    ##  9 HW2045    PBW502    HI1563    2014-11-23     85.3  25.8 B     A    
-    ## 10 HD2985    CSW18     PBW502    2014-11-23     85.3  25.8 B     C    
-    ## # ... with 483 more rows
+    ## # A tibble: 493 x 19
+    ##    variety_a variety_b variety_c district village participant_name   age
+    ##    <chr>     <chr>     <chr>     <chr>    <chr>   <chr>            <int>
+    ##  1 CSW18     PBW502    HW2045    Vaishali Shembh~ Participant Nam~    63
+    ##  2 WR544     HD2985    PBW550    Vaishali Shembh~ Participant Nam~    27
+    ##  3 PBW343    HD2932    RAJ4120   Vaishali Patadh  Participant Nam~    29
+    ##  4 HP1633    DBW17     CSW18     Vaishali Shembh~ Participant Nam~    51
+    ##  5 CSW18     DBW17     HD2932    Vaishali Bhatha~ Participant Nam~    51
+    ##  6 HP1633    HW2045    CSW18     Vaishali Shembh~ Participant Nam~    63
+    ##  7 HW2045    HD2824    PBW550    Vaishali Bhatha~ Participant Nam~    36
+    ##  8 DBW17     HI1563    RAJ4120   Vaishali Shembh~ Participant Nam~    62
+    ##  9 HW2045    PBW502    HI1563    Vaishali Shembh~ Participant Nam~    45
+    ## 10 HD2985    CSW18     PBW502    Vaishali Shembh~ Participant Nam~    42
+    ## # ... with 483 more rows, and 12 more variables: gender <chr>,
+    ## #   planting_date <date>, lon <dbl>, lat <dbl>, germination_best <chr>,
+    ## #   germination_worst <chr>, grainquality_best <chr>,
+    ## #   grainquality_worst <chr>, yield_best <chr>, yield_worst <chr>,
+    ## #   overall_best <chr>, overall_worst <chr>
 
 Preparing the data
 ------------------
@@ -47,8 +51,8 @@ Let's see how it works. We can convert the `breadwheat` data into a rankings obj
 ``` r
 # this return a object of class "rankings"
 R <- to_rankings(breadwheat, 
-                 items = c(1:3), 
-                 rankings = c(7:8),
+                 items = c("variety_a","variety_b","variety_c"), 
+                 rankings = c("overall_best","overall_worst"),
                  type = "tricot")
 
 print(R[1:10])
@@ -63,8 +67,8 @@ print(R[1:10])
 ``` r
 # and this a object of class "grouped_rankings"
 G <- to_rankings(breadwheat, 
-                 items = c(1:3), 
-                 rankings = c(7:8),
+                 items = c("variety_a","variety_b","variety_c"), 
+                 rankings = c("overall_best","overall_worst"),
                  type = "tricot",
                  grouped.rankings = TRUE)
 

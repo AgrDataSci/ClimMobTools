@@ -9,7 +9,7 @@ The **ClimMobTools** repository provides the toolkit employed in crowdsourcing c
 
 To create your project, please visit the [ClimMob](https://climmob.net/blog/) portal.
 
-**Publications**
+### References
 
 van Etten J., de Sousa K., Aguilar A., Barrios M., Coto A., Dell'Acqua M., \[...\] Steinke J. (2019). Crop variety management for climate adaptation supported by citizen science. *Proceedings of the National Academy of Sciences*, 116(10), 4194-4199. <https://doi.org/10.1073/pnas.1813720116>.
 
