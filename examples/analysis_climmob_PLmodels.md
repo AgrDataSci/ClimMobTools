@@ -1,7 +1,7 @@
 Analyse the ClimMob tricot data with PlackettLuce models
 ================
 Kauê de Sousa
-28 March, 2019
+05 April, 2019
 
 Breadwheat data
 ===============
@@ -125,7 +125,7 @@ print(mod)
 Model with covariates
 ---------------------
 
-And then, we fit a model with covariates. But first, let's get some covariates using the related temperature data `breadwheat_modis`, which contains the MODIS data (day and night temperatur) for all plots in `breadwheat` data from the planting date until the end of the the experiment. We use the function `gosset::temperature` to get the heat stress indices. An explanation about each index is found in `help(temperature)`.
+And then, we fit a model with covariates. But first, let's get some covariates using the related temperature data `breadwheat_modis`, which contains the MODIS data (day and night temperature) for all plots in `breadwheat` data from the planting date until the end of the experiment. We use the function `gosset::temperature` to get the heat stress indices. An explanation about each index is found in `help(temperature)`.
 
 ``` r
 data("breadwheat_modis", package = "gosset")
@@ -195,7 +195,7 @@ print(tree)
 Tree visualisation
 ------------------
 
-Here I show some ways to visualise the PlackettLuce tree. First we can use the print method from partykit as a default.
+Here I show some ways to visualise the PlackettLuce tree. First we can use the default print S3 method from partykit.
 
 ``` r
 plot(tree)
