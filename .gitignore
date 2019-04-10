@@ -11,8 +11,8 @@
 .Rproj
 
 # Powerpoint files
-*.pptx
-*.ppt
+*.ppt[x]
+
 
 # Temporary files created by R markdown
 *.utf8.md
@@ -20,7 +20,7 @@
 README.html
 
 # Ignore these folders for a while
-randomization/
+randomization
 data/.output/
 
 
