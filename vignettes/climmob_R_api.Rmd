@@ -1,0 +1,79 @@
+---
+title: "Fetch ClimMob data using an API key"
+author: "Kauê de Sousa"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+```
+
+## Preparing the data
+
+```{r, message = FALSE}
+#library("devtools")
+#install_github("kauedesousa/gosset", upgrade = "never")
+library("gosset")
+library("jsonlite")
+library("httr")
+```
+
+Here I show some examples for a test user in [ClimMob](https://climmob.net/blog/)
+
+```{r}
+# the user's API key 
+key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
+```
+
+We can use the fuction `gosset::getProjectCM` to get our list of projects:
+
+```{r}
+myprojects <- getProjectsCM(key)
+
+myprojects
+
+```
+
+Then get the data available in each project using the function `gosset::getDataCM`. Let's start with project "chocolate", which is project where each participant received four items to test. Then reported the performance of all of them by indicanting which one get the the Position 1, Position 2 and so on.
+
+```{r}
+mydata <- getDataCM(key, project = "chocolate")
+
+print(mydata)
+
+```
+
+We can also get the data in the wide format by enabling the argument `pivot.wider`
+
+```{r}
+mydata <-  getDataCM(key, "chocolate", pivot.wider = TRUE)
+
+print(mydata)
+```
+
+By disabling the argument `tidydata` you get the data with their original names from the ODK file. This is used internally to analyse the data in the [ClimMob](https://climmob.net/blog/) portal.
+
+
+```{r}
+mydata <- getDataCM(key, "chocolate", tidynames = FALSE)
+
+print(mydata)
+```
+
+The project "colours" is a project in the standar *tricot* method, where each participant receives three items and report which one had the *best* and *worst* performance.
+
+```{r}
+mydata <- getDataCM(key, "colours")
+
+print(mydata)
+```
+
+The project "wageningen" is a valid project but has no data. It returns a message.
+
+
+```{r}
+mydata <- getDataCM(key, "wageningen")
+
+```
+
