@@ -2,6 +2,11 @@
 
 export(getDataCM)
 export(getProjectsCM)
+export(randomise)
+export(randomize)
+import(Matrix)
+import(RSpectra)
 import(httr)
 import(jsonlite)
+import(methods)
 import(tidyverse)

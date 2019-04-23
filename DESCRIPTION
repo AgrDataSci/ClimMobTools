@@ -25,7 +25,7 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
-Imports: httr, jsonlite, tidyverse
-Suggests: PlackettLuce, psychotree, psychotools, qvcalc
+Imports: httr, jsonlite, Matrix, methods, RSpectra, tidyverse
+Suggests: gosset, PlackettLuce, psychotree, psychotools, qvcalc
 Language: en-GB
 RoxygenNote: 6.1.1
