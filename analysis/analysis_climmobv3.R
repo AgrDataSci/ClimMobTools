@@ -5,7 +5,7 @@
 # ................................................................
 # ................................................................
 # Kaue de Sousa 
-# Updated 27Mar2019
+# Updated 23Apr2019
 # ................................................................
 # ................................................................
 ##args <- c("d39a3c66-5822-4930-a9d4-50e7da041e77", "chocolate",
@@ -34,13 +34,14 @@ library("qvcalc")
 library("psychotools")
 library("PlackettLuce")
 library("gosset")
+library("ClimMobTools")
 
 # ................................................................
 # ................................................................
 # Read data #### 
-data <- gosset::getDataCM(key = key, 
-                          project = project_id,
-                          tidynames = FALSE)
+data <- ClimMobTools::getDataCM(key = key, 
+                                project = project_id,
+                                tidynames = FALSE)
 
 # put it in wide format
 data <- data[,-2]
