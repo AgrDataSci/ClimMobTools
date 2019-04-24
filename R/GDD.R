@@ -8,10 +8,23 @@
 #' @inheritParams temperature
 #' @return The number of days required to reach the growing degree days.
 #' @examples
-#' #' Example 1
-# @export
+#' library("gosset")
+#' library("nasapower")
+#' library("raster")
+#' 
+#' data("breadwheat", package = "gosset")
+#' 
+#' # Calculate the days required for the plants in these plots to reach the
+#' # maturity. The crop requires ~1800 degree days for it.
+#' 
+#' GDD(breadwheat[c("lon","lat")], 
+#'     day.one = breadwheat[["planting_date"]],
+#'     degree.days = 1800,
+#'     base = 5)
+#'     
+#' @export
 GDD <- function(object, day.one = NULL, degree.days = NULL,
-                base = NULL, span = NULL)
+                base = NULL, span = NULL, ...)
 {
   
   # validate parameters
@@ -30,16 +43,16 @@ GDD <- function(object, day.one = NULL, degree.days = NULL,
   
   # get timespan for the day temperature
   if (dim(object)[2] == 2) {
-    day <- get_timespan(object, day.one, span, pars = "T2M_MAX")
+    day <- .get_timespan(object, day.one, span, pars = "T2M_MAX", ...)
   } else {
-    day <- get_timespan(object[, , 1], day.one, span)
+    day <- .get_timespan(object[, , 1], day.one, span, ...)
   }
   
   # get timespan for the night temperature
   if (dim(object)[2] == 2) {
-    night <- get_timespan(object, day.one, span, pars = "T2M_MIN")
+    night <- .get_timespan(object, day.one, span, pars = "T2M_MIN", ...)
   } else {
-    night <- get_timespan(object[,,2], day.one, span)
+    night <- .get_timespan(object[,,2], day.one, span, ...)
   }
   
   # get the difference between day and night temperature

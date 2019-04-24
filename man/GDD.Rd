@@ -5,7 +5,7 @@
 \title{Growing Degree Days}
 \usage{
 GDD(object, day.one = NULL, degree.days = NULL, base = NULL,
-  span = NULL)
+  span = NULL, ...)
 }
 \arguments{
 \item{object}{a numeric vector of geographic coordinates (lonlat) or
@@ -22,6 +22,8 @@ When lonlat is used, the function makes a call to
 \item{base}{an integer for the base temperature. Set 10 as default.}
 
 \item{span}{an integer or a vector with integers for the duration of the timespan to be captured}
+
+\item{...}{additional arguments passed to methods}
 }
 \value{
 The number of days required to reach the growing degree days.
@@ -31,5 +33,18 @@ Compute number of days required to reach growing degree days.
 GDD are calculated by taking the integral of warmth above a base temperature.
 }
 \examples{
-#' Example 1
+library("gosset")
+library("nasapower")
+library("raster")
+
+data("breadwheat", package = "gosset")
+
+# Calculate the days required for the plants in these plots to reach the
+# maturity. The crop requires ~1800 degree days for it.
+
+GDD(breadwheat[c("lon","lat")], 
+    day.one = breadwheat[["planting_date"]],
+    degree.days = 1800,
+    base = 5)
+    
 }

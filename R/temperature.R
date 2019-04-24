@@ -62,7 +62,9 @@ temperature <- function(object, day.one = NULL, span = NULL,
   
   n <- nrow(day)
   
-  ind <- tibble::as_tibble(matrix(nrow = n, ncol = length(index), dimnames = list(1:n, index)))
+  ind <- tibble::as_tibble(matrix(nrow = n, 
+                                  ncol = length(index), 
+                                  dimnames = list(1:n, index)))
   
   # maximun day temperature (degree Celsius)
   if ("maxDT" %in% index) {
