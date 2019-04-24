@@ -19,29 +19,13 @@
 #' \item{Rtotal}{total rainfall (mm) in wet days (R >= 1)}
 #' @examples
 #' 
-#' # Compute indices using precipitation data from CHIRPS
-#' data("breadwheat_chirps", package = "gosset")
-#' data("breadwheat", package = "gosset")
-#' 
-#' # The rainfall indices for the first 50 days after sowing
-#' rainfall(breadwheat_chirps, 
-#'          day.one = breadwheat$planting_date, 
-#'          span = 50)
-#' 
-#' ########################################
-#' 
-#' # Add the first 7 days before sowing (residual precipitation)
-#' rainfall(breadwheat_chirps, 
-#'          day.one = breadwheat$planting_date, 
-#'          span = 50,
-#'          days.before = 7)
-#' 
-#' ########################################
-#' 
 #' # Compute indices using NASA POWER
 #' 
+#' library("gosset")
 #' library("nasapower")
 #' library("raster")
+#' 
+#' data("breadwheat", package = "gosset")
 #' 
 #' rainfall(breadwheat[c("lon","lat")], 
 #'          day.one = breadwheat$planting_date, 

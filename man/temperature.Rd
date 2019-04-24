@@ -38,17 +38,9 @@ Compute temperature indices over a timespan
 }
 \examples{
 
-# Compute indices using temperature data from MODIS MYD11A1
-data("breadwheat_modis", package = "gosset")
+# Compute indices using temperature 
+library("gosset")
 data("breadwheat", package = "gosset")
-
-# compute all temperature indices for the first 30 days in the plots
-temperature(breadwheat_modis,
-            day.one = breadwheat["planting_date"],
-            span = 30)
-
-
-########################################
 
 # Temperature indices from NASA POWER
 
@@ -56,7 +48,7 @@ library("nasapower")
 library("raster")
 
 temperature(breadwheat[c("lon","lat")], 
-            day.one = breadwheat["planting_date"], 
+            day.one = breadwheat[["planting_date"]], 
             span = 40)
 
 }

@@ -10,16 +10,18 @@
 #' for different latitudes
 #' @return The evapotranspiration in mm/day
 #' @examples
-#'  
-#' # Use temperature data from MODIS MYD11A1
-#' data("breadwheat_modis", package = "gosset")
+#'   
+#' library("gosset")
+#' 
 #' data("breadwheat", package = "gosset")
 #' 
+#' breadwheat[c("lon","lat")]
+#' 
 #' # the evapotranspiration in the first 100 days after planting
-#' ETo(breadwheat_modis, 
-#'     day.one = breadwheat$planting_date,
+#' ETo(breadwheat[c("lon","lat")], 
+#'     day.one = breadwheat[["planting_date"]],
 #'     span = 100,
-#'     lat = breadwheat$lat)
+#'     lat = breadwheat[["lat"]])
 #' 
 #' @export
 ETo <- function(object, day.one = NULL, span = NULL, 
