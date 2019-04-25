@@ -34,6 +34,7 @@ The evapotranspiration in mm/day
 Compute evapotranspiration using the Blaney-Criddle method
 }
 \examples{
+\dontrun{
 
 # use the breadwheat data from package gosset 
 library("gosset")
@@ -47,5 +48,6 @@ ETo(breadwheat[c("lon","lat")],
     day.one = breadwheat[["planting_date"]],
     span = 100,
     lat = breadwheat[["lat"]])
+}
 
 }

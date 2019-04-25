@@ -37,7 +37,7 @@ A dataframe with selected indices. Options are:
 Compute rainfall indices over a timespan
 }
 \examples{
-
+\dontrun{
 # use the breadwheat data from package gosset 
 library("gosset")
 library("nasapower")
@@ -56,6 +56,6 @@ rainfall(breadwheat[c("lon","lat")],
          day.one = breadwheat[["planting_date"]],
          span = 50,
          days.before = 15)       
-         
+}       
          
 }

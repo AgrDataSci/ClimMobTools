@@ -8,7 +8,7 @@
 #' @inheritParams temperature
 #' @return The number of days required to reach the growing degree days.
 #' @examples
-#' 
+#' \dontrun{
 #' # use the breadwheat data from package gosset 
 #' library("gosset")
 #' library("nasapower")
@@ -23,6 +23,7 @@
 #'     day.one = breadwheat[["planting_date"]],
 #'     degree.days = 1800,
 #'     base = 5)
+#'}
 #'     
 #' @export
 GDD <- function(object, day.one = NULL, degree.days = NULL,

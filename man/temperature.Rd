@@ -37,6 +37,7 @@ A dataframe with selected indices. Options are:
 Compute temperature indices over a timespan
 }
 \examples{
+\dontrun{
 
 # use the breadwheat data from package gosset 
 library("gosset")
@@ -48,5 +49,6 @@ data("breadwheat", package = "gosset")
 temperature(breadwheat[c("lon","lat")], 
             day.one = breadwheat[["planting_date"]], 
             span = 40)
+}
 
 }

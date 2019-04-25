@@ -10,6 +10,7 @@
 #' for different latitudes
 #' @return The evapotranspiration in mm/day
 #' @examples
+#' \dontrun{
 #' 
 #' # use the breadwheat data from package gosset 
 #' library("gosset")
@@ -23,6 +24,7 @@
 #'     day.one = breadwheat[["planting_date"]],
 #'     span = 100,
 #'     lat = breadwheat[["lat"]])
+#'}
 #' 
 #' @export
 ETo <- function(object, day.one = NULL, span = NULL, 

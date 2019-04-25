@@ -5,7 +5,7 @@ ClimMobTools
 Overview
 --------
 
-The **ClimMobTools** package provides the toolkit employed in crowdsourcing citizen science projects under the *tricot* approach. Tricot, stands for "triadic comparison of technologies", an approach developed by [Bioversity International](https://www.bioversityinternational.org/) for the rapid assessment of on-farm evaluation trails in small-scale agriculture.
+The **ClimMobTools** package provides the toolkit employed in crowdsourcing citizen science projects under the *tricot* approach. Tricot, stands for "triadic comparison of technologies" for the rapid assessment of on-farm evaluation trails in small-scale agriculture.
 
 Installation
 ------------
@@ -27,4 +27,4 @@ The full functionality of **ClimMobTools** is illustrated in the package vignett
 Code of Conduct
 ---------------
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.

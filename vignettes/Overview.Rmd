@@ -12,7 +12,7 @@ output:
   } else html_document
 vignette: >
   %\VignetteIndexEntry{Introduction to ClimMobTools}
-    %\VignetteEncoding{UTF-8}
+  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 bibliography: ["ClimMobTools.bib"]
 csl: citation_style.csl

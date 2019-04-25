@@ -33,7 +33,7 @@ Compute number of days required to reach growing degree days.
 GDD are calculated by taking the integral of warmth above a base temperature.
 }
 \examples{
-
+\dontrun{
 # use the breadwheat data from package gosset 
 library("gosset")
 library("nasapower")
@@ -48,5 +48,6 @@ GDD(breadwheat[c("lon","lat")],
     day.one = breadwheat[["planting_date"]],
     degree.days = 1800,
     base = 5)
+}
     
 }

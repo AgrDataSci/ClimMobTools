@@ -22,6 +22,7 @@
 #' \item{SU}{summer days, number of days with maximum temperature > 30 (degree Celsius)}
 #' \item{TR}{tropical nights, number of nights with maximum temperature > 25 (degree Celsius) }
 #' @examples
+#' \dontrun{
 #' 
 #' # use the breadwheat data from package gosset 
 #' library("gosset")
@@ -33,6 +34,7 @@
 #' temperature(breadwheat[c("lon","lat")], 
 #'             day.one = breadwheat[["planting_date"]], 
 #'             span = 40)
+#'}
 #' 
 #' @export
 temperature <- function(object, day.one = NULL, span = NULL,

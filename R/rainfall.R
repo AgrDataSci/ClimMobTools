@@ -18,7 +18,7 @@
 #' \item{Rx5day}{maximum 5-day rainfall (mm) }
 #' \item{Rtotal}{total rainfall (mm) in wet days (R >= 1)}
 #' @examples
-#' 
+#' \dontrun{
 #' # use the breadwheat data from package gosset 
 #' library("gosset")
 #' library("nasapower")
@@ -37,7 +37,7 @@
 #'          day.one = breadwheat[["planting_date"]],
 #'          span = 50,
 #'          days.before = 15)       
-#'          
+#'}       
 #'          
 #' @export
 rainfall <- function(object, day.one = NULL, span = NULL,

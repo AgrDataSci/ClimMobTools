@@ -30,6 +30,7 @@
 #' @import Matrix
 #' @import methods
 #' @import RSpectra
+#' @importFrom utils combn
 #' @export
 randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL, 
                       itemnames = NULL) {
@@ -50,7 +51,7 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
   varieties <- 1:nvar
   
   # Full set of all combinations
-  varcombinations <- t((combn(varieties, nitems)))
+  varcombinations <- t((utils::combn(varieties, nitems)))
   
   # if the full set of combinations is small and can be covered at least once
   # the set will include each combination at least once
