@@ -21,14 +21,12 @@ Fetch the list of ClimMob projects using your API key
 }
 \examples{
 \dontrun{ 
-# This function will not work without your API key
-library("gosset")
-library("jsonlite")
-library("httr")
+# This function will not work without an API key
 
-my_key <- "my_api_key"
+my_key <- "add_your_key"
 
 getProjectsCM(key = my_key)
+
 }
 
 }

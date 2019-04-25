@@ -19,17 +19,25 @@
 #' \item{Rtotal}{total rainfall (mm) in wet days (R >= 1)}
 #' @examples
 #' 
-#' # Compute indices using NASA POWER
-#' 
+#' # use the breadwheat data from package gosset 
 #' library("gosset")
 #' library("nasapower")
 #' library("raster")
 #' 
 #' data("breadwheat", package = "gosset")
 #' 
+#' # calculate rainfall for the first 50 days after planting
 #' rainfall(breadwheat[c("lon","lat")], 
-#'          day.one = breadwheat$planting_date, 
+#'          day.one = breadwheat[["planting_date"]], 
 #'          span = 50)
+#'          
+#' 
+#' # include the first 15 days before planting (residual precipitation)
+#' rainfall(breadwheat[c("lon","lat")],
+#'          day.one = breadwheat[["planting_date"]],
+#'          span = 50,
+#'          days.before = 15)       
+#'          
 #'          
 #' @export
 rainfall <- function(object, day.one = NULL, span = NULL,
@@ -51,7 +59,9 @@ rainfall <- function(object, day.one = NULL, span = NULL,
   
   n <- nrow(r)
   
-  ind <- tibble::as_tibble(matrix(nrow = n, ncol = length(index), dimnames = list(1:n, index)))
+  ind <- tibble::as_tibble(matrix(nrow = n, 
+                                  ncol = length(index), 
+                                  dimnames = list(1:n, index)))
   
   # maximum length of consecutive dry days (< 1 mm)
   if ("MLDS" %in% index) {

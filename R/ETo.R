@@ -10,12 +10,13 @@
 #' for different latitudes
 #' @return The evapotranspiration in mm/day
 #' @examples
-#'   
+#' 
+#' # use the breadwheat data from package gosset 
 #' library("gosset")
+#' library("nasapower")
+#' library("raster")
 #' 
 #' data("breadwheat", package = "gosset")
-#' 
-#' breadwheat[c("lon","lat")]
 #' 
 #' # the evapotranspiration in the first 100 days after planting
 #' ETo(breadwheat[c("lon","lat")], 

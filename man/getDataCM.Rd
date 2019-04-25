@@ -25,15 +25,14 @@ Fetch the trial data from a ClimMob project using your API key
 }
 \examples{
 \dontrun{
-# This function will not work without your API key  
-library("gosset")
-library("jsonlite")
-library("httr")
 
-my_key <- "my_api_key"
+# This function will not work without an API key  
+
+my_key <- "add_your_key"
 my_project <- "my_climmob_project"
 
 data <- getDataCM(key = my_key, project = my_project)
+
 }
 
 }

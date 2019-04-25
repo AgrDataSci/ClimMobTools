@@ -1,28 +1,17 @@
+inst/doc
 # History files
 .Rhistory
 .Rapp.history
 
 # Session Data files
 .RData
-
 # RStudio files
 .Rproj.user
 .Rproj.user/
 .Rproj
-
 # Powerpoint files
 *.ppt[x]
-
-
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
 README.html
-
-
-
-
-
-
-
-

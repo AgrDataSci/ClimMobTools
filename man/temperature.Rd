@@ -38,14 +38,12 @@ Compute temperature indices over a timespan
 }
 \examples{
 
-# Compute indices using temperature 
+# use the breadwheat data from package gosset 
 library("gosset")
-data("breadwheat", package = "gosset")
-
-# Temperature indices from NASA POWER
-
 library("nasapower")
 library("raster")
+
+data("breadwheat", package = "gosset")
 
 temperature(breadwheat[c("lon","lat")], 
             day.one = breadwheat[["planting_date"]], 

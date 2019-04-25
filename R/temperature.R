@@ -23,14 +23,12 @@
 #' \item{TR}{tropical nights, number of nights with maximum temperature > 25 (degree Celsius) }
 #' @examples
 #' 
-#' # Compute indices using temperature 
+#' # use the breadwheat data from package gosset 
 #' library("gosset")
-#' data("breadwheat", package = "gosset")
-#' 
-#' # Temperature indices from NASA POWER
-#' 
 #' library("nasapower")
 #' library("raster")
+#' 
+#' data("breadwheat", package = "gosset")
 #' 
 #' temperature(breadwheat[c("lon","lat")], 
 #'             day.one = breadwheat[["planting_date"]], 

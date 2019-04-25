@@ -38,16 +38,24 @@ Compute rainfall indices over a timespan
 }
 \examples{
 
-# Compute indices using NASA POWER
-
+# use the breadwheat data from package gosset 
 library("gosset")
 library("nasapower")
 library("raster")
 
 data("breadwheat", package = "gosset")
 
+# calculate rainfall for the first 50 days after planting
 rainfall(breadwheat[c("lon","lat")], 
-         day.one = breadwheat$planting_date, 
+         day.one = breadwheat[["planting_date"]], 
          span = 50)
+         
+
+# include the first 15 days before planting (residual precipitation)
+rainfall(breadwheat[c("lon","lat")],
+         day.one = breadwheat[["planting_date"]],
+         span = 50,
+         days.before = 15)       
+         
          
 }

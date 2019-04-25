@@ -8,6 +8,8 @@
 #' @inheritParams temperature
 #' @return The number of days required to reach the growing degree days.
 #' @examples
+#' 
+#' # use the breadwheat data from package gosset 
 #' library("gosset")
 #' library("nasapower")
 #' library("raster")
@@ -29,10 +31,10 @@ GDD <- function(object, day.one = NULL, degree.days = NULL,
   
   # validate parameters
   if (is.null(day.one)) {
-    stop("a Date vector for day.one is required \n")
+    stop("day.one is missing with no default \n")
   }
   if (is.null(degree.days)) {
-    stop("an integer for degree.days is required \n")
+    stop("degree.days is missing with no default \n")
   }
   if (is.null(base)) {
     base <- 10
@@ -43,6 +45,7 @@ GDD <- function(object, day.one = NULL, degree.days = NULL,
   
   # get timespan for the day temperature
   if (dim(object)[2] == 2) {
+    cat("fetching NASA POWER, this may take a little longer. \n")
     day <- .get_timespan(object, day.one, span, pars = "T2M_MAX", ...)
   } else {
     day <- .get_timespan(object[, , 1], day.one, span, ...)
@@ -60,12 +63,16 @@ GDD <- function(object, day.one = NULL, degree.days = NULL,
   
   # sum temperature values until reach the defined degree days
   Y <- apply(Y, 1, function(x){
-    for(d in 1:length(x)){
-      i=d
-      if(sum(x[1:d]) > degree.days) break}
+    
+    for (d in 1:length(x)) {
+      
+      i <- d
+      
+      if (sum(x[1:d]) > degree.days) break}
+    
     return(i)
   })
   
-  return(tibble::tibble(GDD=Y))
+  return(tibble::tibble(GDD = Y))
 }
 

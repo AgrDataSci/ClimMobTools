@@ -1,0 +1,146 @@
+---
+title: "Introduction to ClimMobTools"
+package: ClimMobTools
+author:
+- name: Kauê de Sousa
+  affiliation: Department of Agricultural Sciences, Høgskolen i Innlandet, Norway
+output:
+  if (requireNamespace("BiocStyle", quietly = TRUE)) {
+    BiocStyle::html_document
+  } else if (requireNamespace("bookdown", quietly = TRUE)) {
+    bookdown::html_document2
+  } else html_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to ClimMobTools}
+    %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+bibliography: ["ClimMobTools.bib"]
+csl: citation_style.csl
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+
+The **ClimMobTools** package provides the toolkit employed in crowdsourcing citizen science projects under the *tricot* approach. Tricot, stands for "triadic comparison of technologies", an approach developed by van Etten et al. (2016)[@VanEtten2016] for the rapid assessment of on-farm evaluation trails in small-scale agriculture.
+
+## Installation
+
+The development version can be installed via
+
+
+    install.packages("devtools")
+    devtools::install_github("kauedesousa/ClimMobTools", upgrade = "never")
+    
+    
+# Usage
+
+The `breadwheat` is a dataframe from crowdsourcing citizen-science trials of bread wheat (*Triticum aestivum*) varieties in India. This is a sample data available at the [ClimMob](https://climmob.net/blog/) that can be fetched using using the function `getDataCM` from **ClimMobTools** and an API key from the ClimMob portal.
+
+```{r fetch, message = FALSE}
+library("ClimMobTools")
+#install.packages("devtools")
+#devtools::install_github("kauedesousa/gosset", upgrade = "never")
+library("gosset")
+library("PlackettLuce")
+library("tidyverse")
+library("magrittr")
+
+# the API key
+key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
+
+data <- ClimMobTools::getDataCM(key = key, 
+                                project = "breadwheat")
+
+head(data)
+
+```
+
+
+## Preparing the data
+
+The function `getDataCM` returns a dataframe in the long format to allows the organisation of projects with different structure. We can put this into wide format where each row is a farmer observation using **tidyverse**. 
+
+
+```{r tidying}
+# reshape the data into the wide format
+# we also remove some variables that refer to the ODK survey employed for the data collection
+data %<>% 
+  filter(!str_detect(variable, "survey")) %>% 
+  group_by(id) %>%
+  distinct(id, variable, value) %>%
+  spread(variable, value)
+```
+
+The [PlackettLuce](https://hturner.github.io/PlackettLuce/) model is one approach to analyse the *tricot* data[@Turner2018]. To do so, we need to convert the farmers' ranking into a object of class 'rankings' or 'grouped_rankings'. A object of class 'rankings' is a matrix of dense rankings that can be used to fit a PlackettLuce model using `PlackettLuce` from **PlackettLuce**. A object of class 'grouped_rankings' associates a group index with an object of class 'rankings', then it allows the rankings to be linked to explanatory variables and fit a PlackettLuce model using `pltree` from **PlackettLuce**. 
+
+We can convert the farmers' rankings in into a rankings object using the function `to_rankings` from package **gosset**. The argument `grouped.rankings` return a object of class 'grouped_rankings'.
+
+```{r plrankings, message = FALSE}
+
+G <- to_rankings(data, 
+                 items = c("item_A","item_B","item_C"), 
+                 rankings = c("overallperf_pos","overallperf_neg"),
+                 type = "tricot", 
+                 grouped.rankings = TRUE)
+
+head(G, 10)
+
+```
+
+
+## Add environmental variables
+
+Environmental variables can easily be included into the data set using the longitude and latitude information from the **tricot** and the planting dates for each plot. In this exercise we include the heat stress indices using the function `temperature` from **ClimMobTools**.
+
+```{r temperature, message = FALSE}
+
+# first we convert the lon lat into numeric
+# and the planting dates into Date
+data %<>%
+  mutate(lon = as.numeric(lon),
+         lat = as.numeric(lat),
+         plantingdate = as.Date(plantingdate, 
+                                format = "%Y-%m-%d"))
+
+# then we get the temperature indices
+# get some variables to include in the model
+# from the planting date to the next 120 days
+temp <- temperature(data[c("lon","lat")], 
+                    day.one = data["plantingdate"], 
+                    span = 120)
+
+
+modeldata <- cbind(G, temp)
+
+head(modeldata)
+
+```
+
+## Fit a PlackettLuce model
+
+Now we fit the model using the function `pltree` from **PlackettLuce** with temperature indices as explanatory variables.
+
+```{r plmodel, message=FALSE}
+tree <- pltree(G ~ ., data = modeldata, npseudo = 5)
+
+print(tree)
+```
+
+The PlackettLuce model shows that the bread wheat variaties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).  
+
+```{r pltree, echo=FALSE, fig.height=4, fig.width=8, message=FALSE}
+plot(tree)
+```
+
+
+## References
+
+
+
+
