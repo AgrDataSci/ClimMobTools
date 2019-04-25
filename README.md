@@ -12,7 +12,7 @@ Installation
 
 The development version can be installed via
 
-    install.packages("devtools")
+    library("devtools")
     devtools::install_github("kauedesousa/ClimMobTools", upgrade = "never")
 
 **ClimMobTools** is under development. Use with caution.
