@@ -7,16 +7,9 @@ Authors@R: c(person("Kaue", "de Sousa",
         comment = c(ORCID = "0000-0002-7571-7845")),
         person("Jacob", "van Etten", role = c("aut", "ctb"),
         comment = c(ORCID = "0000-0001-7554-2558")),
-        person("Sam", "Dumble", role = c("aut","ctb"),
-        comment = c(ORCID = "0000-0000-0000-0000")),
-        person("Dave", "Mills", role = c("aut","ctb"),
-        comment = c(ORCID = "0000-0000-0000-0000")),
-        person("Nicolas", "Greliche", role = c("aut","ctb"),
-        comment = c(ORCID = "0000-0000-0000-0000")),
-        person("Brandon", "Madriz", role = c("ctb"),
-        comment = c(ORCID = "0000-0000-0000-0000")),
-        person("Carlos", "Quiros", role = c("ctb"),
-        comment = c(ORCID = "0000-0000-0000-0000")))
+        person("Stats4SD", role = c("aut", "ctb")),
+        person("Brandon", "Madriz", role = c("aut","ctb")),
+        person("Carlos", "Quiros", role = c("aut","ctb")))
 Maintainer: Kaue de Sousa <kaue.desousa@inn.no>
 URL: https://kauedesousa.github.io/ClimMobTools/
 BugReports: https://github.com/kauedesousa/ClimMobTools/issues
