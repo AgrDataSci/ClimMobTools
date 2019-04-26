@@ -15,6 +15,13 @@ The development version can be installed via
     library("devtools")
     devtools::install_github("kauedesousa/ClimMobTools", upgrade = "never")
 
+To enable the vignettes to be build use
+
+    library("devtools")
+    devtools::install_github("kauedesousa/ClimMobTools", 
+                             build_opts = c("--no-resave-data", "--no-manual"),
+                             upgrade = "never")
+
 **ClimMobTools** is under development. Use with caution.
 
 Going further
