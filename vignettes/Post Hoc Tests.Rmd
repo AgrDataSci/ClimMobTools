@@ -90,10 +90,10 @@ library(PlackettLuce)
 data("breadwheat", package = "gosset")
 
 
- R <- to_rankings(breadwheat,
-                  items = c("variety_a","variety_b","variety_c"),
-                  rankings = c("overall_best","overall_worst"),
-                  type = "tricot")
+R <- to_rankings(breadwheat,
+                 items = c("variety_a","variety_b","variety_c"),
+                 rankings = c("overall_best","overall_worst"),
+                 type = "tricot")
 
 mod1 <- PlackettLuce(R,  npseudo = 0, maxit = 7)
 summary(mod1)

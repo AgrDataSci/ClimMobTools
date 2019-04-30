@@ -53,6 +53,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/Environmental_indices.html">Environmental variables</a>
+    </li>
+    <li>
       <a href="../articles/Overview.html">Introduction to ClimMobTools</a>
     </li>
     <li>
@@ -172,7 +175,6 @@ data <span class="op">%&lt;&gt;%</span>
 temp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/temperature.html">temperature</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
                     <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>], 
                     <span class="dt">span =</span> <span class="dv">120</span>)
-<span class="co">#&gt; fetching NASA POWER, this may take a little longer.</span>
 
 
 modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(G, temp)
@@ -186,9 +188,10 @@ modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 <span class="co">#&gt; 5 CSW18 &gt; DBW17 &gt;  ... 37.02 20.65 20.54  4.63 28  0 15.50008</span>
 <span class="co">#&gt; 6 CSW18 &gt; HP1633 &gt; ... 38.58 20.65 23.03  4.63 34  0 15.54842</span></code></pre></div>
 </div>
-<div id="fit-a-plackettluce-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fit-a-plackettluce-model" class="anchor"></a>Fit a PlackettLuce model</h2>
+</div>
+<div id="fit-a-plackettluce-model" class="section level1">
+<h1 class="hasAnchor">
+<a href="#fit-a-plackettluce-model" class="anchor"></a>Fit a PlackettLuce model</h1>
 <p>Now we fit the model using the function <code>pltree</code> from <strong>PlackettLuce</strong> with temperature indices as explanatory variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> modeldata, <span class="dt">npseudo =</span> <span class="dv">5</span>)
 
@@ -222,16 +225,15 @@ modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 <p>The PlackettLuce model shows that the bread wheat variaties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).</p>
 <p><img src="Overview_files/figure-html/pltree-1.png" width="768"></p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
 <div id="ref-VanEtten2016">
 <p>1. van Etten, J., Beza, E., Calderer, L. &amp; van Duijvendijk, K. <em>et al.</em> First experiences with a novel farmer citizen science approach: Crowdsourcing participatory variety selection through on-farm triadic comparisons of technologies (tricot). <em>Experimental Agriculture</em> 1–22 (2016).</p>
 </div>
 <div id="ref-Turner2018">
 <p>2. Turner, H., van Etten, J., Firth, D. &amp; Kosmidis, I. Modelling rankings in R: The PlackettLuce package. <em>arXiv:1810.12068</em> (2018).</p>
-</div>
 </div>
 </div>
 </div>
@@ -248,10 +250,10 @@ modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 <a href="#usage">Usage</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#preparing-the-data">Preparing the data</a></li>
       <li><a href="#add-environmental-variables">Add environmental variables</a></li>
-      <li><a href="#fit-a-plackettluce-model">Fit a PlackettLuce model</a></li>
-      <li><a href="#references">References</a></li>
       </ul>
 </li>
+      <li><a href="#fit-a-plackettluce-model">Fit a PlackettLuce model</a></li>
+      <li><a href="#references">References</a></li>
       </ul>
 </div>
       </div>

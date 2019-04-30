@@ -53,6 +53,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/Environmental_indices.html">Environmental variables</a>
+    </li>
+    <li>
       <a href="../articles/Overview.html">Introduction to ClimMobTools</a>
     </li>
     <li>
@@ -76,7 +79,7 @@
       <h1>Post Hoc Tests From PL Model</h1>
                         <h4 class="author">Stats4SD</h4>
             
-            <h4 class="date">26 April, 2019</h4>
+            <h4 class="date">30 April, 2019</h4>
       
       
       <div class="hidden name"><code>Post Hoc Tests.Rmd</code></div>
@@ -90,10 +93,10 @@
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"breadwheat"</span>, <span class="dt">package =</span> <span class="st">"gosset"</span>)
 
 
- R &lt;-<span class="st"> </span><span class="kw">to_rankings</span>(breadwheat,
-                  <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"variety_a"</span>,<span class="st">"variety_b"</span>,<span class="st">"variety_c"</span>),
-                  <span class="dt">rankings =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overall_best"</span>,<span class="st">"overall_worst"</span>),
-                  <span class="dt">type =</span> <span class="st">"tricot"</span>)
+R &lt;-<span class="st"> </span><span class="kw">to_rankings</span>(breadwheat,
+                 <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"variety_a"</span>,<span class="st">"variety_b"</span>,<span class="st">"variety_c"</span>),
+                 <span class="dt">rankings =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overall_best"</span>,<span class="st">"overall_worst"</span>),
+                 <span class="dt">type =</span> <span class="st">"tricot"</span>)
 
 mod1 &lt;-<span class="st"> </span><span class="kw">PlackettLuce</span>(R,  <span class="dt">npseudo =</span> <span class="dv">0</span>, <span class="dt">maxit =</span> <span class="dv">7</span>)</code></pre></div>
 <pre><code>## Warning in PlackettLuce(R, npseudo = 0, maxit = 7): Iterations have not

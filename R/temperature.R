@@ -47,7 +47,6 @@ temperature <- function(object, day.one = NULL, span = NULL,
   
   # get timespan for the day temperature
   if (dim(object)[2] == 2) {
-    cat("fetching NASA POWER, this may take a little longer. \n")
     day <- .get_timespan(object, day.one, span, pars = "T2M_MAX", ...)
   } else {
     day <- .get_timespan(object[, , 1], day.one, span, ...)

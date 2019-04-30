@@ -61,14 +61,21 @@
   
   # the timespan
   span <- as.vector(t(span))
+  
   # the begin date
   b <- day.one - days.before
+  
   # the end date
   e <- day.one + span
+  
   # the refreshed timespan
   span <- as.integer(e - b)
+  
   # the maximum timespan
   maxspan <- max(span)
+  
+  # the maximum end date
+  maxend <- max(b) + max(span)
   
   # look if nasapower is required 
   nasa_power <- dim(object)[[2]] == 2
@@ -80,7 +87,7 @@
     lims <- with(object, c(min(object[,1]), min(object[,2]),
                            max(object[,1]), max(object[,2])))
     # the first and last date to fetch
-    dates <- c(min(b), max(e))
+    dates <- c(min(b), maxend)
     # the projection
     myproj <- "+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
     
@@ -116,10 +123,11 @@
     
   }
   
-  # check if provided start.date exists within the object
+  # # check if provided start.date exists within the object
   days <- names(object)
-  out <- !as.character(b) %in% days & !as.character(e) %in% days
   
+  out <- !as.character(b) %in% days & !as.character(e) %in% days
+
   if (any(out)) {
     suppress <- dimnames(object)[[1]][out]
     warning("Ignoring rows c(",
@@ -129,7 +137,7 @@
   } else{
     rnames <- as.integer(dimnames(object)[[1]])
   }
-  
+
   # refresh objects
   object <- object[!out, ]
   b <- b[!out]

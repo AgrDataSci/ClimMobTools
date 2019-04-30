@@ -30,6 +30,10 @@
 ETo <- function(object, day.one = NULL, span = NULL, 
                 lat = NULL, Kc = 1, p = NULL){
   
+  if (any(c("tbl_df", "tbl") %in% class(day.one))) {
+    day.one <- day.one[[1]]
+  }
+  
   # get p if lat is provided
   if (!is.null(lat)) {
     l <- .round5(lat, 5)
@@ -43,7 +47,6 @@ ETo <- function(object, day.one = NULL, span = NULL,
   
   # get timespan for the day temperature
   if (dim(object)[2] == 2) {
-    cat("fetching NASA POWER, this may take a little longer. \n")
     day <- .get_timespan(object, day.one, span, pars = "T2M_MAX")
   } else {
     day <- .get_timespan(object[, , 1], day.one, span)

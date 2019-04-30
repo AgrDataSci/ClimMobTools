@@ -50,8 +50,6 @@ rainfall <- function(object, day.one = NULL, span = NULL,
   
   #get timespan
   if (dim(object)[2] == 2) {
-    cat("fetching NASA POWER, this may take a little longer. \n")
-    
     r <- .get_timespan(object, day.one, span, pars = "PRECTOT", ...)
   } else {
     r <- .get_timespan(object, day.one, span, ...)
