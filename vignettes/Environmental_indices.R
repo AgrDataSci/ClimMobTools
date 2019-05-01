@@ -4,7 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ---- message = FALSE----------------------------------------------------
+## ----fetchdata, message = FALSE------------------------------------------
 library("ClimMobTools")
 library("nasapower")
 library("tidyverse")
@@ -36,7 +36,7 @@ data %<>%
 data <- data[1:25, ]
 
 
-## ---- message=FALSE------------------------------------------------------
+## ----temperature, message=FALSE------------------------------------------
 temp <- temperature(data[c("lon","lat")], 
                     day.one = data["plantingdate"], 
                     span = 120)
@@ -44,7 +44,7 @@ temp <- temperature(data[c("lon","lat")],
 head(temp, 10)
 
 
-## ---- message=FALSE------------------------------------------------------
+## ----degreedays, message=FALSE-------------------------------------------
 
 gdd <- GDD(data[c("lon","lat")], 
            day.one = data["plantingdate"],
@@ -54,7 +54,7 @@ gdd <- GDD(data[c("lon","lat")],
 head(gdd, 10)
 
 
-## ---- message=FALSE------------------------------------------------------
+## ----temp_gdd, message=FALSE---------------------------------------------
 temp <- temperature(data[c("lon","lat")], 
                     day.one = data["plantingdate"], 
                     span = gdd)
@@ -62,27 +62,28 @@ temp <- temperature(data[c("lon","lat")],
 head(temp, 10)
 
 
-## ---- message=FALSE------------------------------------------------------
+## ----rain, message=FALSE-------------------------------------------------
 rain <- rainfall(data[c("lon","lat")], 
                  day.one = data["plantingdate"],
                  span = gdd)
 
-head(temp, 10)
+head(rain, 10)
 
 
-## ---- message=FALSE------------------------------------------------------
-rain <- rainfall(data[c("lon","lat")], 
-                 day.one = data["plantingdate"], 
-                 span = gdd,
-                 days.before = 15)
+## ----rain2, eval=FALSE, message=FALSE, include=FALSE---------------------
+#  rain <- rainfall(data[c("lon","lat")],
+#                   day.one = data["plantingdate"],
+#                   span = gdd,
+#                   days.before = 15)
+#  
+#  
 
-
-
-## ---- message=FALSE------------------------------------------------------
+## ----eto, message=FALSE--------------------------------------------------
 eto <- ETo(data[c("lon","lat")], 
            day.one = data["plantingdate"],
            span = gdd,
            lat = data[["lat"]])
 
+head(eto, 10)
 
 
