@@ -1,0 +1,62 @@
+`r print(trait_names[i])`
+
+
+
+```{r}
+
+  n<-(2*i)-1
+  R_t <- to_rankings(df,
+                 items = vars,
+                 rankings = traits[n:(n+1)],
+                 type = "tricot")
+
+mod_t <- PlackettLuce(R_t,  npseudo = 0, maxit = 7)
+mods[[i]]<-mod_t
+
+
+
+message1<-paste("Model deviance exceeds expected deviance under H0 in",percent(mean(deviance(mod_overall)>out[,2])),"of 500 simulations")
+
+if(mean(deviance(mod_t)>out[,2])<0.01){
+message1<-paste(message1,"This suggests that the results from the experiment show there is evidence of a difference between varieties")
+}
+if(mean(deviance(mod_t)>out[,2])>0.01 & mean(deviance(mod_overall)>out[,2])<0.10){
+message1<-paste(message1,"This suggests that the results from the experiment shows there may be some evidence of a difference between varieties")  
+}
+if(mean(deviance(mod_t)>out[,2])>0.10){
+message1<-paste(message1,"This suggests that the results from the experiment do not provide enough evidence to conclude that there are differences between varieties")  
+}
+```
+
+```{r}
+summary(mod_t)
+```
+
+
+```{r}
+
+ggplot(data=data.frame(out),aes(x=X2))+
+    geom_histogram(bins = 40)+geom_density()+
+  geom_vline(xintercept =deviance(mod_t),col="red" )+
+  ggtitle("Histogram of Simulated Deviance Under H0",subtitle = "Red line indciates observed model deviance")
+```
+`r print(message1)`
+
+```{r,fig.width=7,fig.height=7}
+
+
+summaries<-multcompPL(mod_t,adjust = "BH")
+
+plot(plot.multcompPL(summaries,level=0.84)+
+       ggtitle(paste(trait_names[i],"Estimates w/ 84% Confidence Intervals"),
+ subtitle="Groups created from pairwise contrasts at 5% level\nwith Benjamini & Hochberg adjustment"))
+```
+
+```{r}
+summaries %>% 
+  select(estimate,quasiSE,.group) %>%
+  rename("Estimate"=estimate,"Group"=.group) %>% 
+  kable(digits=2) 
+```
+
+
