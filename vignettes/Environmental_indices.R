@@ -70,7 +70,7 @@ rain <- rainfall(data[c("lon","lat")],
 head(rain, 10)
 
 
-## ----rain2, eval=FALSE, message=FALSE, include=FALSE---------------------
+## ----rain2, eval=FALSE, message=FALSE------------------------------------
 #  rain <- rainfall(data[c("lon","lat")],
 #                   day.one = data["plantingdate"],
 #                   span = gdd,

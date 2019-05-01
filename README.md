@@ -2,7 +2,7 @@
 ClimMobTools
 ============
 
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/kauedesousa/ClimMobTools?branch=master&svg=true)](https://ci.appveyor.com/project/kauedesousa/ClimMobTools) [![Travis-CI Build Status](https://travis-ci.org/kauedesousa/ClimMobTools.svg?branch=master)](https://travis-ci.org/kauedesousa/ClimMobTools)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/kauedesousa/ClimMobTools?branch=master&svg=true)](https://ci.appveyor.com/project/kauedesousa/ClimMobTools)
 
 Package website: <https://kauedesousa.github.io/ClimMobTools/>
 
