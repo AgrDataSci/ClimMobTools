@@ -2,9 +2,9 @@
 ClimMobTools
 ============
 
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/kauedesousa/ClimMobTools?branch=master&svg=true)](https://ci.appveyor.com/project/kauedesousa/ClimMobTools)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/agrobioinfoservices/ClimMobTools?branch=master&svg=true)](https://ci.appveyor.com/project/kauedesousa/ClimMobTools)
 
-Package website: <https://kauedesousa.github.io/ClimMobTools/>
+Package website: <https://agrobioinfoservices.github.io/ClimMobTools/>
 
 Overview
 --------
@@ -17,14 +17,14 @@ Installation
 The development version can be installed via
 
     library("devtools")
-    devtools::install_github("kauedesousa/ClimMobTools", upgrade = "never")
+    devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")
 
 **ClimMobTools** is under development. Use with caution.
 
 Going further
 -------------
 
-The full functionality of **ClimMobTools** is illustrated in the package vignette. The vignette can be found on the [package website](https://kauedesousa.github.io/ClimMobTools/) or from within `R` once the package has been installed, e.g. via
+The full functionality of **ClimMobTools** is illustrated in the package vignette. The vignette can be found on the [package website](https://agrobioinfoservices.github.io/ClimMobTools/) or from within `R` once the package has been installed, e.g. via
 
     vignette("Overview", package = "ClimMobTools")
 

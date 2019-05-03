@@ -42,7 +42,7 @@ The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/)
 
 ### Breadwheat data 
 
-In this article we use the **NASA POWER** data via the `R` package [nasapower](https://ropensci.github.io/nasapower/index.html) as external input data for the environmental indices. We use the bread wheat data from Vaishali, India as internal input with planing dates and geographic information. In the *Introduction to ClimMobTools* [article](https://kauedesousa.github.io/ClimMobTools/articles/Overview.html) we show how to fetch your ClimMob data into your `R` section using an API key. 
+In this article we use the **NASA POWER** data via the `R` package [nasapower](https://ropensci.github.io/nasapower/index.html) as external input data for the environmental indices. We use the bread wheat data from Vaishali, India as internal input with planing dates and geographic information. In the *Introduction to ClimMobTools* [article](https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html) we show how to fetch your ClimMob data into your `R` section using an API key. 
 
 ```{r fetchdata, message = FALSE}
 library("ClimMobTools")
@@ -167,7 +167,7 @@ head(eto, 10)
 ```
 
 
-Finally, these indices can be combined into a single data set with the **PlackettLuce** rankings to assess if the climate plays a role on the crop performance as shown in this [article](https://kauedesousa.github.io/ClimMobTools/articles/Overview.html).
+Finally, these indices can be combined into a single data set with the **PlackettLuce** rankings to assess if the climate plays a role on the crop performance as shown in this [article](https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html).
 
 
 ## References

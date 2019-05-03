@@ -35,7 +35,7 @@ The development version can be installed via
 
 
     install.packages("devtools")
-    devtools::install_github("kauedesousa/ClimMobTools", upgrade = "never")
+    devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")
     
     
 # Usage
