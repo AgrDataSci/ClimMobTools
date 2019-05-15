@@ -103,10 +103,6 @@ devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")<
 <span class="co">#install.packages("devtools")</span>
 <span class="co">#devtools::install_github("kauedesousa/gosset", upgrade = "never")</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
-<span class="co">#&gt; Warning: replacing previous import 'dplyr::filter' by 'stats::filter' when</span>
-<span class="co">#&gt; loading 'gosset'</span>
-<span class="co">#&gt; Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when</span>
-<span class="co">#&gt; loading 'gosset'</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"tidyverse"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"magrittr"</span>)
@@ -146,6 +142,7 @@ G &lt;-<span class="st"> </span><span class="kw">to_rankings</span>(data,
                  <span class="dt">rankings =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span>),
                  <span class="dt">type =</span> <span class="st">"tricot"</span>, 
                  <span class="dt">grouped.rankings =</span> <span class="ot">TRUE</span>)
+<span class="co">#&gt; Warning in to_rankings(data, items = c("item_A", "item_B", "item_C"), rankings = c("overallperf_pos", : Argument 'rankings' is deprecated, use 'input' instead</span>
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(G, <span class="dv">10</span>)
 <span class="co">#&gt;                      1                      2                      3 </span>
