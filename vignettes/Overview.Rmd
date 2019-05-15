@@ -45,7 +45,7 @@ The `breadwheat` is a dataframe from crowdsourcing citizen-science trials of bre
 ```{r fetch, message = FALSE}
 library("ClimMobTools")
 #install.packages("devtools")
-#devtools::install_github("kauedesousa/gosset", upgrade = "never")
+#devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")
 library("gosset")
 library("PlackettLuce")
 library("tidyverse")
@@ -85,7 +85,7 @@ We can convert the farmers' rankings in into a rankings object using the functio
 
 G <- to_rankings(data, 
                  items = c("item_A","item_B","item_C"), 
-                 rankings = c("overallperf_pos","overallperf_neg"),
+                 input = c("overallperf_pos","overallperf_neg"),
                  type = "tricot", 
                  grouped.rankings = TRUE)
 
