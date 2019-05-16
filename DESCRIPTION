@@ -13,20 +13,13 @@ Authors@R: c(person("Kaue", "de Sousa",
 Maintainer: Kaue de Sousa <kaue.desousa@inn.no>
 URL: https://agrobioinfoservices.github.io/ClimMobTools/
 BugReports: https://github.com/agrobioinfoservices/ClimMobTools/issues
-Description: ClimMobTools provides the toolkit for the ClimMob platform in R
+Description: ClimMobTools provides the toolkit for the ClimMob platform in R.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
-Imports: httr, jsonlite, Matrix, methods, nasapower, raster, RSpectra, tidyverse, utils
-Suggests: 
-    BiocStyle,
-    PlackettLuce,
-    psychotree,
-    psychotools,
-    qvcalc,
-    knitr,
-    rmarkdown
+Imports: httr, jsonlite, Matrix, methods, nasapower, raster, RSpectra, tibble, tidyr, utils
+Suggests: PlackettLuce, psychotree, psychotools, qvcalc, knitr, rmarkdown
 Language: en-GB
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

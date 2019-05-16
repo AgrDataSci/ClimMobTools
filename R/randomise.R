@@ -27,9 +27,9 @@
 #'           itemnames = inames)
 #'           
 #' @aliases randomize
-#' @import Matrix
-#' @import methods
-#' @import RSpectra
+#' @importFrom Matrix Diagonal
+#' @importFrom methods as
+#' @importFrom RSpectra eigs
 #' @importFrom utils combn
 #' @export
 randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL, 

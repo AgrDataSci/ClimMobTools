@@ -18,9 +18,6 @@
 #' 
 #' }
 #' 
-#' @import httr
-#' @import jsonlite
-#' @import tidyverse
 #' @seealso \url{https://climmob.net/climmob3/}
 #' @export
 getProjectsCM <- function(key = NULL){

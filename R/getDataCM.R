@@ -23,6 +23,10 @@
 #' }
 #' 
 #' @seealso \code{\link{getProjectsCM}}
+#' @importFrom httr accept_json content GET
+#' @importFrom jsonlite fromJSON
+#' @importFrom tibble as_tibble tibble
+#' @importFrom tidyr gather separate spread
 #' @export
 getDataCM <- function(key = NULL, project = NULL, ...){
   
@@ -274,11 +278,14 @@ getDataCM <- function(key = NULL, project = NULL, ...){
                                                     "registration",
                                                     assess_name))
   
-  output <- dplyr::arrange(output, moment)
+
+  # reorder moment and ids
+  o <- order(output$moment)
+  output <- output[o, ]
   
   output$id <- as.integer(output$id)
-  
-  output <- dplyr::arrange(output, id)
+  o <- order(output$id)
+  output <- output[o, ]
   
   # if required, put the data in wide format
   if (pivot.wider) {
@@ -290,9 +297,11 @@ getDataCM <- function(key = NULL, project = NULL, ...){
     
     output <- output[,-2]
     
-    output <- tidyr::spread(output, variable, value)
+    output <- tidyr::spread(output, 
+                            key = "variable", 
+                            value = "value")
     
-    output <- dplyr::mutate(output, id = id)
+    output$id <- id
     
     output <- output[c("id", variable_levels)]
   }

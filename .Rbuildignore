@@ -3,8 +3,7 @@
 ^README\.Rmd$
 ^README\.md$
 ^CONTRIBUTING\.md$
-^CONDUCT\.md$
-^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$
 ^readme\.bib$
 ^\.travis\.yml$
 ^appveyor\.yml$
