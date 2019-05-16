@@ -19,7 +19,14 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
 Imports: httr, jsonlite, Matrix, methods, nasapower, raster, RSpectra, tibble, tidyr, utils
-Suggests: PlackettLuce, psychotree, psychotools, qvcalc, knitr, rmarkdown
+Suggests: 
+    PlackettLuce,
+    psychotree,
+    psychotools,
+    qvcalc,
+    knitr,
+    rmarkdown,
+    testthat
 Language: en-GB
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
