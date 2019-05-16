@@ -13,7 +13,7 @@ bibliography: ["ClimMobTools.bib"]
 csl: citation_style.csl
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include=FALSE}
 TRAVIS <- !identical(tolower(Sys.getenv("TRAVIS")), "true")
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -39,7 +39,7 @@ The development version can be installed via
 
 The `breadwheat` is a dataframe from crowdsourcing citizen-science trials of bread wheat (*Triticum aestivum*) varieties in India. This is a sample data available at the [ClimMob](https://climmob.net/blog/) that can be fetched using using the function `getDataCM` from **ClimMobTools** and an API key from the ClimMob portal.
 
-```{r fetch, message = FALSE}
+```{r fetch, message=FALSE, eval=TRAVIS}
 library("ClimMobTools")
 # install.packages("devtools")
 # devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")
@@ -64,7 +64,7 @@ head(data)
 The function `getDataCM` returns a dataframe in the long format to allows the organisation of projects with different structure. We can put this into wide format where each row is a farmer observation using **tidyverse**. 
 
 
-```{r tidying}
+```{r tidying, eval=TRAVIS}
 # reshape the data into the wide format
 # we also remove some variables that refer to the ODK survey employed for the data collection
 data %<>% 
@@ -78,7 +78,7 @@ The [PlackettLuce](https://hturner.github.io/PlackettLuce/) model is one approac
 
 We can convert the farmers' rankings in into a rankings object using the function `to_rankings` from package **gosset**. The argument `grouped.rankings` return a object of class 'grouped_rankings'.
 
-```{r plrankings, message = FALSE}
+```{r plrankings, message = FALSE, eval=TRAVIS}
 
 G <- to_rankings(data, 
                  items = c("item_A","item_B","item_C"), 
@@ -95,7 +95,7 @@ head(G, 10)
 
 Environmental variables can easily be included into the data set using the longitude and latitude information from the **tricot** and the planting dates for each plot. In this exercise we include the heat stress indices using the function `temperature` from **ClimMobTools**.
 
-```{r temperature, message = FALSE}
+```{r temperature, message = FALSE, eval=TRAVIS}
 
 # first we convert the lon lat into numeric
 # and the planting dates into Date
@@ -123,7 +123,7 @@ head(modeldata)
 
 Now we fit the model using the function `pltree` from **PlackettLuce** with temperature indices as explanatory variables.
 
-```{r plmodel, message=FALSE}
+```{r plmodel, message=FALSE, eval=TRAVIS}
 tree <- pltree(G ~ ., data = modeldata, npseudo = 5)
 
 print(tree)
@@ -131,7 +131,7 @@ print(tree)
 
 The PlackettLuce model shows that the bread wheat variaties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).  
 
-```{r pltree, echo=FALSE, fig.height=4, fig.width=8, message=FALSE}
+```{r pltree, echo=FALSE, fig.height=4, fig.width=8, message=FALSE, eval=TRAVIS}
 plot(tree)
 ```
 

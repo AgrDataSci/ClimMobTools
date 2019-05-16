@@ -13,7 +13,7 @@ bibliography: ["ClimMobTools.bib"]
 csl: citation_style.csl
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include=FALSE}
 TRAVIS <- !identical(tolower(Sys.getenv("TRAVIS")), "true")
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -41,7 +41,7 @@ The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/)
 
 In this article we use the **NASA POWER** data via the `R` package [nasapower](https://ropensci.github.io/nasapower/index.html) as external input data for the environmental indices. We use the bread wheat data from Vaishali, India as internal input with planing dates and geographic information. In the *Introduction to ClimMobTools* [article](https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html) we show how to fetch your ClimMob data into your `R` section using an API key. 
 
-```{r fetchdata, message = FALSE}
+```{r fetchdata, message=FALSE, eval=TRAVIS}
 library("ClimMobTools")
 library("nasapower")
 library("tidyverse")
@@ -82,7 +82,7 @@ The duration from where the environmental indices will be computed is defined by
 
 Here we compute the temperature indices for a time span of 120 days after the planting date:
 
-```{r temperature, message=FALSE}
+```{r temperature, message=FALSE, eval=TRAVIS}
 temp <- temperature(data[c("lon","lat")], 
                     day.one = data["plantingdate"], 
                     span = 120)
@@ -97,7 +97,7 @@ If the time span is unknown and or you want to capture the variability among dif
 
 Here we define that the required degree days for wheat is 1800 °C, the growing degree days are computed with a base 5, from planting date and on:
 
-```{r degreedays, message=FALSE}
+```{r degreedays, message=FALSE, eval=TRAVIS}
 
 gdd <- GDD(data[c("lon","lat")], 
            day.one = data["plantingdate"],
@@ -110,7 +110,7 @@ head(gdd, 10)
 
 Then, these growing degree days can be applied as time span to compute the temperature:
 
-```{r temp_gdd, message=FALSE}
+```{r temp_gdd, message=FALSE, eval=TRAVIS}
 temp <- temperature(data[c("lon","lat")], 
                     day.one = data["plantingdate"], 
                     span = gdd)
@@ -126,7 +126,7 @@ Precipitation indices can also be computed in the same way as the temperature in
 
 Here we use the NASA POWER data with a time span defined by the growing degree days using the function `rainfall` from **ClimMobTools**.  
 
-```{r rain, message=FALSE}
+```{r rain, message=FALSE, eval=TRAVIS}
 rain <- rainfall(data[c("lon","lat")], 
                  day.one = data["plantingdate"],
                  span = gdd)
@@ -138,7 +138,7 @@ head(rain, 10)
 Function `rainfall` has also a feature that enables the indices to be calculated from some days before the planting date. This is important for case studies where a residual precipitation must be taken into account. To do so, we use the argument `days.before`:
 
 
-```{r rain2, eval=FALSE, message=FALSE}
+```{r rain2, eval=FALSE, message=FALSE, eval=TRAVIS}
 rain <- rainfall(data[c("lon","lat")], 
                  day.one = data["plantingdate"], 
                  span = gdd,
@@ -153,7 +153,7 @@ rain <- rainfall(data[c("lon","lat")],
 Evapotranspiration can be defined as the sum of evaporation and plant transpiration from the Earth's surface to the atmosphere. This is also an important index to include in models for GxE interactions. In **ClimMobTools** the index can be calculate using the function `ETo` which computes the evapotranspiration based on the Blaney-Criddle method, an ideal equation when only air-temperature data sets are available for a site. 
 
 
-```{r eto, message=FALSE}
+```{r eto, message=FALSE, eval=TRAVIS}
 eto <- ETo(data[c("lon","lat")], 
            day.one = data["plantingdate"],
            span = gdd,
