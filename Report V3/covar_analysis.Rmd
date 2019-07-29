@@ -1,0 +1,122 @@
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+   gsplit=TRUE
+if(covars[i]==gender|is.na(gender)){
+  gsplit=FALSE
+}
+
+ if(is.numeric(dt.fr[,covars[i]])){
+if(gsplit==FALSE){    
+    vartable<-data.frame(Variable=colnames(dt.fr)[covars[i]],
+                    Mean=round(mean(dt.fr[,covars[i]],na.rm=TRUE),2),
+                    Median=round(median(dt.fr[,covars[i]],na.rm=TRUE),1),
+               Minimum=min(dt.fr[,covars[i]],na.rm=TRUE),Maximum=max(dt.fr[,covars[i]],na.rm=TRUE),
+               "Standard Deviation"=round(sd(dt.fr[,covars[i]],na.rm=TRUE),2))
+    
+
+    
+   p1<- ggplot(data=dataset,aes_string(x=colnames(dt.fr)[covars[i]]))+
+      geom_histogram(col="black",fill=alpha("red",0.5),bins=20)+
+     ggtitle(paste("Histogram of",colnames(dt.fr)[covars[i]]))+ylab("Frequency")+
+     scale_y_continuous(sec.axis = sec_axis(~./nrow(dataset),labels=scales::percent,
+                                                   name="Percentage"))
+}
+    else{
+      dt.fr$gender<-factor(dt.fr[,gender])
+              vartable<-data.frame(Variable=colnames(dt.fr)[covars[i]],gender=levels(dt.fr[,gender]),
+                    Mean=round(tapply(dt.fr[,covars[i]],dt.fr[,gender],mean,na.rm=TRUE),2),
+                    Median=round(tapply(dt.fr[,covars[i]],dt.fr[,gender],median,na.rm=TRUE),2),
+               Minimum=round(tapply(dt.fr[,covars[i]],dt.fr[,gender],min,na.rm=TRUE),2),
+               Maximum=round(tapply(dt.fr[,covars[i]],dt.fr[,gender],max,na.rm=TRUE),2),
+               "Standard Deviation"=round(tapply(dt.fr[,covars[i]],dt.fr[,gender],sd,na.rm=TRUE),2))
+    
+
+    
+   p1<- ggplot(data=dataset,aes_string(x=colnames(dt.fr)[covars[i]]))+facet_wrap(~gender)+
+      geom_histogram(col="black",fill=alpha("red",0.5),bins=20)+
+     ggtitle(paste("Histogram of",colnames(dt.fr)[covars[i]]))+ylab("Frequency")+
+     scale_y_continuous(sec.axis = sec_axis(~./nrow(dataset),labels=scales::percent,
+                                                   name="Percentage"))  
+    }
+
+    
+  }
+    if(class(dt.fr[,covars[i]])=="Date"){
+    
+      if(gsplit==TRUE){  
+              dt.fr$gender<-factor(dt.fr[,gender])
+    vartable<-data.frame(Variable=colnames(dt.fr)[covars[i]],gender=levels(dt.fr[,gender]),
+                         "Median Date"=as.Date(tapply(dt.fr[,covars[i]],dt.fr[,gender],median,na.rm=TRUE), 
+                                               origin = "1970-01-01"),
+               "Earliest Date"=as.Date(tapply(dt.fr[,covars[i]],dt.fr[,gender],min,na.rm=TRUE), origin = "1970-01-01"),"Final Date"=as.Date(tapply(dt.fr[,covars[i]],dt.fr[,gender],max,na.rm=TRUE), origin = "1970-01-01"))
+    
+
+    
+   p1<- ggplot(data=dataset,aes_string(x=colnames(dt.fr)[covars[i]]))+
+     facet_wrap(~gender)+
+      geom_histogram(col="black",fill=alpha("blue",0.5))+
+     ggtitle(paste("Histogram of",colnames(dt.fr)[covars[i]]))+ylab("Frequency")+
+scale_x_date(date_breaks = "2 days", date_minor_breaks = "1 day", date_labels = "%d-%b")+
+     scale_y_continuous(sec.axis = sec_axis(~./nrow(dataset),labels=scales::percent,
+                                                   name="Percentage"))+
+     theme(axis.text.x = element_text(angle=90))
+      }
+      else{
+            vartable<-data.frame(Variable=colnames(dt.fr)[covars[i]],
+                                 "Median Date"=as.Date(median(dt.fr[,covars[i]],na.rm=TRUE)),
+               "Earliest Date"=as.Date(min(dt.fr[,covars[i]],na.rm=TRUE)),
+               "Final Date"=as.Date(max(dt.fr[,covars[i]],na.rm=TRUE)))
+    
+
+    
+   p1<- ggplot(data=dataset,aes_string(x=colnames(dt.fr)[covars[i]]))+
+      geom_histogram(col="black",fill=alpha("blue",0.5))+
+     ggtitle(paste("Histogram of",colnames(dt.fr)[covars[i]]))+ylab("Frequency")+
+scale_x_date(date_breaks = "2 days", date_minor_breaks = "1 day", date_labels = "%d-%b")+
+     scale_y_continuous(sec.axis = sec_axis(~./nrow(dataset),labels=scales::percent,
+                                                   name="Percentage"))
+      }
+}
+    if(is.character(dt.fr[,covars[i]])|is.factor(dt.fr[,covars[i]])){
+    
+        if(gsplit==TRUE){  
+          
+          vartable<-data.frame(table(dt.fr[,covars[i]],dt.fr[,gender]))
+
+ vartable<-vartable %>% group_by(Var2) %>% mutate(per=Freq/sum(Freq)) %>%
+   ungroup() %>%  mutate(per=percent(per))%>% select(Var1,Var2,per) %>%   spread(Var2,per)
+colnames(vartable)[2:3]<-paste("% Within",colnames(vartable)[2:3])
+colnames(vartable)[1]<-colnames(dt.fr)[covars[i]]
+   p1<- ggplot(data=dt.fr,aes_string(x=colnames(dt.fr)[covars[i]],fill=colnames(dt.fr)[gender]))+
+      geom_bar(col="black")+coord_flip()+
+     ggtitle(paste("Barchart of",colnames(dt.fr)[covars[i]]))+ylab("Frequency")+
+     scale_y_continuous(name="Count")
+ 
+        }
+      else{
+vartable<-data.frame(table(dt.fr[,covars[i]]))
+colnames(vartable)<-c(colnames(dt.fr)[covars[i]],"Frequency")
+ vartable<-vartable %>%
+  mutate("% of Respondents"=percent(Frequency/sum(Frequency),1)) 
+
+   p1<- ggplot(data=dataset,aes_string(x=colnames(dt.fr)[covars[i]]))+
+      geom_bar(col="black",fill=alpha("forestgreen",0.5))+coord_flip()+
+     ggtitle(paste("Barchart of",colnames(dt.fr)[covars[i]]))+ylab("Frequency")+
+     scale_y_continuous(sec.axis = sec_axis(~./sum(vartable$Frequency),labels=scales::percent,
+                                                   name="Percentage"))
+
+      }
+    }
+
+
+```
+
+```{r}
+vartable %>% kable(caption=paste("Table 2.2.",i," Summary of ",colnames(dt.fr)[covars[i]],sep=""))
+```
+
+*Figure `r paste("2.2.",i,sep="")`*
+```{r}
+plot(p1)
+```
+
