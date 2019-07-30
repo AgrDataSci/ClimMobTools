@@ -1,6 +1,6 @@
 Package: ClimMobTools
 Type: Package
-Title: Tools for the ClimMob citizen science in agriculture
+Title: Tools for crowdsourcing citizen science in agriculture
 Version: 0.1.0.0
 Authors@R: c(person("Kaue", "de Sousa", 
         email = "kaue.desousa@inn.no", role = c("aut", "cre"),
