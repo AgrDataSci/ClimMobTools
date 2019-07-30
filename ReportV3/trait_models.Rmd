@@ -1,0 +1,61 @@
+**`r trait_names[i]`**
+
+
+```{r}
+x_tmp<-anovas[[i]]
+p_tmp<-x_tmp[2,5]
+x_tmp[,5]<-paste(format.pval((x_tmp[,5])),stars.pval((x_tmp[,5])))
+
+x_tmp$model[2]<-paste("mod",trait_names[i],sep="_")
+
+kable(x_tmp,caption=paste0("Table 3.4.",i))
+```
+
+```{r}
+
+if(p_tmp<0.001){
+message_tmp<-paste0("p=",format.pval((p_tmp)), " , this suggests that from the experiment shows there is strong evidence of a difference between", option,"s")
+}
+
+if(p_tmp<0.01 & p_tmp >0.001){
+message_tmp<-paste0("p=",format.pval((p_tmp)), " ,this suggests that from the experiment shows there is evidence of a difference between", option,"s")
+}
+if(p_tmp>0.01 & p_tmp <0.10){
+message_tmp<-paste0("p=",format.pval((p_tmp))," ,this suggests that the experiment shows there may be some evidence of a difference between", option,"s")  
+}
+if(p_tmp>0.10){
+message_tmp<-paste0("p=",format.pval((p_tmp))," ,this suggests that there is not enough evidence to conclude that there are differences between", option,"s")  
+}
+```
+
+`r message_tmp`
+
+```{r,fig.width=7,fig.height=7}
+
+
+plot(plot.multcompPL(summaries[[i]],level=0.84)+
+       ggtitle(paste(trait_names[i],"Estimates w/ 84% Confidence Intervals"),
+ subtitle="Groups created from pairwise contrasts at 5% level\nwith Benjamini & Hochberg adjustment"))
+```
+
+```{r}
+summaries[[i]] %>% 
+  select(estimate,quasiSE,.group) %>%
+  rename("Estimate"=estimate,"Group"=.group) %>% 
+  kable(digits=2,caption = paste("Table 3.5.",i," ",trait_names[i]," model parameter estimates"))
+```
+
+```{r}
+
+
+kable(worths[[i]][,-2],caption = paste("Table 3.6.",i," ","Probability of being highest ranked: ",trait_names[i]))
+
+
+ggplot(data=worths[[i]],aes(y=worth,fill=worth,group=Variety,x=1))+
+  geom_bar(stat="identity",col="black",show.legend = FALSE)+
+  theme_void()+
+  geom_text(aes(y=cumsum(rev(worth))-rev(worth)/2,size=rev(worth),label=rev(paste(Variety,percent(worth),sep=": "))),show.legend = FALSE,fontface=2)+
+  ggtitle(paste("Probability that variety is the\nhighest ranked",trait_names[i]))+
+  scale_fill_gradient(low="white",high="forestgreen")+
+  scale_size_continuous(range=c(0.5,10))
+```

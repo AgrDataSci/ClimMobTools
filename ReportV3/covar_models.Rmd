@@ -1,0 +1,76 @@
+### `r colnames(dt.fr)[covar]`
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+
+f1<-as.formula(paste("G~",colnames(dt.fr)[covar]))
+
+R_overall <- to_rankings(dt.fr,
+                 items = vars,
+                 rankings = overall,
+                 type = "tricot")
+dt.fr$G<-grouped_rankings(R_overall, index = seq_len(nrow(R_overall)))
+
+
+tree1 <- pltree(formula=f1,
+               data = dt.fr, minsize = 50, alpha = 0.05)
+
+```
+
+
+*`r ifelse(length(tree1)>1,paste("Figure 4.4.",i,sep=""),paste(" "))`*
+```{r,fig.height=7,fig.width=10}
+
+
+if(length(tree1)>1){
+rval1<-node_terminal1(tree1)
+plot(tree1,terminal_panel =rval1 )
+}
+
+```
+
+*`r ifelse(length(tree1)>1,paste("Figure 4.5.",i,sep=""),paste(" "))`*
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.height=8,fig.width=10}
+if(length(tree1)>1){
+coefs<-map_df(nodeids(tree1,terminal = TRUE),
+                    function(x)data.frame(node=x,
+                                          rule=partykit:::.list.rules.party(tree1, x),
+                                          multcompPL(tree1[[ x ]]$node$info$object)))
+      
+
+ns<-map_df(nodeids(tree1,terminal = TRUE),
+                    function(x)data.frame(node=x,
+                                          rule=partykit:::.list.rules.party(tree1, x),
+                                          n=tree1[[ x ]]$node$info$nobs))
+
+coefs<-inner_join(coefs,ns)
+
+      coefs$Label<-paste("Node",coefs$node,":",coefs$rule,"\n","n=",coefs$n)
+      
+      
+      coefs<-coefs %>% mutate(term=reorder(term,estimate,mean)) %>%
+        group_by(node) %>% mutate(m=mean(estimate),ctd=estimate-m) %>%data.frame()
+      
+      ggplot(data=coefs,aes(x=term,y=ctd,ymax=ctd+1.96*quasiSE,ymin=ctd-1.96*quasiSE,col=Label))+
+        geom_point(position = position_dodge(width=0.3),size=1)+
+        geom_errorbar(position = position_dodge(width=0.3),width=0)+
+        coord_flip()+
+        geom_text(aes(label=.group),size=3,fontface=2,nudge_x=rep(c(-0.3,0.5),each=nlevels(coefs$term)))+
+        ylab("")+
+        xlab("Variety")+
+        ggtitle(paste("Terminal node parameter estimates for","overall","rankings."),
+                subtitle = paste("Covariates considered:",paste(colnames(dt.fr)[covar],collapse=", ")))
+}
+      
+```
+
+
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+endmessage<-""
+if(length(tree1)==1){
+  endmessage<-paste("Variable not found to be statistically signifcant at 5% level. p=",
+        round(nodeapply(tree1,1,function(n) info_node(n)$test)[[1]][2,1],4))
+}
+```
+`r endmessage`

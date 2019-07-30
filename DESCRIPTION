@@ -1,13 +1,13 @@
 Package: ClimMobTools
 Type: Package
 Title: Tools for the ClimMob citizen science in agriculture
-Version: 0.1-0
+Version: 0.1.0.0
 Authors@R: c(person("Kaue", "de Sousa", 
         email = "kaue.desousa@inn.no", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0002-7571-7845")),
         person("Jacob", "van Etten", role = c("aut", "ctb"),
         comment = c(ORCID = "0000-0001-7554-2558")),
-        person("Stats4SD", role = c("aut", "ctb")),
+        person("Sam", "Dumble", role = c("aut", "ctb")),
         person("Brandon", "Madriz", role = c("aut","ctb")),
         person("Carlos", "Quiros", role = c("aut","ctb")))
 Maintainer: Kaue de Sousa <kaue.desousa@inn.no>

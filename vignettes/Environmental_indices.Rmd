@@ -24,18 +24,16 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. **ClimMobTools** provides the toolkit to compute environmental variables that serves as input for your [PlackettLuce](https://hturner.github.io/PlackettLuce/) model. 
+Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. **ClimMobTools** provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using  [Plackett-Luce](https://hturner.github.io/PlackettLuce/)[@Turner2018] or [Bradley-Terry](https://cran.r-project.org/web/packages/psychotree/index.html)[@Wickelmaier2018] model. 
 
-The climatic variables available in **ClimMobTools** were previously used for the environmental analysis of wheat trial data[@Kehel2016] and reflects the changes in climatic patterns due to climate change[@Aguilar2005]. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation[@VanEtten2019].
+The climatic variables available in **ClimMobTools** were previously used for the environmental analysis of wheat trial data[@Kehel2016] and explain the changes in climatic patterns due to climate change[@Aguilar2005]. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation[@VanEtten2019].
 
 
 ## Source of data and input
 
-To be able to compute the environmental indices, you will need to ensure that your ClimMob data has the planting dates for when the *tricot* experiments were established, as well as the the longitude and the latitude for each of experiment location. 
+Environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)[@Funk2015] for rainfall, and MODIS (MYD11A2)[@Wan2015] for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data[@VanEtten2019]. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.
 
-Environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)[@Funk2015] for rainfall, and MODIS (MYD11A2)[@Wan2015] for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data[@VanEtten2019]. However, to host and extract this information to produce the matrix for the environmental indices it requires much computer capacity. MODIS data also requires some work to reduce noise and fill gaps.
-
-The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/). By providing your planting dates and the geographic information, **ClimMobTools** makes an internal call to [nasapower](https://ropensci.github.io/nasapower/index.html)[@Sparks2018] to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.
+The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/). By providing the planting dates and the geographic information (lon and lat), **ClimMobTools** makes an internal call to [nasapower](https://ropensci.github.io/nasapower/index.html)[@Sparks2018] to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.
 
 ### Breadwheat data 
 
@@ -93,7 +91,7 @@ head(temp, 10)
 
 ### Timespan defined by growing degree days
 
-If the time span is unknown and or you want to capture the variability among different locations. We can apply the function `GDD` which estimates the number of days needed for the crop to reach the required degree days. 
+If the time span is unknown and or there is a interest in capture the variability among different locations. We can apply the function `GDD` which estimates the number of days needed for the crop to reach the required degree days. 
 
 Here we define that the required degree days for wheat is 1800 °C, the growing degree days are computed with a base 5, from planting date and on:
 

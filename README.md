@@ -20,8 +20,6 @@ The development version can be installed via
     library("devtools")
     devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")
 
-**ClimMobTools** is under development. Use with caution.
-
 Going further
 -------------
 

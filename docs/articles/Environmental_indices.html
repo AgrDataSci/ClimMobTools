@@ -86,15 +86,14 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. <strong>ClimMobTools</strong> provides the toolkit to compute environmental variables that serves as input for your <a href="https://hturner.github.io/PlackettLuce/">PlackettLuce</a> model.</p>
-<p>The climatic variables available in <strong>ClimMobTools</strong> were previously used for the environmental analysis of wheat trial data<span class="citation"><sup>1</sup></span> and reflects the changes in climatic patterns due to climate change<span class="citation"><sup>2</sup></span>. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation<span class="citation"><sup>3</sup></span>.</p>
+<p>Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. <strong>ClimMobTools</strong> provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using <a href="https://hturner.github.io/PlackettLuce/">Plackett-Luce</a><span class="citation"><sup>1</sup></span> or <a href="https://cran.r-project.org/web/packages/psychotree/index.html">Bradley-Terry</a><span class="citation"><sup>2</sup></span> model.</p>
+<p>The climatic variables available in <strong>ClimMobTools</strong> were previously used for the environmental analysis of wheat trial data<span class="citation"><sup>3</sup></span> and explain the changes in climatic patterns due to climate change<span class="citation"><sup>4</sup></span>. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation<span class="citation"><sup>5</sup></span>.</p>
 </div>
 <div id="source-of-data-and-input" class="section level2">
 <h2 class="hasAnchor">
 <a href="#source-of-data-and-input" class="anchor"></a>Source of data and input</h2>
-<p>To be able to compute the environmental indices, you will need to ensure that your ClimMob data has the planting dates for when the <em>tricot</em> experiments were established, as well as the the longitude and the latitude for each of experiment location.</p>
-<p>Environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)<span class="citation"><sup>4</sup></span> for rainfall, and MODIS (MYD11A2)<span class="citation"><sup>5</sup></span> for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data<span class="citation"><sup>3</sup></span>. However, to host and extract this information to produce the matrix for the environmental indices it requires much computer capacity. MODIS data also requires some work to reduce noise and fill gaps.</p>
-<p>The other alternative relies on using <a href="https://power.larc.nasa.gov/">NASA POWER</a>. By providing your planting dates and the geographic information, <strong>ClimMobTools</strong> makes an internal call to <a href="https://ropensci.github.io/nasapower/index.html">nasapower</a><span class="citation"><sup>6</sup></span> to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.</p>
+<p>Environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)<span class="citation"><sup>6</sup></span> for rainfall, and MODIS (MYD11A2)<span class="citation"><sup>7</sup></span> for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data<span class="citation"><sup>5</sup></span>. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.</p>
+<p>The other alternative relies on using <a href="https://power.larc.nasa.gov/">NASA POWER</a>. By providing the planting dates and the geographic information (lon and lat), <strong>ClimMobTools</strong> makes an internal call to <a href="https://ropensci.github.io/nasapower/index.html">nasapower</a><span class="citation"><sup>8</sup></span> to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.</p>
 <div id="breadwheat-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breadwheat-data" class="anchor"></a>Breadwheat data</h3>
@@ -157,7 +156,7 @@ data &lt;-<span class="st"> </span>data[<span class="dv">1</span><span class="op
 <div id="timespan-defined-by-growing-degree-days" class="section level3">
 <h3 class="hasAnchor">
 <a href="#timespan-defined-by-growing-degree-days" class="anchor"></a>Timespan defined by growing degree days</h3>
-<p>If the time span is unknown and or you want to capture the variability among different locations. We can apply the function <code>GDD</code> which estimates the number of days needed for the crop to reach the required degree days.</p>
+<p>If the time span is unknown and or there is a interest in capture the variability among different locations. We can apply the function <code>GDD</code> which estimates the number of days needed for the crop to reach the required degree days.</p>
 <p>Here we define that the required degree days for wheat is 1800 °C, the growing degree days are computed with a base 5, from planting date and on:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.html">GDD</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
@@ -258,23 +257,29 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
+<div id="ref-Turner2018">
+<p>1. Turner, H., van Etten, J., Firth, D. &amp; Kosmidis, I. Modelling rankings in R: The PlackettLuce package. <em>arXiv:1810.12068</em> (2018).</p>
+</div>
+<div id="ref-Wickelmaier2018">
+<p>2. Wickelmaier, F. &amp; Zeileis, A. Using recursive partitioning to account for parameter heterogeneity in multinomial processing tree models. <em>Behavior Research Methods</em> <strong>50</strong>, 1217–1233 (2018).</p>
+</div>
 <div id="ref-Kehel2016">
-<p>1. Kehel, Z., Crossa, J. &amp; Reynolds, M. Identifying Climate Patterns during the Crop-Growing Cycle from 30 Years of CIMMYT Elite Spring Wheat International Yield Trials. in <em>Applied mathematics and omics to assess crop genetic resources for climate change adaptive traits</em> (eds. Bari, A., Damania, A. B., Mackay, M. &amp; Dayanandan, S.) 151–174 (CRC Press, 2016).</p>
+<p>3. Kehel, Z., Crossa, J. &amp; Reynolds, M. Identifying Climate Patterns during the Crop-Growing Cycle from 30 Years of CIMMYT Elite Spring Wheat International Yield Trials. in <em>Applied mathematics and omics to assess crop genetic resources for climate change adaptive traits</em> (eds. Bari, A., Damania, A. B., Mackay, M. &amp; Dayanandan, S.) 151–174 (CRC Press, 2016).</p>
 </div>
 <div id="ref-Aguilar2005">
-<p>2. Aguilar, E., Peterson, T. C., Obando, P. R. &amp; Frutos, R. <em>et al.</em> Changes in precipitation and temperature extremes in Central America and northern South America, 1961–2003. <em>Journal of Geophysical Research</em> <strong>110</strong>, D23107 (2005).</p>
+<p>4. Aguilar, E., Peterson, T. C., Obando, P. R. &amp; Frutos, R. <em>et al.</em> Changes in precipitation and temperature extremes in Central America and northern South America, 1961–2003. <em>Journal of Geophysical Research</em> <strong>110</strong>, D23107 (2005).</p>
 </div>
 <div id="ref-VanEtten2019">
-<p>3. van Etten, J., de Sousa, K., Aguilar, A. &amp; Barrios, M. <em>et al.</em> Crop variety management for climate adaptation supported by citizen science. <em>Proceedings of the National Academy of Sciences</em> <strong>116</strong>, 4194–4199 (2019).</p>
+<p>5. van Etten, J., de Sousa, K., Aguilar, A. &amp; Barrios, M. <em>et al.</em> Crop variety management for climate adaptation supported by citizen science. <em>Proceedings of the National Academy of Sciences</em> <strong>116</strong>, 4194–4199 (2019).</p>
 </div>
 <div id="ref-Funk2015">
-<p>4. Funk, C., Peterson, P., Landsfeld, M. &amp; Pedreros, D. <em>et al.</em> The climate hazards infrared precipitation with stations—a new environmental record for monitoring extremes. <em>Scientific Data</em> <strong>2</strong>, 150066 (2015).</p>
+<p>6. Funk, C., Peterson, P., Landsfeld, M. &amp; Pedreros, D. <em>et al.</em> The climate hazards infrared precipitation with stations—a new environmental record for monitoring extremes. <em>Scientific Data</em> <strong>2</strong>, 150066 (2015).</p>
 </div>
 <div id="ref-Wan2015">
-<p>5. Wan, Z., Hook, S. &amp; Hulley, G. MYD11A1 MODIS/Aqua Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V006 [Data set]. <em>NASA EOSDIS LP DAAC</em> (2015). doi:<a href="https://doi.org/10.5067/MODIS/MYD11A1.006">10.5067/MODIS/MYD11A1.006</a></p>
+<p>7. Wan, Z., Hook, S. &amp; Hulley, G. MYD11A1 MODIS/Aqua Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V006 [Data set]. <em>NASA EOSDIS LP DAAC</em> (2015). doi:<a href="https://doi.org/10.5067/MODIS/MYD11A1.006">10.5067/MODIS/MYD11A1.006</a></p>
 </div>
 <div id="ref-Sparks2018">
-<p>6. Sparks, A. H. nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R. <em>Journal of Open Source Software</em> <strong>3</strong>, 1035 (2018).</p>
+<p>8. Sparks, A. H. nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R. <em>Journal of Open Source Software</em> <strong>3</strong>, 1035 (2018).</p>
 </div>
 </div>
 </div>
@@ -299,7 +304,7 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
 
 
       <footer><div class="copyright">
-  <p>Developed by Kaue de Sousa, Jacob van Etten, Stats4SD, Brandon Madriz, Carlos Quiros.</p>
+  <p>Developed by Kaue de Sousa, Jacob van Etten, Sam Dumble, Brandon Madriz, Carlos Quiros.</p>
 </div>
 
 <div class="pkgdown">
