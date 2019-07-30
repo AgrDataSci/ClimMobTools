@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -137,22 +137,7 @@ data &lt;-<span class="st"> </span>data[<span class="dv">1</span><span class="op
 <p>Here we compute the temperature indices for a time span of 120 days after the planting date:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/temperature.html">temperature</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
                     <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>], 
-                    <span class="dt">span =</span> <span class="dv">120</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(temp, <span class="dv">10</span>)
-<span class="co">#&gt; # A tibble: 10 x 7</span>
-<span class="co">#&gt;    maxDT minDT maxNT minNT    SU    TR   DTR</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1  38.6  20.6  23.0  4.63    37     0  15.5</span>
-<span class="co">#&gt;  2  38.6  20.6  23.0  4.63    34     0  15.5</span>
-<span class="co">#&gt;  3  39.5  20.6  24.0  4.63    42     0  15.6</span>
-<span class="co">#&gt;  4  38.6  20.6  23.0  4.63    33     0  15.5</span>
-<span class="co">#&gt;  5  37.0  20.6  20.5  4.63    28     0  15.5</span>
-<span class="co">#&gt;  6  38.6  20.6  23.0  4.63    34     0  15.5</span>
-<span class="co">#&gt;  7  38.6  20.6  23.0  4.63    33     0  15.5</span>
-<span class="co">#&gt;  8  37.1  20.6  20.5  4.63    29     0  15.5</span>
-<span class="co">#&gt;  9  37.0  20.6  20.5  4.63    28     0  15.5</span>
-<span class="co">#&gt; 10  37.0  20.6  20.5  4.63    28     0  15.5</span></code></pre></div>
+                    <span class="dt">span =</span> <span class="dv">120</span>)</code></pre></div>
 <div id="timespan-defined-by-growing-degree-days" class="section level3">
 <h3 class="hasAnchor">
 <a href="#timespan-defined-by-growing-degree-days" class="anchor"></a>Timespan defined by growing degree days</h3>
@@ -162,41 +147,11 @@ data &lt;-<span class="st"> </span>data[<span class="dv">1</span><span class="op
 gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.html">GDD</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
            <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>],
            <span class="dt">degree.days =</span> <span class="dv">1800</span>,
-           <span class="dt">base =</span> <span class="dv">5</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(gdd, <span class="dv">10</span>)
-<span class="co">#&gt; # A tibble: 10 x 1</span>
-<span class="co">#&gt;      GDD</span>
-<span class="co">#&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1   122</span>
-<span class="co">#&gt;  2   124</span>
-<span class="co">#&gt;  3   120</span>
-<span class="co">#&gt;  4   124</span>
-<span class="co">#&gt;  5   126</span>
-<span class="co">#&gt;  6   124</span>
-<span class="co">#&gt;  7   124</span>
-<span class="co">#&gt;  8   126</span>
-<span class="co">#&gt;  9   126</span>
-<span class="co">#&gt; 10   126</span></code></pre></div>
+           <span class="dt">base =</span> <span class="dv">5</span>)</code></pre></div>
 <p>Then, these growing degree days can be applied as time span to compute the temperature:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/temperature.html">temperature</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
                     <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>], 
-                    <span class="dt">span =</span> gdd)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(temp, <span class="dv">10</span>)
-<span class="co">#&gt; # A tibble: 10 x 7</span>
-<span class="co">#&gt;    maxDT minDT maxNT minNT    SU    TR   DTR</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1  38.6  20.6  23.0  4.63    39     0  15.5</span>
-<span class="co">#&gt;  2  38.6  20.6  23.0  4.63    38     0  15.5</span>
-<span class="co">#&gt;  3  39.5  20.6  24.0  4.63    42     0  15.6</span>
-<span class="co">#&gt;  4  38.6  20.6  23.0  4.63    37     0  15.5</span>
-<span class="co">#&gt;  5  38.6  20.6  23.0  4.63    34     0  15.5</span>
-<span class="co">#&gt;  6  38.6  20.6  23.0  4.63    38     0  15.5</span>
-<span class="co">#&gt;  7  38.6  20.6  23.0  4.63    37     0  15.5</span>
-<span class="co">#&gt;  8  38.6  20.6  23.0  4.63    35     0  15.5</span>
-<span class="co">#&gt;  9  38.6  20.6  23.0  4.63    34     0  15.5</span>
-<span class="co">#&gt; 10  38.6  20.6  23.0  4.63    34     0  15.5</span></code></pre></div>
+                    <span class="dt">span =</span> gdd)</code></pre></div>
 </div>
 </div>
 <div id="rainfall" class="section level2">
@@ -206,22 +161,7 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
 <p>Here we use the NASA POWER data with a time span defined by the growing degree days using the function <code>rainfall</code> from <strong>ClimMobTools</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rain &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rainfall.html">rainfall</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
                  <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>],
-                 <span class="dt">span =</span> gdd)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(rain, <span class="dv">10</span>)
-<span class="co">#&gt; # A tibble: 10 x 8</span>
-<span class="co">#&gt;     MLDS  MLWS R10mm R20mm  SDII Rx1day Rx5day Rtotal</span>
-<span class="co">#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1    30     3     1     0  4.29  13.1    18.2   48.0</span>
-<span class="co">#&gt;  2    30     3     1     0  4.29  13.1    18.2   48.0</span>
-<span class="co">#&gt;  3    30     3     1     0  4.11  13.1    18.2   49.4</span>
-<span class="co">#&gt;  4    30     3     1     0  4.26  13.1    18.2   48.0</span>
-<span class="co">#&gt;  5    30     3     0     0  3.51   5.57   11.3   34.8</span>
-<span class="co">#&gt;  6    30     3     1     0  4.29  13.1    18.2   48.0</span>
-<span class="co">#&gt;  7    30     3     1     0  4.26  13.1    18.2   48.0</span>
-<span class="co">#&gt;  8    30     3     0     0  3.51   5.57   11.3   34.8</span>
-<span class="co">#&gt;  9    30     3     0     0  3.51   5.57   11.3   34.8</span>
-<span class="co">#&gt; 10    30     3     0     0  3.51   5.57   11.3   34.8</span></code></pre></div>
+                 <span class="dt">span =</span> gdd)</code></pre></div>
 <p>Function <code>rainfall</code> has also a feature that enables the indices to be calculated from some days before the planting date. This is important for case studies where a residual precipitation must be taken into account. To do so, we use the argument <code>days.before</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rain &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rainfall.html">rainfall</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
                  <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>], 
@@ -235,22 +175,7 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eto &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ETo.html">ETo</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
            <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>],
            <span class="dt">span =</span> gdd,
-           <span class="dt">lat =</span> data[[<span class="st">"lat"</span>]])
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(eto, <span class="dv">10</span>)
-<span class="co">#&gt; # A tibble: 10 x 1</span>
-<span class="co">#&gt;      ETo</span>
-<span class="co">#&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1  4.10</span>
-<span class="co">#&gt;  2  4.26</span>
-<span class="co">#&gt;  3  4.14</span>
-<span class="co">#&gt;  4  4.25</span>
-<span class="co">#&gt;  5  4.22</span>
-<span class="co">#&gt;  6  4.26</span>
-<span class="co">#&gt;  7  4.25</span>
-<span class="co">#&gt;  8  4.23</span>
-<span class="co">#&gt;  9  4.22</span>
-<span class="co">#&gt; 10  4.22</span></code></pre></div>
+           <span class="dt">lat =</span> data[[<span class="st">"lat"</span>]])</code></pre></div>
 <p>Finally, these indices can be combined into a single data set with the <strong>PlackettLuce</strong> rankings to assess if the climate plays a role on the crop performance as shown in this <a href="https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html">article</a>.</p>
 </div>
 <div id="references" class="section level2 unnumbered">

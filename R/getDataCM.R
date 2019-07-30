@@ -49,7 +49,7 @@ getDataCM <- function(key = NULL, project = NULL, ...){
     cmdata <- jsonlite::fromJSON(cmdata)
   }
   
-  # if a .json data is provided instead of a CliMob key
+  # if a .json data is provided instead of a ClimMob key
   if (is.null(key)) {
     cmdata <- dots[["data"]]
   }
@@ -67,7 +67,7 @@ getDataCM <- function(key = NULL, project = NULL, ...){
   }
   
   if (!raw) {
-    cmdata <- .extractFromjson(cmdata, ...)
+    cmdata <- .extractFromjson(data = cmdata, ...)
   }
   
   return(cmdata)
@@ -183,7 +183,14 @@ getDataCM <- function(key = NULL, project = NULL, ...){
   }
   
   # replace any possible code in participant registration
-  # NOT SUPPORTED YET
+  # gender
+  gender <- any(grepl("gender", names(trial)))
+  if (gender) {
+    igender <- which(grepl("gender", names(trial)))
+    trial[,igender] <- ifelse(trial[,igender] == 1, "Man",
+                              ifelse(trial[,igender] == 2,"Woman", NA))
+  }
+  
   
   # reshape it into a long format 
   # put pack id as first colunm

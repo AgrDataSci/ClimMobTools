@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")<
 <a href="#usage" class="anchor"></a>Usage</h1>
 <p>The <code>breadwheat</code> is a dataframe from crowdsourcing citizen-science trials of bread wheat (<em>Triticum aestivum</em>) varieties in India. This is a sample data available at the <a href="https://climmob.net/blog/">ClimMob</a> that can be fetched using using the function <code>getDataCM</code> from <strong>ClimMobTools</strong> and an API key from the ClimMob portal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ClimMobTools"</span>)
-<span class="co"># install.packages("devtools")</span>
+<span class="co"># library("devtools")</span>
 <span class="co"># devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
@@ -111,18 +111,7 @@ devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")<
 key &lt;-<span class="st"> "d39a3c66-5822-4930-a9d4-50e7da041e77"</span>
 
 data &lt;-<span class="st"> </span>ClimMobTools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ClimMobTools/topics/getDataCM">getDataCM</a></span>(<span class="dt">key =</span> key, 
-                                <span class="dt">project =</span> <span class="st">"breadwheat"</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(data)
-<span class="co">#&gt; # A tibble: 6 x 4</span>
-<span class="co">#&gt;      id moment       variable         value                                </span>
-<span class="co">#&gt;   &lt;int&gt; &lt;fct&gt;        &lt;chr&gt;            &lt;chr&gt;                                </span>
-<span class="co">#&gt; 1     1 package      participant_name Participant Name1                    </span>
-<span class="co">#&gt; 2     1 package      item_A           CSW18                                </span>
-<span class="co">#&gt; 3     1 package      item_B           PBW502                               </span>
-<span class="co">#&gt; 4     1 package      item_C           HW2045                               </span>
-<span class="co">#&gt; 5     1 registration surveyid         14c7cfd6-51c3-11e9-a394-0686a00ebfc0 </span>
-<span class="co">#&gt; 6     1 registration survey_deviceim~ API_d39a3c66-5822-4930-a9d4-50e7da04~</span></code></pre></div>
+                                <span class="dt">project =</span> <span class="st">"breadwheat"</span>)</code></pre></div>
 <div id="preparing-the-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preparing-the-data" class="anchor"></a>Preparing the data</h2>
@@ -141,17 +130,7 @@ G &lt;-<span class="st"> </span><span class="kw">to_rankings</span>(data,
                  <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span>), 
                  <span class="dt">input =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span>),
                  <span class="dt">type =</span> <span class="st">"tricot"</span>, 
-                 <span class="dt">grouped.rankings =</span> <span class="ot">TRUE</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(G, <span class="dv">10</span>)
-<span class="co">#&gt;                      1                      2                      3 </span>
-<span class="co">#&gt; "CSW18 &gt; PBW502 &gt; ..." "HD2985 &gt; PBW550  ..." "PBW343 &gt; HD2932  ..." </span>
-<span class="co">#&gt;                      4                      5                      6 </span>
-<span class="co">#&gt; "CSW18 &gt; DBW17 &gt;  ..." "CSW18 &gt; DBW17 &gt;  ..." "CSW18 &gt; HP1633 &gt; ..." </span>
-<span class="co">#&gt;                      7                      8                      9 </span>
-<span class="co">#&gt; "HW2045 &gt; PBW550  ..." "RAJ4120 &gt; DBW17  ..." "PBW502 &gt; HI1563  ..." </span>
-<span class="co">#&gt;                     10 </span>
-<span class="co">#&gt; "CSW18 &gt; HD2985 &gt; ..."</span></code></pre></div>
+                 <span class="dt">grouped.rankings =</span> <span class="ot">TRUE</span>)</code></pre></div>
 </div>
 <div id="add-environmental-variables" class="section level2">
 <h2 class="hasAnchor">
@@ -174,53 +153,15 @@ temp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/temper
                     <span class="dt">span =</span> <span class="dv">120</span>)
 
 
-modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(G, temp)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(modeldata)
-<span class="co">#&gt;                      G maxDT minDT maxNT minNT SU TR      DTR</span>
-<span class="co">#&gt; 1 CSW18 &gt; PBW502 &gt; ... 38.58 20.65 23.03  4.63 37  0 15.53933</span>
-<span class="co">#&gt; 2 HD2985 &gt; PBW550  ... 38.58 20.65 23.03  4.63 34  0 15.54842</span>
-<span class="co">#&gt; 3 PBW343 &gt; HD2932  ... 39.51 20.65 23.95  4.63 42  0 15.55067</span>
-<span class="co">#&gt; 4 CSW18 &gt; DBW17 &gt;  ... 38.58 20.65 23.03  4.63 33  0 15.53900</span>
-<span class="co">#&gt; 5 CSW18 &gt; DBW17 &gt;  ... 37.02 20.65 20.54  4.63 28  0 15.50008</span>
-<span class="co">#&gt; 6 CSW18 &gt; HP1633 &gt; ... 38.58 20.65 23.03  4.63 34  0 15.54842</span></code></pre></div>
+modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(G, temp)</code></pre></div>
 </div>
 </div>
 <div id="fit-a-plackettluce-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#fit-a-plackettluce-model" class="anchor"></a>Fit a PlackettLuce model</h1>
 <p>Now we fit the model using the function <code>pltree</code> from <strong>PlackettLuce</strong> with temperature indices as explanatory variables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> modeldata, <span class="dt">npseudo =</span> <span class="dv">5</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(tree)
-<span class="co">#&gt; Plackett-Luce tree</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model formula:</span>
-<span class="co">#&gt; G ~ .</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fitted party:</span>
-<span class="co">#&gt; [1] root</span>
-<span class="co">#&gt; |   [2] DTR &lt;= 15.54842: n = 316</span>
-<span class="co">#&gt; |            CSW18      DBW17  DPW621-50     HD2824     HD2932     HD2985 </span>
-<span class="co">#&gt; |        0.0000000 -1.3500262 -2.0642075 -2.7367018 -2.3404488 -2.0210610 </span>
-<span class="co">#&gt; |           HI1563     HP1633     HW2045      K0307      K9107     PBW343 </span>
-<span class="co">#&gt; |       -3.0701465 -2.9472322 -3.0152383 -2.8251093  0.1840145 -0.4262006 </span>
-<span class="co">#&gt; |           PBW502     PBW550    RAJ4120      WR544 </span>
-<span class="co">#&gt; |       -2.6580694 -2.8335694 -2.5902226 -2.8427540 </span>
-<span class="co">#&gt; |   [3] DTR &gt; 15.54842: n = 177</span>
-<span class="co">#&gt; |             CSW18       DBW17   DPW621-50      HD2824      HD2932      HD2985 </span>
-<span class="co">#&gt; |        0.00000000 -0.32664651 -0.78835001 -1.71056606 -0.95950802 -0.36382204 </span>
-<span class="co">#&gt; |            HI1563      HP1633      HW2045       K0307       K9107      PBW343 </span>
-<span class="co">#&gt; |       -1.47219807 -1.52568770 -1.29566827 -1.97724897  0.76542436  0.04559096 </span>
-<span class="co">#&gt; |            PBW502      PBW550     RAJ4120       WR544 </span>
-<span class="co">#&gt; |       -1.34900699 -1.25988861 -1.79841219 -1.53531151 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number of inner nodes:    1</span>
-<span class="co">#&gt; Number of terminal nodes: 2</span>
-<span class="co">#&gt; Number of parameters per node: 16</span>
-<span class="co">#&gt; Objective function (negative log-likelihood): 664.6034</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> modeldata, <span class="dt">npseudo =</span> <span class="dv">5</span>)</code></pre></div>
 <p>The PlackettLuce model shows that the bread wheat variaties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).</p>
-<p><img src="Overview_files/figure-html/pltree-1.png" width="768"></p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
