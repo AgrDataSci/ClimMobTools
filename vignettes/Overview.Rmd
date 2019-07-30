@@ -3,7 +3,15 @@ title: "Introduction to ClimMobTools"
 package: ClimMobTools
 author:
 - name: Kauê de Sousa
-  affiliation: Department of Agricultural Sciences, Høgskolen i Innlandet, Norway
+  affiliation: Department of Agricultural Sciences, Høgskolen i Innlandet, Norway; and Bioversity International
+- name: Jacob van Etten
+  affiliation: Bioversity International, Rome, Italy
+- name: Sam Dumble
+  affiliation: Statistics for Sustainable Development, Reading, UK
+- name: Brandon Madriz
+  affiliation: Bioversity International, Turrialba, Costa Rica
+- name: Carlos F. Quiros
+  affiliation: Bioversity International, Turrialba, Costa Rica
 output: html_document
 vignette: >
   %\VignetteIndexEntry{Introduction to ClimMobTools}
