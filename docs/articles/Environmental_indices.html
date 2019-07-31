@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -89,24 +89,23 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. <strong>ClimMobTools</strong> provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using <a href="https://hturner.github.io/PlackettLuce/">Plackett-Luce</a><span class="citation"><sup>1</sup></span> or <a href="https://cran.r-project.org/web/packages/psychotree/index.html">Bradley-Terry</a><span class="citation"><sup>2</sup></span> model.</p>
+<p>Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. <strong>ClimMobTools</strong> provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using <a href="https://CRAN.R-project.org/package=PlackettLuce">Plackett-Luce</a><span class="citation"><sup>1</sup></span> or <a href="https://CRAN.R-project.org/package=psychotree">Bradley-Terry</a><span class="citation"><sup>2</sup></span> model.</p>
 <p>The climatic variables available in <strong>ClimMobTools</strong> were previously used for the environmental analysis of wheat trial data<span class="citation"><sup>3</sup></span> and explain the changes in climatic patterns due to climate change<span class="citation"><sup>4</sup></span>. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation<span class="citation"><sup>5</sup></span>.</p>
 </div>
 <div id="source-of-data-and-input" class="section level2">
 <h2 class="hasAnchor">
 <a href="#source-of-data-and-input" class="anchor"></a>Source of data and input</h2>
 <p>Environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)<span class="citation"><sup>6</sup></span> for rainfall, and MODIS (MYD11A2)<span class="citation"><sup>7</sup></span> for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data<span class="citation"><sup>5</sup></span>. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.</p>
-<p>The other alternative relies on using <a href="https://power.larc.nasa.gov/">NASA POWER</a>. By providing the planting dates and the geographic information (lon and lat), <strong>ClimMobTools</strong> makes an internal call to <a href="https://ropensci.github.io/nasapower/index.html">nasapower</a><span class="citation"><sup>8</sup></span> to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.</p>
+<p>The other alternative relies on using <a href="https://power.larc.nasa.gov/">NASA POWER</a>. By providing the planting dates and the geographic information (lon and lat), <strong>ClimMobTools</strong> makes an internal call to <a href="https://CRAN.R-project.org/package=nasapower">nasapower</a><span class="citation"><sup>8</sup></span> to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.</p>
 <div id="breadwheat-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breadwheat-data" class="anchor"></a>Breadwheat data</h3>
-<p>In this article we use the <strong>NASA POWER</strong> data via the <code>R</code> package <a href="https://ropensci.github.io/nasapower/index.html">nasapower</a> as external input data for the environmental indices. We use the bread wheat data from Vaishali, India as internal input with planing dates and geographic information. In the <em>Introduction to ClimMobTools</em> <a href="https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html">article</a> we show how to fetch your ClimMob data into your <code>R</code> section using an API key.</p>
+<p>In this article we use the <strong>NASA POWER</strong> data via the <code>R</code> package nasapower as external input data for the environmental indices. We use the bread wheat data from Vaishali, India as internal input with planing dates and geographic information. In the <em>Introduction to ClimMobTools</em> <a href="https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html">article</a> we show how to fetch the ClimMob data into your <code>R</code> section using an API key.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ClimMobTools"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"nasapower"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"tidyverse"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"magrittr"</span>)
 
-<span class="co"># fetch ClimMob data from your ClimMob user account</span>
 key &lt;-<span class="st"> "d39a3c66-5822-4930-a9d4-50e7da041e77"</span>
 
 data &lt;-<span class="st"> </span>ClimMobTools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ClimMobTools/topics/getDataCM">getDataCM</a></span>(<span class="dt">key =</span> key, 

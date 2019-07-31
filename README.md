@@ -10,7 +10,7 @@ Package website: <https://agrobioinfoservices.github.io/ClimMobTools/>
 Overview
 --------
 
-The **ClimMobTools** package provides the toolkit employed in crowdsourcing citizen science projects under the *tricot* approach. Tricot, stands for "triadic comparison of technologies" for the rapid assessment of on-farm evaluation trails in small-scale agriculture.
+The **ClimMobTools** package provides the toolkit for the [ClimMob](https://climmob.net/climmob3/) platform in `R`. ClimMob is an open source software for crowdsourcing citizen science in agriculture. Developed by [Bioversity International](https://www.bioversityinternational.org/), it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information. The concept behind the methodology applied by ClimMob is demonstrated by van Etten et al. [(2019a)](https://doi.org/10.1017/S0014479716000739), with its applications for crop management demonstrated by van Etten et al [(2019b)](https://doi.org/10.1073/pnas.1813720116).
 
 Installation
 ------------
