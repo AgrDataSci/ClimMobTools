@@ -4,6 +4,7 @@
 
 * Tests coverage > 90%
 * Validations in `temperature`, `rainfall`, `getDataCM`, and `ETo`
+* A single vignette for the package Overview
 
 ## CRAN issues
 

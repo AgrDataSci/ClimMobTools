@@ -53,9 +53,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Environmental_indices.html">Environmental variables</a>
-    </li>
-    <li>
       <a href="../articles/Overview.html">Introduction to ClimMobTools</a>
     </li>
   </ul>
@@ -79,7 +76,7 @@
       <h1>Introduction to ClimMobTools</h1>
                         <h4 class="author">Kauê de Sousa</h4>
             <address class="author_afil">
-      Department of Agricultural Sciences, Høgskolen i Innlandet, Norway; and Bioversity International<br><h4 class="author">Jacob van Etten</h4>
+      Department of Agricultural Sciences, Høgskolen i Innlandet, Hamar, Norway; and Bioversity International<br><h4 class="author">Jacob van Etten</h4>
             <address class="author_afil">
       Bioversity International, Rome, Italy<br><h4 class="author">Sam Dumble</h4>
             <address class="author_afil">
@@ -115,10 +112,6 @@ devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")<
 <a href="#usage" class="anchor"></a>Usage</h1>
 <p>The <code>breadwheat</code> is a dataframe from crowdsourcing citizen-science trials of bread wheat (<em>Triticum aestivum</em>) varieties in India. This is a sample data available at the <a href="https://climmob.net/blog/">ClimMob</a> that can be fetched using using the function <code>getDataCM</code> from <strong>ClimMobTools</strong> and an API key from the ClimMob portal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ClimMobTools"</span>)
-<span class="co"># library("devtools")</span>
-<span class="co"># devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"tidyverse"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"magrittr"</span>)
 
@@ -126,31 +119,29 @@ devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")<
 key &lt;-<span class="st"> "d39a3c66-5822-4930-a9d4-50e7da041e77"</span>
 
 data &lt;-<span class="st"> </span>ClimMobTools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ClimMobTools/topics/getDataCM">getDataCM</a></span>(<span class="dt">key =</span> key, 
-                                <span class="dt">project =</span> <span class="st">"breadwheat"</span>)</code></pre></div>
-<div id="preparing-the-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#preparing-the-data" class="anchor"></a>Preparing the data</h2>
-<p>The function <code>getDataCM</code> returns a dataframe in the long format to allows the organisation of projects with different structure. We can put this into wide format where each row is a farmer observation using <strong>tidyverse</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reshape the data into the wide format</span>
-<span class="co"># we also remove some variables that refer to the ODK survey employed for the data collection</span>
+                                <span class="dt">project =</span> <span class="st">"breadwheat"</span>,
+                                <span class="dt">tidynames =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># reshape the data into the wide format</span>
 data <span class="op">%&lt;&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw">str_detect</span>(variable, <span class="st">"survey"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">distinct</span>(id, variable, value) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(variable, value)</code></pre></div>
-<p>The <a href="https://hturner.github.io/PlackettLuce/">PlackettLuce</a> model is one approach to analyse the <em>tricot</em> data<span class="citation"><sup>2</sup></span>. To do so, we need to convert the farmers’ ranking into a object of class ‘rankings’ or ‘grouped_rankings’. A object of class ‘rankings’ is a matrix of dense rankings that can be used to fit a PlackettLuce model using <code>PlackettLuce</code> from <strong>PlackettLuce</strong>. A object of class ‘grouped_rankings’ associates a group index with an object of class ‘rankings’, then it allows the rankings to be linked to explanatory variables and fit a PlackettLuce model using <code>pltree</code> from <strong>PlackettLuce</strong>.</p>
-<p>We can convert the farmers’ rankings in into a rankings object using the function <code>to_rankings</code> from package <strong>gosset</strong>. The argument <code>grouped.rankings</code> return a object of class ‘grouped_rankings’.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-G &lt;-<span class="st"> </span><span class="kw">to_rankings</span>(data, 
-                 <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span>), 
-                 <span class="dt">input =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span>),
-                 <span class="dt">type =</span> <span class="st">"tricot"</span>, 
-                 <span class="dt">grouped.rankings =</span> <span class="ot">TRUE</span>)</code></pre></div>
-</div>
-<div id="add-environmental-variables" class="section level2">
+<span class="st">  </span><span class="kw">spread</span>(variable, value) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ungroup</span>()</code></pre></div>
+<div id="environmental-variables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#add-environmental-variables" class="anchor"></a>Add environmental variables</h2>
-<p>Environmental variables can easily be included into the data set using the longitude and latitude information from the <strong>tricot</strong> and the planting dates for each plot. In this exercise we include the heat stress indices using the function <code>temperature</code> from <strong>ClimMobTools</strong>.</p>
+<a href="#environmental-variables" class="anchor"></a>Environmental variables</h2>
+<p>Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. <strong>ClimMobTools</strong> provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using <a href="https://CRAN.R-project.org/package=PlackettLuce">Plackett-Luce</a><span class="citation"><sup>2</sup></span> or <a href="https://CRAN.R-project.org/package=psychotree">Bradley-Terry</a><span class="citation"><sup>3</sup></span> model.</p>
+<p>The climatic variables available in <strong>ClimMobTools</strong> were previously used for the environmental analysis of wheat trial data<span class="citation"><sup>4</sup></span> and explain the changes in climatic patterns due to climate change<span class="citation"><sup>5</sup></span>. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation<span class="citation"><sup>6</sup></span>.</p>
+<p>The environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)<span class="citation"><sup>7</sup></span> for rainfall, and MODIS (MYD11A2)<span class="citation"><sup>8</sup></span> for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data<span class="citation"><sup>6</sup></span>. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.</p>
+<p>The other alternative relies on using <a href="https://power.larc.nasa.gov/">NASA POWER</a>. By providing the planting dates and the geographic information (lon and lat), <strong>ClimMobTools</strong> makes an internal call to <a href="https://CRAN.R-project.org/package=nasapower">nasapower</a><span class="citation"><sup>9</sup></span> to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.</p>
+<div id="temperature" class="section level3">
+<h3 class="hasAnchor">
+<a href="#temperature" class="anchor"></a>Temperature</h3>
+<p><strong>ClimMobTools</strong> functions to compute environmental indices has the basics input data; a numeric vector of geographic information (lonlat) or an array with day and night temperature (from sources like MODIS) and the a vector of class <code>Date</code> for the first day that will be taken into account for the environmental indices. Generally the <code>Date</code> vector is the planting date from when the experiment were established, but can also refer to other phenological event during the plant development, such as day of 50% flowering.</p>
+<p>The duration from where the environmental indices will be computed is defined by the argument <code>span</code> which can be a single integer that takes into account a single time span for all tricot experiments or a vector indicating the time span for each of the observations.</p>
+<p>Here we compute the temperature indices for a time span of 120 days after the planting date using the function <code>temperature</code> from <strong>ClimMobTools</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># first we convert the lon lat into numeric</span>
 <span class="co"># and the planting dates into Date</span>
@@ -165,17 +156,44 @@ data <span class="op">%&lt;&gt;%</span>
 <span class="co"># from the planting date to the next 120 days</span>
 temp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/temperature.html">temperature</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
                     <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>], 
-                    <span class="dt">span =</span> <span class="dv">120</span>)
-
-
-modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(G, temp)</code></pre></div>
+                    <span class="dt">span =</span> <span class="dv">120</span>)</code></pre></div>
+</div>
+<div id="rainfall" class="section level3">
+<h3 class="hasAnchor">
+<a href="#rainfall" class="anchor"></a>Rainfall</h3>
+<p>Precipitation indices can also be computed in the same way as the temperature indices. The external input data can be fetched by NASA POWER or by providing a matrix with CHIRPS data.</p>
+<p>Here we use the NASA POWER data with a time span defined by the growing degree days using the function <code>rainfall</code> from <strong>ClimMobTools</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rain &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rainfall.html">rainfall</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
+                 <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>],
+                 <span class="dt">span =</span> <span class="dv">120</span>)</code></pre></div>
+<p>Function <code>rainfall</code> has also a feature that enables the indices to be calculated from some days before the planting date. This is important for case studies where a residual precipitation must be taken into account. To do so, we use the argument <code>days.before</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rain &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rainfall.html">rainfall</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
+                 <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>], 
+                 <span class="dt">span =</span> <span class="dv">120</span>,
+                 <span class="dt">days.before =</span> <span class="dv">15</span>)</code></pre></div>
 </div>
 </div>
-<div id="fit-a-plackettluce-model" class="section level1">
+</div>
+<div id="model-with-environmental-variables" class="section level1">
 <h1 class="hasAnchor">
-<a href="#fit-a-plackettluce-model" class="anchor"></a>Fit a PlackettLuce model</h1>
-<p>Now we fit the model using the function <code>pltree</code> from <strong>PlackettLuce</strong> with temperature indices as explanatory variables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> modeldata, <span class="dt">npseudo =</span> <span class="dv">5</span>)</code></pre></div>
+<a href="#model-with-environmental-variables" class="anchor"></a>Model with environmental variables</h1>
+<p>The Plackett-Luce model is one approach to analyse the <em>tricot</em> data<span class="citation"><sup>2</sup></span>. To do so, we need to convert the farmers’ ranking into an object of class ‘grouped_rankings’. An object of class ‘grouped_rankings’ allows the rankings to be linked to explanatory variables and fit the model using <code>pltree</code> from <strong>PlackettLuce</strong>.</p>
+<p>We can convert the farmers’ rankings in into a grouped_rankings object using the function <code>to_rankings</code> from package <strong>gosset</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library("devtools")</span>
+<span class="co"># devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
+
+G &lt;-<span class="st"> </span><span class="kw">to_rankings</span>(data, 
+                 <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span>), 
+                 <span class="dt">input =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span>),
+                 <span class="dt">type =</span> <span class="st">"tricot"</span>, 
+                 <span class="dt">grouped.rankings =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Finally, we fit the model using the function <code>pltree</code> from <strong>PlackettLuce</strong> with temperature and rainfall indices as explanatory variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
+
+modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(G, temp, rain)
+
+tree &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> modeldata, <span class="dt">npseudo =</span> <span class="dv">5</span>)</code></pre></div>
 <p>The PlackettLuce model shows that the bread wheat variaties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).</p>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -187,6 +205,27 @@ modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
 </div>
 <div id="ref-Turner2018">
 <p>2. Turner, H., van Etten, J., Firth, D. &amp; Kosmidis, I. Modelling rankings in R: The PlackettLuce package. <em>arXiv:1810.12068</em> (2018).</p>
+</div>
+<div id="ref-Wickelmaier2018">
+<p>3. Wickelmaier, F. &amp; Zeileis, A. Using recursive partitioning to account for parameter heterogeneity in multinomial processing tree models. <em>Behavior Research Methods</em> <strong>50</strong>, 1217–1233 (2018).</p>
+</div>
+<div id="ref-Kehel2016">
+<p>4. Kehel, Z., Crossa, J. &amp; Reynolds, M. Identifying Climate Patterns during the Crop-Growing Cycle from 30 Years of CIMMYT Elite Spring Wheat International Yield Trials. in <em>Applied mathematics and omics to assess crop genetic resources for climate change adaptive traits</em> (eds. Bari, A., Damania, A. B., Mackay, M. &amp; Dayanandan, S.) 151–174 (CRC Press, 2016).</p>
+</div>
+<div id="ref-Aguilar2005">
+<p>5. Aguilar, E., Peterson, T. C., Obando, P. R. &amp; Frutos, R. <em>et al.</em> Changes in precipitation and temperature extremes in Central America and northern South America, 1961–2003. <em>Journal of Geophysical Research</em> <strong>110</strong>, D23107 (2005).</p>
+</div>
+<div id="ref-VanEtten2019">
+<p>6. van Etten, J., de Sousa, K., Aguilar, A. &amp; Barrios, M. <em>et al.</em> Crop variety management for climate adaptation supported by citizen science. <em>Proceedings of the National Academy of Sciences</em> <strong>116</strong>, 4194–4199 (2019).</p>
+</div>
+<div id="ref-Funk2015">
+<p>7. Funk, C., Peterson, P., Landsfeld, M. &amp; Pedreros, D. <em>et al.</em> The climate hazards infrared precipitation with stations—a new environmental record for monitoring extremes. <em>Scientific Data</em> <strong>2</strong>, 150066 (2015).</p>
+</div>
+<div id="ref-Wan2015">
+<p>8. Wan, Z., Hook, S. &amp; Hulley, G. MYD11A1 MODIS/Aqua Land Surface Temperature/Emissivity Daily L3 Global 1km SIN Grid V006 [Data set]. <em>NASA EOSDIS LP DAAC</em> (2015). doi:<a href="https://doi.org/10.5067/MODIS/MYD11A1.006">10.5067/MODIS/MYD11A1.006</a></p>
+</div>
+<div id="ref-Sparks2018">
+<p>9. Sparks, A. H. nasapower: A NASA POWER Global Meteorology, Surface Solar Energy and Climatology Data Client for R. <em>Journal of Open Source Software</em> <strong>3</strong>, 1035 (2018).</p>
 </div>
 </div>
 </div>
@@ -201,11 +240,10 @@ modeldata &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rd
       <li><a href="#installation">Installation</a></li>
       <li>
 <a href="#usage">Usage</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#preparing-the-data">Preparing the data</a></li>
-      <li><a href="#add-environmental-variables">Add environmental variables</a></li>
+<li><a href="#environmental-variables">Environmental variables</a></li>
       </ul>
 </li>
-      <li><a href="#fit-a-plackettluce-model">Fit a PlackettLuce model</a></li>
+      <li><a href="#model-with-environmental-variables">Model with environmental variables</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>

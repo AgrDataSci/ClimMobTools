@@ -3,7 +3,7 @@ title: "Introduction to ClimMobTools"
 package: ClimMobTools
 author:
 - name: Kauê de Sousa
-  affiliation: Department of Agricultural Sciences, Høgskolen i Innlandet, Norway; and Bioversity International
+  affiliation: Department of Agricultural Sciences, Høgskolen i Innlandet, Hamar, Norway; and Bioversity International
 - name: Jacob van Etten
   affiliation: Bioversity International, Rome, Italy
 - name: Sam Dumble
@@ -49,10 +49,6 @@ The `breadwheat` is a dataframe from crowdsourcing citizen-science trials of bre
 
 ```{r fetch, message=FALSE, eval=FALSE, echo=TRUE}
 library("ClimMobTools")
-# library("devtools")
-# devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")
-library("gosset")
-library("PlackettLuce")
 library("tidyverse")
 library("magrittr")
 
@@ -60,46 +56,37 @@ library("magrittr")
 key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
 data <- ClimMobTools::getDataCM(key = key, 
-                                project = "breadwheat")
+                                project = "breadwheat",
+                                tidynames = TRUE)
 
-
-```
-
-
-## Preparing the data
-
-The function `getDataCM` returns a dataframe in the long format to allows the organisation of projects with different structure. We can put this into wide format where each row is a farmer observation using **tidyverse**. 
-
-
-```{r tidying, eval=FALSE, echo=TRUE}
 # reshape the data into the wide format
-# we also remove some variables that refer to the ODK survey employed for the data collection
 data %<>% 
   filter(!str_detect(variable, "survey")) %>% 
   group_by(id) %>%
   distinct(id, variable, value) %>%
-  spread(variable, value)
-```
-
-The [PlackettLuce](https://hturner.github.io/PlackettLuce/) model is one approach to analyse the *tricot* data[@Turner2018]. To do so, we need to convert the farmers' ranking into a object of class 'rankings' or 'grouped_rankings'. A object of class 'rankings' is a matrix of dense rankings that can be used to fit a PlackettLuce model using `PlackettLuce` from **PlackettLuce**. A object of class 'grouped_rankings' associates a group index with an object of class 'rankings', then it allows the rankings to be linked to explanatory variables and fit a PlackettLuce model using `pltree` from **PlackettLuce**. 
-
-We can convert the farmers' rankings in into a rankings object using the function `to_rankings` from package **gosset**. The argument `grouped.rankings` return a object of class 'grouped_rankings'.
-
-```{r plrankings, message = FALSE, eval=FALSE, echo=TRUE}
-
-G <- to_rankings(data, 
-                 items = c("item_A","item_B","item_C"), 
-                 input = c("overallperf_pos","overallperf_neg"),
-                 type = "tricot", 
-                 grouped.rankings = TRUE)
+  spread(variable, value) %>% 
+  ungroup()
 
 
 ```
 
+## Environmental variables
 
-## Add environmental variables
+Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. **ClimMobTools** provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using  [Plackett-Luce](https://CRAN.R-project.org/package=PlackettLuce)[@Turner2018] or [Bradley-Terry](https://CRAN.R-project.org/package=psychotree)[@Wickelmaier2018] model. 
 
-Environmental variables can easily be included into the data set using the longitude and latitude information from the **tricot** and the planting dates for each plot. In this exercise we include the heat stress indices using the function `temperature` from **ClimMobTools**.
+The climatic variables available in **ClimMobTools** were previously used for the environmental analysis of wheat trial data[@Kehel2016] and explain the changes in climatic patterns due to climate change[@Aguilar2005]. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation[@VanEtten2019].
+
+The environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)[@Funk2015] for rainfall, and MODIS (MYD11A2)[@Wan2015] for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data[@VanEtten2019]. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.
+
+The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/). By providing the planting dates and the geographic information (lon and lat), **ClimMobTools** makes an internal call to [nasapower](https://CRAN.R-project.org/package=nasapower)[@Sparks2018] to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.
+
+### Temperature
+
+**ClimMobTools** functions to compute environmental indices has the basics input data; a numeric vector of geographic information (lonlat) or an array with day and night temperature (from sources like MODIS) and the a vector of class `Date` for the first day that will be taken into account for the environmental indices. Generally the `Date` vector is the planting date from when the experiment were established, but can also refer to other phenological event during the plant development, such as day of 50% flowering. 
+
+The duration from where the environmental indices will be computed is defined by the argument `span` which can be a single integer that takes into account a single time span for all tricot experiments or a vector indicating the time span for each of the observations. 
+
+Here we compute the temperature indices for a time span of 120 days after the planting date using the function `temperature` from **ClimMobTools**.
 
 ```{r temperature, message=FALSE, eval=FALSE, echo=TRUE}
 
@@ -119,22 +106,66 @@ temp <- temperature(data[c("lon","lat")],
                     span = 120)
 
 
-modeldata <- cbind(G, temp)
+```
+
+### Rainfall 
+
+Precipitation indices can also be computed in the same way as the temperature indices. The external input data can be fetched by NASA POWER or by providing a matrix with CHIRPS data.
+
+Here we use the NASA POWER data with a time span defined by the growing degree days using the function `rainfall` from **ClimMobTools**.  
+
+```{r rain, message=FALSE, eval=FALSE, echo=TRUE}
+rain <- rainfall(data[c("lon","lat")], 
+                 day.one = data["plantingdate"],
+                 span = 120)
+
+```
+
+Function `rainfall` has also a feature that enables the indices to be calculated from some days before the planting date. This is important for case studies where a residual precipitation must be taken into account. To do so, we use the argument `days.before`:
+
+
+```{r rain2, message=FALSE, eval=FALSE, echo=TRUE}
+rain <- rainfall(data[c("lon","lat")], 
+                 day.one = data["plantingdate"], 
+                 span = 120,
+                 days.before = 15)
 
 
 ```
 
-# Fit a PlackettLuce model
+# Model with environmental variables
 
-Now we fit the model using the function `pltree` from **PlackettLuce** with temperature indices as explanatory variables.
+The Plackett-Luce model is one approach to analyse the *tricot* data[@Turner2018]. To do so, we need to convert the farmers' ranking into an object of class 'grouped_rankings'. An object of class 'grouped_rankings'  allows the rankings to be linked to explanatory variables and fit the model using `pltree` from **PlackettLuce**. 
+
+We can convert the farmers' rankings in into a grouped_rankings object using the function `to_rankings` from package **gosset**. 
+
+```{r plrankings, message=FALSE, eval=FALSE, echo=TRUE}
+# library("devtools")
+# devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")
+library("gosset")
+
+G <- to_rankings(data, 
+                 items = c("item_A","item_B","item_C"), 
+                 input = c("overallperf_pos","overallperf_neg"),
+                 type = "tricot", 
+                 grouped.rankings = TRUE)
+
+
+```
+
+
+Finally, we fit the model using the function `pltree` from **PlackettLuce** with temperature and rainfall indices as explanatory variables.
 
 ```{r plmodel, message=FALSE, eval=FALSE, echo=TRUE}
+library("PlackettLuce")
+
+modeldata <- cbind(G, temp, rain)
+
 tree <- pltree(G ~ ., data = modeldata, npseudo = 5)
 
 ```
 
 The PlackettLuce model shows that the bread wheat variaties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).  
-
 
 # References
 
