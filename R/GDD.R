@@ -31,15 +31,14 @@ GDD <- function(object, day.one = NULL, degree.days = NULL,
 {
   
   # validate parameters
-  if (is.null(day.one)) {
-    stop("day.one is missing with no default \n")
-  }
   if (is.null(degree.days)) {
     stop("degree.days is missing with no default \n")
   }
+  
   if (is.null(base)) {
     base <- 10
   }
+  
   if (is.null(span)) {
     span <- 150
   }

@@ -4,12 +4,6 @@ library("ClimMobTools")
 #load("tests/clim.rda")
 load("../clim.rda")
 
-
-days <- dimnames(rain)[[2]]
-
-d <- as.Date(rep(days[2:3], each=5), format = "%Y-%m-%d")
-
-
 g <- c(5,4,5,11,5,7,5,6,6,8)
 
 test_that("equal", {
@@ -26,3 +20,42 @@ test_that("equal", {
   expect_equal(dg, TRUE)
 })
 
+
+test_that("nasapower works", {
+  dg <- suppressWarnings(
+    GDD(object = lonlat,
+        day.one = d, 
+        degree.days = 45, 
+        span = 12)
+  )
+  
+  dg <- as.vector(apply(dg, 1, is.na))
+  
+  dg <- sum(dg) == 0
+  
+  expect_equal(dg, TRUE)
+})
+
+
+test_that("missing day.one", {
+  expect_error(
+    GDD(object = temp)
+  )
+})
+
+
+test_that("missing degree.days", {
+  expect_error(
+    GDD(object = temp, 
+        day.one = d)
+  )
+})
+
+
+test_that("missing span", {
+  expect_error(
+    GDD(object = temp, 
+        day.one = d, 
+        degree.days = 10)
+  )
+})

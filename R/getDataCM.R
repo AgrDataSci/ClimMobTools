@@ -1,8 +1,10 @@
 #' Get ClimMob data
 #'
-#' Fetch the trial data from a ClimMob project using your API key
+#' Fetch the trial data from a ClimMob project using an API key
 #'
 #' @param project a character for the project id
+#' @param tidynames logical, if TRUE suppress ODK strings
+#' @param pivot.wider logical, if TRUE return a wider object, each observer is a row
 #' @param ... additional arguments passed to methods
 #' @inheritParams getProjectsCM
 #' @return A data frame with the project data
@@ -28,7 +30,8 @@
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr gather separate spread
 #' @export
-getDataCM <- function(key = NULL, project = NULL, ...){
+getDataCM <- function(key = NULL, project = NULL, 
+                      tidynames = FALSE, pivot.wider = FALSE, ...){
   
   dots <- list(...)
   
@@ -59,22 +62,20 @@ getDataCM <- function(key = NULL, project = NULL, ...){
   # if not then return a warning message
   if (length(cmdata) < 7) {
     pstring <- paste0("'",project,"'")
-    return(
-      cat(
-        "\nProject", pstring, "was found but has no associated data. \n"
-      )
-    )
+    stop("Project ", pstring, " was found but has no associated data. \n")
   }
   
   if (!raw) {
-    cmdata <- .extractFromjson(data = cmdata, ...)
+    cmdata <- .extractFromjson(data = cmdata, 
+                               tidynames = tidynames,
+                               pivot.wider = pivot.wider, ...)
   }
   
   return(cmdata)
   
 }
 
-.extractFromjson <- function(data, tidynames = TRUE, pivot.wider = FALSE){
+.extractFromjson <- function(data, tidynames, pivot.wider){
   
   # currently the json file is structured with
   # data[[1]] 'specialfields', the assessment questions

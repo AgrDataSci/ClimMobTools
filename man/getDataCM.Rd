@@ -4,12 +4,17 @@
 \alias{getDataCM}
 \title{Get ClimMob data}
 \usage{
-getDataCM(key = NULL, project = NULL, ...)
+getDataCM(key = NULL, project = NULL, tidynames = FALSE,
+  pivot.wider = FALSE, ...)
 }
 \arguments{
 \item{key}{a character for the ClimMob user API key}
 
 \item{project}{a character for the project id}
+
+\item{tidynames}{logical, if TRUE suppress ODK strings}
+
+\item{pivot.wider}{logical, if TRUE return a wider object, each observer is a row}
 
 \item{...}{additional arguments passed to methods}
 }
@@ -21,7 +26,7 @@ A data frame with the project data
 \item{value}{the value for each variable}
 }
 \description{
-Fetch the trial data from a ClimMob project using your API key
+Fetch the trial data from a ClimMob project using an API key
 }
 \examples{
 \dontrun{

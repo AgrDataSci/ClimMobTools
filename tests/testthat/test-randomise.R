@@ -10,16 +10,57 @@ r <- randomise(nitems = ni,
                nvar = nv,
                itemnames = inames)
 
-
-
-test_that("randomise returns a dataframe", {
-  expect_equal(dim(r), c(10, 3))
+test_that("returns a valid object", {
+  v <- !is.null(r)
+  expect_equal(v, TRUE)
 })
 
-test_that("randomise returns a balanced design", {
+test_that("returns a balanced sample", {
   
   i <- c(7, 8) %in% summary(as.factor(unlist(r)))
   
   expect_equal(i, c(TRUE, TRUE))
-
 })
+
+
+test_that("returns an error", {
+  expect_error(
+    randomise(nitems = ni,
+              nobservers = no,
+              nvar = nv,
+              itemnames = inames[1:3])
+  )
+})
+
+test_that("missing nobservers", {
+  expect_error(
+    randomise(nitems = ni,
+              nobservers = NULL,
+              nvar = nv,
+              itemnames = inames)
+  )
+})
+
+test_that("missing nvar", {
+  expect_error(
+    randomise(nitems = ni,
+              nobservers = no,
+              nvar = NULL,
+              itemnames = inames)
+  )
+})
+
+test_that("alias works", {
+  r <- randomize(nitems = ni,
+                 nobservers = no,
+                 nvar = nv,
+                 itemnames = inames)
+  
+  r <- as.vector(apply(r, 1, is.na))
+  
+  r <- sum(r) == 0
+  
+  expect_equal(r, TRUE)
+  
+})
+

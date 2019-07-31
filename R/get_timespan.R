@@ -13,26 +13,6 @@
 # start.date to be included in the timespan
 # @param ... additional arguments passed to \code{\link[nasapower]{get_power}}
 # @return a data frame of environmental data for the chosen period
-# @examples
-# 
-# # Concatenate environmental data from from CHIRPS
-# data("breadwheat_chirps", package = "gosset")
-# data("breadwheat", package = "gosset")
-# 
-# # Get the precipitation that occured in the first 30 days after the planting date
-# get_timespan(breadwheat_chirps,
-#              day.one = breadwheat$planting_date,
-#              span = 30)
-# 
-# ######################################
-# 
-# # Get data from NASA POWER
-# 
-# # select daily precipitation using the argument 'pars'
-# get_timespan(breadwheat[c("lon","lat")],
-#              day.one = breadwheat$planting_date,
-#              span = 30,
-#              pars = "PRECTOT")
 #' @import nasapower
 #' @importFrom raster rasterFromXYZ extract stack
 .get_timespan <- function(object, day.one = NULL,
@@ -44,7 +24,7 @@
   }
   
   if (is.null(span)) {
-    span <- 150
+    stop("argument 'span' is missing with no default \n ")
   }
   
   if (is.null(days.before)) {

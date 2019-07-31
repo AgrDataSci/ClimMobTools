@@ -47,6 +47,10 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
     stop("itemnames in missing with no default")
   }
   
+  if (nvar != length(itemnames)) {
+    stop("nvar is different than provided itemnames")
+  }
+  
   # Varieties indicated by integers
   varieties <- 1:nvar
   
