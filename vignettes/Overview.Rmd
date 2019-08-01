@@ -39,13 +39,13 @@ The **ClimMobTools** package provides the toolkit employed in crowdsourcing citi
 The development version can be installed via
 
 
-    install.packages("devtools")
+    library("devtools")
     devtools::install_github("agrobioinfoservices/ClimMobTools", upgrade = "never")
     
     
 # Usage
 
-The `breadwheat` is a dataframe from crowdsourcing citizen-science trials of bread wheat (*Triticum aestivum*) varieties in India. This is a sample data available at the [ClimMob](https://climmob.net/blog/) that can be fetched using using the function `getDataCM` from **ClimMobTools** and an API key from the ClimMob portal.
+The `breadwheat` is a dataframe from crowdsourcing citizen science trials of bread wheat (*Triticum aestivum*) varieties in India. This is a sample data available at the [ClimMob](https://climmob.net/blog/) that can be fetched using the function `getDataCM` from **ClimMobTools** and an API key from the ClimMob portal.
 
 ```{r fetch, message=FALSE, eval=FALSE, echo=TRUE}
 library("ClimMobTools")
@@ -72,21 +72,21 @@ data %<>%
 
 ## Environmental variables
 
-Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. **ClimMobTools** provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using  [Plackett-Luce](https://CRAN.R-project.org/package=PlackettLuce)[@Turner2018] or [Bradley-Terry](https://CRAN.R-project.org/package=psychotree)[@Wickelmaier2018] model. 
+Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. **ClimMobTools** provides the toolkit to compute environmental variables that serves as covariates for the ranking analysis with explanatory variables using  [Plackett-Luce](https://CRAN.R-project.org/package=PlackettLuce)[@Turner2018] or [Bradley-Terry](https://CRAN.R-project.org/package=psychotree)[@Wickelmaier2018] model. 
 
-The climatic variables available in **ClimMobTools** were previously used for the environmental analysis of wheat trial data[@Kehel2016] and explain the changes in climatic patterns due to climate change[@Aguilar2005]. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation[@VanEtten2019].
+The climatic variables available in **ClimMobTools** were previously used for the environmental analysis of wheat trials[@Kehel2016] and can explain the changes in climatic patterns due to climate change[@Aguilar2005]. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide varietal recommendations for climate adaptation[@VanEtten2019].
 
-The environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)[@Funk2015] for rainfall, and MODIS (MYD11A2)[@Wan2015] for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with ClimMob data[@VanEtten2019]. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.
+The environmental data can be calculated using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)[@Funk2015] for rainfall, and MODIS (MYD11A2)[@Wan2015] for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and high resolution (0.05°), and have been used in previous studies with ClimMob data[@VanEtten2019]. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.
 
-The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/). By providing the planting dates and the geographic information (lon and lat), **ClimMobTools** makes an internal call to [nasapower](https://CRAN.R-project.org/package=nasapower)[@Sparks2018] to fetch the required time series data and compute the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.
+The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/). By providing the planting dates and the geographic information (lonlat), **ClimMobTools** makes an internal call to [nasapower](https://CRAN.R-project.org/package=nasapower)[@Sparks2018] to fetch the required time series data and calculate the environmental indices. It do not requires much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.
 
 ### Temperature
 
-**ClimMobTools** functions to compute environmental indices has the basics input data; a numeric vector of geographic information (lonlat) or an array with day and night temperature (from sources like MODIS) and the a vector of class `Date` for the first day that will be taken into account for the environmental indices. Generally the `Date` vector is the planting date from when the experiment were established, but can also refer to other phenological event during the plant development, such as day of 50% flowering. 
+**ClimMobTools** functions to compute environmental indices has the basics input data; a numeric vector of geographic information (lonlat) or an array with day and night temperature (from sources like MODIS) and the a vector of class `Date` for the first day that will be taken into account for the environmental indices. Generally the `Date` vector is the planting date from when the experiment were established, but can also refer to other phenological event during the plant development, such as day of 50% flowering or the first day of a growing season. 
 
-The duration from where the environmental indices will be computed is defined by the argument `span` which can be a single integer that takes into account a single time span for all tricot experiments or a vector indicating the time span for each of the observations. 
+The duration from where the environmental indices will be computed is defined by the argument `span` which can be a single integer that takes into account a single time span for the entire data set or a vector indicating the time span for each observation. 
 
-Here we compute the temperature indices for a time span of 120 days after the planting date using the function `temperature` from **ClimMobTools**.
+Here we calculate the temperature indices for a time span of 120 days after the planting date using the function `temperature` from **ClimMobTools**.
 
 ```{r temperature, message=FALSE, eval=FALSE, echo=TRUE}
 
@@ -99,8 +99,6 @@ data %<>%
                                 format = "%Y-%m-%d"))
 
 # then we get the temperature indices
-# get some variables to include in the model
-# from the planting date to the next 120 days
 temp <- temperature(data[c("lon","lat")], 
                     day.one = data["plantingdate"], 
                     span = 120)
@@ -110,9 +108,9 @@ temp <- temperature(data[c("lon","lat")],
 
 ### Rainfall 
 
-Precipitation indices can also be computed in the same way as the temperature indices. The external input data can be fetched by NASA POWER or by providing a matrix with CHIRPS data.
+Precipitation indices can also be calculated in the same way as the temperature indices. The can be either the geographic coordinates or a matrix with CHIRPS data.
 
-Here we use the NASA POWER data with a time span defined by the growing degree days using the function `rainfall` from **ClimMobTools**.  
+Here we use the NASA POWER data with a time span of 120 days after planting date using the function `rainfall` from **ClimMobTools**.  
 
 ```{r rain, message=FALSE, eval=FALSE, echo=TRUE}
 rain <- rainfall(data[c("lon","lat")], 
@@ -121,7 +119,7 @@ rain <- rainfall(data[c("lon","lat")],
 
 ```
 
-Function `rainfall` has also a feature that enables the indices to be calculated from some days before the planting date. This is important for case studies where a residual precipitation must be taken into account. To do so, we use the argument `days.before`:
+Function `rainfall` has also a feature that enables the indices to be calculated from some days before the planting date. This is important for some studies where a residual precipitation must be taken into account. To do so, we use the argument `days.before`:
 
 
 ```{r rain2, message=FALSE, eval=FALSE, echo=TRUE}
@@ -135,7 +133,7 @@ rain <- rainfall(data[c("lon","lat")],
 
 # Model with environmental variables
 
-The Plackett-Luce model is one approach to analyse the *tricot* data[@Turner2018]. To do so, we need to convert the farmers' ranking into an object of class 'grouped_rankings'. An object of class 'grouped_rankings'  allows the rankings to be linked to explanatory variables and fit the model using `pltree` from **PlackettLuce**. 
+The Plackett-Luce model is one approach to analyse the ClimMob data[@Turner2018]. To do so, we need to convert the farmers' ranking into an object of class 'grouped_rankings'. An object of class 'grouped_rankings'  allows the rankings to be linked to explanatory variables and fit the model using `pltree` from **PlackettLuce**. 
 
 We can convert the farmers' rankings in into a grouped_rankings object using the function `to_rankings` from package **gosset**. 
 
@@ -165,7 +163,7 @@ tree <- pltree(G ~ ., data = modeldata, npseudo = 5)
 
 ```
 
-The PlackettLuce model shows that the bread wheat variaties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).  
+The PlackettLuce model shows that the bread wheat varieties had a different performance under a threshold of 15.5 degrees Celsius for the diurnal temperature range (DTR).  
 
 # References
 
