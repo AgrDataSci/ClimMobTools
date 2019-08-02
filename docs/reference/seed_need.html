@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Randomised group of items — randomise • ClimMobTools</title>
+<title>Required seed amount in a ClimMob project — seed_need • ClimMobTools</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,18 +30,10 @@
 
 
 
-<meta property="og:title" content="Randomised group of items — randomise" />
+<meta property="og:title" content="Required seed amount in a ClimMob project — seed_need" />
 
-<meta property="og:description" content="Set a randomised group of items for crowdsourcing citizen science.
-Generate designs for ranking of options. It is designed for tricot trials 
-specifically (comparing 3 options), but it will also work with comparisons 
-of any other number of options. 
-The design strives for approximate A optimality, this means that it is robust 
-to missing observations. It also strives for balance for positions of each option.
-Options are equally divided between first, second, third, etc. position. 
-The strategy is to create a &quot;pool&quot; of combinations that does not repeat 
-combinations and is A-optimal. Then this pool is ordered to make subsets of 
-consecutive combinations also relatively balanced and A-optimal" />
+<meta property="og:description" content="Calculate the required amount of seeds (or other technology) required 
+for a ClimMob project." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,79 +110,78 @@ consecutive combinations also relatively balanced and A-optimal" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Randomised group of items</h1>
+    <h1>Required seed amount in a ClimMob project</h1>
     
-    <div class="hidden name"><code>randomise.Rd</code></div>
+    <div class="hidden name"><code>seed_need.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Set a randomised group of items for crowdsourcing citizen science.
-Generate designs for ranking of options. It is designed for tricot trials 
-specifically (comparing 3 options), but it will also work with comparisons 
-of any other number of options. 
-The design strives for approximate A optimality, this means that it is robust 
-to missing observations. It also strives for balance for positions of each option.
-Options are equally divided between first, second, third, etc. position. 
-The strategy is to create a "pool" of combinations that does not repeat 
-combinations and is A-optimal. Then this pool is ordered to make subsets of 
-consecutive combinations also relatively balanced and A-optimal</p>
+    <p>Calculate the required amount of seeds (or other technology) required 
+for a ClimMob project.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>randomise</span>(<span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>itemnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.15</span>,
+  <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"kg"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ncomp</th>
-      <td><p>an integer for the number of items each observer compares</p></td>
-    </tr>
-    <tr>
       <th>nobservers</th>
       <td><p>an integer for the number of observers</p></td>
+    </tr>
+    <tr>
+      <th>ncomp</th>
+      <td><p>an integer for the number of items each observer compares</p></td>
     </tr>
     <tr>
       <th>nitems</th>
       <td><p>an integer for the number of items tested in the project</p></td>
     </tr>
     <tr>
-      <th>itemnames</th>
-      <td><p>a character for the name of items tested in the project</p></td>
+      <th>nseeds</th>
+      <td><p>an integer for the metric of seeds each bag receives</p></td>
+    </tr>
+    <tr>
+      <th>unit</th>
+      <td><p>optional, a character specifying the metric unit used</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with the randomised design</p>
+    <p>a dataframe with required number of seeds</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ni</span> <span class='kw'>&lt;-</span> <span class='fl'>3</span>
-<span class='no'>no</span> <span class='kw'>&lt;-</span> <span class='fl'>50</span>
-<span class='no'>nv</span> <span class='kw'>&lt;-</span> <span class='fl'>4</span>
-<span class='no'>inames</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='st'>"Var"</span>, <span class='fl'>1</span>:<span class='no'>nv</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>""</span>)
-
-<span class='fu'>randomise</span>(<span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='no'>ni</span>,
-          <span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='no'>no</span>,
-          <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='no'>nv</span>,
-          <span class='kw'>itemnames</span> <span class='kw'>=</span> <span class='no'>inames</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 50 x 3</span><span>
-#&gt;    item_A item_B item_C
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'> 1</span><span> Var1   Var3   Var4  
-#&gt; </span><span style='color: #555555;'> 2</span><span> Var2   Var4   Var3  
-#&gt; </span><span style='color: #555555;'> 3</span><span> Var3   Var1   Var2  
-#&gt; </span><span style='color: #555555;'> 4</span><span> Var4   Var2   Var1  
-#&gt; </span><span style='color: #555555;'> 5</span><span> Var1   Var2   Var4  
-#&gt; </span><span style='color: #555555;'> 6</span><span> Var2   Var1   Var3  
-#&gt; </span><span style='color: #555555;'> 7</span><span> Var3   Var4   Var1  
-#&gt; </span><span style='color: #555555;'> 8</span><span> Var4   Var3   Var2  
-#&gt; </span><span style='color: #555555;'> 9</span><span> Var1   Var2   Var3  
-#&gt; </span><span style='color: #555555;'>10</span><span> Var2   Var1   Var4  
-#&gt; </span><span style='color: #555555;'># ... with 40 more rows</span><span></div><div class='input'>          
-</div></span></pre>
+    <pre class="examples"><div class='input'>
+<span class='co'># allocate 0.2 kg of seeds per variety in a project with 500 </span>
+<span class='co'># participants and 14 varieties</span>
+<span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+          <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+          <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>14</span>,
+          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 3</span><span>
+#&gt;   var               quant unit 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> N bags             </span><span style='text-decoration: underline;'>1</span><span>500 unit 
+#&gt; </span><span style='color: #555555;'>2</span><span> Bags per variety    108 unit 
+#&gt; </span><span style='color: #555555;'>3</span><span> Seeds per variety    22 kg   
+#&gt; </span><span style='color: #555555;'>4</span><span> Seeds total         308 kg   </div><div class='input'>
+<span class='co'># allocate 100 seedlings per variety in a project with 400 </span>
+<span class='co'># participants, 8 varieties and 3 comparisons between varieties</span>
+<span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>400</span>,
+          <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+          <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>9</span>,
+          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"unit"</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 3</span><span>
+#&gt;   var                quant unit 
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> N bags              </span><span style='text-decoration: underline;'>1</span><span>200 unit 
+#&gt; </span><span style='color: #555555;'>2</span><span> Bags per variety     134 unit 
+#&gt; </span><span style='color: #555555;'>3</span><span> Seeds per variety  </span><span style='text-decoration: underline;'>13</span><span>400 unit 
+#&gt; </span><span style='color: #555555;'>4</span><span> Seeds total       </span><span style='text-decoration: underline;'>120</span><span>600 unit </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

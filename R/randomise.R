@@ -1,6 +1,6 @@
 #' Randomised group of items
 #'
-#' Set a randomised group of items for crowdsourcing citizen-science.
+#' Set a randomised group of items for crowdsourcing citizen science.
 #' Generate designs for ranking of options. It is designed for tricot trials 
 #' specifically (comparing 3 options), but it will also work with comparisons 
 #' of any other number of options. 
@@ -10,10 +10,10 @@
 #' The strategy is to create a "pool" of combinations that does not repeat 
 #' combinations and is A-optimal. Then this pool is ordered to make subsets of 
 #' consecutive combinations also relatively balanced and A-optimal
-#' @param nitems an integer for the number of items each observer receives
+#' @param ncomp an integer for the number of items each observer compares
 #' @param nobservers an integer for the number of observers
-#' @param nvar an integer for the number of varieties or other technologies
-#' @param itemnames a character for the name of technologies to randomise
+#' @param nitems an integer for the number of items tested in the project
+#' @param itemnames a character for the name of items tested in the project
 #' @return A dataframe with the randomised design
 #' @examples 
 #' ni <- 3
@@ -21,9 +21,9 @@
 #' nv <- 4
 #' inames <- paste("Var", 1:nv, sep="")
 #' 
-#' randomise(nitems = ni,
+#' randomise(ncomp = ni,
 #'           nobservers = no,
-#'           nvar = nv,
+#'           nitems = nv,
 #'           itemnames = inames)
 #'           
 #' @aliases randomize
@@ -32,30 +32,30 @@
 #' @importFrom RSpectra eigs
 #' @importFrom utils combn
 #' @export
-randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL, 
+randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL, 
                       itemnames = NULL) {
-
+  
   if (is.null(nobservers)) {
-    stop("nobservers in missing with no default")
+    stop("nobservers is missing with no default")
   }
   
-  if (is.null(nvar)) {
-    stop("nvar in missing with no default")
+  if (is.null(nitems)) {
+    stop("nitems is missing with no default")
   }
   
   if (is.null(itemnames)) {
-    stop("itemnames in missing with no default")
+    stop("itemnames is missing with no default")
   }
   
-  if (nvar != length(itemnames)) {
-    stop("nvar is different than provided itemnames")
+  if (nitems != length(itemnames)) {
+    stop("nitems is different than provided itemnames")
   }
   
   # Varieties indicated by integers
-  varieties <- 1:nvar
+  varieties <- 1:nitems
   
   # Full set of all combinations
-  varcombinations <- t((utils::combn(varieties, nitems)))
+  varcombinations <- t((utils::combn(varieties, ncomp)))
   
   # if the full set of combinations is small and can be covered at least once
   # the set will include each combination at least once
@@ -70,10 +70,10 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
   nremain <- nobservers - nfixed
   
   #create set to get to full number of observers
-  vars2 <- matrix(nrow = nremain, ncol = nitems)
+  vars2 <- matrix(nrow = nremain, ncol = ncomp)
   
   # set up array with set of combinations
-  varcomb <- matrix(0, nrow = nvar, ncol = nvar)
+  varcomb <- matrix(0, nrow = nitems, ncol = nitems)
   
   if (dim(vars2)[1] > 0.5) {
     
@@ -85,7 +85,7 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
       
       # priority of each combination is equal to Shannon index of varieties in each combination
       prioritycomb <- apply(varcombinations, 1, function(x){ 
-        .getShannonVector(x, sumcomb, nvar)
+        .getShannonVector(x, sumcomb, nitems)
       })
       
       # highest priority to be selected is the combination which has the lowest Shannon index
@@ -98,9 +98,9 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
         # randomly subsample from selected if there are too many combinations to check
         if (length(selected) > 10) {
           selected <- sample(selected, 10)
-          }
+        }
         
-        # get a nvar x nvar matrix with number of connections
+        # get a nitems x nitems matrix with number of connections
         
         # calculate Kirchhoff index and select smallest value
         khi <- vector(length = length(selected))
@@ -138,10 +138,10 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
   vars <- rbind(vars1, vars2)
   
   # create empy object to contain ordered combinations of vars
-  varOrdered <- matrix(NA, nrow = nobservers, ncol = nitems)
+  varOrdered <- matrix(NA, nrow = nobservers, ncol = ncomp)
   
   # set up array with set of combinations
-  varcomb <- matrix(0, nrow = nvar, ncol = nvar)
+  varcomb <- matrix(0, nrow = nitems, ncol = nitems)
   
   # fill first row
   selected <- sample(1:nobservers, 1)
@@ -157,7 +157,7 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
     
     # priority of each combination is equal to Shannon index of varieties in each combination
     prioritycomb <- apply(vars, 1, function(x){ 
-      .getShannonVector(x, sumcomb, nvar)
+      .getShannonVector(x, sumcomb, nitems)
     })
     
     # highest priority to be selected is the combination which has the lowest Shannon index
@@ -171,7 +171,7 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
         selected <- sample(selected, 7)
       }
       
-      # get a nvar x nvar matrix with number of connections
+      # get a nitems x nitems matrix with number of connections
       sumcombMatrix <- varcomb * 0
       
       # in this case, get matrix to calculate Kirchhoff index only for last 10 observers
@@ -200,7 +200,7 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
     # if there are still ties between ranks of combinations, select one randomly
     if (length(selected) > 1) { 
       selected <- sample(selected, 1) 
-      }
+    }
     
     # assign the selected combination
     varOrdered[i,] <- vars[selected,]
@@ -215,8 +215,8 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
   varOrdered[nobservers,] <- vars
   
   # Equally distribute positions to achieve order balance
-  # First create matrix with frequency of position of each of nvar
-  position <- matrix(0, ncol = nitems, nrow = nvar)
+  # First create matrix with frequency of position of each of nitems
+  position <- matrix(0, ncol = ncomp, nrow = nitems)
   
   # Sequentially reorder sets to achieve evenness in positions
   # Shannon is good here, because evenness values are proportional
@@ -227,33 +227,33 @@ randomise <- function(nitems = 3, nobservers = NULL, nvar = NULL,
     varOrdered_all <- .getPerms(varOrdered[i,])
     varOrdered_Shannon <- apply(varOrdered_all, 1, function(x) {
       .getShannonMatrix(x, position)
-      })
+    })
     varOrdered_i <- varOrdered_all[which(varOrdered_Shannon == min(varOrdered_Shannon))[1],]
     varOrdered[i,] <- varOrdered_i
     pp <- position * 0
-    pp[cbind(varOrdered_i,1:nitems)] <- 1
+    pp[cbind(varOrdered_i,1:ncomp)] <- 1
     position <- position + pp
     
   }
   
   # The varOrdered matrix has the indices of the elements
   # Create the final matrix
-  finalresults <- matrix(NA, ncol = nitems, nrow = nobservers)
+  finalresults <- matrix(NA, ncol = ncomp, nrow = nobservers)
   
   # loop over the rows and columns of the final matrix and put the elements randomized
   # with the indexes in varOrdered
   for (i in 1:nobservers){
-    for (j in 1:nitems){
+    for (j in 1:ncomp){
       finalresults[i,j] <- itemnames[varOrdered[i,j]]
     }
   }
   
   finalresults <- tibble::as_tibble(finalresults)
   
-  names(finalresults) <- paste0("item_", LETTERS[1:nitems])
+  names(finalresults) <- paste0("item_", LETTERS[1:ncomp])
   
   return(finalresults)
-    
+  
 }
 
 #' @inheritParams randomise
@@ -319,8 +319,8 @@ randomize <- function(...){
   
 }
 
-.getShannonVector <- function(x, sumcomb, nvar) {
-  xi <- rep(0, times = nvar)
+.getShannonVector <- function(x, sumcomb, nitems) {
+  xi <- rep(0, times = nitems)
   xi[x] <- 1
   return(.shannon(sumcomb + xi))
   

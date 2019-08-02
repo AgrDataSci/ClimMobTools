@@ -5,55 +5,74 @@ no <- 10
 nv <- 4
 inames <- paste("Var", 1:nv, sep="")
 
-r <- randomise(nitems = ni,
+r <- randomise(ncomp = ni,
                nobservers = no,
-               nvar = nv,
+               nitems = nv,
                itemnames = inames)
 
 test_that("returns a valid object", {
-  v <- !is.null(r)
+  v <- as.vector(apply(r, 1, is.na))
+  v <- !any(v)
+  
   expect_equal(v, TRUE)
 })
 
 test_that("returns a balanced sample", {
   
   i <- c(7, 8) %in% summary(as.factor(unlist(r)))
+  i <- sum(i)
   
-  expect_equal(i, c(TRUE, TRUE))
+  expect_equal(i, 2)
 })
+
+
+test_that("works with more than 3", {
+  
+  r5 <- randomise(ncomp = 5,
+                  nobservers = 20,
+                  nitems = 10,
+                  itemnames = paste("Var", 1:10, sep=""))
+  
+  v <- as.vector(apply(r5, 1, is.na))
+  v <- !any(v)
+  
+  expect_equal(v, TRUE)
+
+})
+
 
 
 test_that("returns an error", {
   expect_error(
-    randomise(nitems = ni,
+    randomise(ncomp = ni,
               nobservers = no,
-              nvar = nv,
+              nitems = nv,
               itemnames = inames[1:3])
   )
 })
 
 test_that("missing nobservers", {
   expect_error(
-    randomise(nitems = ni,
+    randomise(ncomp = ni,
               nobservers = NULL,
-              nvar = nv,
+              nitems = nv,
               itemnames = inames)
   )
 })
 
-test_that("missing nvar", {
+test_that("missing nitems", {
   expect_error(
-    randomise(nitems = ni,
+    randomise(ncomp = ni,
               nobservers = no,
-              nvar = NULL,
+              nitems = NULL,
               itemnames = inames)
   )
 })
 
 test_that("alias works", {
-  r <- randomize(nitems = ni,
+  r <- randomize(ncomp = ni,
                  nobservers = no,
-                 nvar = nv,
+                 nitems = nv,
                  itemnames = inames)
   
   r <- as.vector(apply(r, 1, is.na))

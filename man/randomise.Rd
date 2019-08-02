@@ -5,23 +5,23 @@
 \alias{randomize}
 \title{Randomised group of items}
 \usage{
-randomise(nitems = 3, nobservers = NULL, nvar = NULL,
+randomise(ncomp = 3, nobservers = NULL, nitems = NULL,
   itemnames = NULL)
 }
 \arguments{
-\item{nitems}{an integer for the number of items each observer receives}
+\item{ncomp}{an integer for the number of items each observer compares}
 
 \item{nobservers}{an integer for the number of observers}
 
-\item{nvar}{an integer for the number of varieties or other technologies}
+\item{nitems}{an integer for the number of items tested in the project}
 
-\item{itemnames}{a character for the name of technologies to randomise}
+\item{itemnames}{a character for the name of items tested in the project}
 }
 \value{
 A dataframe with the randomised design
 }
 \description{
-Set a randomised group of items for crowdsourcing citizen-science.
+Set a randomised group of items for crowdsourcing citizen science.
 Generate designs for ranking of options. It is designed for tricot trials 
 specifically (comparing 3 options), but it will also work with comparisons 
 of any other number of options. 
@@ -38,9 +38,9 @@ no <- 50
 nv <- 4
 inames <- paste("Var", 1:nv, sep="")
 
-randomise(nitems = ni,
+randomise(ncomp = ni,
           nobservers = no,
-          nvar = nv,
+          nitems = nv,
           itemnames = inames)
           
 }
