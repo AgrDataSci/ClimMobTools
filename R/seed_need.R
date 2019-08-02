@@ -27,12 +27,19 @@
 seed_need <- function(nobservers = 100, ncomp = 3, 
                       nitems = 10, nseeds = 0.15, unit = "kg") {
   
-  
+  # number of bags in total 
   nbags <- nobservers * ncomp
   
+  # number of bags per item
   bagsvar <- ceiling(nbags / nitems)
   
+  # refresh nbags
+  nbags <- bagsvar * nitems
+  
+  # number of seeds per variety
   seedsvar <- ceiling(bagsvar * nseeds)
+  
+  # number of seeds in total
   seedstotal <- ceiling(seedsvar * nitems)
   
   namevar <- c("N bags", "Bags per variety", 
