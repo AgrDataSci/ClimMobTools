@@ -1,3 +1,10 @@
+# ClimMobTools 0.2-3
+
+## New Features
+
+* Function build_rankings is added to convert the tricot data into an object of class rankings from `PlackettLuce`
+* Function seed_need is added to calculate the required amount of seeds/seedlings needed for the tricot project
+
 # ClimMobTools 0.2-2
 
 ## New Features

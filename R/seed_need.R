@@ -1,7 +1,7 @@
-#' Required seed amount in a ClimMob project
+#' Required seed amount in a tricot project
 #' 
 #' Calculate the required amount of seeds (or other technology) required 
-#' for a ClimMob project.
+#' for a triadic comparison of technologies (tricot) project.
 #' 
 #' @param unit optional, a character specifying the metric unit used
 #' @param nseeds an integer for the metric of seeds each bag receives

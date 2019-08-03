@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -177,15 +177,10 @@ temp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/temper
 <a href="#model-with-environmental-variables" class="anchor"></a>Model with environmental variables</h1>
 <p>The Plackett-Luce model is one approach to analyse the ClimMob data<span class="citation"><sup>2</sup></span>. To do so, we need to convert the farmers’ ranking into an object of class ‘grouped_rankings’. An object of class ‘grouped_rankings’ allows the rankings to be linked to explanatory variables and fit the model using <code>pltree</code> from <strong>PlackettLuce</strong>.</p>
 <p>We can convert the farmers’ rankings in into a grouped_rankings object using the function <code>to_rankings</code> from package <strong>gosset</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library("devtools")</span>
-<span class="co"># devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
-
-G &lt;-<span class="st"> </span><span class="kw">to_rankings</span>(data, 
-                 <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span>), 
-                 <span class="dt">input =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span>),
-                 <span class="dt">type =</span> <span class="st">"tricot"</span>, 
-                 <span class="dt">grouped.rankings =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">G &lt;-<span class="st"> </span><span class="kw"><a href="../reference/build_rankings.html">build_rankings</a></span>(data, 
+                    <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span>), 
+                    <span class="dt">input =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span>),
+                    <span class="dt">grouped.rankings =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Finally, we fit the model using the function <code>pltree</code> from <strong>PlackettLuce</strong> with temperature and rainfall indices as explanatory variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
 

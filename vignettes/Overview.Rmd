@@ -138,15 +138,10 @@ The Plackett-Luce model is one approach to analyse the ClimMob data[@Turner2018]
 We can convert the farmers' rankings in into a grouped_rankings object using the function `to_rankings` from package **gosset**. 
 
 ```{r plrankings, message=FALSE, eval=FALSE, echo=TRUE}
-# library("devtools")
-# devtools::install_github("agrobioinfoservices/gosset", upgrade = "never")
-library("gosset")
-
-G <- to_rankings(data, 
-                 items = c("item_A","item_B","item_C"), 
-                 input = c("overallperf_pos","overallperf_neg"),
-                 type = "tricot", 
-                 grouped.rankings = TRUE)
+G <- build_rankings(data, 
+                    items = c("item_A","item_B","item_C"), 
+                    input = c("overallperf_pos","overallperf_neg"),
+                    grouped.rankings = TRUE)
 
 
 ```

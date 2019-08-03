@@ -2,7 +2,7 @@
 % Please edit documentation in R/seed_need.R
 \name{seed_need}
 \alias{seed_need}
-\title{Required seed amount in a ClimMob project}
+\title{Required seed amount in a tricot project}
 \usage{
 seed_need(nobservers = 100, ncomp = 3, nitems = 10, nseeds = 0.15,
   unit = "kg")
@@ -23,7 +23,7 @@ a dataframe with required number of seeds
 }
 \description{
 Calculate the required amount of seeds (or other technology) required 
-for a ClimMob project.
+for a triadic comparison of technologies (tricot) project.
 }
 \examples{
   
