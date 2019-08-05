@@ -18,7 +18,7 @@
 #' \item{Rx5day}{maximum 5-day rainfall (mm) }
 #' \item{Rtotal}{total rainfall (mm) in wet days (R >= 1)}
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' 
 #' library("ClimMobTools")
 #' library("nasapower")

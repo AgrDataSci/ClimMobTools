@@ -33,7 +33,8 @@ Compute number of days required to reach growing degree days.
 GDD are calculated by taking the integral of warmth above a base temperature.
 }
 \examples{
-\dontrun{
+\donttest{
+
 library("ClimMobTools")
 library("nasapower")
 

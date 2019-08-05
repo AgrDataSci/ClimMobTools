@@ -1,3 +1,11 @@
+# ClimMobTools 0.2-5
+
+## CRAN issues
+
+* please write the title in title case: Tools for Crowdsourcing Citizen Science in Agriculture >>> done
+* Please replace dontrun by donttest or unwap the examples if they can be executed in less than 5 sec per Rd-file. >>> dontrun is now replaced by donttest
+
+
 # ClimMobTools 0.2-4
 
 ## CRAN issues

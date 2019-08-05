@@ -22,7 +22,8 @@
 #' \item{SU}{summer days, number of days with maximum temperature > 30 (degree Celsius)}
 #' \item{TR}{tropical nights, number of nights with maximum temperature > 25 (degree Celsius) }
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' 
 #' library("ClimMobTools")
 #' library("nasapower")
 #' 

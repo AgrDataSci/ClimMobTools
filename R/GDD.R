@@ -8,7 +8,8 @@
 #' @inheritParams temperature
 #' @return The number of days required to reach the growing degree days.
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' 
 #' library("ClimMobTools")
 #' library("nasapower")
 #' 

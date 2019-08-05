@@ -37,7 +37,8 @@ A dataframe with selected indices. Options are:
 Compute temperature indices over a timespan
 }
 \examples{
-\dontrun{
+\donttest{
+
 library("ClimMobTools")
 library("nasapower")
 

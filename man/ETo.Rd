@@ -34,7 +34,7 @@ The evapotranspiration in mm/day
 Compute evapotranspiration using the Blaney-Criddle method
 }
 \examples{
-\dontrun{
+\donttest{
  
 library("ClimMobTools")
 library("nasapower")

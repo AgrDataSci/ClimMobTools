@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -165,8 +165,7 @@ for different latitudes</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-
+    <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"ClimMobTools"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"nasapower"</span>)
 
@@ -182,8 +181,19 @@ for different latitudes</p></td>
 <span class='fu'>ETo</span>(<span class='no'>lonlat</span>,
     <span class='kw'>day.one</span> <span class='kw'>=</span> <span class='no'>pdates</span>,
     <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-    <span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>lonlat</span><span class='kw'>[[</span><span class='st'>"lat"</span>]])
-<span class='co'># }</span><div class='input'>
+    <span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>lonlat</span><span class='kw'>[[</span><span class='st'>"lat"</span>]])</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 1</span><span>
+#&gt;      ETo
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>  5.69
+#&gt; </span><span style='color: #555555;'> 2</span><span>  5.77
+#&gt; </span><span style='color: #555555;'> 3</span><span>  5.72
+#&gt; </span><span style='color: #555555;'> 4</span><span>  5.74
+#&gt; </span><span style='color: #555555;'> 5</span><span>  5.77
+#&gt; </span><span style='color: #555555;'> 6</span><span>  5.68
+#&gt; </span><span style='color: #555555;'> 7</span><span>  5.78
+#&gt; </span><span style='color: #555555;'> 8</span><span>  5.76
+#&gt; </span><span style='color: #555555;'> 9</span><span>  6.04
+#&gt; </span><span style='color: #555555;'>10</span><span>  6.06</div></span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -10,7 +10,7 @@
 #' for different latitudes
 #' @return The evapotranspiration in mm/day
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  
 #' library("ClimMobTools")
 #' library("nasapower")
