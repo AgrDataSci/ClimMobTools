@@ -22,7 +22,7 @@
 #' \item{SU}{summer days, number of days with maximum temperature > 30 (degree Celsius)}
 #' \item{TR}{tropical nights, number of nights with maximum temperature > 25 (degree Celsius) }
 #' @examples
-#'  
+#' \dontrun{
 #' library("ClimMobTools")
 #' library("nasapower")
 #' 
@@ -38,7 +38,7 @@
 #' temperature(lonlat,
 #'             day.one = pdates,
 #'             span = 40)
-#'             
+#' }
 #' @export
 temperature <- function(object, day.one = NULL, span = NULL,
                         index = NULL, ...)

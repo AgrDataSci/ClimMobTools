@@ -37,7 +37,7 @@ A dataframe with selected indices. Options are:
 Compute temperature indices over a timespan
 }
 \examples{
- 
+\dontrun{
 library("ClimMobTools")
 library("nasapower")
 
@@ -53,5 +53,5 @@ pdates <- as.Date(pdates, origin = "1970-01-01")
 temperature(lonlat,
             day.one = pdates,
             span = 40)
-            
+}
 }

@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
       </span>
     </div>
 
@@ -110,6 +110,17 @@
       
     </div>
 
+    <div id="climmobtools-0-2-4" class="section level1">
+<h1 class="page-header">
+<a href="#climmobtools-0-2-4" class="anchor"></a>ClimMobTools 0.2-4</h1>
+<div id="cran-issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#cran-issues" class="anchor"></a>CRAN issues</h2>
+<ul>
+<li>time elapsed for <code>temperature</code> &gt;&gt;&gt; a practical example with random data was added to functions <code>temperature</code>, <code>rainfall</code>, <code>ETo</code> and <code>GDD</code>, but they are suppressed with “dontrun{}” to avoid issues with elapsed time during CRAN checks.</li>
+</ul>
+</div>
+</div>
     <div id="climmobtools-0-2-3" class="section level1">
 <h1 class="page-header">
 <a href="#climmobtools-0-2-3" class="anchor"></a>ClimMobTools 0.2-3</h1>
@@ -121,14 +132,14 @@
 <li>Function <code>seed_need</code> is added to calculate the required amount of seeds/seedlings needed for the tricot project</li>
 </ul>
 </div>
-<div id="cran-issues" class="section level2">
+<div id="cran-issues-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#cran-issues" class="anchor"></a>CRAN issues</h2>
+<a href="#cran-issues-1" class="anchor"></a>CRAN issues</h2>
 <ul>
-<li>please makew the title title case <em>&gt;&gt;&gt;</em> the title is correct <strong>ClimMobTools</strong>
+<li>please makew the title title case &gt;&gt;&gt; the title is correct <strong>ClimMobTools</strong>
 </li>
-<li>gosset is not in a standard repository nor do you have declared where to get this from. See the CRAN policies how to do that. No reason to put this in “dontrun{}”. But protect the example to only run if gosset is available ion the user’s machine. <em>&gt;&gt;&gt;</em> <strong>gosset</strong> is a package under development. All dependencies to <strong>gosset</strong> were removed and function <code>build_rankings</code> was added into <strong>ClimMobTools</strong> as a replacement to <code><a href="https://www.rdocumentation.org/packages/gosset/topics/to_rankings">gosset::to_rankings</a></code>.</li>
-<li>Perhaps also add an example that is easily executable by everyone even without gosset? <em>&gt;&gt;&gt;</em> a practical example was added, but other functions <code>rainfall</code>, <code>ETo</code> and <code>GDD</code> (which use the same approach as <code>temperature</code>) has practical examples in “dontrun{}” to avoid elapsed time during CRAN checks.</li>
+<li>gosset is not in a standard repository nor do you have declared where to get this from. See the CRAN policies how to do that. No reason to put this in “dontrun{}”. But protect the example to only run if gosset is available ion the user’s machine. &gt;&gt;&gt; <strong>gosset</strong> is a package under development. All dependencies to <strong>gosset</strong> were removed and function <code>build_rankings</code> was added into <strong>ClimMobTools</strong> as a replacement to <code>to_rankings</code>.</li>
+<li>Perhaps also add an example that is easily executable by everyone even without gosset? &gt;&gt;&gt; a practical example was added, but other functions <code>rainfall</code>, <code>ETo</code> and <code>GDD</code> (which use the same approach as <code>temperature</code>) has practical examples in “dontrun{}” to avoid elapsed time during CRAN checks.</li>
 </ul>
 </div>
 </div>
@@ -145,9 +156,9 @@
 <li>A single vignette for the package Overview</li>
 </ul>
 </div>
-<div id="cran-issues-1" class="section level2">
+<div id="cran-issues-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#cran-issues-1" class="anchor"></a>CRAN issues</h2>
+<a href="#cran-issues-2" class="anchor"></a>CRAN issues</h2>
 <ul>
 <li>Non canonical URLs in inst/doc/Environmental_indices.html</li>
 <li>Elaborate what the platform [ClimMob] is, and add web reference</li>
@@ -181,6 +192,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#climmobtools-0-2-4">0.2-4</a></li>
         <li><a href="#climmobtools-0-2-3">0.2-3</a></li>
         <li><a href="#climmobtools-0-2-2">0.2-2</a></li>
         <li><a href="#climmobtools-0-2-1">0.2-1</a></li>
