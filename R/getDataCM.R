@@ -16,6 +16,8 @@
 #' \dontrun{
 #' 
 #' # This function will not work without an API key  
+#' # the user API key can be obtained once a free ClimMob account 
+#' # is created via https://climmob.net/climmob3/
 #' 
 #' my_key <- "add_your_key"
 #' my_project <- "my_climmob_project"

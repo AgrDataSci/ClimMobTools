@@ -35,19 +35,23 @@ Compute evapotranspiration using the Blaney-Criddle method
 }
 \examples{
 \dontrun{
-
-# use the breadwheat data from package gosset 
-library("gosset")
+ 
+library("ClimMobTools")
 library("nasapower")
-library("raster")
 
-data("breadwheat", package = "gosset")
+# random geographic locations around bbox(11, 12, 55, 58)
+lonlat <- data.frame(lon = runif(10, 11, 12),
+                     lat = runif(10, 55, 58))
 
-# the evapotranspiration in the first 100 days after planting
-ETo(breadwheat[c("lon","lat")], 
-    day.one = breadwheat[["planting_date"]],
-    span = 100,
-    lat = breadwheat[["lat"]])
+# random planting dates around 2018-05-15 and 2018-05-20
+pdates <- as.integer(runif(10, 17666, 17670))
+pdates <- as.Date(pdates, origin = "1970-01-01")
+
+# the evapotranspiration in the first 50 days after planting
+ETo(lonlat,
+    day.one = pdates,
+    span = 50,
+    lat = lonlat[["lat"]])
 }
 
 }

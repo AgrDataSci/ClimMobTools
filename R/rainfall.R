@@ -19,25 +19,31 @@
 #' \item{Rtotal}{total rainfall (mm) in wet days (R >= 1)}
 #' @examples
 #' \dontrun{
-#' # use the breadwheat data from package gosset 
-#' library("gosset")
-#' library("nasapower")
-#' library("raster")
 #' 
-#' data("breadwheat", package = "gosset")
+#' library("ClimMobTools")
+#' library("nasapower")
+#' 
+#' # random geographic locations around bbox(11, 12, 55, 58)
+#' lonlat <- data.frame(lon = runif(10, 11, 12),
+#'                      lat = runif(10, 55, 58))
+#' 
+#' # random planting dates around 2018-05-15 and 2018-05-20
+#' pdates <- as.integer(runif(10, 17666, 17670))
+#' pdates <- as.Date(pdates, origin = "1970-01-01")
 #' 
 #' # calculate rainfall for the first 50 days after planting
-#' rainfall(breadwheat[c("lon","lat")], 
-#'          day.one = breadwheat[["planting_date"]], 
+#' rainfall(lonlat,
+#'          day.one = pdates,
 #'          span = 50)
-#'          
+#' 
 #' 
 #' # include the first 15 days before planting (residual precipitation)
-#' rainfall(breadwheat[c("lon","lat")],
-#'          day.one = breadwheat[["planting_date"]],
+#' rainfall(lonlat,
+#'          day.one = pdates,
 #'          span = 50,
-#'          days.before = 15)       
-#'}       
+#'          days.before = 15)
+#' 
+#' }       
 #'          
 #' @export
 rainfall <- function(object, day.one = NULL, span = NULL,

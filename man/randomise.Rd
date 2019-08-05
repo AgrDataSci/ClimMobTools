@@ -34,9 +34,9 @@ consecutive combinations also relatively balanced and A-optimal
 }
 \examples{
 ni <- 3
-no <- 50
+no <- 10
 nv <- 4
-inames <- paste("Var", 1:nv, sep="")
+inames <- c("mango","banana","grape","apple")
 
 randomise(ncomp = ni,
           nobservers = no,

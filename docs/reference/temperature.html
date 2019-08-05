@@ -167,19 +167,35 @@ All indices are given by default</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># use the breadwheat data from package gosset </span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"gosset"</span>)
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"ClimMobTools"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"nasapower"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"raster"</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"breadwheat"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"gosset"</span>)
+<span class='co'># random geographic locations around bbox(11, 12, 55, 58)</span>
+<span class='no'>lonlat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span>),
+                     <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>10</span>, <span class='fl'>55</span>, <span class='fl'>58</span>))
 
-<span class='fu'>temperature</span>(<span class='no'>breadwheat</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"lon"</span>,<span class='st'>"lat"</span>)],
-            <span class='kw'>day.one</span> <span class='kw'>=</span> <span class='no'>breadwheat</span><span class='kw'>[[</span><span class='st'>"planting_date"</span>]],
-            <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>40</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+<span class='co'># random planting dates around 2018-05-15 and 2018-05-20</span>
+<span class='no'>pdates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/integer'>as.integer</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>10</span>, <span class='fl'>17666</span>, <span class='fl'>17670</span>))
+<span class='no'>pdates</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>pdates</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>"1970-01-01"</span>)
+
+<span class='co'># get temperature indices for the first 40 days</span>
+<span class='fu'>temperature</span>(<span class='no'>lonlat</span>,
+            <span class='kw'>day.one</span> <span class='kw'>=</span> <span class='no'>pdates</span>,
+            <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>40</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 7</span><span>
+#&gt;    maxDT minDT maxNT minNT    SU    TR   DTR
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>  23.1  15.7  17.7 12.2      0     0  4.07
+#&gt; </span><span style='color: #555555;'> 2</span><span>  22.6  16.2  18.4 11.9      0     0  4.10
+#&gt; </span><span style='color: #555555;'> 3</span><span>  24.5  16.2  17.1 10.4      0     0  5.67
+#&gt; </span><span style='color: #555555;'> 4</span><span>  24.2  16.3  16.6  9.59     0     0  6.30
+#&gt; </span><span style='color: #555555;'> 5</span><span>  21.9  15.7  18.4 13.2      0     0  3.30
+#&gt; </span><span style='color: #555555;'> 6</span><span>  23.1  15.7  17.7 12.2      0     0  4.10
+#&gt; </span><span style='color: #555555;'> 7</span><span>  23.5  14.8  17.9 12.0      0     0  4.53
+#&gt; </span><span style='color: #555555;'> 8</span><span>  24.2  16.3  16.6  9.59     0     0  6.34
+#&gt; </span><span style='color: #555555;'> 9</span><span>  23.5  14.8  17.9 12.0      0     0  4.51
+#&gt; </span><span style='color: #555555;'>10</span><span>  24.2  16.4  16.3  9.17     0     0  6.87</div><div class='input'>            
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

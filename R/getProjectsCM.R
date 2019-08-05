@@ -10,7 +10,9 @@
 #' \item{creation_date}{the project's creation date}
 #' @examples
 #' \dontrun{ 
-#' # This function will not work without an API key
+#' # This function will not work without an API key  
+#' # the user API key can be obtained once a free ClimMob account 
+#' # is created via https://climmob.net/climmob3/
 #' 
 #' my_key <- "add_your_key"
 #' 

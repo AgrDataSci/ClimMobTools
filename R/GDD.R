@@ -9,18 +9,22 @@
 #' @return The number of days required to reach the growing degree days.
 #' @examples
 #' \dontrun{
-#' # use the breadwheat data from package gosset 
-#' library("gosset")
+#' library("ClimMobTools")
 #' library("nasapower")
-#' library("raster")
 #' 
-#' data("breadwheat", package = "gosset")
+#' # random geographic locations around bbox(11, 12, 55, 58)
+#' lonlat <- data.frame(lon = runif(10, 11, 12),
+#'                      lat = runif(10, 55, 58))
+#' 
+#' # random planting dates around 2018-05-15 and 2018-05-20
+#' pdates <- as.integer(runif(10, 17666, 17670))
+#' pdates <- as.Date(pdates, origin = "1970-01-01")
 #' 
 #' # Calculate the days required for the plants in these plots to reach the
 #' # maturity. The crop requires ~1800 degree days for it.
 #' 
-#' GDD(breadwheat[c("lon","lat")], 
-#'     day.one = breadwheat[["planting_date"]],
+#' GDD(lonlat, 
+#'     day.one = pdates,
 #'     degree.days = 1800,
 #'     base = 5)
 #'}

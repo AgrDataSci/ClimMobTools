@@ -117,9 +117,18 @@
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New Features</h2>
 <ul>
-<li>Function <code>build_rankings</code> is added to convert the tricot data into an object of class rankings from <strong>PlackettLuce</strong>
-</li>
+<li>Function <code>build_rankings</code> is added to convert the tricot data into an object of class rankings from <strong>PlackettLuce</strong>.</li>
 <li>Function <code>seed_need</code> is added to calculate the required amount of seeds/seedlings needed for the tricot project</li>
+</ul>
+</div>
+<div id="cran-issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#cran-issues" class="anchor"></a>CRAN issues</h2>
+<ul>
+<li>please makew the title title case <em>&gt;&gt;&gt;</em> the title is correct <strong>ClimMobTools</strong>
+</li>
+<li>gosset is not in a standard repository nor do you have declared where to get this from. See the CRAN policies how to do that. No reason to put this in “dontrun{}”. But protect the example to only run if gosset is available ion the user’s machine. <em>&gt;&gt;&gt;</em> <strong>gosset</strong> is a package under development. All dependencies to <strong>gosset</strong> were removed and function <code>build_rankings</code> was added into <strong>ClimMobTools</strong> as a replacement to <code><a href="https://www.rdocumentation.org/packages/gosset/topics/to_rankings">gosset::to_rankings</a></code>.</li>
+<li>Perhaps also add an example that is easily executable by everyone even without gosset? <em>&gt;&gt;&gt;</em> a practical example was added, but other functions <code>rainfall</code>, <code>ETo</code> and <code>GDD</code> (which use the same approach as <code>temperature</code>) has practical examples in “dontrun{}” to avoid elapsed time during CRAN checks.</li>
 </ul>
 </div>
 </div>
@@ -136,9 +145,9 @@
 <li>A single vignette for the package Overview</li>
 </ul>
 </div>
-<div id="cran-issues" class="section level2">
+<div id="cran-issues-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#cran-issues" class="anchor"></a>CRAN issues</h2>
+<a href="#cran-issues-1" class="anchor"></a>CRAN issues</h2>
 <ul>
 <li>Non canonical URLs in inst/doc/Environmental_indices.html</li>
 <li>Elaborate what the platform [ClimMob] is, and add web reference</li>

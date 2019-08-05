@@ -37,18 +37,21 @@ A dataframe with selected indices. Options are:
 Compute temperature indices over a timespan
 }
 \examples{
-\dontrun{
-
-# use the breadwheat data from package gosset 
-library("gosset")
+ 
+library("ClimMobTools")
 library("nasapower")
-library("raster")
 
-data("breadwheat", package = "gosset")
+# random geographic locations around bbox(11, 12, 55, 58)
+lonlat <- data.frame(lon = runif(10, 11, 12),
+                     lat = runif(10, 55, 58))
 
-temperature(breadwheat[c("lon","lat")], 
-            day.one = breadwheat[["planting_date"]], 
+# random planting dates around 2018-05-15 and 2018-05-20
+pdates <- as.integer(runif(10, 17666, 17670))
+pdates <- as.Date(pdates, origin = "1970-01-01")
+
+# get temperature indices for the first 40 days
+temperature(lonlat,
+            day.one = pdates,
             span = 40)
-}
-
+            
 }
