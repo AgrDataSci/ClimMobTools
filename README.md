@@ -15,6 +15,12 @@ The **ClimMobTools** package provides the toolkit for the [ClimMob](https://clim
 Installation
 ------------
 
+The package may be installed from CRAN via
+
+``` r
+install.packages("ClimMobTools")
+```
+
 The development version can be installed via
 
 ``` r

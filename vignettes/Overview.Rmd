@@ -36,6 +36,12 @@ The **ClimMobTools** package provides the toolkit employed in crowdsourcing citi
 
 ## Installation
 
+The package may be installed from CRAN via
+
+```{r cran, message=FALSE, eval=FALSE, echo=TRUE}
+install.packages("ClimMobTools")
+```
+
 The development version can be installed via
 
 ```{r install, message=FALSE, eval=FALSE, echo=TRUE}
@@ -45,8 +51,7 @@ devtools::install_github("agrobioinfoservices/ClimMobTools")
 
 ```
 
-    
-    
+
 # Usage
 
 The `breadwheat` is a dataframe from crowdsourcing citizen science trials of bread wheat (*Triticum aestivum*) varieties in India. This is a sample data available at the [ClimMob](https://climmob.net/blog/) that can be fetched using the function `getDataCM` from **ClimMobTools** and an API key from the ClimMob portal.
