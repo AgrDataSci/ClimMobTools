@@ -1,3 +1,14 @@
+# ClimMobTools 0.2-6
+
+## New features
+
+* `ETo` deals with object of class tbl_df
+
+## CRAN issues
+
+Please always write package names, software names and API names in single quotes in title and description >>> fixed
+
+
 # ClimMobTools 0.2-5
 
 ## CRAN issues

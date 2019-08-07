@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.6</span>
       </span>
     </div>
 
@@ -104,8 +104,7 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The development version can be installed via</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"devtools"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"devtools"</span>)
 
 devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"agrobioinfoservices/ClimMobTools"</span>)</code></pre></div>
 </div>
@@ -144,8 +143,7 @@ data <span class="op">%&lt;&gt;%</span><span class="st"> </span>
 <p><strong>ClimMobTools</strong> functions to compute environmental indices has the basics input data; a numeric vector of geographic information (lonlat) or an array with day and night temperature (from sources like MODIS) and the a vector of class <code>Date</code> for the first day that will be taken into account for the environmental indices. Generally the <code>Date</code> vector is the planting date from when the experiment were established, but can also refer to other phenological event during the plant development, such as day of 50% flowering or the first day of a growing season.</p>
 <p>The duration from where the environmental indices will be computed is defined by the argument <code>span</code> which can be a single integer that takes into account a single time span for the entire data set or a vector indicating the time span for each observation.</p>
 <p>Here we calculate the temperature indices for a time span of 120 days after the planting date using the function <code>temperature</code> from <strong>ClimMobTools</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="co"># first we convert the lon lat into numeric</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first we convert the lonlat into numeric</span>
 <span class="co"># and the planting dates into Date</span>
 data <span class="op">%&lt;&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lon =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(lon),

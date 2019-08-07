@@ -58,3 +58,26 @@ test_that("daytime hours", {
   
   expect_equal(r, TRUE)
 })
+
+
+test_that("accept a tibble", {
+  
+  coord <- as.data.frame(lonlat)
+  coord <- tibble::as_tibble(coord)
+  
+  e <- ETo(temp,
+           day.one = d,
+           span = 10,
+           lat = coord[,2])
+  
+  e <- !any(is.na(e))
+  
+  expect_equal(e, TRUE)
+  
+  
+})
+
+
+
+
+

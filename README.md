@@ -10,7 +10,7 @@ Package website: <https://agrobioinfoservices.github.io/ClimMobTools/>
 Overview
 --------
 
-The **ClimMobTools** package provides the toolkit for the [ClimMob](https://climmob.net/climmob3/) platform in `R`. ClimMob is an open source software for crowdsourcing citizen science in agriculture. Developed by van Etten et al. [(2019)](https://doi.org/10.1017/S0014479716000739), it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information. **ClimMobTools** enables project managers to deep explore and analyse their ClimMob data in R.
+The **ClimMobTools** package provides the toolkit for the [ClimMob](https://climmob.net/climmob3/) platform in R. ClimMob is an open source software for crowdsourcing citizen science in agriculture. Developed by van Etten et al. [(2019)](https://doi.org/10.1017/S0014479716000739), it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information. **ClimMobTools** enables project managers to deep explore and analyse their ClimMob data in R.
 
 Installation
 ------------

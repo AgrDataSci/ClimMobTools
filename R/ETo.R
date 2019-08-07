@@ -3,8 +3,8 @@
 #' Compute evapotranspiration using the Blaney-Criddle method
 #' 
 #' @inheritParams temperature
-#' @param lat the latitude (in Decimal degrees)
-#' @param Kc the crop factor for water requirement
+#' @param lat a vector for the latitude (in Decimal degrees)
+#' @param Kc a numeric value for the crop factor for water requirement
 #' @param p optional, a numeric value (from 0 to 1) used if lat is not given,
 #' representing the mean daily percentage of annual daytime hours 
 #' for different latitudes
@@ -34,8 +34,14 @@
 ETo <- function(object, day.one = NULL, span = NULL, 
                 lat = NULL, Kc = 1, p = NULL){
   
-  if (any(c("tbl_df", "tbl") %in% class(day.one))) {
+  # remove vector from a tibble object
+  if (.is_tibble(day.one)) {
     day.one <- day.one[[1]]
+  }
+  
+  # remove vector from a tibble object
+  if (.is_tibble(lat)) {
+    lat <- lat[[1]]
   }
   
   # get p if lat is provided
@@ -73,9 +79,4 @@ ETo <- function(object, day.one = NULL, span = NULL,
   
 }
 
-# Round to the nearest base value
-.round5 <- function(x, base.value) {
-  
-  base.value * round( x / base.value )
-  
-}
+

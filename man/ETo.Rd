@@ -19,9 +19,9 @@ When lonlat is used, the function makes a call to
 
 \item{span}{an integer or a vector with integers for the duration of the timespan to be captured}
 
-\item{lat}{the latitude (in Decimal degrees)}
+\item{lat}{a vector for the latitude (in Decimal degrees)}
 
-\item{Kc}{the crop factor for water requirement}
+\item{Kc}{a numeric value for the crop factor for water requirement}
 
 \item{p}{optional, a numeric value (from 0 to 1) used if lat is not given,
 representing the mean daily percentage of annual daytime hours 
