@@ -1,12 +1,12 @@
 #' Build Plackett-Luce rankings
 #'
-#' Create an object of class "rankings" or "grouped_rankings" from tricot data
+#' Create an object of class "rankings" from ClimMob data
 #'
 #' @param data a data frame with columns specified by items and input values to rank.
 #' @param items a data frame or index of \code{data} for the column(s) containing the item names
 #' @param input a data frame or index of \code{data} for the column(s) containing the values to be ranked
 #' @param additional.rank optional, a data frame for the comparisons between tricot items and the local item
-#' @param grouped.rankings optional, if TRUE return an object of class grouped_rankings
+#' @param group optional, if TRUE return an object of class "grouped_rankings"
 #' @param ... additional arguments passed to methods
 #' @return a PlackettLuce "rankings" object, which is a matrix of dense rankings 
 #' @seealso \code{\link[PlackettLuce]{rankings}} \code{\link[PlackettLuce]{grouped_rankings}}
@@ -34,7 +34,7 @@
 #'                     items = c(1:3),
 #'                     input = c(4:5),
 #'                     additional.rank = beans[c(6:8)],
-#'                     grouped.rankings = TRUE)
+#'                     group = TRUE)
 #'                     
 #' head(G)
 #' 
@@ -60,7 +60,7 @@
 #' @export
 build_rankings <- function(data = NULL, items = NULL,
                            input = NULL, additional.rank = NULL, 
-                           grouped.rankings = FALSE, ...) {
+                           group = FALSE, ...) {
   
   # get extra arguments
   dots <- list(...)
@@ -106,7 +106,7 @@ build_rankings <- function(data = NULL, items = NULL,
     itemnames <- sort(unique(as.vector(r)))
     
     # convert it into a PlackettLuce rank
-    R <- PlackettLuce::as.rankings(r, input = "ordering", labels = itemnames)
+    R <- PlackettLuce::as.rankings(r, input = "ordering", items = itemnames)
     
     # if pseudo-item were added, it is removed
     pseudo <- grepl("pseudoitem", itemnames) 
@@ -132,7 +132,7 @@ build_rankings <- function(data = NULL, items = NULL,
   
   # and into a grouped_rankings
   gi <- rep(seq_len(n), (nrow(R) / n))
-  G <- PlackettLuce::grouped_rankings(R, index = gi)
+  G <- PlackettLuce::group(R, index = gi)
   
   # check if all data is required
   if (full.output) {
@@ -140,7 +140,7 @@ build_rankings <- function(data = NULL, items = NULL,
   }
   
   # return a grouped_rankings if required
-  if (grouped.rankings) {
+  if (group) {
     R <- G
   }
   
@@ -333,7 +333,7 @@ build_rankings <- function(data = NULL, items = NULL,
   # we then convert these orderings to sub-rankings of the full set of items
   # and combine them with the rankings
   paired <- lapply(paired, function(x) {
-    x <- PlackettLuce::as.rankings(x, input = "ordering", labels = itemnames)
+    x <- PlackettLuce::as.rankings(x, input = "ordering", items = itemnames)
   })
   
   paired <- do.call("rbind", paired)

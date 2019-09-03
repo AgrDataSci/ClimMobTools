@@ -11,7 +11,7 @@ test_that("triadic ok", {
   R <- build_rankings(data = triadic,
                       items = c(1:3),
                       input = c(4:5), 
-                      grouped.rankings = TRUE)
+                      group = TRUE)
   
   R <- R[1:length(R),, as.grouped_rankings = FALSE]
   
@@ -26,7 +26,7 @@ test_that("triadic with local ok", {
                       items = c(1:3),
                       input = c(4:5), 
                       additional.rank = triadic[,6:8],
-                      grouped.rankings = TRUE)
+                      group = TRUE)
   
   R <- R[1:length(R),, as.grouped_rankings = FALSE]
   
@@ -40,7 +40,7 @@ test_that("tretra ok", {
   R <- build_rankings(data = NULL,
                       items = tetra[,c(1:5)],
                       input = tetra[,c(6:10)], 
-                      grouped.rankings = TRUE)
+                      group = TRUE)
   
   R <- R[1:length(R),, as.grouped_rankings = FALSE]
   

@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Build Plackett-Luce rankings — build_rankings" />
 
-<meta property="og:description" content="Create an object of class &quot;rankings&quot; or &quot;grouped_rankings&quot; from tricot data" />
+<meta property="og:description" content="Create an object of class &quot;rankings&quot; from ClimMob data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.7</span>
       </span>
     </div>
 
@@ -116,12 +116,12 @@
 
     <div class="ref-description">
     
-    <p>Create an object of class "rankings" or "grouped_rankings" from tricot data</p>
+    <p>Create an object of class "rankings" from ClimMob data</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>build_rankings</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>input</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>additional.rank</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grouped.rankings</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>additional.rank</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,8 +143,8 @@
       <td><p>optional, a data frame for the comparisons between tricot items and the local item</p></td>
     </tr>
     <tr>
-      <th>grouped.rankings</th>
-      <td><p>optional, if TRUE return an object of class grouped_rankings</p></td>
+      <th>group</th>
+      <td><p>optional, if TRUE return an object of class "grouped_rankings"</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -158,7 +158,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/PlackettLuce/topics/rankings'>rankings</a></code> <code><a href='https://www.rdocumentation.org/packages/PlackettLuce/topics/grouped_rankings'>grouped_rankings</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/PlackettLuce/topics/rankings'>rankings</a></code> <code><a href='https://www.rdocumentation.org/packages/PlackettLuce/topics/PlackettLuce-deprecated'>grouped_rankings</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -189,7 +189,7 @@
                     <span class='kw'>items</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>),
                     <span class='kw'>input</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>4</span>:<span class='fl'>5</span>),
                     <span class='kw'>additional.rank</span> <span class='kw'>=</span> <span class='no'>beans</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>6</span>:<span class='fl'>8</span>)],
-                    <span class='kw'>grouped.rankings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+                    <span class='kw'>group</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>G</span>)</div><div class='output co'>#&gt;                                                 1 
 #&gt;  "PM2 Don Rey &gt; SJ ..., Local &gt; BRT 103-182, ..." 

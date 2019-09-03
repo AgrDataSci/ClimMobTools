@@ -1,3 +1,13 @@
+# ClimMobTools 0.2-7
+
+## Improvements
+* Update dependencies from PlackettLuce in the function `build_rankings`
+
+
+## Changes in behaviour
+* Argument "grouped.rankings" is replaced by "group" in `build_rankings`
+
+
 # ClimMobTools 0.2-6
 
 ## New features
