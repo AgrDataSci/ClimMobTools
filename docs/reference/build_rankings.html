@@ -144,11 +144,11 @@
     </tr>
     <tr>
       <th>group</th>
-      <td><p>optional, if TRUE return an object of class "grouped_rankings"</p></td>
+      <td><p>logical, if TRUE return an object of class "grouped_rankings"</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments passed to methods</p></td>
+      <td><p>additional arguments passed to methods. See details</p></td>
     </tr>
     </table>
     
@@ -156,9 +156,13 @@
 
     <p>a PlackettLuce "rankings" object, which is a matrix of dense rankings</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>full.output: logical, to return a list with a "rankings", a "grouped_rankings" and the ordered items</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/PlackettLuce/topics/rankings'>rankings</a></code> <code><a href='https://www.rdocumentation.org/packages/PlackettLuce/topics/PlackettLuce-deprecated'>grouped_rankings</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/PlackettLuce/topics/rankings'>rankings</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -205,8 +209,9 @@
 #&gt;   "ALS 0532-6 &gt; INT ..., ALS 0532-6 &gt; Local, ..." </div><div class='input'>
 <span class='co'>############################################################</span>
 
-<span class='co'># rankings with more than 3 items in a tricot project</span>
-<span class='co'># 5 items randomly assigned</span>
+<span class='co'># rankings with five items in a ClimMob project</span>
+
+<span class='no'>items</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='randomise.html'>randomise</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"green"</span>,<span class='st'>"blue"</span>,<span class='st'>"red"</span>,<span class='st'>"white"</span>,<span class='st'>"yellow"</span>))
 
 <span class='no'>input</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fl'>NA</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>5</span>))
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>input</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"position_item_"</span>,<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>5</span>])
@@ -215,15 +220,13 @@
   <span class='no'>input</span>[<span class='no'>s</span>,] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)
 }
 
-<span class='no'>items</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='randomise.html'>randomise</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"green"</span>,<span class='st'>"blue"</span>,<span class='st'>"red"</span>,<span class='st'>"white"</span>,<span class='st'>"yellow"</span>))
-
 <span class='fu'>build_rankings</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='no'>items</span>,
                <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>input</span>)</div><div class='output co'>#&gt;                                     1                                     2 
-#&gt; "green &gt; red &gt; yellow &gt; blue &gt; white" "white &gt; green &gt; blue &gt; yellow &gt; red" 
+#&gt; "green &gt; blue &gt; yellow &gt; red &gt; white" "white &gt; red &gt; yellow &gt; blue &gt; green" 
 #&gt;                                     3                                     4 
-#&gt; "white &gt; blue &gt; green &gt; yellow &gt; red" "white &gt; yellow &gt; red &gt; green &gt; blue" 
+#&gt; "white &gt; yellow &gt; red &gt; green &gt; blue" "green &gt; yellow &gt; blue &gt; red &gt; white" 
 #&gt;                                     5 
-#&gt; "blue &gt; yellow &gt; red &gt; green &gt; white" </div><div class='input'>
+#&gt; "green &gt; blue &gt; red &gt; white &gt; yellow" </div><div class='input'>
 
 </div></pre>
   </div>
@@ -233,6 +236,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
@@ -244,7 +249,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kaue de Sousa, Jacob van Etten, Sam Dumble, Brandon Madriz, Carlos Quiros.</p>
+  <p>Developed by Kaue de Sousa, Jacob van Etten, Sam Dumble, Nicolas Greliche, Brandon Madriz, Carlos Quiros.</p>
 </div>
 
 <div class="pkgdown">

@@ -16,15 +16,18 @@ build_rankings(data = NULL, items = NULL, input = NULL,
 
 \item{additional.rank}{optional, a data frame for the comparisons between tricot items and the local item}
 
-\item{group}{optional, if TRUE return an object of class "grouped_rankings"}
+\item{group}{logical, if TRUE return an object of class "grouped_rankings"}
 
-\item{...}{additional arguments passed to methods}
+\item{...}{additional arguments passed to methods. See details}
 }
 \value{
 a PlackettLuce "rankings" object, which is a matrix of dense rankings
 }
 \description{
 Create an object of class "rankings" from ClimMob data
+}
+\details{
+full.output: logical, to return a list with a "rankings", a "grouped_rankings" and the ordered items
 }
 \examples{
  
@@ -56,8 +59,9 @@ head(G)
 
 ############################################################
 
-# rankings with more than 3 items in a tricot project
-# 5 items randomly assigned
+# rankings with five items in a ClimMob project
+
+items <- randomise(5, 5, 5, c("green","blue","red","white","yellow"))
 
 input <- as.data.frame(matrix(NA, nrow = 5, ncol = 5))
 names(input) <- paste0("position_item_",LETTERS[1:5])
@@ -66,13 +70,11 @@ for(s in 1:5) {
   input[s,] <- sample(1:5)
 }
 
-items <- randomise(5, 5, 5, c("green","blue","red","white","yellow"))
-
 build_rankings(items = items, 
                input = input)
 
 
 }
 \seealso{
-\code{\link[PlackettLuce]{rankings}} \code{\link[PlackettLuce]{grouped_rankings}}
+\code{\link[PlackettLuce]{rankings}}
 }
