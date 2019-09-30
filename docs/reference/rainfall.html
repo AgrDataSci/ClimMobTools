@@ -86,6 +86,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/Environmental_variables.html">Environmental variables</a>
+    </li>
+    <li>
       <a href="../articles/Overview.html">Introduction to ClimMobTools</a>
     </li>
   </ul>
@@ -182,38 +185,38 @@ All indices are given by default</p></td>
 <span class='co'># calculate rainfall for the first 50 days after planting</span>
 <span class='fu'>rainfall</span>(<span class='no'>lonlat</span>,
          <span class='kw'>day.one</span> <span class='kw'>=</span> <span class='no'>pdates</span>,
-         <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 8
+         <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 8</span><span>
 #&gt;     MLDS  MLWS R10mm R20mm  SDII Rx1day Rx5day Rtotal
-#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1    14     3     1     0  3.66  11.6    14.9   38.6
-#&gt;  2    14     3     0     0  5.06   8.03   21.6   51.1
-#&gt;  3    15     3     0     0  4.88   7.77   20.2   50.0
-#&gt;  4    12     3     0     0  3.53   9.11   14.0   37.4
-#&gt;  5    14     3     0     0  2.89   6.83   11.6   29.8
-#&gt;  6    14     3     0     0  3.60   9.11   14.0   37.4
-#&gt;  7    14     3     0     0  4.88   7.77   20.2   50.0
-#&gt;  8    12     3     0     0  3.72   8.26   17.5   44.6
-#&gt;  9    14     3     0     0  3.76   8.26   17.5   44.6
-#&gt; 10    13     3     0     0  3.68   9.81   15.1   44.8</div><div class='input'>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>    14     3     1     0  3.66  11.6    14.9   38.6
+#&gt; </span><span style='color: #555555;'> 2</span><span>    14     3     0     0  5.06   8.03   21.6   51.1
+#&gt; </span><span style='color: #555555;'> 3</span><span>    15     3     0     0  4.88   7.77   20.2   50.0
+#&gt; </span><span style='color: #555555;'> 4</span><span>    12     3     0     0  3.53   9.11   14.0   37.4
+#&gt; </span><span style='color: #555555;'> 5</span><span>    14     3     0     0  2.89   6.83   11.6   29.8
+#&gt; </span><span style='color: #555555;'> 6</span><span>    14     3     0     0  3.60   9.11   14.0   37.4
+#&gt; </span><span style='color: #555555;'> 7</span><span>    14     3     0     0  4.88   7.77   20.2   50.0
+#&gt; </span><span style='color: #555555;'> 8</span><span>    12     3     0     0  3.72   8.26   17.5   44.6
+#&gt; </span><span style='color: #555555;'> 9</span><span>    14     3     0     0  3.76   8.26   17.5   44.6
+#&gt; </span><span style='color: #555555;'>10</span><span>    13     3     0     0  3.68   9.81   15.1   44.8</div><div class='input'>
 
 <span class='co'># include the first 15 days before planting (residual precipitation)</span>
 <span class='fu'>rainfall</span>(<span class='no'>lonlat</span>,
          <span class='kw'>day.one</span> <span class='kw'>=</span> <span class='no'>pdates</span>,
          <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-         <span class='kw'>days.before</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 8
+         <span class='kw'>days.before</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 8</span><span>
 #&gt;     MLDS  MLWS R10mm R20mm  SDII Rx1day Rx5day Rtotal
-#&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1    14     3     1     0  3.64  11.6    14.9   40.8
-#&gt;  2    14     3     0     0  4.86   8.03   21.6   52.2
-#&gt;  3    15     3     0     0  4.68   7.77   20.2   51.1
-#&gt;  4    12     3     0     0  3.66   9.11   14.0   49.2
-#&gt;  5    14     3     0     0  2.90   6.83   11.6   32.0
-#&gt;  6    14     3     0     0  3.53   9.11   14.0   39.2
-#&gt;  7    14     3     0     0  4.69   7.77   20.2   51.1
-#&gt;  8    12     3     0     0  3.58   8.26   17.5   48.8
-#&gt;  9    14     3     0     0  3.66   8.26   17.5   45.8
-#&gt; 10    13     3     0     0  3.60   9.81   15.1   46.0</div><div class='input'>
-</div><div class='input'>         
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>    14     3     1     0  3.64  11.6    14.9   40.8
+#&gt; </span><span style='color: #555555;'> 2</span><span>    14     3     0     0  4.86   8.03   21.6   52.2
+#&gt; </span><span style='color: #555555;'> 3</span><span>    15     3     0     0  4.68   7.77   20.2   51.1
+#&gt; </span><span style='color: #555555;'> 4</span><span>    12     3     0     0  3.66   9.11   14.0   49.2
+#&gt; </span><span style='color: #555555;'> 5</span><span>    14     3     0     0  2.90   6.83   11.6   32.0
+#&gt; </span><span style='color: #555555;'> 6</span><span>    14     3     0     0  3.53   9.11   14.0   39.2
+#&gt; </span><span style='color: #555555;'> 7</span><span>    14     3     0     0  4.69   7.77   20.2   51.1
+#&gt; </span><span style='color: #555555;'> 8</span><span>    12     3     0     0  3.58   8.26   17.5   48.8
+#&gt; </span><span style='color: #555555;'> 9</span><span>    14     3     0     0  3.66   8.26   17.5   45.8
+#&gt; </span><span style='color: #555555;'>10</span><span>    13     3     0     0  3.60   9.81   15.1   46.0</div><div class='input'>
+</div></span><div class='input'>         
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

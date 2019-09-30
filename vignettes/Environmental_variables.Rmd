@@ -1,0 +1,161 @@
+---
+title: "Environmental variables"
+package: ClimMobTools
+author:
+- name: Kauê de Sousa
+  affiliation: Department of Agricultural Sciences, Høgskolen i Innlandet, Hamar, Norway; and Bioversity International, Turrialba, Costa Rica
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to ClimMobTools}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+bibliography: ["ClimMobTools.bib"]
+csl: citation_style.csl
+---
+  
+```{r setup, include=FALSE}
+TRAVIS <- !identical(tolower(Sys.getenv("TRAVIS")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = TRAVIS
+)
+```
+
+## Introduction
+
+Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. **ClimMobTools** provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using  [Plackett-Luce](https://CRAN.R-project.org/package=PlackettLuce)[@Turner2018] or [Bradley-Terry](https://CRAN.R-project.org/package=psychotree)[@Wickelmaier2018] model. 
+
+The climatic variables available in **ClimMobTools** were previously used for the environmental analysis of wheat trial data[@Kehel2016] and explain the changes in climatic patterns due to climate change[@Aguilar2005]. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation[@VanEtten2019].
+
+
+## Source of data and input
+
+Environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)[@Funk2015] for rainfall, and MODIS (MYD11A2)[@Wan2015] for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with tricot data[@VanEtten2019]. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.
+
+The other alternative relies on using [NASA POWER](https://power.larc.nasa.gov/). By providing the planting dates and the geographic information (lon and lat), **ClimMobTools** makes an internal call to [nasapower](https://CRAN.R-project.org/package=nasapower)[@Sparks2018] to fetch the required time series data and compute the environmental indices. It do not require much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.
+
+### Breadwheat data 
+
+In this article we use the **NASA POWER** data via the `R` package nasapower as external input data for the environmental indices. We use the bread wheat data from Vaishali, India as internal input with planing dates and geographic information. In the *Introduction to ClimMobTools* [article](https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html) we show how to fetch the ClimMob data into your `R` section using an API key. 
+
+```{r fetchdata, message=FALSE, eval=FALSE, echo=TRUE}
+library("ClimMobTools")
+library("nasapower")
+library("tidyverse")
+library("magrittr")
+
+key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
+
+data <- getDataCM(key = key,
+                  project = "breadwheat",
+                  tidynames = TRUE)
+
+
+# data into wide format
+data %<>% 
+  filter(!str_detect(variable, "survey")) %>% 
+  group_by(id) %>%
+  distinct(id, variable, value) %>%
+  spread(variable, value)
+
+# convert the lon lat into numeric
+# and the planting dates into Date
+data %<>%
+  mutate(lon = as.numeric(lon),
+         lat = as.numeric(lat),
+         plantingdate = as.Date(plantingdate, 
+                                format = "%Y-%m-%d"))
+
+# take the the first 25 observations (to save time)
+data <- data[1:25, ]
+
+```
+
+## Temperature 
+
+The functions to compute environmental indices has the basics input data; a numeric vector of geographic information (lonlat) or an array with day and night temperature (from sources like MODIS) and the a vector of class `Date` for the first day that will be taken into account for the environmental indices. Generally the `Date` vector is the planting date from when the experiment were established, but can also refer to other phenological event during the plant development, such as day of 50% flowering. 
+
+The duration from where the environmental indices will be computed is defined by the argument `span` which can be a single integer that takes into account a single time span for all tricot experiments or a vector indicating the time span for each of the observations. 
+
+Here we compute the temperature indices for a time span of 120 days after the planting date:
+  
+```{r temperature, message=FALSE, eval=FALSE, echo=TRUE}
+temp <- temperature(data[c("lon","lat")], 
+                    day.one = data["plantingdate"], 
+                    span = 120)
+
+```
+
+### Timespan defined by growing degree days
+
+If the time span is unknown and or there is an interest in capture the variability among different locations. We can apply the function `GDD` which estimates the number of days needed for the crop to reach the required degree days. 
+
+Here we define that the required degree days for wheat is 1800 °C. The growing degree days are computed with a base 5, from planting date and on:
+  
+```{r degreedays, message=FALSE, eval=FALSE, echo=TRUE}
+
+gdd <- GDD(data[c("lon","lat")], 
+           day.one = data["plantingdate"],
+           degree.days = 1800,
+           base = 5)
+
+```
+
+Then, these growing degree days can be applied as time span to compute the temperature:
+  
+```{r temp_gdd, message=FALSE, eval=FALSE, echo=TRUE}
+temp <- temperature(data[c("lon","lat")], 
+                    day.one = data["plantingdate"], 
+                    span = gdd)
+
+```
+
+
+## Rainfall 
+
+Precipitation indices can also be computed in the same way as the temperature indices. The external input data can be fetched by NASA POWER or by providing a matrix with CHIRPS data.
+
+Here we use the NASA POWER data with a time span defined by the growing degree days using the function `rainfall` from **ClimMobTools**.  
+
+```{r rain, message=FALSE, eval=FALSE, echo=TRUE}
+rain <- rainfall(data[c("lon","lat")], 
+                 day.one = data["plantingdate"],
+                 span = gdd)
+
+```
+
+Function `rainfall` has also a feature that enables the indices to be calculated from some days before the planting date. This is important for case studies where a residual precipitation must be taken into account. To do so, we use the argument `days.before`:
+  
+  
+```{r rain2, eval=FALSE, message=FALSE, eval=FALSE, echo=TRUE}
+rain <- rainfall(data[c("lon","lat")], 
+                 day.one = data["plantingdate"], 
+                 span = gdd,
+                 days.before = 15)
+
+
+```
+
+
+## Evapotranspiration
+
+Evapotranspiration can be defined as the sum of evaporation and plant transpiration from the Earth's surface to the atmosphere. This is also an important index to include in models for GxE interactions. In **ClimMobTools** the index can be calculate using the function `ETo` which computes the evapotranspiration based on the Blaney-Criddle method, an ideal equation when only air-temperature data sets are available for a site. 
+
+
+```{r eto, message=FALSE, eval=FALSE, echo=TRUE}
+eto <- ETo(data[c("lon","lat")], 
+           day.one = data["plantingdate"],
+           span = gdd,
+           lat = data["lat"])
+
+```
+
+
+Finally, these indices can be combined into a single data set with the **PlackettLuce** rankings to assess if the climate plays a role on the crop performance as shown in this [article](https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html).
+
+
+## References
+
+
+
