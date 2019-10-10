@@ -1,0 +1,39 @@
+
+**`r paste(trait_labels[i])`**
+
+```{r,include=FALSE,echo=FALSE}
+
+best<-subset(metadat,trait==trait_names[i]&bw=="best")$num
+worst<-subset(metadat,trait==trait_names[i]&bw=="worst")$num
+  
+fav1<-favourability(a=df[,vars[1]],
+                   b=df[,vars[2]],
+                   c=df[,vars[3]],
+                   best=df[,best],
+                   worst=df[,worst])
+fav2<-fav1
+
+fav2$best_per<-formattable::percent(fav2$best_per/100,1)
+fav2$worst_per<-formattable::percent(fav2$worst_per/100,1)
+fav2$wins<-formattable::percent(fav2$wins,1)
+fav2$Fav_Score<-round(fav2$Fav_Score,1)
+
+colnames(fav2)<-c(option,"N","% Top Ranked","% Bottom Ranked","% Contests Won","Net Favourability Score")
+
+
+
+p2<-favourability_plot(fav1)+ggtitle(trait_short[i])+ylim(-100,100)+xlab(option)
+```
+
+```{r}
+kable(fav2[nrow(fav2):1,],row.names = FALSE,
+      caption=paste("Table 2.2.",i,": Favourability Statistics for ",trait_short[i],sep=""))
+```
+
+*Figure `r paste("2.2.",i,sep="")`*
+```{r}
+p2
+```
+
+
+

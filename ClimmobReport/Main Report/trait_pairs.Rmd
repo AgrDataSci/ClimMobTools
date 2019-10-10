@@ -1,0 +1,20 @@
+**`r trait_labels[i]`**
+
+```{r}
+best<-subset(metadat,trait==trait_names[i]&bw=="best")$num
+  worst<-subset(metadat,trait==trait_names[i]&bw=="worst")$num
+  
+cont_t<-contests(a=df[,vars[1]],
+                   b=df[,vars[2]],
+                   c=df[,vars[3]],
+                   best=df[,best],
+                   worst=df[,worst])
+```
+
+*Figure `r paste("2.4.",i,sep="")`*
+```{r,fig.height=11,fig.width=9}
+cont_t[[2]]+
+  ggtitle(paste("Head to Head Performance:",trait_short[i]))+
+  ylab("% Contests Preferred")+xlab(option)
+
+```

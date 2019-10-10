@@ -1,0 +1,17 @@
+---
+geometry: left=0cm,right=0cm,top=-1cm,bottom=-1cm
+output:
+  pdf_document: default
+  word_document: 
+    reference_docx: Word_Style.docx
+  html_document:
+    df_print: paged
+---
+```{r setup_opts, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,error = FALSE,message=FALSE,warning = FALSE)
+```
+
+```{r image-ref-for-in-text, echo = FALSE, message=FALSE, fig.align='center', out.width='.99\\linewidth', fig.pos='H'}
+knitr::include_graphics(paste0("png Files/",ranker_id,".png"))
+knitr::include_graphics("png Files/items.png")
+```
