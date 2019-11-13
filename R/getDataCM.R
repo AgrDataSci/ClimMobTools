@@ -1,6 +1,6 @@
 #' Get ClimMob data
 #'
-#' Fetch the trial data from a ClimMob project using an API key
+#' Fetch the trial data from a ClimMob project using an application programming interface (API) key
 #'
 #' @param project a character for the project id
 #' @param tidynames logical, if TRUE suppress ODK strings

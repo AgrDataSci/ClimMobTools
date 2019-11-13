@@ -8,7 +8,7 @@ getDataCM(key = NULL, project = NULL, tidynames = FALSE,
   pivot.wider = FALSE, ...)
 }
 \arguments{
-\item{key}{a character for the ClimMob user API key}
+\item{key}{a character for the user's application programming interface (API) key}
 
 \item{project}{a character for the project id}
 
@@ -26,7 +26,7 @@ A data frame with the project data
 \item{value}{the value for each variable}
 }
 \description{
-Fetch the trial data from a ClimMob project using an API key
+Fetch the trial data from a ClimMob project using an application programming interface (API) key
 }
 \examples{
 \dontrun{

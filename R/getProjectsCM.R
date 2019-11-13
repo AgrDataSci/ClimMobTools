@@ -1,8 +1,8 @@
 #' Get ClimMob projects 
 #'
-#' Fetch the list of ClimMob projects using your API key
+#' Fetch the list of ClimMob projects using an application programming interface (API) key
 #'
-#' @param key a character for the ClimMob user API key
+#' @param key a character for the user's application programming interface (API) key
 #' @return A data frame with the ClimMob projects 
 #' \item{project_id}{the project unique id}
 #' \item{name}{the project name}

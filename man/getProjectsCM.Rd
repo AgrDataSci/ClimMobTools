@@ -7,7 +7,7 @@
 getProjectsCM(key = NULL)
 }
 \arguments{
-\item{key}{a character for the ClimMob user API key}
+\item{key}{a character for the user's application programming interface (API) key}
 }
 \value{
 A data frame with the ClimMob projects 
@@ -17,7 +17,7 @@ A data frame with the ClimMob projects
 \item{creation_date}{the project's creation date}
 }
 \description{
-Fetch the list of ClimMob projects using your API key
+Fetch the list of ClimMob projects using an application programming interface (API) key
 }
 \examples{
 \dontrun{ 
