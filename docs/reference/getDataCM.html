@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Get ClimMob data — getDataCM" />
 
-<meta property="og:description" content="Fetch the trial data from a ClimMob project using an API key" />
+<meta property="og:description" content="Fetch the trial data from a ClimMob project using an application programming interface (API) key" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
       </span>
     </div>
 
@@ -119,19 +119,24 @@
 
     <div class="ref-description">
     
-    <p>Fetch the trial data from a ClimMob project using an API key</p>
+    <p>Fetch the trial data from a ClimMob project using an application programming interface (API) key</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>getDataCM</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>project</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidynames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pivot.wider</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>getDataCM</span>(
+  <span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>project</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tidynames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pivot.wider</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>key</th>
-      <td><p>a character for the ClimMob user API key</p></td>
+      <td><p>a character for the user's application programming interface (API) key</p></td>
     </tr>
     <tr>
       <th>project</th>
