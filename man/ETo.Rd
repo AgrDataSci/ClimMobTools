@@ -4,8 +4,7 @@
 \alias{ETo}
 \title{Evapotranspiration}
 \usage{
-ETo(object, day.one = NULL, span = NULL, lat = NULL, Kc = 1,
-  p = NULL)
+ETo(object, day.one = NULL, span = NULL, lat = NULL, Kc = 1, p = NULL)
 }
 \arguments{
 \item{object}{a numeric vector of geographic coordinates (lonlat) or

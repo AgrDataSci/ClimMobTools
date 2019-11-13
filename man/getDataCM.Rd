@@ -4,8 +4,13 @@
 \alias{getDataCM}
 \title{Get ClimMob data}
 \usage{
-getDataCM(key = NULL, project = NULL, tidynames = FALSE,
-  pivot.wider = FALSE, ...)
+getDataCM(
+  key = NULL,
+  project = NULL,
+  tidynames = FALSE,
+  pivot.wider = FALSE,
+  ...
+)
 }
 \arguments{
 \item{key}{a character for the user's application programming interface (API) key}

@@ -4,8 +4,7 @@
 \alias{GDD}
 \title{Growing Degree Days}
 \usage{
-GDD(object, day.one = NULL, degree.days = NULL, base = NULL,
-  span = NULL, ...)
+GDD(object, day.one = NULL, degree.days = NULL, base = NULL, span = NULL, ...)
 }
 \arguments{
 \item{object}{a numeric vector of geographic coordinates (lonlat) or

@@ -54,7 +54,7 @@ rainfall <- function(object, day.one = NULL, span = NULL,
     index <- c("MLDS","MLWS","R10mm","R20mm","SDII","Rx1day","Rx5day","Rtotal")
   }
   
-  #get timespan
+  # get timespan
   if (dim(object)[2] == 2) {
     r <- .get_timespan(object, day.one, span, pars = "PRECTOT", ...)
   } else {

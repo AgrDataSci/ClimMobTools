@@ -4,8 +4,14 @@
 \alias{build_rankings}
 \title{Build Plackett-Luce rankings}
 \usage{
-build_rankings(data = NULL, items = NULL, input = NULL,
-  additional.rank = NULL, group = FALSE, ...)
+build_rankings(
+  data = NULL,
+  items = NULL,
+  input = NULL,
+  additional.rank = NULL,
+  group = FALSE,
+  ...
+)
 }
 \arguments{
 \item{data}{a data frame with columns specified by items and input values to rank.}

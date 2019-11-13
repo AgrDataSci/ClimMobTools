@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: Tools for Crowdsourcing Citizen Science in Agriculture
-Version: 0.2-7
+Version: 0.2-8
 Authors@R: c(person("Kaue", "de Sousa", 
         email = "kaue.desousa@inn.no", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0002-7571-7845")),
@@ -39,5 +39,5 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0)
 Language: en-GB
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 VignetteBuilder: knitr

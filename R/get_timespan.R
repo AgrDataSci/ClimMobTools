@@ -64,8 +64,11 @@
   if (nasa_power) {
     
     # define geographic boundaries for lonlat
-    lims <- with(object, c(min(object[,1]), min(object[,2]),
-                           max(object[,1]), max(object[,2])))
+    lims <- with(object, c(floor(min(object[,1])), 
+                           floor(min(object[,2])),
+                           ceiling(max(object[,1])), 
+                           ceiling(max(object[,2]))))
+    
     # the first and last date to fetch
     dates <- c(min(b), maxend)
     # the projection
