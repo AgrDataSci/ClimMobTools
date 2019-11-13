@@ -1,3 +1,8 @@
+# ClimMobTools 0.2-8
+
+### Improvements
+* `temperature` and `rainfall` now deals with one single lonlat point 
+
 # ClimMobTools 0.2-7
 
 ### Improvements

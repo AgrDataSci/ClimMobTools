@@ -79,27 +79,27 @@
       <h1>Environmental variables</h1>
                         <h4 class="author">Kauê de Sousa</h4>
             <address class="author_afil">
-      Department of Agricultural Sciences, Høgskolen i Innlandet, Hamar, Norway; and Bioversity International, Turrialba, Costa Rica<br><div class="hidden name"><code>Environmental_variables.Rmd</code></div>
+      Department of Agricultural Sciences, Høgskolen i Innlandet, Hamar, Norway; and Bioversity International, Rome, Italy<br><div class="hidden name"><code>Environmental_variables.Rmd</code></div>
 
     </address>
 </div>
 
     
     
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>Understanding how different crop varieties respond to environmental variation is a valuable approach to provide recommendations based on genotype x environment (GxE) interactions for climate adaptation. <strong>ClimMobTools</strong> provides the toolkit to compute environmental variables that serves as input for the ranking analysis with explanatory variables using <a href="https://CRAN.R-project.org/package=PlackettLuce">Plackett-Luce</a><span class="citation"><sup>1</sup></span> or <a href="https://CRAN.R-project.org/package=psychotree">Bradley-Terry</a><span class="citation"><sup>2</sup></span> model.</p>
 <p>The climatic variables available in <strong>ClimMobTools</strong> were previously used for the environmental analysis of wheat trial data<span class="citation"><sup>3</sup></span> and explain the changes in climatic patterns due to climate change<span class="citation"><sup>4</sup></span>. In a more advanced analysis, these variables can be applied with seasonal forecasts and risk analysis to provide farm recommendations for climate adaptation<span class="citation"><sup>5</sup></span>.</p>
 </div>
-<div id="source-of-data-and-input" class="section level2">
-<h2 class="hasAnchor">
-<a href="#source-of-data-and-input" class="anchor"></a>Source of data and input</h2>
+<div id="source-of-data-and-input" class="section level1">
+<h1 class="hasAnchor">
+<a href="#source-of-data-and-input" class="anchor"></a>Source of data and input</h1>
 <p>Environmental data can be computed using input from time series databases such as the Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)<span class="citation"><sup>6</sup></span> for rainfall, and MODIS (MYD11A2)<span class="citation"><sup>7</sup></span> for land surface temperature. These databases has the advantage to be free and publicly available sources of global coverage and a high resolution (0.05°), and have been used in previous studies with tricot data<span class="citation"><sup>5</sup></span>. However, it requires much computer capacity to extract this information and produce the matrix for the environmental indices. MODIS data also requires some work to reduce noise and fill gaps.</p>
 <p>The other alternative relies on using <a href="https://power.larc.nasa.gov/">NASA POWER</a>. By providing the planting dates and the geographic information (lon and lat), <strong>ClimMobTools</strong> makes an internal call to <a href="https://CRAN.R-project.org/package=nasapower">nasapower</a><span class="citation"><sup>8</sup></span> to fetch the required time series data and compute the environmental indices. It do not require much computer capacity but requires a persistent internet connection. NASAPOWER, however has a low grid resolution (0.5°) compared to MODIS and CHIRPS and could not provide the expected results for GxE interactions in a narrow geographical range.</p>
-<div id="breadwheat-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#breadwheat-data" class="anchor"></a>Breadwheat data</h3>
+<div id="breadwheat-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breadwheat-data" class="anchor"></a>Breadwheat data</h2>
 <p>In this article we use the <strong>NASA POWER</strong> data via the <code>R</code> package nasapower as external input data for the environmental indices. We use the bread wheat data from Vaishali, India as internal input with planing dates and geographic information. In the <em>Introduction to ClimMobTools</em> <a href="https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html">article</a> we show how to fetch the ClimMob data into your <code>R</code> section using an API key.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ClimMobTools"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"nasapower"</span>)
@@ -132,18 +132,18 @@ data <span class="op">%&lt;&gt;%</span>
 data &lt;-<span class="st"> </span>data[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>, ]</code></pre></div>
 </div>
 </div>
-<div id="temperature" class="section level2">
-<h2 class="hasAnchor">
-<a href="#temperature" class="anchor"></a>Temperature</h2>
+<div id="temperature" class="section level1">
+<h1 class="hasAnchor">
+<a href="#temperature" class="anchor"></a>Temperature</h1>
 <p>The functions to compute environmental indices has the basics input data; a numeric vector of geographic information (lonlat) or an array with day and night temperature (from sources like MODIS) and the a vector of class <code>Date</code> for the first day that will be taken into account for the environmental indices. Generally the <code>Date</code> vector is the planting date from when the experiment were established, but can also refer to other phenological event during the plant development, such as day of 50% flowering.</p>
 <p>The duration from where the environmental indices will be computed is defined by the argument <code>span</code> which can be a single integer that takes into account a single time span for all tricot experiments or a vector indicating the time span for each of the observations.</p>
 <p>Here we compute the temperature indices for a time span of 120 days after the planting date:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/temperature.html">temperature</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
                     <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>], 
                     <span class="dt">span =</span> <span class="dv">120</span>)</code></pre></div>
-<div id="timespan-defined-by-growing-degree-days" class="section level3">
-<h3 class="hasAnchor">
-<a href="#timespan-defined-by-growing-degree-days" class="anchor"></a>Timespan defined by growing degree days</h3>
+<div id="timespan-defined-by-growing-degree-days" class="section level2">
+<h2 class="hasAnchor">
+<a href="#timespan-defined-by-growing-degree-days" class="anchor"></a>Timespan defined by growing degree days</h2>
 <p>If the time span is unknown and or there is an interest in capture the variability among different locations. We can apply the function <code>GDD</code> which estimates the number of days needed for the crop to reach the required degree days.</p>
 <p>Here we define that the required degree days for wheat is 1800 °C. The growing degree days are computed with a base 5, from planting date and on:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
@@ -157,9 +157,9 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
                     <span class="dt">span =</span> gdd)</code></pre></div>
 </div>
 </div>
-<div id="rainfall" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rainfall" class="anchor"></a>Rainfall</h2>
+<div id="rainfall" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rainfall" class="anchor"></a>Rainfall</h1>
 <p>Precipitation indices can also be computed in the same way as the temperature indices. The external input data can be fetched by NASA POWER or by providing a matrix with CHIRPS data.</p>
 <p>Here we use the NASA POWER data with a time span defined by the growing degree days using the function <code>rainfall</code> from <strong>ClimMobTools</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rain &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rainfall.html">rainfall</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
@@ -171,9 +171,9 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
                  <span class="dt">span =</span> gdd,
                  <span class="dt">days.before =</span> <span class="dv">15</span>)</code></pre></div>
 </div>
-<div id="evapotranspiration" class="section level2">
-<h2 class="hasAnchor">
-<a href="#evapotranspiration" class="anchor"></a>Evapotranspiration</h2>
+<div id="evapotranspiration" class="section level1">
+<h1 class="hasAnchor">
+<a href="#evapotranspiration" class="anchor"></a>Evapotranspiration</h1>
 <p>Evapotranspiration can be defined as the sum of evaporation and plant transpiration from the Earth’s surface to the atmosphere. This is also an important index to include in models for GxE interactions. In <strong>ClimMobTools</strong> the index can be calculate using the function <code>ETo</code> which computes the evapotranspiration based on the Blaney-Criddle method, an ideal equation when only air-temperature data sets are available for a site.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eto &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ETo.html">ETo</a></span>(data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"lon"</span>,<span class="st">"lat"</span>)], 
            <span class="dt">day.one =</span> data[<span class="st">"plantingdate"</span>],
@@ -181,9 +181,9 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
            <span class="dt">lat =</span> data[<span class="st">"lat"</span>])</code></pre></div>
 <p>Finally, these indices can be combined into a single data set with the <strong>PlackettLuce</strong> rankings to assess if the climate plays a role on the crop performance as shown in this <a href="https://agrobioinfoservices.github.io/ClimMobTools/articles/Overview.html">article</a>.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
 <div id="ref-Turner2018">
 <p>1. Turner, H., van Etten, J., Firth, D. &amp; Kosmidis, I. Modelling rankings in R: The PlackettLuce package. <em>arXiv:1810.12068</em> (2018).</p>
@@ -219,8 +219,16 @@ gdd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/GDD.htm
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#source-of-data-and-input">Source of data and input</a></li>
-      <li><a href="#temperature">Temperature</a></li>
+      <li>
+<a href="#source-of-data-and-input">Source of data and input</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#breadwheat-data">Breadwheat data</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#temperature">Temperature</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#timespan-defined-by-growing-degree-days">Timespan defined by growing degree days</a></li>
+      </ul>
+</li>
       <li><a href="#rainfall">Rainfall</a></li>
       <li><a href="#evapotranspiration">Evapotranspiration</a></li>
       <li><a href="#references">References</a></li>
