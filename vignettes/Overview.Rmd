@@ -14,7 +14,7 @@ author:
   affiliation: Bioversity International, Turrialba, Costa Rica
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{Introduction to ClimMobTools}
+  %\VignetteIndexEntry{ClimMobTools}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 bibliography: ["ClimMobTools.bib"]

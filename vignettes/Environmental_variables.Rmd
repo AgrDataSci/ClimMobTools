@@ -6,7 +6,7 @@ author:
   affiliation: Department of Agricultural Sciences, Høgskolen i Innlandet, Hamar, Norway; and Bioversity International, Rome, Italy
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{Introduction to ClimMobTools}
+  %\VignetteIndexEntry{Environmental Indices}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 bibliography: ["ClimMobTools.bib"]
