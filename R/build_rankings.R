@@ -2,9 +2,9 @@
 #'
 #' Create an object of class "rankings" from ClimMob data
 #'
-#' @param data a data frame with columns specified by items and input values to rank.
+#' @param data a data frame with columns specified by items and input values
 #' @param items a data frame or index of \code{data} for the column(s) containing the item names
-#' @param input a data frame or index of \code{data} for the column(s) containing the values to be ranked
+#' @param input a data frame or index of \code{data} for the column(s) containing the ranked values
 #' @param additional.rank optional, a data frame for the comparisons between tricot items and the local item
 #' @param group logical, if TRUE return an object of class "grouped_rankings"
 #' @param ... additional arguments passed to methods. See details
@@ -66,14 +66,23 @@ build_rankings <- function(data = NULL, items = NULL,
   # get extra arguments
   dots <- list(...)
   
+  # keep only target columns in data
+  if (!is.null(data)) {
+    items <- names(data[, items])
+    input <- names(data[, input])
+    data <- data[, c(items, input)]
+  }
+  
+  # if 'items' and 'input' are provided as data.frame
+  # put all together as 'data'
   if (is.null(data)) {
     data <- cbind(items, input)
     items <- names(items)
     input <- names(input)
   }
   
-  if (!is.data.frame(data)){
-    data <- data.frame(data, stringsAsFactors = FALSE)
+  if (.is_tibble(data)){
+    data <- as.data.frame(data, stringsAsFactors = FALSE)
   }
   
   # get nrow in object
@@ -86,7 +95,8 @@ build_rankings <- function(data = NULL, items = NULL,
   full.output <- dots[["full.output"]]
   full.output <- isTRUE(full.output)
   
-  # deal with data of type "tricot"  
+  # check number of comparisons to decide which way data will 
+  # be handled, if type is tricot or if it contains more comparisons
   ncomp <- ncol(items)
   
   # with 3 comparisons
@@ -94,35 +104,32 @@ build_rankings <- function(data = NULL, items = NULL,
     rrank <- data[input]
     
     if (any(rrank[,1] == rrank[,2])) {
-      stop("ties cannot be handled in objects of type 'tricot'\n")
+      stop("ties cannot be handled in objects of type 'tricot' \n")
     }
     
     if (any(is.na(unlist(rrank)))) {
-      stop("NAs cannot be handled in objects of type 'tricot'\n")
+      stop("NAs cannot be handled in objects of type 'tricot' \n")
     }
     
     r <- .pivot_triadic(i = items, r = data[input])
     
-    # get names of all items
-    itemnames <- sort(unique(as.vector(r)))
-    
-    # convert it into a PlackettLuce rank
-    R <- PlackettLuce::as.rankings(r, input = "ordering", items = itemnames)
-    
-    # if pseudo-item were added, it is removed
-    pseudo <- grepl("pseudoitem", itemnames) 
-    if (any(pseudo)) {
-      R <- R[, !pseudo]
-    }
   }
   
   # with 4 or more comparisons
   if (ncomp >= 4) {
     r <- .pivot_tetra(i = items, r = data[input])
-    
-    # make a PlackettLuce rankings
-    R <- PlackettLuce::as.rankings(r)
-    
+  }
+  
+  # get item names 
+  itemnames <- sort(unique(as.vector(r)))
+  
+  # make a PlackettLuce rankings
+  R <- PlackettLuce::as.rankings(r, input = "ordering", items = itemnames)
+  
+  # if pseudo-item were added, it is removed
+  pseudo <- grepl("pseudoitem", itemnames) 
+  if (any(pseudo)) {
+    R <- R[, !pseudo]
   }
   
   # check if additional rankings are required
@@ -251,15 +258,8 @@ build_rankings <- function(data = NULL, items = NULL,
   
   names(r) <- c("id","item","rank")
   
-  # if pseudo-item were added, it is removed now
-  rmitem <- !r[["item"]] %in% paste0("pseudoitem", 1:nrank)
-  r <- r[rmitem, ]
-  
   # reshape data into wide format
-  r <- tidyr::spread(r, item, rank)
-  
-  # replace possible NA's with zeros (0) as required for PlackettLuce
-  r[is.na(r)] <- 0
+  r <- tidyr::spread(r, rank, item)
   
   # order observations by ids
   r <- r[order(r[,"id"]), ]

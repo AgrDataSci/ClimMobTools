@@ -17,11 +17,12 @@ if(length(gender)>0){
 }
 
 #Map 1
-
+geodata = F
 if(geodata==TRUE){
 map1<- map.f(data = dt.fr,lon = "lon",lat="lat")
 mapshot(map1, file = "map1.png")
 }
+
 #Replace this with the updated function
 
 #Favourability Analysis Table
@@ -31,6 +32,7 @@ fav1<-favourability(a=df[,vars[1]],
                     c=df[,vars[3]],
                     best=df[,overall[1]],
                     worst=df[,overall[2]])
+
 fav2<-fav1
 
 fav2$best_per<-formattable::percent(fav2$best_per/100,1)

@@ -3,6 +3,8 @@
 export(ETo)
 export(GDD)
 export(build_rankings)
+export(favorite)
+export(favourite)
 export(getDataCM)
 export(getProjectsCM)
 export(rainfall)

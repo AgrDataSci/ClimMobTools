@@ -14,11 +14,11 @@ build_rankings(
 )
 }
 \arguments{
-\item{data}{a data frame with columns specified by items and input values to rank.}
+\item{data}{a data frame with columns specified by items and input values}
 
 \item{items}{a data frame or index of \code{data} for the column(s) containing the item names}
 
-\item{input}{a data frame or index of \code{data} for the column(s) containing the values to be ranked}
+\item{input}{a data frame or index of \code{data} for the column(s) containing the ranked values}
 
 \item{additional.rank}{optional, a data frame for the comparisons between tricot items and the local item}
 

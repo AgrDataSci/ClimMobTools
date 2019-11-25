@@ -1,10 +1,10 @@
-context("test-getProjectsCM")
+context("test-getDataCM")
 
 library("ClimMobTools")
 
 key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-p <- getDataCM(key,"colours")
+p <- getDataCM(key,"flowers")
 p <- !is.null(p)
 
 
@@ -37,7 +37,7 @@ test_that("pivot.wider", {
 test_that("error no data", {
   expect_error(
     getDataCM("d39a3c66-5822-4930-a9d4-50e7da041e77",
-              "wageningen")
+              "test")
   )
 }
 )

@@ -1,22 +1,22 @@
 ####Climmob.R
 
 #On server shoudln't need to set wd if everything is hosted in sensible place with sensible defaults.
-setwd("C:/Users/sdumb/Dropbox (SSD)/Climmob Project/ClimmobReport")
+#setwd("C:/Users/sdumb/Dropbox (SSD)/Climmob Project/ClimmobReport")
 
 #1. Call all relevant libraries
-source("Setup/dependencies.R")
+source("ClimmobReport/Setup/dependencies.R")
 
 #2. load user written functions
-source("Setup/functions.R")
+source("ClimmobReport/Setup/functions.R")
 
 #3. Bring in user specified parameters for reporting process (needs to dynamically link to interface in climmob so suer can set/modify these values)
-source("Setup/params.R")
+source("ClimmobReport/Setup/params.R")
 
 #4. Get data off server and manipulate into required format
-source("Setup/data.R")
+source("ClimmobReport/Setup/data.R")
 
 #5. Run analysis of data
-source("Setup/analysis.R")
+source("ClimmobReport/Setup/analysis.R")
 
 #6. Output results
 

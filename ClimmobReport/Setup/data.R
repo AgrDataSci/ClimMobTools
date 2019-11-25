@@ -5,10 +5,10 @@ rawdata <- ClimMobTools::getDataCM(key, project = projname, pivot.wider = TRUE, 
 #mydata<-rawdata$data
 
 #pull out components of the raw data file for use elsewhere
-characteristics<-rawdata$specialfields
-keys<-rawdata$importantfields
-nameproj<-rawdata$project$project_name
-fields<-rawdata$registry$fields
+characteristics <- rawdata$specialfields
+keys <- rawdata$importantfields
+nameproj <- rawdata$project$project_name
+fields <- rawdata$registry$fields
 
 #combine data collected after registration into a single dataframe
 latefields<-do.call("rbind",rawdata$assessments$fields)
