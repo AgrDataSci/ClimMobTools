@@ -4,6 +4,7 @@
 #' 
 #' @inheritParams build_rankings
 #' @param reorder logical, if items should be reordered from higher favourability score to least favourability score
+#' @param x an object of class 'fvrt' for the plotting method
 #' @aliases favorite
 #' @return a data.frame with descriptive statistics
 #' \item{N}{number of times the given item was evaluated}
@@ -42,7 +43,8 @@
 #'                  
 #' @import ggplot2
 #' @export
-favourite <- function(data = NULL, items = NULL, input = NULL, reorder = TRUE){
+favourite <- function(data = NULL, items = NULL, 
+                      input = NULL, reorder = TRUE){
   
   # keep only target columns in data
   if (!is.null(data)) {
@@ -159,12 +161,12 @@ favorite <- function(...){
 #' @rdname favourite
 #' @method plot fvrt
 #' @export
-plot.fvrt <- function(object, ...) {
+plot.fvrt <- function(x, ...) {
   
-  p <- ggplot2::ggplot(data = object, 
-                       ggplot2::aes(y = fav_score, 
-                                    fill = fav_score, 
-                                    x = items))+
+  p <- ggplot2::ggplot(data = x, 
+                       ggplot2::aes(y = x$fav_score, 
+                                    fill = x$fav_score, 
+                                    x = x$items))+
     ggplot2::geom_hline(yintercept = 0)+
     ggplot2::geom_bar(stat = "identity", col = "black")+
     ggplot2::coord_flip() +

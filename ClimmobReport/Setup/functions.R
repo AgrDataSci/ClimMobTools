@@ -709,74 +709,74 @@ get_ranking <- function(a,b,c,best,worst,format="ABC",reorder=TRUE){
 
 
 
-# favourability<-function(a,b,c,best,worst,format="ABC",reorder=TRUE,out="summary"){
-#   nalist<-is.na(best)==F&is.na(worst)==F&is.na(a)==F&is.na(b)==F&is.na(c)==F
-#   a<-as.character(a)[nalist]
-#   b<-as.character(b)[nalist]
-#   c<-as.character(c)[nalist]
-#   best<-as.character(best)[nalist]
-#   worst<-as.character(worst)[nalist]
-#   
-#   
-#   
-#   if(format=="abc"){
-#     best<-toupper(best)
-#     worst<-toupper(worst)
-#   }
-#   
-#   best1<-ifelse(best=="A",a,
-#                 ifelse(best=="B",b,
-#                        ifelse(best=="C",c,NA)))
-#   worst1<-ifelse(worst=="A",a,
-#                  ifelse(worst=="B",b,
-#                         ifelse(worst=="C",c,NA)))
-#   if(out=="summary"){
-#     vars<-sort(unique(c(a,b,c)))
-#     
-#     inrow<-NULL
-#     wins<-NULL
-#     losses<-NULL
-#     
-#     for(i in 1:length(vars)){
-#       inrow<-cbind(inrow,ifelse(a==vars[i]|b==vars[i]|c==vars[i],1,0))
-#       wins<-cbind(wins,ifelse(best1==vars[i],1,0))
-#       losses<-cbind(losses,ifelse(worst1==vars[i],1,0))
-#     }
-#     colnames(inrow)<-paste("n",1:(length(vars)),sep="")
-#     colnames(wins)<-paste("b",1:(length(vars)),sep="")
-#     colnames(losses)<-paste("w",1:(length(vars)),sep="")
-#     
-#     
-#     
-#     
-#     sumstats<-data.frame(var=vars,N=colSums(inrow),
-#                          best_per=100*colSums(wins)/colSums(inrow),
-#                          worst_per=100*colSums(losses)/colSums(inrow),
-#                          wins=((2*colSums(wins))+colSums(inrow-wins-losses))/(2*colSums(inrow)),stringsAsFactors = FALSE)
-#     
-#     sumstats$Fav_Score=sumstats$best_per-sumstats$worst_per
-#     
-#     if(reorder==TRUE){
-#       sumstats$var<-reorder(sumstats$var,sumstats$Fav_Score,mean)
-#       sumstats<-sumstats[order(sumstats$Fav_Score),]
-#     }
-#     return(sumstats)
-#   }
-#   else{
-#     return( data.frame(best1,worst1,stringsAsFactors = FALSE))
-#   }
-# }
+favourability<-function(a,b,c,best,worst,format="ABC",reorder=TRUE,out="summary"){
+  nalist<-is.na(best)==F&is.na(worst)==F&is.na(a)==F&is.na(b)==F&is.na(c)==F
+  a<-as.character(a)[nalist]
+  b<-as.character(b)[nalist]
+  c<-as.character(c)[nalist]
+  best<-as.character(best)[nalist]
+  worst<-as.character(worst)[nalist]
 
-# favourability_plot<-function(x){
-#   p1<- ggplot(data=x,aes(y=Fav_Score,fill=Fav_Score,x=var))+
-#     geom_hline(yintercept = 0)+
-#     geom_bar(stat="identity",col="black")+
-#     coord_flip()+
-#     scale_y_continuous(breaks = seq(-100,100, by = 20))+
-#     scale_fill_gradient2(low = "red",
-#                          mid = "white",
-#                          high = "forestgreen",
-#                          limits = c(-100, 100))
-#   
-#   return(p1)
-# }
+
+
+  if(format=="abc"){
+    best<-toupper(best)
+    worst<-toupper(worst)
+  }
+
+  best1<-ifelse(best=="A",a,
+                ifelse(best=="B",b,
+                       ifelse(best=="C",c,NA)))
+  worst1<-ifelse(worst=="A",a,
+                 ifelse(worst=="B",b,
+                        ifelse(worst=="C",c,NA)))
+  if(out=="summary"){
+    vars<-sort(unique(c(a,b,c)))
+
+    inrow<-NULL
+    wins<-NULL
+    losses<-NULL
+
+    for(i in 1:length(vars)){
+      inrow<-cbind(inrow,ifelse(a==vars[i]|b==vars[i]|c==vars[i],1,0))
+      wins<-cbind(wins,ifelse(best1==vars[i],1,0))
+      losses<-cbind(losses,ifelse(worst1==vars[i],1,0))
+    }
+    colnames(inrow)<-paste("n",1:(length(vars)),sep="")
+    colnames(wins)<-paste("b",1:(length(vars)),sep="")
+    colnames(losses)<-paste("w",1:(length(vars)),sep="")
+
+
+
+
+    sumstats<-data.frame(var=vars,N=colSums(inrow),
+                         best_per=100*colSums(wins)/colSums(inrow),
+                         worst_per=100*colSums(losses)/colSums(inrow),
+                         wins=((2*colSums(wins))+colSums(inrow-wins-losses))/(2*colSums(inrow)),stringsAsFactors = FALSE)
+
+    sumstats$Fav_Score=sumstats$best_per-sumstats$worst_per
+
+    if(reorder==TRUE){
+      sumstats$var<-reorder(sumstats$var,sumstats$Fav_Score,mean)
+      sumstats<-sumstats[order(sumstats$Fav_Score),]
+    }
+    return(sumstats)
+  }
+  else{
+    return( data.frame(best1,worst1,stringsAsFactors = FALSE))
+  }
+}
+
+favourability_plot<-function(x){
+  p1<- ggplot(data=x,aes(y=Fav_Score,fill=Fav_Score,x=var))+
+    geom_hline(yintercept = 0)+
+    geom_bar(stat="identity",col="black")+
+    coord_flip()+
+    scale_y_continuous(breaks = seq(-100,100, by = 20))+
+    scale_fill_gradient2(low = "red",
+                         mid = "white",
+                         high = "forestgreen",
+                         limits = c(-100, 100))
+
+  return(p1)
+}

@@ -27,23 +27,28 @@ mapshot(map1, file = "map1.png")
 
 #Favourability Analysis Table
 df<-as.data.frame(dataset)
-fav1<-favourability(a=df[,vars[1]],
-                    b=df[,vars[2]],
-                    c=df[,vars[3]],
-                    best=df[,overall[1]],
-                    worst=df[,overall[2]])
+# fav1<-favourability(a=df[,vars[1]],
+#                     b=df[,vars[2]],
+#                     c=df[,vars[3]],
+#                     best=df[,overall[1]],
+#                     worst=df[,overall[2]])
+fav1 <- favourite(data = df,
+                  items = vars,
+                  input = overall) 
 
-fav2<-fav1
+fav2 <- fav1
 
-fav2$best_per<-formattable::percent(fav2$best_per/100,1)
-fav2$worst_per<-formattable::percent(fav2$worst_per/100,1)
-fav2$wins<-formattable::percent(fav2$wins,1)
-fav2$Fav_Score<-round(fav2$Fav_Score,1)
+fav2$best <- formattable::percent(fav2$best/100,1)
+fav2$worst <- formattable::percent(fav2$worst/100,1)
+fav2$wins <- formattable::percent(fav2$wins,1)
+fav2$fav_score<-round(fav2$fav_score,1)
+
 colnames(fav2)<-c("Variety","N","% Top Ranked","% Bottom Ranked","% Contests Won","Net Favourability Score")
-fav2<-fav2[nrow(fav2):1,]
+
+fav2 <- fav2[nrow(fav2):1,]
 
 #Contest Plots
-cont1<-contests(a=df[,vars[1]],
+cont1 <- contests(a=df[,vars[1]],
                 b=df[,vars[2]],
                 c=df[,vars[3]],
                 best=df[,overall[1]],

@@ -8,7 +8,7 @@
 \usage{
 favourite(data = NULL, items = NULL, input = NULL, reorder = TRUE)
 
-\method{plot}{fvrt}(object, ...)
+\method{plot}{fvrt}(x, ...)
 }
 \arguments{
 \item{data}{a data frame with columns specified by items and input values}
@@ -18,6 +18,8 @@ favourite(data = NULL, items = NULL, input = NULL, reorder = TRUE)
 \item{input}{a data frame or index of \code{data} for the column(s) containing the ranked values}
 
 \item{reorder}{logical, if items should be reordered from higher favourability score to least favourability score}
+
+\item{x}{an object of class 'fvrt' for the plotting method}
 
 \item{...}{additional arguments passed to methods. See details}
 }
