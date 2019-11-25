@@ -3,9 +3,12 @@
 \name{favourite}
 \alias{favourite}
 \alias{favorite}
+\alias{plot.fvrt}
 \title{Favourability scores}
 \usage{
 favourite(data = NULL, items = NULL, input = NULL, reorder = TRUE)
+
+\method{plot}{fvrt}(object, ...)
 }
 \arguments{
 \item{data}{a data frame with columns specified by items and input values}
@@ -15,6 +18,8 @@ favourite(data = NULL, items = NULL, input = NULL, reorder = TRUE)
 \item{input}{a data frame or index of \code{data} for the column(s) containing the ranked values}
 
 \item{reorder}{logical, if items should be reordered from higher favourability score to least favourability score}
+
+\item{...}{additional arguments passed to methods. See details}
 }
 \value{
 a data.frame with descriptive statistics
@@ -55,4 +60,5 @@ for(s in 1:5) {
 
 fav <- favourite(items = items, 
                  input = input)
+                 
 }

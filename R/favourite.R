@@ -39,6 +39,8 @@
 #' 
 #' fav <- favourite(items = items, 
 #'                  input = input)
+#'                  
+#' @import ggplot2
 #' @export
 favourite <- function(data = NULL, items = NULL, input = NULL, reorder = TRUE){
   
@@ -128,17 +130,19 @@ favourite <- function(data = NULL, items = NULL, input = NULL, reorder = TRUE){
   # favourability score
   fav_score <- best_per - worst_per
   
-  sumstats <- tibble::as_tibble(data.frame(items = itemnames,
-                                           N = colSums(inrow),                            
-                                           best =  best_per,
-                                           worst = worst_per,
-                                           wins = wins,
-                                           fav_score = fav_score))
+  sumstats <- tibble::tibble(items = itemnames,
+                             N = colSums(inrow),
+                             best =  best_per,
+                             worst = worst_per,
+                             wins = wins,
+                             fav_score = fav_score)
   
 
   if (reorder) {
     sumstats <- sumstats[rev(order(sumstats$fav_score)), ]
   }
+  
+  class(sumstats) <- c("fvrt", class(sumstats))
   
   return(sumstats)
 
@@ -151,3 +155,26 @@ favorite <- function(...){
   favourite(...)
   
 }
+
+#' @rdname favourite
+#' @method plot fvrt
+#' @export
+plot.fvrt <- function(object, ...) {
+  
+  p <- ggplot2::ggplot(data = object, 
+                       ggplot2::aes(y = fav_score, 
+                                    fill = fav_score, 
+                                    x = items))+
+    ggplot2::geom_hline(yintercept = 0)+
+    ggplot2::geom_bar(stat = "identity", col = "black")+
+    ggplot2::coord_flip() +
+    ggplot2::scale_y_continuous(breaks = seq(-100, 100, by = 20))+
+    ggplot2::scale_fill_gradient2(name = "Favourability",
+                                  low = "#CA0020",
+                                  mid = "#FFFFFF",
+                                  high = "#0571B0",
+                                  limits = c(-100, 100))
+  
+  return(p)
+}
+
