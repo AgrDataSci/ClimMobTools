@@ -28,6 +28,7 @@
 #'            additional.rank = beans[c(6:8)])
 #'  
 #' @importFrom scales percent
+#' @importFrom stats aggregate
 #' @export
 preference <- function(data = NULL, items = NULL, input = NULL, ...){
 
@@ -60,6 +61,9 @@ preference <- function(data = NULL, items = NULL, input = NULL, ...){
   # calculate preference
   bin$preference <- (bin$win / bin$ncontest)
   
+  # reorder by player1 for a visually better output
+  bin <- bin[order(bin$player1), ]
+  
   # add class for the plotting method
   class(bin) <- c("cmb_pref", class(bin))
   
@@ -73,6 +77,21 @@ preference <- function(data = NULL, items = NULL, input = NULL, ...){
 #' @export
 plot.cmb_pref <- function(x, ...) {
   
+  # get summary to order items from higher to lower
+  x_mean <- stats::aggregate(x$preference, 
+                             by = list(x$player1),
+                             mean)
+  # get order
+  player_levels <- rev(order(x_mean[,2]))
+  
+  # define levels
+  player_levels <- x_mean[player_levels, 1]
+  
+  # set levels to player1 and player2
+  x$player1 <- factor(x$player1, levels = player_levels)
+  x$player2 <- factor(x$player2, levels = player_levels)
+  
+  
   p <- 
   ggplot2::ggplot(x) +
     ggplot2::geom_bar(ggplot2::aes(y = x$preference, 
@@ -80,17 +99,16 @@ plot.cmb_pref <- function(x, ...) {
                                    fill = x$preference), 
                       stat = "identity", 
                       col = "black") +
-    ggplot2::facet_wrap( ~ x$player1, 
-                         scales = "free_y", 
-                         ncol = 3) +
-    ggplot2::coord_flip() +
+    ggplot2::facet_wrap(. ~ x$player1,
+                        scales = "free_y", 
+                        ncol = 3) +
+    ggplot2::coord_flip() + 
     ggplot2::scale_fill_gradient2(
       limits = c(0, 1),
-      low = alpha("#CA0020", 0.75),
-      high = alpha("#0571B0", 0.75),
-      midpoint = 0.5,
+      low = alpha("#FFFFFF", 0.90),
+      high = alpha("#0571B0", 0.90),
       labels = scales::percent,
-      name = "% Times Preferred"
+      name = "% Times preferred"
     ) +
     ggplot2::scale_y_continuous(labels = scales::percent, 
                                 limits = c(0, 1))

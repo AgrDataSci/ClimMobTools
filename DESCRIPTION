@@ -30,6 +30,7 @@ Imports:
     raster, 
     RSpectra, 
     scales,
+    stats,
     tibble, 
     tidyr, 
     utils

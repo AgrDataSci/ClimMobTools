@@ -48,3 +48,30 @@ test_that("accepts 4 or more comparisons", {
   expect_equal(is.data.frame(fav), TRUE)
   
 })
+
+
+
+test_that("alias works", {
+  
+  fav <- favorite(data = tetra,
+                  items = c(1:5),
+                  input = c(6:10))
+  
+  expect_equal(is.data.frame(fav), TRUE)
+  
+})
+
+
+test_that("plot works", {
+  
+  fav <- favorite(data = tetra,
+                  items = c(1:5),
+                  input = c(6:10))
+  
+  fav <- plot(fav)
+  
+  fav <- "ggplot" %in% class(fav)
+  
+  expect_equal(fav, TRUE)
+  
+})
