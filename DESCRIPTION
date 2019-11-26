@@ -29,6 +29,7 @@ Imports:
     PlackettLuce (>= 0.2-8),
     raster, 
     RSpectra, 
+    scales,
     tibble, 
     tidyr, 
     utils

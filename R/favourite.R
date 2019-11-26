@@ -4,7 +4,7 @@
 #' 
 #' @inheritParams build_rankings
 #' @param reorder logical, if items should be reordered from higher favourability score to least favourability score
-#' @param x an object of class 'fvrt' for the plotting method
+#' @param x an object of class 'cmb_fvrt' for the plotting method. Generates a 'ggplot' object that can be passed to any ggplot2 method
 #' @aliases favorite
 #' @return a data.frame with descriptive statistics
 #' \item{N}{number of times the given item was evaluated}
@@ -14,7 +14,8 @@
 #' \item{fav_score}{the favourability score, which is the difference between best and worst performance}
 #' @examples
 #' 
-#' # beans data where each observer compares 3 varieties randomly distributed 
+#' # beans data where each observer compares 3 varieties 
+#' # randomly distributed 
 #'  
 #' library("PlackettLuce")
 #' data("beans", package = "PlackettLuce")
@@ -46,45 +47,23 @@
 favourite <- function(data = NULL, items = NULL, 
                       input = NULL, reorder = TRUE){
   
-  # keep only target columns in data
-  if (!is.null(data)) {
-    items <- names(data[, items])
-    input <- names(data[, input])
-    data <- data[, c(items, input)]
-  }
-  
-  # if 'items' and 'input' are provided as data.frame
-  # put all together as 'data'
-  if (is.null(data)) {
-    data <- cbind(items, input)
-    items <- names(items)
-    input <- names(input)
-  }
-  
-  # if 'data' is an object of class tbl_df
-  # convert to "data.frame"
-  if (.is_tibble(data)) {
-    data <- as.data.frame(data, stringsAsFactors = FALSE)
-  }
-  
-  # check for NAs within data
-  nalist <- apply(data, 2, is.na)
-  nalist <- !apply(nalist, 1, any)
-  
-  # apply vector to data
-  data <- data[nalist, ]
+  # check data
+  args <- .check_data(data = data,
+                      items = items, 
+                      input = input)
   
   # take decoded rankings
-  dataR <- build_rankings(data = data,
-                          items = items, 
-                          input = input, 
-                          full.output = TRUE)[[3]]
+  args[["full.output"]] <- TRUE
+  
+  dataR <- do.call("build_rankings", args)  
 
+  dataR <- dataR[[3]]
+  
   # get names of tested items
   itemnames <- sort(unique(as.vector(dataR)))
   
   # items ranked as first (best)
-  firstR <- dataR[,1]
+  firstR <- dataR[, 1]
   
   # item ranked as last (worst)
   lastR <- dataR[,ncol(dataR)]
@@ -96,9 +75,12 @@ favourite <- function(data = NULL, items = NULL,
   wins <- NULL
   losses <- NULL
   
+  # get data.frame with randomised items
+  X <- args$data[, args$items]
+  
   for (i in seq_along(itemnames)) {
     # check the row where item i is present
-    inrow_i <- apply(data[, items], 1, function(x) {
+    inrow_i <- apply(X, 1, function(x) {
       y <- any(x == itemnames[i])
       as.integer(y)
     })
@@ -144,7 +126,7 @@ favourite <- function(data = NULL, items = NULL,
     sumstats <- sumstats[rev(order(sumstats$fav_score)), ]
   }
   
-  class(sumstats) <- c("fvrt", class(sumstats))
+  class(sumstats) <- c("cmb_fvrt", class(sumstats))
   
   return(sumstats)
 
@@ -159,9 +141,9 @@ favorite <- function(...){
 }
 
 #' @rdname favourite
-#' @method plot fvrt
+#' @method plot cmb_fvrt
 #' @export
-plot.fvrt <- function(x, ...) {
+plot.cmb_fvrt <- function(x, ...) {
   
   p <- ggplot2::ggplot(data = x, 
                        ggplot2::aes(y = x$fav_score, 
@@ -179,4 +161,3 @@ plot.fvrt <- function(x, ...) {
   
   return(p)
 }
-

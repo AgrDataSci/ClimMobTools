@@ -3,12 +3,12 @@
 \name{favourite}
 \alias{favourite}
 \alias{favorite}
-\alias{plot.fvrt}
+\alias{plot.cmb_fvrt}
 \title{Favourability scores}
 \usage{
 favourite(data = NULL, items = NULL, input = NULL, reorder = TRUE)
 
-\method{plot}{fvrt}(x, ...)
+\method{plot}{cmb_fvrt}(x, ...)
 }
 \arguments{
 \item{data}{a data frame with columns specified by items and input values}
@@ -19,7 +19,7 @@ favourite(data = NULL, items = NULL, input = NULL, reorder = TRUE)
 
 \item{reorder}{logical, if items should be reordered from higher favourability score to least favourability score}
 
-\item{x}{an object of class 'fvrt' for the plotting method}
+\item{x}{an object of class 'cmb_fvrt' for the plotting method. Generates a 'ggplot' object that can be passed to any ggplot2 method}
 
 \item{...}{additional arguments passed to methods. See details}
 }
@@ -36,7 +36,8 @@ Compute favourability scores
 }
 \examples{
 
-# beans data where each observer compares 3 varieties randomly distributed 
+# beans data where each observer compares 3 varieties 
+# randomly distributed 
  
 library("PlackettLuce")
 data("beans", package = "PlackettLuce")
