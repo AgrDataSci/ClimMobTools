@@ -87,12 +87,15 @@ We build the rankings using the function `rank_tricot` from the R package **goss
 library("PlackettLuce")
 library("gosset")
 
-G <- rank_tricot(data, 
+library("PlackettLuce")
+library("gosset")
+
+R <- rank_tricot(data, 
                  items = c("item_A","item_B","item_C"), 
                  input = c("overallperf_pos","overallperf_neg"),
-                 group = TRUE)
+                 group = FALSE)
 
-plt <- pltree(G ~ .)
+mod <- PlackettLuce(R)
 
 
 ```

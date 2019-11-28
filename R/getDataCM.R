@@ -54,12 +54,6 @@ getDataCM <- function(key = NULL, project = NULL,
     cmdata <- jsonlite::fromJSON(cmdata)
   }
   
-  # if a .json data is provided instead of a ClimMob key
-  if (is.null(key)) {
-    cmdata <- dots[["data"]]
-  }
-  
-  
   # check if the given project has data
   # if not then return a warning message
   if (length(cmdata) < 7) {

@@ -69,6 +69,15 @@ test_that("missing nitems", {
   )
 })
 
+test_that("missing itemnames", {
+  expect_error(
+    randomise(ncomp = ni,
+              nobservers = no,
+              nitems = nv,
+              itemnames = NULL)
+  )
+})
+
 test_that("alias works", {
   r <- randomize(ncomp = ni,
                  nobservers = no,
@@ -78,6 +87,25 @@ test_that("alias works", {
   r <- as.vector(apply(r, 1, is.na))
   
   r <- sum(r) == 0
+  
+  expect_equal(r, TRUE)
+  
+})
+
+test_that("alias works", {
+  
+  ni <- 3
+  no <- 200
+  nv <- 30
+  inames <- paste("Var", 1:nv, sep="")
+  
+  r <- randomize(ncomp = ni,
+                 nobservers = no,
+                 nitems = nv,
+                 itemnames = inames)
+  
+
+  r <- is.data.frame(r)
   
   expect_equal(r, TRUE)
   

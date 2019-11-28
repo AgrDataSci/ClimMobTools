@@ -139,12 +139,15 @@ data <span class="op">%&lt;&gt;%</span><span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
 
-G &lt;-<span class="st"> </span><span class="kw">rank_tricot</span>(data, 
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
+
+R &lt;-<span class="st"> </span><span class="kw">rank_tricot</span>(data, 
                  <span class="dt">items =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span>), 
                  <span class="dt">input =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span>),
-                 <span class="dt">group =</span> <span class="ot">TRUE</span>)
+                 <span class="dt">group =</span> <span class="ot">FALSE</span>)
 
-plt &lt;-<span class="st"> </span><span class="kw">pltree</span>(G <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
+mod &lt;-<span class="st"> </span><span class="kw">PlackettLuce</span>(R)</code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
