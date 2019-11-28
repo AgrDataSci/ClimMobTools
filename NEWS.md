@@ -1,3 +1,10 @@
+# ClimMobTools 0.2-9
+
+### Changes in behaviour
+
+* Migrating functions from **ClimMobTools** to **gosset**. ClimMobTools will keep only the functions exclusively related to the 'ClimMob' platform. Other functions are transferred to **gosset** to provide a better environment for data handling, analysis and visualization.
+* Retain function `getDataCM`, `getProjectCM`, `randomise` and `seed_need`
+
 # ClimMobTools 0.2-8
 
 ### Improvements
