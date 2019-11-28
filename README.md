@@ -21,7 +21,7 @@ Overview
 Package website
 ---------------
 
-<https://agrobioinfoservices.github.io/gosset/>
+<https://agrobioinfoservices.github.io/ClimMobTools/>
 
 Installation
 ------------

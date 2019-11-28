@@ -31,7 +31,7 @@ Several functions of **ClimMobTools** are migrating to the new package [gosset](
 
 ## Package website
 
-https://agrobioinfoservices.github.io/gosset/
+https://agrobioinfoservices.github.io/ClimMobTools/
 
 ## Installation
 
