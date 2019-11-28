@@ -11,12 +11,17 @@ ClimMobTools
 Announcement
 ------------
 
-Several functions of **ClimMobTools** are migrating to the new package [gosset](https://github.com/agrobioinfoservices/gosset%5D). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to **gosset** to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general. Retained functions are `getDataCM`, `getProjectCM`, `randomise` and `seed_need`. We apologize for any issue caused due to this migration, and we are happy to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
+Several functions of **ClimMobTools** are migrating to the new package [gosset](https://agrobioinfoservices.github.io/gosset/). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to **gosset** to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general. Retained functions are `getDataCM`, `getProjectCM`, `randomise` and `seed_need`. We apologize for any issue caused due to this migration, and we are happy to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
 
 Overview
 --------
 
 **ClimMobTools** the API for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for crowdsourcing citizen science in agriculture. Developed by van Etten et al. (2019) for the rapid assessment of on-farm evaluation trails in small-scale agriculture. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information.
+
+Package website
+---------------
+
+<https://agrobioinfoservices.github.io/gosset/>
 
 Installation
 ------------
