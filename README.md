@@ -11,7 +11,7 @@ ClimMobTools
 Announcement
 ------------
 
-Several functions of **ClimMobTools** are migrating to the new package [gosset](https://agrobioinfoservices.github.io/gosset/). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to **gosset** to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general. Retained functions are `getDataCM`, `getProjectCM`, `randomise` and `seed_need`. We apologize for any issue caused due to this migration, and we are happy to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
+Several functions of **ClimMobTools** are migrating to the new package [gosset](https://agrobioinfoservices.github.io/gosset/). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to [gosset](https://agrobioinfoservices.github.io/gosset/) to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general. Retained functions are `getDataCM`, `getProjectCM`, `randomise` and `seed_need`. We apologize for any problem caused by this migration, and we are willing to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
 
 Overview
 --------
