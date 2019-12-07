@@ -1,6 +1,6 @@
 #' Get ClimMob projects 
 #'
-#' Fetch the list of ClimMob projects using an application programming interface (API) key
+#' Get ClimMob projects using an application programming interface (API) key
 #'
 #' @param key a character for the user's application programming interface (API) key
 #' @return A data frame with the ClimMob projects 
@@ -8,6 +8,9 @@
 #' \item{name}{the project name}
 #' \item{status}{the current status}
 #' \item{creation_date}{the project's creation date}
+#' \item{intended_participants}{the number of participants the project intended to register}
+#' \item{registration_progress}{the percentage of intended participants which were registered}
+#' \item{last_registration_activity}{number of days since the submission of the last registration}
 #' @examples
 #' \dontrun{ 
 #' # This function will not work without an API key  
@@ -26,20 +29,31 @@ getProjectsCM <- function(key = NULL){
 
   url <- "https://climmob.net/climmob3/api/readProjects?Apikey="
   
-  data <- httr::GET(url = url, 
+  dat <- httr::GET(url = url, 
                     query = list(Apikey = key), 
                     httr::accept_json())
 
-  data <- httr::content(data, as = "text")
+  dat <- httr::content(dat, as = "text")
   
-  data <- jsonlite::fromJSON(data)
+  dat <- jsonlite::fromJSON(dat)
   
-  data <- data[,c("project_cod","project_name",
-                 "project_active","project_creationdate")]
+  
+  progress <- dat$progress
+  
+  dat <- cbind(dat, progress)
+  
+  dat <- dat[,c("project_cod","project_name",
+                 "project_regstatus","project_creationdate",
+                 "project_numobs", "regperc","lastreg")]
 
-  names(data) <- c("project_id","name","status","creation_date")
-
-  data <- tibble::as_tibble(data)
+  names(dat) <- c("project_id","name","status","creation_date",
+                  "intended_participants", "registration_progress","last_registration_activity")
   
-  return(data)
+  dat$status <- with(dat, ifelse(status == 1, "active", ifelse(status == 2, "concluded", "not_started")))
+  
+  dat$creation_date <- with(dat, as.Date(creation_date, origin = "1970-01-01"))
+
+  dat <- tibble::as_tibble(dat)
+  
+  return(dat)
 }

@@ -5,7 +5,6 @@
 #' @param project a character for the project id
 #' @param tidynames logical, if TRUE suppress ODK strings
 #' @param pivot.wider logical, if TRUE return a wider object, each observer is a row
-#' @param ... additional arguments passed to methods
 #' @inheritParams getProjectsCM
 #' @return A data frame with the project data
 #' \item{id}{the participant's package id}
@@ -30,29 +29,20 @@
 #' @importFrom httr accept_json content GET
 #' @importFrom jsonlite fromJSON
 #' @importFrom tibble as_tibble tibble
-#' @importFrom tidyr gather separate spread
 #' @export
 getDataCM <- function(key = NULL, project = NULL, 
-                      tidynames = FALSE, pivot.wider = FALSE, ...){
+                      tidynames = TRUE, pivot.wider = FALSE){
   
-  dots <- list(...)
+  url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
   
-  # if the raw .json is required
-  raw <- dots[["raw"]]
-  if (is.null(raw)) { raw <- FALSE }
+  cmdata <- httr::GET(url = url,
+                      query = list(Body = paste0('{"project_cod":"', project, '"}'),
+                                   Apikey = key),
+                      httr::accept_json())
   
-  if (!is.null(key)) {
-    url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
-    
-    cmdata <- httr::GET(url = url,
-                        query = list(Body = paste0('{"project_cod":"', project, '"}'),
-                                     Apikey = key),
-                        httr::accept_json())
-    
-    cmdata <- httr::content(cmdata, as = "text")
-    
-    cmdata <- jsonlite::fromJSON(cmdata)
-  }
+  cmdata <- httr::content(cmdata, as = "text")
+  
+  cmdata <- jsonlite::fromJSON(cmdata)
   
   # check if the given project has data
   # if not then return a warning message
@@ -61,11 +51,10 @@ getDataCM <- function(key = NULL, project = NULL,
     stop("Project ", pstring, " was found but has no associated data. \n")
   }
   
-  if (!raw) {
-    cmdata <- .extractFromjson(data = cmdata, 
-                               tidynames = tidynames,
-                               pivot.wider = pivot.wider, ...)
-  }
+  
+  cmdata <- .extractFromjson(data = cmdata,
+                             tidynames = tidynames,
+                             pivot.wider = pivot.wider)
   
   return(cmdata)
   
@@ -85,7 +74,7 @@ getDataCM <- function(key = NULL, project = NULL,
   # get the names of assessments questions
   assess_q <- data[[1]]
   
-  assess_q <- assess_q[,2]
+  assess_q <- assess_q[, 2]
   
   overallvslocal <- grepl("overallchar", assess_q)
   
@@ -95,7 +84,7 @@ getDataCM <- function(key = NULL, project = NULL,
   
   # get variables names from participant registration
   regs <- data[[3]]
-  ##regs_codes <- do.call("rbind", regs$lkptables$values)
+  
   regs <- regs[[1]]
   
   regs_name <- paste0("REG_", regs[,1])
@@ -148,15 +137,22 @@ getDataCM <- function(key = NULL, project = NULL,
       
       lonlat[is.na(lonlat)] <- c("NA NA NA NA")
       
-      lonlat <- tidyr::separate(lonlat, 1,
-                                newname, 
-                                sep = " ", 
-                                remove = TRUE,
-                                extra = "drop") 
+      lonlat <- t(apply(lonlat, 1, function(x) {
+        
+        unlist(strsplit(x, " "))
+      
+      }))
+    
       
       lonlat[lonlat == "NA"] <- NA
       
-      lonlat <- lonlat[c(2,1)]
+      lonlat <- lonlat[, c(2,1)]
+      
+      lonlat <- as.data.frame(lonlat, stringsAsFactors = FALSE)
+      
+      names(lonlat) <- newname
+      
+      lonlat <- apply(lonlat, 2, as.numeric)
       
       trial <- cbind(trial, lonlat)
       
@@ -195,10 +191,7 @@ getDataCM <- function(key = NULL, project = NULL,
   
   trial <- cbind(trial[packid], trial[!packid])
   
-  trial <- tidyr::gather(trial, 
-                         key = "variable",
-                         value = "value", 
-                         names(trial)[2:ncol(trial)])
+  trial <- .set_long(trial, "REG_qst162")
   
   trial$moment <- "registration"
   
@@ -212,8 +205,6 @@ getDataCM <- function(key = NULL, project = NULL,
                           trial$moment)
     
   }
-  
-  names(trial)[1] <- "id"
   
   # comparisons and package
   comps <- data[[6]]$comps
@@ -231,14 +222,9 @@ getDataCM <- function(key = NULL, project = NULL,
   
   pack <- cbind(data[[6]][2:3], comps)
   
-  pack <- tidyr::gather(pack, 
-                        key = "variable",
-                        value = "value", 
-                        names(pack)[2:ncol(pack)])
+  pack <- .set_long(pack, "package_id")
   
   pack$moment <- "package"
-  
-  names(pack)[1] <- "id"
   
   trial <- rbind(pack, trial)
   
@@ -271,7 +257,7 @@ getDataCM <- function(key = NULL, project = NULL,
   
   output <- tibble::as_tibble(trial)
   
-  output <- output[c(1,4,2,3)]
+  output <- output[, c("id","moment","variable","value")]
   
   # remove some ODK variables
   output <- output[!grepl("originid|rowuuid|qst163", output[[3]]), ]
@@ -293,22 +279,21 @@ getDataCM <- function(key = NULL, project = NULL,
   
   # if required, put the data in wide format
   if (pivot.wider) {
+    
     output$variable <- paste(output$moment, output$variable, sep = "_")
     
     variable_levels <- unique(output$variable)
     
-    id <- unique(output$id)
-    
     output <- output[,-2]
     
-    output <- tidyr::spread(output, 
-                            key = "variable", 
-                            value = "value")
+    output <- .set_wide(output, "id")
+
+    output <- output[,c("id", variable_levels)]
     
-    output$id <- id
+    output <- tibble::as_tibble(output)
     
-    output <- output[c("id", variable_levels)]
   }
   
   return(output)
+  
 }

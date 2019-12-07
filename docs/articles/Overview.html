@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClimMobTools: Toolkit for the ‘ClimMob’ platform in R • ClimMobTools</title>
+<title>ClimMobTools: API Client for the ‘ClimMob’ platform in R • ClimMobTools</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="ClimMobTools: Toolkit for the ‘ClimMob’ platform in R">
+<script src="../pkgdown.js"></script><meta property="og:title" content="ClimMobTools: API Client for the ‘ClimMob’ platform in R">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -54,7 +54,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Overview.html">ClimMobTools: Toolkit for the 'ClimMob' platform in R</a>
+      <a href="../articles/Overview.html">ClimMobTools: API Client for the 'ClimMob' platform in R</a>
     </li>
   </ul>
 </li>
@@ -74,7 +74,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>ClimMobTools: Toolkit for the ‘ClimMob’ platform in R</h1>
+      <h1>ClimMobTools: API Client for the ‘ClimMob’ platform in R</h1>
                         <h4 class="author">Kauê de Sousa</h4>
             <address class="author_afil">
       Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway; and Bioversity International, Rome, Italy<br><h4 class="author">Jacob van Etten</h4>
@@ -96,7 +96,7 @@
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p><strong>ClimMobTools</strong> the API for the ‘ClimMob’ platform in R. <a href="https://climmob.net/">ClimMob</a> is an open source software for crowdsourcing citizen science in agriculture under the tricot approach<span class="citation"><sup>1</sup></span>. The approach aims the rapid assessment of on-farm evaluation trails in small-scale agriculture. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information.</p>
+<p><strong>ClimMobTools</strong> the API Client for the ‘ClimMob’ platform in R. <a href="https://climmob.net/">ClimMob</a> is an open source software for crowdsourcing citizen science in agriculture under the tricot approach<span class="citation"><sup>1</sup></span>. The approach aims the rapid assessment of on-farm evaluation trails in small-scale agriculture. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -106,7 +106,7 @@
 <p>The development version can be installed via</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"devtools"</span>)
 
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"agrobioinfoservices/ClimMobTools"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/remote-reexports">install_github</a></span>(<span class="st">"agrobioinfoservices/ClimMobTools"</span>)</code></pre></div>
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
@@ -121,15 +121,8 @@ key &lt;-<span class="st"> "d39a3c66-5822-4930-a9d4-50e7da041e77"</span>
 
 data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getDataCM.html">getDataCM</a></span>(<span class="dt">key =</span> key, 
                   <span class="dt">project =</span> <span class="st">"breadwheat"</span>,
-                  <span class="dt">tidynames =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># reshape the data into the wide format</span>
-data <span class="op">%&lt;&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw">str_detect</span>(variable, <span class="st">"survey"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">distinct</span>(id, variable, value) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(variable, value) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ungroup</span>()</code></pre></div>
+                  <span class="dt">tidynames =</span> <span class="ot">TRUE</span>,
+                  <span class="dt">pivot.wider =</span> <span class="ot">TRUE</span>)</code></pre></div>
 </div>
 <div id="tricot-data-into-rankings" class="section level1">
 <h1 class="hasAnchor">
@@ -137,9 +130,6 @@ data <span class="op">%&lt;&gt;%</span><span class="st"> </span>
 <p>The Plackett-Luce model is one approach to analyse the ClimMob data<span class="citation"><sup>2</sup></span>. To do so, we build the farmers’ rankings as an object of class ‘grouped_rankings’. This allows the rankings to be linked to explanatory variables and fit the model using <code>pltree</code> from <strong>PlackettLuce</strong>.</p>
 <p>We build the rankings using the function <code>rank_tricot</code> from the R package <strong>gosset</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"PlackettLuce"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"gosset"</span>)
 
 R &lt;-<span class="st"> </span><span class="kw">rank_tricot</span>(data, 

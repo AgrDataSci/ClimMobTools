@@ -1,18 +1,18 @@
 Package: ClimMobTools
 Type: Package
-Title: Toolkit for the 'ClimMob' platform in R
+Title: API Client for the 'ClimMob' platform in R
 Version: 0.2-9
 Authors@R: c(person("Kaue", "de Sousa", 
         email = "kaue.desousa@inn.no", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0002-7571-7845")),
-        person("Jacob", "van Etten", role = c("aut", "ctb"),
+        person("Jacob", "van Etten", role = "aut",
         comment = c(ORCID = "0000-0001-7554-2558")),
-        person("Brandon", "Madriz", role = c("aut","ctb")),
-        person("Carlos", "Quiros", role = c("aut","ctb")))
+        person("Brandon", "Madriz", role = "aut"),
+        person("Carlos", "Quiros", role = "aut"))
 Maintainer: Kaue de Sousa <kaue.desousa@inn.no>
 URL: https://agrobioinfoservices.github.io/ClimMobTools/
 BugReports: https://github.com/agrobioinfoservices/ClimMobTools/issues
-Description: The package provides the API for the 'ClimMob' platform in R. 'ClimMob' is an open source software for crowdsourcing citizen science in agriculture <https://climmob.net/climmob3/>. Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information. 'ClimMobTools' enables project managers to deep explore and analyse their 'ClimMob' data in R.
+Description: API Client for the 'ClimMob' platform in R. 'ClimMob' is an open source software for crowdsourcing citizen science in agriculture under the 'tricot' method <https://climmob.net/climmob3/>. Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information. 'ClimMobTools' enables project managers to deep explore and analyse their 'ClimMob' data in R.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -24,7 +24,6 @@ Imports:
     methods, 
     RSpectra, 
     tibble, 
-    tidyr, 
     utils
 Suggests: 
     knitr,
@@ -32,5 +31,5 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0)
 Language: en-GB
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr

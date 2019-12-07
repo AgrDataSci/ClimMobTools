@@ -1,5 +1,5 @@
 ---
-title: "ClimMobTools: Toolkit for the 'ClimMob' platform in R"
+title: "ClimMobTools: API Client for the 'ClimMob' platform in R"
 package: ClimMobTools
 author:
 - name: Kauê de Sousa
@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-**ClimMobTools** the API for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for crowdsourcing citizen science in agriculture under the tricot approach[@vanEtten2019tricot]. The approach aims the rapid assessment of on-farm evaluation trails in small-scale agriculture. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information.
+**ClimMobTools** the API Client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for crowdsourcing citizen science in agriculture under the tricot approach[@vanEtten2019tricot]. The approach aims the rapid assessment of on-farm evaluation trails in small-scale agriculture. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information.
 
 ## Installation
 
@@ -64,16 +64,8 @@ key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
 data <- getDataCM(key = key, 
                   project = "breadwheat",
-                  tidynames = TRUE)
-
-# reshape the data into the wide format
-data %<>% 
-  filter(!str_detect(variable, "survey")) %>% 
-  group_by(id) %>%
-  distinct(id, variable, value) %>%
-  spread(variable, value) %>% 
-  ungroup()
-
+                  tidynames = TRUE,
+                  pivot.wider = TRUE)
 
 ```
 
@@ -84,9 +76,6 @@ The Plackett-Luce model is one approach to analyse the ClimMob data[@Turner2018]
 We build the rankings using the function `rank_tricot` from the R package **gosset**. 
 
 ```{r plrankings, message=FALSE, eval=FALSE, echo=TRUE}
-library("PlackettLuce")
-library("gosset")
-
 library("PlackettLuce")
 library("gosset")
 

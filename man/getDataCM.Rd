@@ -4,13 +4,7 @@
 \alias{getDataCM}
 \title{Get ClimMob data}
 \usage{
-getDataCM(
-  key = NULL,
-  project = NULL,
-  tidynames = FALSE,
-  pivot.wider = FALSE,
-  ...
-)
+getDataCM(key = NULL, project = NULL, tidynames = TRUE, pivot.wider = FALSE)
 }
 \arguments{
 \item{key}{a character for the user's application programming interface (API) key}
@@ -20,8 +14,6 @@ getDataCM(
 \item{tidynames}{logical, if TRUE suppress ODK strings}
 
 \item{pivot.wider}{logical, if TRUE return a wider object, each observer is a row}
-
-\item{...}{additional arguments passed to methods}
 }
 \value{
 A data frame with the project data
