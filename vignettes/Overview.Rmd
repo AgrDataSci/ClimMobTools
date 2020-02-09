@@ -56,8 +56,6 @@ The `breadwheat` is a dataframe from crowdsourcing citizen science trials of bre
 
 ```{r fetch, message=FALSE, eval=FALSE, echo=TRUE}
 library("ClimMobTools")
-library("tidyverse")
-library("magrittr")
 
 # the API key
 key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
