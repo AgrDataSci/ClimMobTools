@@ -1,15 +1,14 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' platform in R
-Version: 0.2-9
+Version: 0.2.9
 Authors@R: c(person("Kaue", "de Sousa", 
         email = "kaue.desousa@inn.no", role = c("aut", "cre"),
-        comment = c(ORCID = "0000-0002-7571-7845")),
+        comment = c(ORCID = "0000-0002-7571-7845")), 
         person("Jacob", "van Etten", role = "aut",
         comment = c(ORCID = "0000-0001-7554-2558")),
-        person("Brandon", "Madriz", role = "aut"),
-        person("Carlos", "Quiros", role = "aut"))
-Maintainer: Kaue de Sousa <kaue.desousa@inn.no>
+        person("Brandon", "Madriz", role = "ctb",
+        comment = "API Client implementation"))
 URL: https://agrobioinfoservices.github.io/ClimMobTools/
 BugReports: https://github.com/agrobioinfoservices/ClimMobTools/issues
 Description: API Client for the 'ClimMob' platform in R. 'ClimMob' is an open 
@@ -21,10 +20,10 @@ Description: API Client for the 'ClimMob' platform in R. 'ClimMob' is an open
     it enables many farmers to carry out reasonably simple experiments that 
     taken together can offer even more information. 'ClimMobTools' enables project 
     managers to deep explore and analyse their 'ClimMob' data in R.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 2.10)
+Depends: R (>= 3.5.0)
 Imports:
     httr, 
     jsonlite, 

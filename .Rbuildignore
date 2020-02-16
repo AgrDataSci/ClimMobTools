@@ -6,11 +6,9 @@
 ^docs$
 ^pkgdown$
 ^CODE_OF_CONDUCT\.md$
-^README\.Rmd$
 ^README\.md$
-^LICENSE\.md$
-^LICENSE$
 ^CONTRIBUTING\.md$
 ^tests$
-^ClimmobReport$
+^dev$
 ^logo\.svg$
+^codemeta\.json$

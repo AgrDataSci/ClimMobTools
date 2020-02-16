@@ -41,3 +41,6 @@ seed_need(nobservers = 400,
           nseeds = 100,
           unit = "unit")
 }
+\author{
+Kauê de Sousa
+}

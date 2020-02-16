@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get ClimMob data — getDataCM • ClimMobTools</title>
+<title>API Client for the 'ClimMob' platform in R — ClimMobTools • ClimMobTools</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,9 +42,17 @@
 
 
 
-<meta property="og:title" content="Get ClimMob data — getDataCM" />
-<meta property="og:description" content="Fetch the data from a ClimMob project using an application 
- programming interface (API) key" />
+<meta property="og:title" content="API Client for the 'ClimMob' platform in R — ClimMobTools" />
+<meta property="og:description" content="
+API Client for the 'ClimMob' platform in R. 'ClimMob' is an open 
+    source software for crowdsourcing citizen science in agriculture under 
+    the 'tricot' method &amp;lt;https://climmob.net/climmob3/&amp;gt;. Developed by 
+    van Etten et al. (2019) &amp;lt;https://doi.org/10.1017/S0014479716000739&amp;gt;, it turns the 
+    research paradigm on its head; instead of a few researchers designing complicated 
+    trials to compare several technologies in search of the best solutions, 
+    it enables many farmers to carry out reasonably simple experiments that 
+    taken together can offer even more information. 'ClimMobTools' enables project 
+    managers to deep explore and analyse their 'ClimMob' data in R." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -124,94 +132,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get ClimMob data</h1>
+    <h1>API Client for the 'ClimMob' platform in R</h1>
     
-    <div class="hidden name"><code>getDataCM.Rd</code></div>
+    <div class="hidden name"><code>ClimMobTools.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Fetch the data from a ClimMob project using an application 
- programming interface (API) key</p>
+    <p><img src='figures/logo.png' align='right' alt='logo' width='120' /></p>
+<p>API Client for the 'ClimMob' platform in R. 'ClimMob' is an open 
+    source software for crowdsourcing citizen science in agriculture under 
+    the 'tricot' method &lt;https://climmob.net/climmob3/&gt;. Developed by 
+    van Etten et al. (2019) &lt;https://doi.org/10.1017/S0014479716000739&gt;, it turns the 
+    research paradigm on its head; instead of a few researchers designing complicated 
+    trials to compare several technologies in search of the best solutions, 
+    it enables many farmers to carry out reasonably simple experiments that 
+    taken together can offer even more information. 'ClimMobTools' enables project 
+    managers to deep explore and analyse their 'ClimMob' data in R.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getDataCM</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>project</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>as.data.frame</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for CM_list</span>
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>tidynames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pivot.wider</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>key</th>
-      <td><p>a character for the user's application programming 
-interface (API) key</p></td>
-    </tr>
-    <tr>
-      <th>project</th>
-      <td><p>a character for the project id</p></td>
-    </tr>
-    <tr>
-      <th>as.data.frame</th>
-      <td><p>logical, to return a data frame</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional arguments passed to methods</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>an object of class <code>CM_list</code></p></td>
-    </tr>
-    <tr>
-      <th>tidynames</th>
-      <td><p>logical, if TRUE suppress ODK strings</p></td>
-    </tr>
-    <tr>
-      <th>pivot.wider</th>
-      <td><p>logical, if TRUE return a wider object 
-where each observer is a row</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>An object of class 'CM_list' or a data.frame with the 
-variables:</p>
-<dt>id</dt><dd><p>the participant's package id</p></dd>
-<dt>moment</dt><dd><p>the data collection moment</p></dd>
-<dt>variable</dt><dd><p>the variable name</p></dd>
-<dt>value</dt><dd><p>the value for each variable</p></dd>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='getProjectsCM.html'>getProjectsCM</a></code></p></div>
+    <div class='dont-index'><p><strong>Useful links:</strong></p><ul>
+<li><p>Development repository: 
+ <a href='https://github.com/agrobioinfoservices/ClimMobTools'>https://github.com/agrobioinfoservices/ClimMobTools</a></p></li>
+<li><p>Static documentation: 
+ <a href='https://agrobioinfoservices.github.io/ClimMobTools/'>https://agrobioinfoservices.github.io/ClimMobTools/</a></p></li>
+<li><p>Report bugs: 
+ <a href='https://github.com/agrobioinfoservices/ClimMobTools/issues'>https://github.com/agrobioinfoservices/ClimMobTools/issues</a></p></li>
+</ul>
+</div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
-<span class='co'># This function will not work without an API key  </span>
-<span class='co'># the user API key can be obtained once a free ClimMob account </span>
-<span class='co'># is created via https://climmob.net/climmob3/</span>
-
-<span class='no'>my_key</span> <span class='kw'>&lt;-</span> <span class='st'>"add_your_key"</span>
-<span class='no'>my_project</span> <span class='kw'>&lt;-</span> <span class='st'>"my_climmob_project"</span>
-
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>getDataCM</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>my_key</span>, <span class='kw'>project</span> <span class='kw'>=</span> <span class='no'>my_project</span>)
-
-}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
-    <p>Kauê de Sousa</p>
+    <p>Kauê de Sousa and Jacob van Etten and Brandon Madriz</p>
   </div>
 </div>
 

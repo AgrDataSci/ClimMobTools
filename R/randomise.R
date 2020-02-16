@@ -10,6 +10,8 @@
 #' The strategy is to create a "pool" of combinations that does not repeat 
 #' combinations and is A-optimal. Then this pool is ordered to make subsets of 
 #' consecutive combinations also relatively balanced and A-optimal
+#' 
+#' @author Jacob van Etten and Kauê de Sousa
 #' @param ncomp an integer for the number of items each observer compares
 #' @param nobservers an integer for the number of observers
 #' @param nitems an integer for the number of items tested in the project
@@ -83,12 +85,14 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
       # calculate frequency of each variety
       sumcomb <- rowSums(varcomb) + colSums(varcomb)
       
-      # priority of each combination is equal to Shannon index of varieties in each combination
+      # priority of each combination is equal to Shannon index of varieties 
+      # in each combination
       prioritycomb <- apply(varcombinations, 1, function(x){ 
         .getShannonVector(x, sumcomb, nitems)
       })
       
-      # highest priority to be selected is the combination which has the lowest Shannon index
+      # highest priority to be selected is the combination which has the lowest 
+      # Shannon index
       selected <- which(prioritycomb == min(prioritycomb))
       
       # if there are ties, find out which combination reduces Kirchhoff index most
@@ -117,7 +121,8 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
         
       }
       
-      # if there are still ties between ranks of combinations, selected randomly from the ties
+      # if there are still ties between ranks of combinations, selected randomly 
+      # from the ties
       if (length(selected) > 1) { 
         selected <- sample(selected, 1)
       }
@@ -155,12 +160,14 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
     # calculate frequency of each variety
     sumcomb <- rowSums(varcomb) + colSums(varcomb)
     
-    # priority of each combination is equal to Shannon index of varieties in each combination
+    # priority of each combination is equal to Shannon index of varieties 
+    # in each combination
     prioritycomb <- apply(vars, 1, function(x){ 
       .getShannonVector(x, sumcomb, nitems)
     })
     
-    # highest priority to be selected is the combination which has the lowest Shannon index
+    # highest priority to be selected is the combination which has the 
+    # lowest Shannon index
     selected <- which(prioritycomb == min(prioritycomb))
     
     # if there are ties, find out which combination reduces Kirchhoff index most
@@ -174,14 +181,16 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
       # get a nitems x nitems matrix with number of connections
       sumcombMatrix <- varcomb * 0
       
-      # in this case, get matrix to calculate Kirchhoff index only for last 10 observers
+      # in this case, get matrix to calculate Kirchhoff index only for 
+      # last 10 observers
       for (j in max(1,i-10):(i-1)) {
         index <- t(combn(varOrdered[j,],2))
         sumcombMatrix[index] <- sumcombMatrix[index] + 1
         
       }
       
-      # calculate Kirchhoff indices for the candidate matrix corresponding to each row in selected
+      # calculate Kirchhoff indices for the candidate matrix corresponding
+      # to each row in selected
       khi <- vector(length = length(selected))
       for (k in 1:length(selected)) {
         
@@ -228,7 +237,8 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
     varOrdered_Shannon <- apply(varOrdered_all, 1, function(x) {
       .getShannonMatrix(x, position)
     })
-    varOrdered_i <- varOrdered_all[which(varOrdered_Shannon == min(varOrdered_Shannon))[1],]
+    varOrdered_i <- varOrdered_all[which(varOrdered_Shannon == 
+                                           min(varOrdered_Shannon))[1],]
     varOrdered[i,] <- varOrdered_i
     pp <- position * 0
     pp[cbind(varOrdered_i,1:ncomp)] <- 1
@@ -240,7 +250,8 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   # Create the final matrix
   finalresults <- matrix(NA, ncol = ncomp, nrow = nobservers)
   
-  # loop over the rows and columns of the final matrix and put the elements randomized
+  # loop over the rows and columns of the final matrix and put
+  # the elements randomized
   # with the indexes in varOrdered
   for (i in 1:nobservers){
     for (j in 1:ncomp){
@@ -274,8 +285,10 @@ randomize <- function(...){
   
   # Then some maths to get the Kirchhoff index
   
-  # Using rARPACK:eigs, setting k to n-1 because we don't need the last eigen value
-  Laplacian <- methods::as(Matrix::Diagonal(x = colSums(x)) - x, "dsyMatrix")
+  # Using rARPACK:eigs, setting k to n-1 because we don't need the 
+  # last eigen value
+  Laplacian <- methods::as(Matrix::Diagonal(x = colSums(x)) - x, 
+                           "dsyMatrix")
   lambda <-
     try(RSpectra::eigs(Laplacian,
                        k = (dim(Laplacian)[1] - 1),

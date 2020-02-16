@@ -7,7 +7,8 @@
 getProjectsCM(key = NULL)
 }
 \arguments{
-\item{key}{a character for the user's application programming interface (API) key}
+\item{key}{a character for the user's application programming 
+interface (API) key}
 }
 \value{
 A data frame with the ClimMob projects 
@@ -15,9 +16,12 @@ A data frame with the ClimMob projects
 \item{name}{the project name}
 \item{status}{the current status}
 \item{creation_date}{the project's creation date}
-\item{intended_participants}{the number of participants the project intended to register}
-\item{registration_progress}{the percentage of intended participants which were registered}
-\item{last_registration_activity}{number of days since the submission of the last registration}
+\item{intended_participants}{the number of participants the project 
+ intended to register}
+\item{registration_progress}{the percentage of intended participants 
+ which were registered}
+\item{last_registration_activity}{number of days since the submission 
+ of the last registration}
 }
 \description{
 Get ClimMob projects using an application programming interface (API) key
@@ -37,4 +41,7 @@ getProjectsCM(key = my_key)
 }
 \seealso{
 \url{https://climmob.net/climmob3/}
+}
+\author{
+Kauê de Sousa
 }

@@ -43,3 +43,6 @@ randomise(ncomp = ni,
           itemnames = inames)
           
 }
+\author{
+Jacob van Etten and Kauê de Sousa
+}

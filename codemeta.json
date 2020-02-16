@@ -1,0 +1,200 @@
+{
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
+  "@type": "SoftwareSourceCode",
+  "identifier": "ClimMobTools",
+  "description": "API Client for the 'ClimMob' platform in R. 'ClimMob' is an open \n    source software for crowdsourcing citizen science in agriculture under \n    the 'tricot' method <https://climmob.net/climmob3/>. Developed by \n    van Etten et al. (2019) <https://doi.org/10.1017/S0014479716000739>, it turns the \n    research paradigm on its head; instead of a few researchers designing complicated \n    trials to compare several technologies in search of the best solutions, \n    it enables many farmers to carry out reasonably simple experiments that \n    taken together can offer even more information. 'ClimMobTools' enables project \n    managers to deep explore and analyse their 'ClimMob' data in R.",
+  "name": "ClimMobTools: API Client for the 'ClimMob' platform in R",
+  "codeRepository": "https://agrobioinfoservices.github.io/ClimMobTools/",
+  "issueTracker": "https://github.com/agrobioinfoservices/ClimMobTools/issues",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "0.2.9",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "3.6.2",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 3.6.2 (2019-12-12)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Kaue",
+      "familyName": "de Sousa",
+      "email": "kaue.desousa@inn.no",
+      "@id": "https://orcid.org/0000-0002-7571-7845"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Jacob",
+      "familyName": "van Etten",
+      "@id": "https://orcid.org/0000-0001-7554-2558"
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Brandon",
+      "familyName": "Madriz"
+    }
+  ],
+  "copyrightHolder": {},
+  "funder": {},
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Kaue",
+      "familyName": "de Sousa",
+      "email": "kaue.desousa@inn.no",
+      "@id": "https://orcid.org/0000-0002-7571-7845"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "PlackettLuce",
+      "name": "PlackettLuce",
+      "version": ">= 0.2-8",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=PlackettLuce"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "version": ">= 2.1.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "httr",
+      "name": "httr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=httr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "jsonlite",
+      "name": "jsonlite",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=jsonlite"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "Matrix",
+      "name": "Matrix",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=Matrix"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "RSpectra",
+      "name": "RSpectra",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=RSpectra"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tibble",
+      "name": "tibble",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=tibble"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    }
+  ],
+  "releaseNotes": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/NEWS.md",
+  "readme": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/README.md",
+  "fileSize": "320.778KB",
+  "contIntegration": [
+    "https://ci.appveyor.com/project/kauedesousa/ClimMobTools",
+    "https://travis-ci.org/agrobioinfoservices/ClimMobTools",
+    "https://codecov.io/github/agrobioinfoservices/ClimMobTools?branch=master"
+  ],
+  "developmentStatus": "https://www.tidyverse.org/lifecycle/#questioning",
+  "relatedLink": "https://CRAN.R-project.org/package=ClimMobTools"
+}

@@ -3,9 +3,11 @@ ClimMobTools
 ============
 
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/agrobioinfoservices/ClimMobTools?branch=master&svg=true)](https://ci.appveyor.com/project/kauedesousa/ClimMobTools) 
-[![Build Status](https://travis-ci.org/agrobioinfoservices/ClimMobTools.svg?branch=master)](https://travis-ci.org/agrobioinfoservices/ClimMobTools) [![codecov](https://codecov.io/gh/agrobioinfoservices/ClimMobTools/master.svg)](https://codecov.io/github/agrobioinfoservices/ClimMobTools?branch=master)  [![lifecycle](https://img.shields.io/badge/lifecycle-questioning-blue.svg)](https://www.tidyverse.org/lifecycle/#questioning) [![Downloads](https://cranlogs.r-pkg.org/badges/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
+[![CRAN](https://www.r-pkg.org/badges/version/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
+[![CRANchecks](https://cranchecks.info/badges/worst/ClimMobTools)](https://cran.r-project.org/web/checks/check_results_ClimMobTools.html)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/agrobioinfoservices/ClimMobTools?branch=master&svg=true)](https://ci.appveyor.com/project/kauedesousa/ClimMobTools) 
+[![Travis](https://travis-ci.org/agrobioinfoservices/ClimMobTools.svg?branch=master)](https://travis-ci.org/agrobioinfoservices/ClimMobTools) [![codecov](https://codecov.io/gh/agrobioinfoservices/ClimMobTools/master.svg)](https://codecov.io/github/agrobioinfoservices/ClimMobTools?branch=master)  [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) 
+[![Downloads](https://cranlogs.r-pkg.org/badges/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
 <!-- badges: end -->
 
 *ClimMobTools*: API Client for the 'ClimMob' platform in R <img align="right" src="man/figures/logo.png">
@@ -13,7 +15,7 @@ ClimMobTools
 
 ## Announcement
 
-Several functions of **ClimMobTools** are migrating to the new package [gosset](https://agrobioinfoservices.github.io/gosset/). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to [gosset](https://agrobioinfoservices.github.io/gosset/) to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general. Retained functions are `getDataCM()`, `getProjectsCM()`, `randomise()` and `seed_need()`. We apologize for any problem caused by this migration, and we are willing to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
+Several functions of **ClimMobTools** are migrating to the new package [gosset](https://agrobioinfoservices.github.io/gosset/). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to [gosset](https://agrobioinfoservices.github.io/gosset/) to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general. Retained functions are `getDataCM()`, `getProjectsCM()`, `randomise()` and `seed_need()`. We apologize for any inconvenience caused by this migration, and we are willing to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
 
 ## Overview
 
@@ -51,7 +53,7 @@ vignette("Overview", package = "ClimMobTools")
 
   - Please [report any issues or bugs](https://github.com/agrobioinfoservices/ClimMobTools/issues).
 
-  - License: GPL-3.
+  - License: MIT.
 
   - Get citation information for *ClimMobTools* in R by typing `citation(package = "ClimMobTools")`.
 

@@ -3,6 +3,7 @@
 #' Calculate the required amount of seeds (or other technology) required 
 #' for a triadic comparison of technologies (tricot) project.
 #' 
+#' @author Kauê de Sousa
 #' @param unit optional, a character specifying the metric unit used
 #' @param nseeds an integer for the metric of seeds each bag receives
 #' @inheritParams randomise
