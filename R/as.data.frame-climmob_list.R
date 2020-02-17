@@ -12,10 +12,7 @@ as.data.frame.CM_list <- function(x,
                                   tidynames = TRUE,
                                   pivot.wider = FALSE) {
   
-  namex <- names(x)
-  
   dt <- list()
-  
   # 'specialfields', the assessment questions
   dt[["specialfields"]] <- x[["specialfields"]]
 
@@ -36,6 +33,9 @@ as.data.frame.CM_list <- function(x,
   
   # 'data', the trial data assessment
   dt[["data"]] <- x[["data"]]
+  
+  # get the project name
+  project_name <- dt$project$project_cod
   
   # get the names of assessments questions
   assess_q <- dt[[1]]
@@ -222,7 +222,10 @@ as.data.frame.CM_list <- function(x,
     
     trial[, "variable"] <- gsub("clm_", "survey_", trial[, "variable"])
     
+    trial[, "variable"] <- gsub("^_","", trial[, "variable"])
+    
     i <- trial[, "variable"] == "farmername"
+    
     trial[i, "variable"] <- "participant_name"
     
   }
@@ -254,7 +257,7 @@ as.data.frame.CM_list <- function(x,
     
     variable_levels <- unique(output$variable)
     
-    output <- output[,-2]
+    output <- output[, -2]
     
     output <- .set_wide(output, "id")
     
@@ -263,6 +266,8 @@ as.data.frame.CM_list <- function(x,
   }
   
   row.names(output) <- seq_along(output$id)
+  
+  output$id <- paste0(project_name, "_", output$id)
   
   return(output)
   
