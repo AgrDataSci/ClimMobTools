@@ -192,6 +192,9 @@ as.data.frame.CM_list <- function(x,
   
   pack <- cbind(dt[[6]][, c("package_id","farmername")], comps)
   
+  # add project name
+  pack$project_name <- project_name
+  
   pack <- .set_long(pack, "package_id")
   
   pack[, "moment"] <- "package"
@@ -266,8 +269,6 @@ as.data.frame.CM_list <- function(x,
   }
   
   row.names(output) <- seq_along(output$id)
-  
-  output$id <- paste0(project_name, "_", output$id)
   
   return(output)
   

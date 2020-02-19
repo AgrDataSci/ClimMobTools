@@ -97,3 +97,116 @@
   
   return(object)
 }
+
+
+#' Capitalize for title case sentence
+#' 
+#' @param x a character
+#' @return \code{x} as a capitalized character
+#' @examples 
+#' zz <- c("try this")
+#' .title_case(zz)
+#' @noRd
+.title_case <- function(x) {
+  gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2", 
+       x, 
+       perl = TRUE)
+}
+
+#' Pluralize
+#' @param x a character
+#' @param p a character to be use in the plural
+#' @return \code{x} as a pluralized character
+#' @examples 
+#' zz <- c("observer")
+#' .pluralize(zz)
+#' @noRd
+.pluralize <- function(x, p = "s") {
+  paste0(x, p)
+}
+
+#' Decode arguments from ClimMob3
+#' 
+#' @param x a list of arguments given by ClimMob
+#' @return a list with data frames for:
+#'  chars: characteristics to be analysed, 
+#'  perf:  the comparison between tested items and the local item
+#'  expl:  the explanatory variables
+#' @noRd
+.decode_pars <- function(x) {
+
+  chars <- x[["Characteristics"]]
+  perf  <- x[["Performance"]]
+  expl  <- x[["Explanatory"]]
+  
+  result <- list()
+  
+  if (!is.null(chars)) {
+    
+    questions <- lapply(chars$vars, function(y) {
+      unlist(y)
+    })
+    
+    questions <- do.call(rbind, questions)
+    questions <- as.data.frame(questions, stringsAsFactors = FALSE)
+    names(questions) <- paste0("quest_", seq_len(dim(questions)[[2]]))
+    
+    questions$n_quest <- dim(questions)[[2]]
+    
+    questions$char_full <- chars$name
+    
+    questions$char <- gsub(" ","_",tolower(chars$name))
+    
+    # look for the overall performance
+    index_overall <- which(grepl("overall", questions$char))
+    # it may happen that this question is done twice
+    # so for that cases, the last is taken
+    index_overall <- index_overall[length(index_overall)]
+    index_overall <- questions$char[index_overall]
+    # put overall as first trait
+    traits <- union(index_overall, questions$char)
+    
+    questions <- questions[match(traits, questions$char), ]
+    
+    rownames(questions) <- 1:nrow(questions)
+    
+    result[["chars"]] <- questions
+  }
+  
+  if (!is.null(perf)) {
+    questions <- lapply(perf$vars, function(y) {
+      unlist(y)
+    })
+    
+    questions <- do.call(rbind, questions)
+    questions <- as.data.frame(questions, stringsAsFactors = FALSE)
+    names(questions) <- paste0("quest_", seq_len(dim(questions)[[2]]))
+    
+    questions$n_quest <- dim(questions)[[2]]
+    
+    questions$perf_full <- perf$name
+    
+    questions$perf <- gsub(" ","_",tolower(perf$name))
+    
+    result[["perf"]] <- questions
+  }else{
+    message("Comparison with local item is missing\n")
+  }
+  
+  if (!is.null(expl)) {
+    
+    result[["expl"]] <- expl
+    
+  }else{
+    pseudo <- data.frame(name = NA,
+                         id = "0000",
+                         vars = "xinterceptx", 
+                         stringsAsFactors = FALSE)
+    result[["expl"]] <- pseudo
+    message("No explanatory variable selected. Fit model with the intercept.\n")
+  }
+  
+  return(result)
+  
+}
+
