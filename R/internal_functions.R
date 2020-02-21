@@ -1,18 +1,19 @@
-# Set data.frame into long format
-# 
-# @param object a data.frame in the wide format
-# @param id a character for the id
-# @return a data.frame in the long format
-# @examples
-# data <- data.frame(
-#   id = 1:10,
-#   x = LETTERS[1:10],
-#   y = letters[11:20],
-#   z = colors()[1:10],
-#   w = colors()[401:410]
-# )
-# 
-# .set_long(data, "id")
+#' Set data.frame into long format
+#' 
+#' @param object a data.frame in the wide format
+#' @param id a character for the id
+#' @return a data.frame in the long format
+#' @examples
+#' data <- data.frame(
+#'   id = 1:10,
+#'   x = LETTERS[1:10],
+#'   y = letters[11:20],
+#'   z = colors()[1:10],
+#'   w = colors()[401:410]
+#' )
+#' 
+#' .set_long(data, "id")
+#' @noRd
 .set_long <- function(object, id) {
   
   object <- split(object, object[, id])
@@ -52,23 +53,24 @@
 }
 
 
-# Set a data.frame into wide format
-# 
-# @param object a data.frame in the long format
-# @param id a character for the id
-# @return a data.frame in the wide format
-# @examples
-# data <- data.frame(
-#   id = 1:10,
-#   x = LETTERS[1:10],
-#   y = letters[11:20],
-#   z = colors()[1:10],
-#   w = colors()[401:410]
-# )
-# 
-# data_l <- .set_long(data, "id")
-# 
-# .set_wide(data_l, "id")
+#' Set a data.frame into wide format
+#' 
+#' @param object a data.frame in the long format
+#' @param id a character for the id
+#' @return a data.frame in the wide format
+#' @examples
+#' data <- data.frame(
+#'   id = 1:10,
+#'   x = LETTERS[1:10],
+#'   y = letters[11:20],
+#'   z = colors()[1:10],
+#'   w = colors()[401:410]
+#' )
+#' 
+#' data_l <- .set_long(data, "id")
+#' 
+#' .set_wide(data_l, "id")
+#' @noRd
 .set_wide <- function(object, id) {
   
   object <- split(object, object[, id])
@@ -141,7 +143,7 @@
   
   result <- list()
   
-  if (!is.null(chars)) {
+  if (length(chars) > 0) {
     
     questions <- lapply(chars$vars, function(y) {
       unlist(y)
@@ -173,7 +175,7 @@
     result[["chars"]] <- questions
   }
   
-  if (!is.null(perf)) {
+  if (length(perf) > 0) {
     questions <- lapply(perf$vars, function(y) {
       unlist(y)
     })
@@ -190,10 +192,10 @@
     
     result[["perf"]] <- questions
   }else{
-    message("Comparison with local item is missing\n")
+    result[["perf"]] <- character(0L)
   }
   
-  if (!is.null(expl)) {
+  if (length(expl) > 0) {
     
     result[["expl"]] <- expl
     
@@ -203,7 +205,6 @@
                          vars = "xinterceptx", 
                          stringsAsFactors = FALSE)
     result[["expl"]] <- pseudo
-    message("No explanatory variable selected. Fit model with the intercept.\n")
   }
   
   return(result)
