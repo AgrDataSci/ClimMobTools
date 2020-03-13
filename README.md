@@ -15,7 +15,7 @@ ClimMobTools
 
 ## Announcement
 
-Several functions of **ClimMobTools** are migrating to the new package [gosset](https://agrobioinfoservices.github.io/gosset/). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to [gosset](https://agrobioinfoservices.github.io/gosset/) to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general. Retained functions are `getDataCM()`, `getProjectsCM()`, `randomise()` and `seed_need()`. We apologize for any inconvenience caused by this migration, and we are willing to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
+Several functions of **ClimMobTools** are migrating to the new packages [gosset](https://agrobioinfoservices.github.io/gosset/) and [climatrends](https://agrobioinfoservices.github.io/climatrends/). ClimMobTools will keep only the functions exclusively related to the [ClimMob](https://climmob.net/) platform. Other functions are transferred to [gosset](https://agrobioinfoservices.github.io/gosset/) to provide a better environment for data handling, analysis and visualization not only to 'tricot' data, but metadata in general, and to [climatrends](https://agrobioinfoservices.github.io/climatrends/) to compute environmental indices and trends in climate variability. Retained functions are `getDataCM()`, `getProjectsCM()`, `randomise()` and `seed_need()`. We apologize for any inconvenience caused by this migration, and we are willing to discuss this via the [issues](https://github.com/agrobioinfoservices/ClimMobTools/issues) section.
 
 ## Overview
 
@@ -36,10 +36,11 @@ install.packages("ClimMobTools")
 The development version can be installed via
 
 ``` r
-library("devtools")
+library("remotes")
+install_github("agrobioinfoservices/ClimMobTools", build_vignettes = TRUE)
 
-devtools::install_github("agrobioinfoservices/ClimMobTools")
 ```
+
 
 ## Going further
 

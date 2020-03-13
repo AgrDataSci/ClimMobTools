@@ -36,7 +36,7 @@ ni <- 3
 no <- 10
 nv <- 4
 inames <- c("mango","banana","grape","apple")
-
+ 
 randomise(ncomp = ni,
           nobservers = no,
           nitems = nv,
@@ -44,5 +44,5 @@ randomise(ncomp = ni,
           
 }
 \author{
-Jacob van Etten and Kauê de Sousa
+Jacob van Etten
 }

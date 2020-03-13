@@ -11,7 +11,7 @@
 #' combinations and is A-optimal. Then this pool is ordered to make subsets of 
 #' consecutive combinations also relatively balanced and A-optimal
 #' 
-#' @author Jacob van Etten and Kauê de Sousa
+#' @author Jacob van Etten
 #' @param ncomp an integer for the number of items each observer compares
 #' @param nobservers an integer for the number of observers
 #' @param nitems an integer for the number of items tested in the project
@@ -22,7 +22,7 @@
 #' no <- 10
 #' nv <- 4
 #' inames <- c("mango","banana","grape","apple")
-#' 
+#'  
 #' randomise(ncomp = ni,
 #'           nobservers = no,
 #'           nitems = nv,
@@ -33,6 +33,7 @@
 #' @importFrom methods as
 #' @importFrom RSpectra eigs
 #' @importFrom utils combn
+#' @importFrom tibble as_tibble
 #' @export
 randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL, 
                       itemnames = NULL) {
@@ -53,8 +54,12 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
     stop("nitems is different than provided itemnames")
   }
   
+  if (nitems < 3) {
+    stop("nitems must be higher than 2")
+  }
+  
   # Varieties indicated by integers
-  varieties <- 1:nitems
+  varieties <- seq_len(nitems)
   
   # Full set of all combinations
   varcombinations <- t((utils::combn(varieties, ncomp)))
@@ -71,7 +76,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   # this means that no combination enters more than once
   nremain <- nobservers - nfixed
   
-  #create set to get to full number of observers
+  # create set to get to full number of observers
   vars2 <- matrix(nrow = nremain, ncol = ncomp)
   
   # set up array with set of combinations
@@ -99,9 +104,11 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
       
       if (length(selected) > 1 & i > 25) {
         
+        reduce <- max(2, min(10, round(5000/nobservers), round(200/nitems)))
+        
         # randomly subsample from selected if there are too many combinations to check
-        if (length(selected) > 10) {
-          selected <- sample(selected, 10)
+        if (length(selected) > reduce) {
+          selected <- sample(selected, reduce)
         }
         
         # get a nitems x nitems matrix with number of connections
@@ -173,9 +180,11 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
     # if there are ties, find out which combination reduces Kirchhoff index most
     if (length(selected) > 1 & i > 25) {
       
+      reduce <- max(2, min(10, round(5000/nobservers), round(200/nitems)))
+      
       # randomly subsample from selected if there are too many combinations to check
-      if (length(selected) > 10) {
-        selected <- sample(selected, 7)
+      if (length(selected) > reduce) {
+        selected <- sample(selected, reduce)
       }
       
       # get a nitems x nitems matrix with number of connections
@@ -253,15 +262,16 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   # loop over the rows and columns of the final matrix and put
   # the elements randomized
   # with the indexes in varOrdered
-  for (i in 1:nobservers){
-    for (j in 1:ncomp){
+  for (i in seq_len(nobservers)){
+    for (j in seq_len(ncomp)){
       finalresults[i,j] <- itemnames[varOrdered[i,j]]
     }
   }
   
-  finalresults <- tibble::as_tibble(finalresults)
+  dimnames(finalresults) <- list(seq_len(nobservers), 
+                                 paste0("item_", LETTERS[1:ncomp]))
   
-  names(finalresults) <- paste0("item_", LETTERS[1:ncomp])
+  finalresults <- tibble::as_tibble(finalresults)
   
   return(finalresults)
   

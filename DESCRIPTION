@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' platform in R
-Version: 0.2.9
+Version: 0.3.1
 Authors@R: c(person("Kaue", "de Sousa", 
         email = "kaue.desousa@inn.no", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0002-7571-7845")), 
@@ -32,7 +32,8 @@ Imports:
     RSpectra, 
     tibble, 
     utils
-Suggests: 
+Suggests:
+    climatrends,
     knitr,
     PlackettLuce (>= 0.2-8),
     rmarkdown,

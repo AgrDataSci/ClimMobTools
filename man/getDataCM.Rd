@@ -21,9 +21,9 @@ interface (API) key}
 
 \item{x}{an object of class \code{CM_list}}
 
-\item{tidynames}{logical, if TRUE suppress ODK strings}
+\item{tidynames}{logical, if \code{TRUE} suppress ODK strings}
 
-\item{pivot.wider}{logical, if TRUE return a wider object 
+\item{pivot.wider}{logical, if \code{TRUE} return a wider object 
 where each observer is a row}
 }
 \value{

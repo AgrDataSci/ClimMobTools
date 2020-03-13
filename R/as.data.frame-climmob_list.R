@@ -1,7 +1,7 @@
 #' @rdname getDataCM
 #' @param x an object of class \code{CM_list}
-#' @param tidynames logical, if TRUE suppress ODK strings
-#' @param pivot.wider logical, if TRUE return a wider object 
+#' @param tidynames logical, if \code{TRUE} suppress ODK strings
+#' @param pivot.wider logical, if \code{TRUE} return a wider object 
 #'  where each observer is a row
 #' @param ... additional arguments passed to methods
 #' @importFrom methods as
@@ -101,7 +101,7 @@ as.data.frame.CM_list <- function(x,
     for (i in seq_along(geo_which)){
       newname <- names(geo[i])
       newname <- gsub("_farmgoelocation|_ubicacion", "", newname)
-      newname <- paste0(newname, c("_lat","_lon"))
+      newname <- paste0(newname, c("_lon","_lat"))
       
       lonlat <- geo[i]
       
@@ -112,7 +112,6 @@ as.data.frame.CM_list <- function(x,
         unlist(strsplit(x, " "))
         
       }))
-      
       
       lonlat[lonlat == "NA"] <- NA
       

@@ -1,10 +1,10 @@
-ClimMobTools 0.2.9 (2020-02-15)
+ClimMobTools 0.3.1 (2020-03-13)
 =========================
 
 ### CHANGES IN BEHAVIOUR
 
 * Migrating functions from **ClimMobTools** to **gosset** and **climatrends**. ClimMobTools will keep only the functions exclusively related to the 'ClimMob' platform. Other functions are transferred to **gosset** and **climatrends** to provide a better environment for data handling, analysis and visualization.
-* Retain function `getDataCM`, `getProjectCM`, `randomise` and `seed_need`
+* Retain function `getDataCM()`, `getProjectCM()`, `randomise()` and `seed_need()`
 * Changes in package description
 * A S3 method `as.data.frame()` is provided to coerce CM_list into a data frame
 * Internal functions for pivoting data.frames to avoid dependencies
