@@ -59,7 +59,7 @@ getDataCM <- function(key = NULL,
   class(cmdata) <- union("CM_list", class(cmdata))
   
   # if required, coerce to a data frame
-  if (as.data.frame) {
+  if (isTRUE(as.data.frame)) {
     cmdata <- as.data.frame(x = cmdata, ...)
     cmdata <- tibble::as_tibble(cmdata)
   }

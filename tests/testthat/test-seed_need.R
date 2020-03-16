@@ -1,15 +1,19 @@
 context("test-seed_need")
 
+v <- c(32, 8, 2, 8)
+
 test_that("returns a valid object", {
-  s <- seed_need(nobservers = 400,
+  s <- seed_need(nobservers = 10,
                  ncomp = 3,
-                 nitems = 9,
-                 nseeds = 100,
-                 unit = "unit")
+                 nitems = 4,
+                 nseeds = .2,
+                 unit = "kg")
   
-  v <- as.vector(apply(s, 1, is.na))
-  v <- !any(v)
+  s <- s$quant
   
-  expect_equal(v, TRUE)
+  s <- all(s == v)
+  
+  expect_true(s)
+  
 })
 

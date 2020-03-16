@@ -14,7 +14,7 @@ test_that("returns a valid object", {
   v <- as.vector(apply(r, 1, is.na))
   v <- !any(v)
   
-  expect_equal(v, TRUE)
+  expect_true(v)
 })
 
 test_that("returns a balanced sample", {
@@ -26,7 +26,7 @@ test_that("returns a balanced sample", {
 })
 
 
-test_that("works with more than 3", {
+test_that("works with more than 3 comp", {
   
   r5 <- randomise(ncomp = 5,
                   nobservers = 20,
@@ -36,13 +36,13 @@ test_that("works with more than 3", {
   v <- as.vector(apply(r5, 1, is.na))
   v <- !any(v)
   
-  expect_equal(v, TRUE)
+  expect_true(v)
 
 })
 
 
 
-test_that("returns an error", {
+test_that("different lenght in nitems and itemnames", {
   expect_error(
     randomise(ncomp = ni,
               nobservers = no,
@@ -78,6 +78,16 @@ test_that("missing itemnames", {
   )
 })
 
+test_that("less than 3 items", {
+  expect_error(
+    randomise(ncomp = ni,
+              nobservers = no,
+              nitems = 2,
+              itemnames = c("A", "B"))
+  )
+})
+
+
 test_that("alias works", {
   r <- randomize(ncomp = ni,
                  nobservers = no,
@@ -88,15 +98,15 @@ test_that("alias works", {
   
   r <- sum(r) == 0
   
-  expect_equal(r, TRUE)
+  expect_true(r)
   
 })
 
 test_that("alias works", {
   
   ni <- 3
-  no <- 200
-  nv <- 30
+  no <- 20
+  nv <- 7
   inames <- paste("Var", 1:nv, sep="")
   
   r <- randomize(ncomp = ni,
@@ -107,7 +117,7 @@ test_that("alias works", {
 
   r <- is.data.frame(r)
   
-  expect_equal(r, TRUE)
+  expect_true(r)
   
 })
 

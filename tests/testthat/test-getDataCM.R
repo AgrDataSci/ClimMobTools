@@ -1,12 +1,21 @@
 context("test-getDataCM")
 
-library("ClimMobTools")
+load("../test_data.rda")
 
 key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-p <- getDataCM(key,"flowers")
-p <- !is.null(p)
+test_that("pivot.wider", {
+  
+  cm <- getDataCM(key,
+                  "chocolates",
+                  pivot.wider = TRUE,
+                  tidynames = TRUE)
+  
+  cm <- all(cm == chocolates, na.rm = TRUE)
+  
+  expect_true(cm)
 
+})
 
 test_that("no API key", {
   
@@ -14,30 +23,11 @@ test_that("no API key", {
   
 })
 
-test_that("api call works", {
-  
-  expect_equal(p, TRUE)
-  
-})
-
-
-test_that("pivot.wider", {
-  
-  cm <- getDataCM(key,
-                  "breadwheat",
-                  pivot.wider = TRUE,
-                  tidynames = TRUE)
-  
-  wider <- ncol(cm) > 10
-  
-  expect_equal(wider, TRUE)
-
-})
 
 test_that("error no data", {
   expect_error(
-    getDataCM("d39a3c66-5822-4930-a9d4-50e7da041e77",
-              "test")
+    getDataCM(key,
+              "empty")
   )
 }
 )
