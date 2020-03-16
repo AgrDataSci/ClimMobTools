@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
-Title: API Client for the 'ClimMob' platform in R
-Version: 0.3.1
+Title: API Client for the 'ClimMob' Platform
+Version: 0.3.2
 Authors@R: c(person("Kaue", "de Sousa", 
         email = "kaue.desousa@inn.no", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0002-7571-7845")), 
@@ -11,10 +11,9 @@ Authors@R: c(person("Kaue", "de Sousa",
         comment = "API Client implementation"))
 URL: https://agrobioinfoservices.github.io/ClimMobTools/
 BugReports: https://github.com/agrobioinfoservices/ClimMobTools/issues
-Description: API Client for the 'ClimMob' platform in R. 'ClimMob' is an open 
-    source software for crowdsourcing citizen science in agriculture under 
-    the 'tricot' method <https://climmob.net/climmob3/>. Developed by 
-    van Etten et al. (2019) <https://doi.org/10.1017/S0014479716000739>, it turns the 
+Description: API client for 'ClimMob', an open source software for crowdsourcing 
+    citizen science in agriculture under the 'tricot' method <https://climmob.net/climmob3/>. 
+    Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the 
     research paradigm on its head; instead of a few researchers designing complicated 
     trials to compare several technologies in search of the best solutions, 
     it enables many farmers to carry out reasonably simple experiments that 
@@ -25,6 +24,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
 Imports:
+    climatrends,
     httr, 
     jsonlite, 
     Matrix, 
@@ -33,7 +33,6 @@ Imports:
     tibble, 
     utils
 Suggests:
-    climatrends,
     knitr,
     PlackettLuce (>= 0.2-8),
     rmarkdown,
