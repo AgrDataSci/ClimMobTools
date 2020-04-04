@@ -9,7 +9,7 @@
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 API client for 'ClimMob', an open source software for crowdsourcing 
-    citizen science in agriculture under the 'tricot' method <https://climmob.net/climmob3/>. 
+    citizen science in agriculture under the 'tricot' method <https://climmob.net/>. 
     Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the 
     research paradigm on its head; instead of a few researchers designing complicated 
     trials to compare several technologies in search of the best solutions, 
@@ -26,6 +26,8 @@ API client for 'ClimMob', an open source software for crowdsourcing
  \url{https://agrobioinfoservices.github.io/ClimMobTools/}}
 \item{Report bugs: 
  \url{https://github.com/agrobioinfoservices/ClimMobTools/issues}}
+\item{ClimMob Platform: 
+ \url{https://climmob.net/climmob3/}}
 }
 }
 \author{

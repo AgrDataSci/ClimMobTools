@@ -4,6 +4,7 @@
 #'  programming interface (API) key
 #'
 #' @rdname getDataCM
+#' @family GET functions
 #' @author Kauê de Sousa
 #' @param project a character for the project id
 #' @param as.data.frame logical, to return a data frame
@@ -20,7 +21,7 @@
 #' 
 #' # This function will not work without an API key  
 #' # the user API key can be obtained once a free ClimMob account 
-#' # is created via https://climmob.net/climmob3/
+#' # is created via https://climmob.net/
 #' 
 #' my_key <- "add_your_key"
 #' my_project <- "my_climmob_project"
@@ -29,7 +30,7 @@
 #' 
 #' }
 #' 
-#' @seealso \code{\link{getProjectsCM}}
+#' @seealso ClimMob website \url{https://climmob.net/}
 #' @importFrom httr accept_json content GET
 #' @importFrom jsonlite fromJSON
 #' @importFrom tibble as_tibble

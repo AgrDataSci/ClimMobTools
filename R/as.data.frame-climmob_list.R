@@ -5,7 +5,6 @@
 #'  where each observer is a row
 #' @param ... additional arguments passed to methods
 #' @importFrom methods as
-#' @importFrom climatrends temperature rainfall GDD ETo
 #' @method as.data.frame CM_list
 #' @export
 as.data.frame.CM_list <- function(x, 

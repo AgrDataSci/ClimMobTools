@@ -1,8 +1,9 @@
 #' Get ClimMob projects 
 #'
-#' Get ClimMob projects using an application programming interface (API) key
+#' Fetch the status of ClimMob projects
 #'
 #' @author Kauê de Sousa
+#' @family GET functions
 #' @param key a character for the user's application programming 
 #'  interface (API) key
 #' @return A data frame with the ClimMob projects 
@@ -20,7 +21,7 @@
 #' \dontrun{ 
 #' # This function will not work without an API key  
 #' # the user API key can be obtained once a free ClimMob account 
-#' # is created via https://climmob.net/climmob3/
+#' # is created via https://climmob.net/
 #' 
 #' my_key <- "add_your_key"
 #' 
@@ -28,20 +29,19 @@
 #' 
 #' }
 #' 
-#' @seealso \url{https://climmob.net/climmob3/}
+#' @seealso ClimMob website \url{https://climmob.net/}
 #' @export
 getProjectsCM <- function(key = NULL){
 
   url <- "https://climmob.net/climmob3/api/readProjects?Apikey="
   
   dat <- httr::GET(url = url, 
-                    query = list(Apikey = key), 
-                    httr::accept_json())
+                   query = list(Apikey = key), 
+                   httr::accept_json())
 
   dat <- httr::content(dat, as = "text")
   
   dat <- jsonlite::fromJSON(dat)
-  
   
   progress <- dat$progress
   

@@ -5,12 +5,12 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "ClimMobTools",
-  "description": "API client for 'ClimMob', an open source software for crowdsourcing \n    citizen science in agriculture under the 'tricot' method <https://climmob.net/climmob3/>. \n    Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the \n    research paradigm on its head; instead of a few researchers designing complicated \n    trials to compare several technologies in search of the best solutions, \n    it enables many farmers to carry out reasonably simple experiments that \n    taken together can offer even more information. 'ClimMobTools' enables project \n    managers to deep explore and analyse their 'ClimMob' data in R.",
+  "description": "API client for 'ClimMob', an open source software for crowdsourcing \n    citizen science in agriculture under the 'tricot' method <https://climmob.net/>. \n    Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the \n    research paradigm on its head; instead of a few researchers designing complicated \n    trials to compare several technologies in search of the best solutions, \n    it enables many farmers to carry out reasonably simple experiments that \n    taken together can offer even more information. 'ClimMobTools' enables project \n    managers to deep explore and analyse their 'ClimMob' data in R.",
   "name": "ClimMobTools: API Client for the 'ClimMob' Platform",
   "codeRepository": "https://agrobioinfoservices.github.io/ClimMobTools/",
   "issueTracker": "https://github.com/agrobioinfoservices/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -72,19 +72,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "PlackettLuce",
-      "name": "PlackettLuce",
-      "version": ">= 0.2-8",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=PlackettLuce"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
       "provider": {
@@ -127,6 +114,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=climatrends"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "PlackettLuce",
+      "name": "PlackettLuce",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=PlackettLuce"
     },
     {
       "@type": "SoftwareApplication",
@@ -201,7 +200,7 @@
   ],
   "releaseNotes": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/NEWS.md",
   "readme": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/README.md",
-  "fileSize": "322.608KB",
+  "fileSize": "322.695KB",
   "contIntegration": [
     "https://ci.appveyor.com/project/kauedesousa/ClimMobTools",
     "https://travis-ci.org/agrobioinfoservices/ClimMobTools",

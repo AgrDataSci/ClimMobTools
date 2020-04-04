@@ -43,7 +43,7 @@
 
 
 <meta property="og:title" content="Get ClimMob projects — getProjectsCM" />
-<meta property="og:description" content="Get ClimMob projects using an application programming interface (API) key" />
+<meta property="og:description" content="Fetch the status of ClimMob projects" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Get ClimMob projects using an application programming interface (API) key</p>
+    <p>Fetch the status of ClimMob projects</p>
     </div>
 
     <pre class="usage"><span class='fu'>getProjectsCM</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -160,13 +160,15 @@ interface (API) key</p></td>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://climmob.net/climmob3/'>https://climmob.net/climmob3/</a></p></div>
+    <div class='dont-index'><p>ClimMob website <a href='https://climmob.net/'>https://climmob.net/</a></p>
+<p>Other GET functions: 
+<code><a href='getDataCM.html'>getDataCM</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># This function will not work without an API key  </span>
 <span class='co'># the user API key can be obtained once a free ClimMob account </span>
-<span class='co'># is created via https://climmob.net/climmob3/</span>
+<span class='co'># is created via https://climmob.net/</span>
 
 <span class='no'>my_key</span> <span class='kw'>&lt;-</span> <span class='st'>"add_your_key"</span>
 

@@ -43,7 +43,7 @@ Fetch the data from a ClimMob project using an application
 
 # This function will not work without an API key  
 # the user API key can be obtained once a free ClimMob account 
-# is created via https://climmob.net/climmob3/
+# is created via https://climmob.net/
 
 my_key <- "add_your_key"
 my_project <- "my_climmob_project"
@@ -54,8 +54,12 @@ data <- getDataCM(key = my_key, project = my_project)
 
 }
 \seealso{
-\code{\link{getProjectsCM}}
+ClimMob website \url{https://climmob.net/}
+
+Other GET functions: 
+\code{\link{getProjectsCM}()}
 }
 \author{
 Kauê de Sousa
 }
+\concept{GET functions}

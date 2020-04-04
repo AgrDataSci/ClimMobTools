@@ -1,3 +1,9 @@
+ClimMobTools 0.3.3 (2020-04-04)
+=========================
+### CHANGES IN BEHAVIOUR
+* Imports 'gosset', 'PlackettLuce' and 'climatrends' by default
+* Minor changes in documentation
+
 ClimMobTools 0.3.2 (2020-03-16)
 =========================
 
