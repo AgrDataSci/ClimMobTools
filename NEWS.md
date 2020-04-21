@@ -1,7 +1,8 @@
-ClimMobTools 0.3.3 (2020-04-04)
+ClimMobTools 0.3.4 (2020-04-21)
 =========================
 ### CHANGES IN BEHAVIOUR
 * Imports 'gosset', 'PlackettLuce' and 'climatrends' by default
+* Use `httr::RETRY` instead of `httr::GET` as suggested by Anna Vasylytsya
 * Minor changes in documentation
 
 ClimMobTools 0.3.2 (2020-03-16)
