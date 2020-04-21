@@ -35,9 +35,11 @@ getProjectsCM <- function(key = NULL){
 
   url <- "https://climmob.net/climmob3/api/readProjects?Apikey="
   
-  dat <- httr::GET(url = url, 
-                   query = list(Apikey = key), 
-                   httr::accept_json())
+  dat <- httr::RETRY(verb = "GET",
+                     url = url,
+                     query = list(Apikey = key),
+                     httr::accept_json(),
+                     terminate_on = c(403, 404))
 
   dat <- httr::content(dat, as = "text")
   

@@ -31,7 +31,7 @@
 #' }
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
-#' @importFrom httr accept_json content GET
+#' @importFrom httr accept_json content RETRY
 #' @importFrom jsonlite fromJSON
 #' @importFrom tibble as_tibble
 #' @export
@@ -41,10 +41,12 @@ getDataCM <- function(key = NULL,
   
   url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
   
-  cmdata <- httr::GET(url = url,
-                      query = list(Body = paste0('{"project_cod":"', project, '"}'),
-                                   Apikey = key),
-                      httr::accept_json())
+  cmdata <- httr::RETRY(verb = "GET", 
+                        url = url,
+                        query = list(Body = paste0('{"project_cod":"', project, '"}'),
+                                    Apikey = key),
+                        httr::accept_json(), 
+                        terminate_on = c(403, 404))
   
   cmdata <- httr::content(cmdata, as = "text")
   
