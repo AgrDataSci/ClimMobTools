@@ -293,6 +293,8 @@ as.data.frame.CM_list <- function(x,
   
   row.names(output) <- seq_along(output$id)
   
+  class(output) <- union("CM_df", class(output))
+  
   return(output)
   
 }

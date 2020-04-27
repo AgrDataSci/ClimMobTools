@@ -46,10 +46,12 @@ seed_need <- function(nobservers = 100, ncomp = 3,
   namevar <- c("N bags", "Bags per variety", 
                "Seeds per variety", "Seeds total")
   
-  result <- tibble::tibble(var = namevar,
-                           quant= c(nbags, bagsvar, seedsvar, seedstotal),
-                           unit = c(rep("unit",2), rep(unit, 2)))
+  result <- data.frame(var = namevar,
+                       quant= c(nbags, bagsvar, seedsvar, seedstotal),
+                       unit = c(rep("unit",2), rep(unit, 2)),
+                       stringsAsFactors = FALSE)
   
+  class(result) <- union("CM_df", class(result))
   
   return(result)
   

@@ -27,7 +27,7 @@ interface (API) key}
 where each observer is a row}
 }
 \value{
-An object of class 'CM_list' or a data.frame with the 
+An object of class 'CM_list' or a data.frame with class "CM_df" with the 
 variables:
 \item{id}{the participant's package id}
 \item{moment}{the data collection moment}

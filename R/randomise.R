@@ -32,8 +32,6 @@
 #' @importFrom Matrix Diagonal
 #' @importFrom methods as
 #' @importFrom RSpectra eigs
-#' @importFrom utils combn
-#' @importFrom tibble as_tibble
 #' @export
 randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL, 
                       itemnames = NULL) {
@@ -62,7 +60,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   varieties <- seq_len(nitems)
   
   # Full set of all combinations
-  varcombinations <- t((utils::combn(varieties, ncomp)))
+  varcombinations <- t((.combn(varieties, ncomp)))
   
   # if the full set of combinations is small and can be covered at least once
   # the set will include each combination at least once
@@ -118,7 +116,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
         for (k in 1:length(selected)) {
           
           evalgraph <- varcomb
-          index <- t(combn(varcombinations[selected[k],], 2))
+          index <- t(.combn(varcombinations[selected[k],], 2))
           evalgraph[index] <- evalgraph[index] + 1
           khi[k] <- .KirchhoffIndex(evalgraph)
           
@@ -137,8 +135,8 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
       # assign the selected combination
       vars2[i,] <- varcombinations[selected,]
       
-      varcomb[t(combn(varcombinations[selected,],2))] <- 
-        varcomb[t(combn(varcombinations[selected,],2))] + 1
+      varcomb[t(.combn(varcombinations[selected,],2))] <- 
+        varcomb[t(.combn(varcombinations[selected,],2))] + 1
       
       # remove used combination
       varcombinations <- varcombinations[-selected,]
@@ -157,7 +155,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   
   # fill first row
   selected <- sample(1:nobservers, 1)
-  varcomb[t(combn(vars[selected,],2))] <- 1
+  varcomb[t(.combn(vars[selected,],2))] <- 1
   varOrdered[1,] <- vars[selected,]
   vars <- vars[-selected,]
   
@@ -193,7 +191,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
       # in this case, get matrix to calculate Kirchhoff index only for 
       # last 10 observers
       for (j in max(1,i-10):(i-1)) {
-        index <- t(combn(varOrdered[j,],2))
+        index <- t(.combn(varOrdered[j,],2))
         sumcombMatrix[index] <- sumcombMatrix[index] + 1
         
       }
@@ -204,7 +202,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
       for (k in 1:length(selected)) {
         
         evalgraph <- sumcombMatrix
-        index <- t(combn(vars[selected[k],], 2))
+        index <- t(.combn(vars[selected[k],], 2))
         evalgraph[index] <- evalgraph[index] + 1
         khi[k] <- .KirchhoffIndex(evalgraph)
         
@@ -222,7 +220,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
     
     # assign the selected combination
     varOrdered[i,] <- vars[selected,]
-    varcomb[t(combn(vars[selected,],2))] <- varcomb[t(combn(vars[selected,],2))] + 1
+    varcomb[t(.combn(vars[selected,], 2))] <- varcomb[t(.combn(vars[selected,], 2))] + 1
     
     # remove used combination
     vars <- vars[-selected, ]
@@ -271,7 +269,9 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   dimnames(finalresults) <- list(seq_len(nobservers), 
                                  paste0("item_", LETTERS[1:ncomp]))
   
-  finalresults <- tibble::as_tibble(finalresults)
+  finalresults <- as.data.frame(finalresults, stringsAsFactors = FALSE)
+  
+  class(finalresults) <- union("CM_df", class(finalresults))
   
   return(finalresults)
   
@@ -347,4 +347,82 @@ randomize <- function(...){
   xi[x] <- 1
   return(.shannon(sumcomb + xi))
   
+}
+
+
+.combn <- function (x, m, FUN = NULL, simplify = TRUE, ...) 
+{
+  stopifnot(length(m) == 1L, is.numeric(m))
+  if (m < 0) 
+    stop("m < 0", domain = NA)
+  if (is.numeric(x) && length(x) == 1L && x > 0 && trunc(x) == 
+      x) 
+    x <- seq_len(x)
+  n <- length(x)
+  if (n < m) 
+    stop("n < m", domain = NA)
+  x0 <- x
+  if (simplify) {
+    if (is.factor(x)) 
+      x <- as.integer(x)
+  }
+  m <- as.integer(m)
+  e <- 0
+  h <- m
+  a <- seq_len(m)
+  nofun <- is.null(FUN)
+  if (!nofun && !is.function(FUN)) 
+    stop("'FUN' must be a function or NULL")
+  len.r <- length(r <- if (nofun) x[a] else FUN(x[a], ...))
+  count <- as.integer(round(choose(n, m)))
+  if (simplify) {
+    dim.use <- if (nofun) 
+      c(m, count)
+    else {
+      d <- dim(r)
+      if (length(d) > 1L) 
+        c(d, count)
+      else if (len.r > 1L) 
+        c(len.r, count)
+      else c(d, count)
+    }
+  }
+  if (simplify) 
+    out <- matrix(r, nrow = len.r, ncol = count)
+  else {
+    out <- vector("list", count)
+    out[[1L]] <- r
+  }
+  if (m > 0) {
+    i <- 2L
+    nmmp1 <- n - m + 1L
+    while (a[1L] != nmmp1) {
+      if (e < n - h) {
+        h <- 1L
+        e <- a[m]
+        j <- 1L
+      }
+      else {
+        e <- a[m - h]
+        h <- h + 1L
+        j <- 1L:h
+      }
+      a[m - h + j] <- e + j
+      r <- if (nofun) 
+        x[a]
+      else FUN(x[a], ...)
+      if (simplify) 
+        out[, i] <- r
+      else out[[i]] <- r
+      i <- i + 1L
+    }
+  }
+  if (simplify) {
+    if (is.factor(x0)) {
+      levels(out) <- levels(x0)
+      class(out) <- class(x0)
+    }
+    dim(out) <- dim.use
+  }
+  out
 }

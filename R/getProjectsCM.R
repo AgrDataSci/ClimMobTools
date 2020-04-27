@@ -62,7 +62,9 @@ getProjectsCM <- function(key = NULL){
   
   dat$creation_date <- with(dat, as.Date(creation_date, origin = "1970-01-01"))
 
-  dat <- tibble::as_tibble(dat)
+  dat <- as.data.frame(dat, stringsAsFactors = FALSE)
+  
+  class(dat) <- union("CM_df", class(dat))
   
   return(dat)
 }

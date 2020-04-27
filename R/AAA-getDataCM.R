@@ -10,7 +10,7 @@
 #' @param as.data.frame logical, to return a data frame
 #' @param ... additional arguments passed to methods
 #' @inheritParams getProjectsCM
-#' @return An object of class 'CM_list' or a data.frame with the 
+#' @return An object of class 'CM_list' or a data.frame with class "CM_df" with the 
 #' variables:
 #' \item{id}{the participant's package id}
 #' \item{moment}{the data collection moment}
@@ -33,7 +33,6 @@
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @importFrom httr accept_json content RETRY
 #' @importFrom jsonlite fromJSON
-#' @importFrom tibble as_tibble
 #' @export
 getDataCM <- function(key = NULL, 
                       project = NULL, 
@@ -64,7 +63,6 @@ getDataCM <- function(key = NULL,
   # if required, coerce to a data frame
   if (isTRUE(as.data.frame)) {
     cmdata <- as.data.frame(x = cmdata, ...)
-    cmdata <- tibble::as_tibble(cmdata)
   }
   
   return(cmdata)

@@ -31,9 +31,7 @@ Imports:
     jsonlite, 
     Matrix, 
     methods, 
-    RSpectra, 
-    tibble, 
-    utils
+    RSpectra
 Suggests:
     knitr,
     rmarkdown,
