@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@
     <p>Fetch the status of ClimMob projects</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getProjectsCM</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>getProjectsCM</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,6 +149,10 @@
       <th>key</th>
       <td><p>a character for the user's application programming 
 interface (API) key</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments passed to methods. See details</p></td>
     </tr>
     </table>
 
@@ -166,6 +170,11 @@ interface (API) key</p></td>
 <dt>last_registration_activity</dt><dd><p>number of days since the submission 
  of the last registration</p></dd>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Additional arguments:</p>
+<p><code>server</code>: a character to select from which server the data will be retrieved, either 
+ "prodution" (the default) or "testing"</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>ClimMob website <a href='https://climmob.net/'>https://climmob.net/</a></p>

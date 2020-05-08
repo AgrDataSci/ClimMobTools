@@ -1,13 +1,16 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 0.3.4
+Version: 0.3.5
 Authors@R: c(person("Kaue", "de Sousa", 
-        email = "kaue.desousa@inn.no", role = c("aut", "cre"),
+        email = "kaue.desousa@inn.no", 
+        role = c("aut", "cre"),
         comment = c(ORCID = "0000-0002-7571-7845")), 
         person("Jacob", "van Etten", role = "aut",
         comment = c(ORCID = "0000-0001-7554-2558")),
         person("Brandon", "Madriz", role = "ctb",
+        comment = "API Client implementation"),
+        person("Carlos F.", "Quiros", role = "ctb",
         comment = "API Client implementation"))
 URL: https://agrobioinfoservices.github.io/ClimMobTools/
 BugReports: https://github.com/agrobioinfoservices/ClimMobTools/issues

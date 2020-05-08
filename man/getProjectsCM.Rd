@@ -4,11 +4,13 @@
 \alias{getProjectsCM}
 \title{Get ClimMob projects}
 \usage{
-getProjectsCM(key = NULL)
+getProjectsCM(key = NULL, ...)
 }
 \arguments{
 \item{key}{a character for the user's application programming 
 interface (API) key}
+
+\item{...}{additional arguments passed to methods. See details}
 }
 \value{
 A data frame with the ClimMob projects 
@@ -25,6 +27,12 @@ A data frame with the ClimMob projects
 }
 \description{
 Fetch the status of ClimMob projects
+}
+\details{
+Additional arguments: 
+
+\code{server}: a character to select from which server the data will be retrieved, either 
+ "prodution" (the default) or "testing"
 }
 \examples{
 \dontrun{ 

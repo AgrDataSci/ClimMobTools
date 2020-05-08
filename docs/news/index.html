@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -134,17 +134,19 @@
       <small>Source: <a href='https://github.com/agrobioinfoservices/ClimMobTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="climmobtools-034-2020-04-27" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.4">
-<a href="#climmobtools-034-2020-04-27" class="anchor"></a>ClimMobTools 0.3.4 (2020-04-27)<small> Unreleased </small>
+    <div id="climmobtools-035-2020-05-08" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.5">
+<a href="#climmobtools-035-2020-05-08" class="anchor"></a>ClimMobTools 0.3.5 (2020-05-08)<small> Unreleased </small>
 </h1>
 <div id="changes-in-behaviour" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changes-in-behaviour" class="anchor"></a>CHANGES IN BEHAVIOUR</h3>
 <ul>
-<li>Imports ‘gosset’, ‘PlackettLuce’ and ‘climatrends’ by default</li>
-<li>Use <code><a href="https://httr.r-lib.org/reference/RETRY.html">httr::RETRY</a></code> instead of <code><a href="https://httr.r-lib.org/reference/GET.html">httr::GET</a></code> as suggested by Anna Vasylytsya</li>
-<li>A print method is added</li>
+<li>Imports ‘PlackettLuce’ and ‘climatrends’ by default</li>
+<li>Use <code><a href="https://httr.r-lib.org/reference/RETRY.html">httr::RETRY()</a></code> instead of <code><a href="https://httr.r-lib.org/reference/GET.html">httr::GET()</a></code> as suggested by Anna Vasylytsya</li>
+<li>A <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method is added</li>
+<li>New integration with the ‘testing’ server enabling to gather data from this server with the argument <code>server</code>
+</li>
 <li>Minor changes in documentation</li>
 </ul>
 </div>

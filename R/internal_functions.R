@@ -124,7 +124,23 @@
 #' .pluralize(zz)
 #' @noRd
 .pluralize <- function(x, p = "s") {
-  paste0(x, p)
+  
+  pl <- matrix(c("variety","varieties",
+                 "variedad","variedades",
+                 "opcion", "optiones"), 
+               nrow = 3, ncol = 2, byrow = TRUE)
+  
+  is_here <- x %in% pl[,1]
+  if (isTRUE(is_here)) {
+    x <- pl[pl[,1] %in% x, 2]
+  }
+  
+  if (isFALSE(is_here)) {
+    x <- paste0(x, p)
+  }
+  
+  return(x)
+  
 }
 
 #' Decode arguments from ClimMob3
@@ -210,4 +226,3 @@
   return(result)
   
 }
-

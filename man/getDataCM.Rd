@@ -38,6 +38,12 @@ variables:
 Fetch the data from a ClimMob project using an application 
  programming interface (API) key
 }
+\details{
+Additional arguments: 
+
+\code{server}: a character to select from which server the data will be retrieved, either 
+ "prodution" (the default) or "testing"
+}
 \examples{
 \dontrun{
 

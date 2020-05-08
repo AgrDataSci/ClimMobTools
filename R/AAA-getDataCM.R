@@ -8,7 +8,7 @@
 #' @author Kauê de Sousa
 #' @param project a character for the project id
 #' @param as.data.frame logical, to return a data frame
-#' @param ... additional arguments passed to methods
+#' @param ... additional arguments passed to methods. See details
 #' @inheritParams getProjectsCM
 #' @return An object of class 'CM_list' or a data.frame with class "CM_df" with the 
 #' variables:
@@ -16,6 +16,12 @@
 #' \item{moment}{the data collection moment}
 #' \item{variable}{the variable name}
 #' \item{value}{the value for each variable}
+#' @details 
+#' Additional arguments: 
+#' 
+#' \code{server}: a character to select from which server the data will be retrieved, either 
+#'  "prodution" (the default) or "testing"
+#' 
 #' @examples
 #' \dontrun{
 #' 
@@ -38,7 +44,24 @@ getDataCM <- function(key = NULL,
                       project = NULL, 
                       as.data.frame = TRUE, ...){
   
-  url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
+  dots <- list(...)
+  server <- dots[["server"]]
+  
+  if (is.null(server)) {
+    server <- "production"
+  }
+  
+  if (server == "production") {
+    
+    url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
+    
+  }
+  
+  if (server == "testing") {
+    
+    url <- "https://testing.climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
+    
+  }
   
   cmdata <- httr::RETRY(verb = "GET", 
                         url = url,
