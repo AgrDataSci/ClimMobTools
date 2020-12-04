@@ -184,6 +184,16 @@
     # put overall as first trait
     traits <- union(index_overall, questions$char)
     
+    # check if the native Overall characteristic is present, if not
+    # take the last one and place it as overall
+    overall_true <- "overall_characteristic" %in% traits
+    
+    if (isFALSE(overall_true)) {
+      
+      traits <- union(traits[length(traits)], traits[-length(traits)])
+    
+    }
+    
     questions <- questions[match(traits, questions$char), ]
     
     rownames(questions) <- 1:nrow(questions)

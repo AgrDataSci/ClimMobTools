@@ -3,11 +3,13 @@ title: "ClimMobTools: API Client for the 'ClimMob' platform in R"
 package: ClimMobTools
 author:
 - name: Kauê de Sousa
-  affiliation: Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway / The Alliance of Bioversity International and CIAT, Rome, Italy
+  affiliation: Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway; Bioversity International, Rome, Italy
 - name: Jacob van Etten
-  affiliation: The Alliance of Bioversity International and CIAT, Rome, Italy
+  affiliation: Bioversity International, Rome, Italy
 - name: Brandon Madriz
-  affiliation: The Alliance of Bioversity International and CIAT, The Americas – Costa Rica Office, Turrialba, Costa Rica
+  affiliation: Bioversity International, The Americas – Costa Rica Office, Turrialba, Costa Rica
+- name: Carlos F. Quirós
+  affiliation: Bioversity International, The Americas – Costa Rica Office, Turrialba, Costa Rica
 output: html_document
 vignette: >
   %\VignetteIndexEntry{ClimMobTools}
