@@ -7,17 +7,16 @@
   "identifier": "ClimMobTools",
   "description": "API client for 'ClimMob', an open source software for crowdsourcing \n    citizen science in agriculture under the 'tricot' method <https://climmob.net/>. \n    Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the \n    research paradigm on its head; instead of a few researchers designing complicated \n    trials to compare several technologies in search of the best solutions, \n    it enables many farmers to carry out reasonably simple experiments that \n    taken together can offer even more information. 'ClimMobTools' enables project \n    managers to deep explore and analyse their 'ClimMob' data in R.",
   "name": "ClimMobTools: API Client for the 'ClimMob' Platform",
-  "codeRepository": "https://agrobioinfoservices.github.io/ClimMobTools/",
+  "codeRepository": "https://github.com/agrobioinfoservices/ClimMobTools",
   "issueTracker": "https://github.com/agrobioinfoservices/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.5",
+  "version": "0.3.6.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
+  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -27,7 +26,7 @@
   "author": [
     {
       "@type": "Person",
-      "givenName": "Kaue",
+      "givenName": "Kauê",
       "familyName": "de Sousa",
       "email": "kaue.desousa@inn.no",
       "@id": "https://orcid.org/0000-0002-7571-7845"
@@ -56,7 +55,7 @@
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": "Kaue",
+      "givenName": "Kauê",
       "familyName": "de Sousa",
       "email": "kaue.desousa@inn.no",
       "@id": "https://orcid.org/0000-0002-7571-7845"
@@ -188,12 +187,9 @@
   ],
   "releaseNotes": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/NEWS.md",
   "readme": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/README.md",
-  "fileSize": "324.545KB",
-  "contIntegration": [
-    "https://ci.appveyor.com/project/kauedesousa/ClimMobTools",
-    "https://travis-ci.org/agrobioinfoservices/ClimMobTools",
-    "https://codecov.io/github/agrobioinfoservices/ClimMobTools?branch=master"
-  ],
-  "developmentStatus": "https://www.tidyverse.org/lifecycle/#questioning",
-  "relatedLink": "https://CRAN.R-project.org/package=ClimMobTools"
+  "fileSize": "1808.939KB",
+  "contIntegration": ["https://travis-ci.org/agrobioinfoservices/ClimMobTools", "https://codecov.io/github/agrobioinfoservices/ClimMobTools?branch=master"],
+  "developmentStatus": "https://www.tidyverse.org/lifecycle/#maturing",
+  "relatedLink": ["https://agrobioinfoservices.github.io/ClimMobTools/", "https://CRAN.R-project.org/package=ClimMobTools"],
+  "keywords": ["agriculture-research", "citizen-science", "crowdsourcing", "randomized-controlled-trials", "r"]
 }
