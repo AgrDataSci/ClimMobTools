@@ -1,3 +1,9 @@
+ClimMobTools 0.3.6.9001 (2020-12-08)
+=========================
+
+### IMPROVEMENTS
+* Method for `as.data.frame()` now handles ClimMob data without the assessment info.
+
 ClimMobTools 0.3.5 (2020-05-08)
 =========================
 ### CHANGES IN BEHAVIOUR

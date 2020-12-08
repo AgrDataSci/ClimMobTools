@@ -65,22 +65,35 @@ as.data.frame.CM_list <- function(x,
     
     # get variables names from assessments
     assess <- dt[["assessments"]]
-    assess <- do.call("rbind", assess[, "fields"])
-    assess <- data.frame(assess, stringsAsFactors = FALSE)
-    assess <- assess[!duplicated(assess[, "name"]), ]
-    # the ids for assessments
-    assess_id <- paste0("ASS", dt[["assessments"]][, "code"])
-    # and the description
-    assess_name <- dt[["assessments"]][, "desc"]
     
-    # trial data
-    trial <- dt[["data"]]
-    # the names of questions
-    looknames <- assess[, "name"]
+    
+    if(length(assess) > 0) {
+    
+      assess <- do.call("rbind", assess[, "fields"])
+      assess <- data.frame(assess, stringsAsFactors = FALSE)
+      assess <- assess[!duplicated(assess[, "name"]), ]
+      # the ids for assessments
+      assess_id <- paste0("ASS", dt[["assessments"]][, "code"])
+      # and the description
+      assess_name <- dt[["assessments"]][, "desc"]
+      # the names of questions
+      looknames <- assess[, "name"]
+    
+    } else {
+      assess <- data.frame()
+      assess_id <- character()
+      assess_name <- character()
+      looknames <- character()
+    }
+    
     # paste the ids of each assessments
     looknames <- c(regs_name,
                    paste(rep(assess_id, each = length(looknames)), 
                          looknames, sep = "_"))
+    
+    
+    # trial data
+    trial <- dt[["data"]]
     
     # get the values from the trial data
     trial <- lapply(looknames, function(x){
@@ -92,7 +105,7 @@ as.data.frame.CM_list <- function(x,
     trial <- do.call("cbind", trial)
     
     # split farmgeolocation info
-    # check if geografic location is available
+    # check if geographic location is available
     geoTRUE <- grepl("farmgoelocation|ubicacion", names(trial))
     
     # if is available, then split the vector as lon lat
