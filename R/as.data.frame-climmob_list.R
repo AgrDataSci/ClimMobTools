@@ -139,7 +139,7 @@ as.data.frame.CM_list <- function(x,
     
     # split geolocation info
     # check if geographic location is available
-    geoTRUE <- grepl("farmgoelocation|geopoint", names(trial))
+    geoTRUE <- grepl("farmgoelocation|geopoint|gps", names(trial))
     
     # if is available, then split the vector as lon lat
     if(any(geoTRUE)){
