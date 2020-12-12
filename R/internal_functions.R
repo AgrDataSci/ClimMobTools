@@ -173,27 +173,13 @@
     
     questions$char_full <- chars$name
     
-    questions$char <- gsub(" ","_",tolower(chars$name))
+    questions$char <- chars$codeQst
     
-    # look for the overall performance
-    index_overall <- which(grepl("overall", questions$char))
-    # it may happen that this question is done twice
-    # so for that cases, the last is taken
-    index_overall <- index_overall[length(index_overall)]
-    index_overall <- questions$char[index_overall]
-    # put overall as first trait
-    traits <- union(index_overall, questions$char)
-    
-    # # check if the native Overall characteristic is present, if not
-    # # take the last one and place it as overall
-    # overall_true <- "overall_characteristic" %in% traits
-    # 
-    # if (isFALSE(overall_true)) {
-    #   
-    #   traits <- union(traits[length(traits)], traits[-length(traits)])
-    # 
-    # }
-    
+    # the last question, which is often the Overall performance 
+    # should be the first
+    traits <- questions$char
+    traits <- union(traits[length(traits)], traits[-length(traits)])
+
     questions <- questions[match(traits, questions$char), ]
     
     rownames(questions) <- 1:nrow(questions)
@@ -236,3 +222,41 @@
   return(result)
   
 }
+
+
+
+#' Decode lkptables
+#' @param x a list 
+#' @return \code{x} as a data.frame 
+#' @noRd
+.decode_lkptable <- function(x){
+  name <- x[["name"]]
+  name <- gsub("lkp", "", name)
+  desc <- x[["desc"]]
+  desc <- gsub("Lookup table ", "", desc)
+  desc <- gsub("[(]", "", desc)
+  desc <- gsub("[)]", "", desc)
+  fields <- x[["fields"]]
+  values <- x[["values"]]
+  
+  result <- list()
+  
+  for(i in seq_along(name)){
+    
+    r <- cbind(name = name[[i]],
+               desc = desc[[i]],
+               values[[i]])
+    
+    names(r) <- c("name", "desc", "id", "label")
+    
+    r$label <- .title_case(r$label)
+    
+    result[[name[[i]]]] <- r
+    
+  }
+  
+  return(result)
+  
+}
+
+

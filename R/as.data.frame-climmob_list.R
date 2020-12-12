@@ -15,7 +15,7 @@ as.data.frame.CM_list <- function(x,
   dt <- list()
   # 'specialfields', the assessment questions
   dt[["specialfields"]] <- x[["specialfields"]]
-
+  
   # 'project', the project details
   dt[["project"]] <- x[["project"]]
   
@@ -49,7 +49,7 @@ as.data.frame.CM_list <- function(x,
   ncomp <- dt$project$project_numcom
   
   if (isTRUE(has_data)) {
-   
+    
     # get the names of assessments questions
     assess_q <- dt[["specialfields"]]
     assess_q <- assess_q[, "name"]
@@ -68,7 +68,7 @@ as.data.frame.CM_list <- function(x,
     
     
     if(length(assess) > 0) {
-    
+      
       assess <- do.call("rbind", assess[, "fields"])
       assess <- data.frame(assess, stringsAsFactors = FALSE)
       assess <- assess[!duplicated(assess[, "name"]), ]
@@ -78,13 +78,33 @@ as.data.frame.CM_list <- function(x,
       assess_name <- dt[["assessments"]][, "desc"]
       # the names of questions
       looknames <- assess[, "name"]
-    
+      
+      # get codes from multiple choice variables
+      assess_lkp <- dt$assessments$lkptables
+      lkp <- list()
+      for(i in seq_along(assess_lkp)){
+        l <- .decode_lkptable(assess_lkp[[i]])
+        lkp <- c(lkp, l)
+      }
+      
+      
     } else {
       assess <- data.frame()
       assess_id <- character()
       assess_name <- character()
       looknames <- character()
+      lkp <- list()
     }
+    
+    # add codes from registration
+    reg_lkp <- .decode_lkptable(dt$registry$lkptables)
+    
+    lkp <- c(reg_lkp, lkp)
+    
+    # remove lkp table with farmers names
+    keep <- !grepl("qst163", names(lkp))
+    
+    lkp <- lkp[keep]
     
     # paste the ids of each assessments
     looknames <- c(regs_name,
@@ -104,9 +124,22 @@ as.data.frame.CM_list <- function(x,
     
     trial <- do.call("cbind", trial)
     
-    # split farmgeolocation info
+    # now replace codes from lkp tables in the trial data
+    keep <- names(lkp) %in% names(trial)
+    
+    lkp <- lkp[keep]
+    
+    nm_lkp <- names(lkp)
+    
+    for(i in seq_along(lkp)){
+      l <- lkp[[i]]
+      trial[[nm_lkp[i]]] <- factor(trial[[nm_lkp[i]]], levels = l$id, labels = l$label)
+      
+    }
+    
+    # split geolocation info
     # check if geographic location is available
-    geoTRUE <- grepl("farmgoelocation|ubicacion", names(trial))
+    geoTRUE <- grepl("farmgoelocation|geopoint", names(trial))
     
     # if is available, then split the vector as lon lat
     if(any(geoTRUE)){
@@ -118,13 +151,15 @@ as.data.frame.CM_list <- function(x,
       trial <- trial[!geoTRUE]
       
       for (i in seq_along(geo_which)){
-        newname <- names(geo[i])
-        newname <- gsub("_farmgoelocation|_ubicacion", "", newname)
+        newname <- names(geo)[[i]]
+        newname <- gsub("farmgoelocation", "_farm_geo", newname)
+        newname <- gsub("__", "_", newname)
         newname <- paste0(newname, c("_lon","_lat"))
         
         lonlat <- geo[i]
         
         lonlat[is.na(lonlat)] <- c("NA NA NA NA")
+        lonlat[lonlat == ""] <- c("NA NA NA NA")
         
         lonlat <- t(apply(lonlat, 1, function(x) {
           
@@ -149,30 +184,21 @@ as.data.frame.CM_list <- function(x,
     
     # replace numbers in trial results by LETTERS
     if (ncomp == 3) {
-      trial[, rank_q] <-
-        apply(trial[, rank_q], 2, function(x) {
-          LETTERS[as.integer(x)]
+      trial[rank_q] <-
+        lapply(trial[rank_q], function(x) {
+          y <- as.integer(x)
+          LETTERS[y]
         })
     }
     
     # replace numbers in question about overall vs local 
     if (length(overallvslocal) > 1) {
-      trial[, overallvslocal] <-
-        apply(trial[, overallvslocal], 2, function(x) {
-          ifelse(x == "1", "Better", 
-                 ifelse(x == "2", "Worse", x))
+      trial[overallvslocal] <-
+        lapply(trial[overallvslocal], function(x) {
+          y <- factor(x, levels = c("1", "2"), labels = c("Better", "Worse"))
+          as.character(y)
         })
     }
-    
-    # replace any possible code in participant registration
-    # gender
-    gender <- any(grepl("gender", names(trial)))
-    if (gender) {
-      igender <- which(grepl("gender", names(trial)))
-      trial[,igender] <- ifelse(trial[, igender] == 1, "Man",
-                                ifelse(trial[, igender] == 2,"Woman", NA))
-    }
-    
     
     # reshape it into a long format 
     # put pack id as first colunm
@@ -194,7 +220,7 @@ as.data.frame.CM_list <- function(x,
                              trial$moment)
       
     }
-     
+    
   } else {
     trial <- data.frame()
     assess_id <- 1
