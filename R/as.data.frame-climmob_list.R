@@ -55,7 +55,7 @@ as.data.frame.CM_list <- function(x,
     assess_q <- assess_q[, "name"]
     
     # check if overall VS local is present
-    overallvslocal <- grepl("overallchar", assess_q)
+    overallvslocal <- grepl("overallper", assess_q)
     
     # get the ranking questions
     rank_q <- assess_q[!overallvslocal]
@@ -125,7 +125,14 @@ as.data.frame.CM_list <- function(x,
     trial <- do.call("cbind", trial)
     
     # now replace codes from lkp tables in the trial data
+    names(lkp) <- gsub("_opts$","",names(lkp))
+    
     keep <- names(lkp) %in% names(trial)
+    
+    lkp <- lkp[keep]
+    
+    # remove assessment questions
+    keep <- !names(lkp) %in% assess_q
     
     lkp <- lkp[keep]
     
@@ -154,7 +161,7 @@ as.data.frame.CM_list <- function(x,
         newname <- names(geo)[[i]]
         newname <- gsub("farmgoelocation", "_farm_geo", newname)
         newname <- gsub("__", "_", newname)
-        newname <- paste0(newname, c("_lon","_lat"))
+        newname <- paste0(newname, c("_longitude","_latitude"))
         
         lonlat <- geo[i]
         

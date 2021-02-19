@@ -147,48 +147,91 @@
 #' 
 #' @param x a list of arguments given by ClimMob
 #' @return a list with data frames for:
-#'  chars: characteristics to be analysed, 
-#'  perf:  the comparison between tested items and the local item
-#'  expl:  the explanatory variables
+#'  traits: characteristics to be analysed, 
+#'  tricotVSlocal:  the comparison between tested items and the local item
+#'  covariates:  the explanatory variables
 #' @noRd
 .decode_pars <- function(x) {
 
-  chars <- x[["Characteristics"]]
-  perf  <- x[["Performance"]]
-  expl  <- x[["Explanatory"]]
+  traits <- x[["Characteristics"]]
+  tricotVSlocal  <- x[["Performance"]]
+  covariates  <- x[["Explanatory"]]
   
   result <- list()
   
-  if (length(chars) > 0) {
+  if (length(traits) > 0) {
     
-    questions <- lapply(chars$vars, function(y) {
+    questions <- lapply(traits$vars, function(y) {
       unlist(y)
     })
     
     questions <- do.call(rbind, questions)
     questions <- as.data.frame(questions, stringsAsFactors = FALSE)
-    names(questions) <- paste0("quest_", seq_len(dim(questions)[[2]]))
+    names(questions) <- paste0("nameString", seq_len(dim(questions)[[2]]))
     
-    questions$n_quest <- dim(questions)[[2]]
+    questions$nQst <- dim(questions)[[2]]
     
-    questions$char_full <- chars$name
+    questions$name <- traits$name
     
-    questions$char <- chars$codeQst
+    questions$codeQst <- traits$codeQst
     
-    # the last question, which is often the Overall performance 
-    # should be the first
-    traits <- questions$char
-    traits <- union(traits[length(traits)], traits[-length(traits)])
-
-    questions <- questions[match(traits, questions$char), ]
+    
+    questionAsked <- do.call(rbind, traits$questionAsked)
+    questionAsked <- as.data.frame(questionAsked, stringsAsFactors = FALSE)
+    names(questionAsked) <- paste0("questionAsked", seq_len(questions$nQst[1]))
+    
+    questions <- cbind(questions, questionAsked)
+    
+    questions$assessmentId <- traits$code$ass_cod
+    
+    questions$assessmentName <- traits$code$ass_desc
+    
+    questions$assessmentDay <- traits$code$ass_days
+    
+    questions$traitOrder  <- rep("otherTraits", length(questions$codeQst))
+    
+    # try to find something related to performance, than yield and lastly taste
+    # this is going to be the reference trait for the main analysis in the report
+    traits <- questions$codeQst
+    tr <- tolower(traits)
+    
+    if (any(grepl("overallperf", tr))) {
+      i <- which(grepl("overallperf", tr))[1]
+      questions$traitOrder[i] <- "referenceTrait"
+      tr <- toupper(tr)
+    }
+    
+    
+    if (any(grepl("performance", tr))) {
+      i <- which(grepl("performance", tr))[1]
+      questions$traitOrder[i] <- "referenceTrait"
+      tr <- toupper(tr)
+    }
+    
+    if (any(grepl("yield", tr))) {
+      i <- which(grepl("yield", tr))[1]
+      questions$traitOrder[i] <- "referenceTrait"
+      tr <- toupper(tr)
+    }
+    
+    if (any(grepl("taste", tr))) {
+      i <- which(grepl("taste", tr))[1]
+      questions$traitOrder[i] <- "referenceTrait"
+    }
+    
+    if (sum(grepl("performance|yield|taste|overallperf", tolower(tr))) == 0) {
+      questions$traitOrder[length(questions$codeQst)] <- "referenceTrait"
+      tr <- toupper(tr)
+    }
     
     rownames(questions) <- 1:nrow(questions)
     
-    result[["chars"]] <- questions
+    result[["traits"]] <- questions
+    
   }
   
-  if (length(perf) > 0) {
-    questions <- lapply(perf$vars, function(y) {
+  if (length(tricotVSlocal) > 0) {
+    questions <- lapply(tricotVSlocal$vars, function(y) {
       unlist(y)
     })
     
@@ -196,27 +239,47 @@
     questions <- as.data.frame(questions, stringsAsFactors = FALSE)
     names(questions) <- paste0("quest_", seq_len(dim(questions)[[2]]))
     
-    questions$n_quest <- dim(questions)[[2]]
+    questions$nQuest <- dim(questions)[[2]]
     
-    questions$perf_full <- perf$name
+    questions$name <- tricotVSlocal$name
     
-    questions$perf <- gsub(" ","_",tolower(perf$name))
+    questions$codeQst <- tricotVSlocal$codeQst
     
-    result[["perf"]] <- questions
+    result[["tricotVSlocal"]] <- questions
+    
   }else{
-    result[["perf"]] <- character(0L)
+    result[["tricotVSlocal"]] <- character(0L)
   }
   
-  if (length(expl) > 0) {
+  if (length(covariates) > 0) {
     
-    result[["expl"]] <- expl
+    covar               <- covariates[,c("codeQst", "id")]
+    covar$nameString    <- covariates$vars
+    covar$name          <- covariates$name 
+    covar$questionAsked <- covariates$questionAsked
+    
+    if (all(is.na(covariates$code))) {
+      
+      covar$assessmentId <- "000000000000"
+      covar$assessmentName <- "Registration"
+      covariates <- covar
+      
+    }else{
+      
+      covariates <- covariates$code[,c("ass_cod","ass_desc")]
+      names(covariates) <- c("assessmentId", "assessmentName")
+      covariates$assessmentId[is.na(covariates$assessmentId)] <- "000000000000"
+      covariates$assessmentName[is.na(covariates$assessmentName)] <- "Registration"
+      covariates <- cbind(covariates, covar)
+      
+    }
+    
+    result[["covariates"]] <- covariates
     
   }else{
-    pseudo <- data.frame(name = NA,
-                         id = "0000",
-                         vars = "xinterceptx", 
-                         stringsAsFactors = FALSE)
-    result[["expl"]] <- pseudo
+    
+    result[["covariates"]] <- character(0L)
+    
   }
   
   return(result)
