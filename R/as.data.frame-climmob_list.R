@@ -52,16 +52,16 @@ as.data.frame.CM_list <- function(x,
     
     # get the names of assessments questions
     assess_q <- dt[["specialfields"]]
-    assess_q <- assess_q[, "name"]
+    #assess_q <- assess_q[, "name"]
     
     # check if overall VS local is present
-    overallvslocal <- grepl("overallper", assess_q)
+    tricotvslocal <- grepl("Performance", assess_q$type)
     
     # get the ranking questions
-    rank_q <- assess_q[!overallvslocal]
+    rank_q <- assess_q$name[!tricotvslocal]
     
     # and the overall vs local question
-    overallvslocal <- assess_q[overallvslocal]
+    tricotvslocal <- assess_q$name[tricotvslocal]
     
     # get variables names from assessments
     assess <- dt[["assessments"]]
@@ -132,7 +132,7 @@ as.data.frame.CM_list <- function(x,
     lkp <- lkp[keep]
     
     # remove assessment questions
-    keep <- !names(lkp) %in% assess_q
+    keep <- !names(lkp) %in% assess_q$name
     
     lkp <- lkp[keep]
     
@@ -199,9 +199,9 @@ as.data.frame.CM_list <- function(x,
     }
     
     # replace numbers in question about overall vs local 
-    if (length(overallvslocal) > 1) {
-      trial[overallvslocal] <-
-        lapply(trial[overallvslocal], function(x) {
+    if (length(tricotvslocal) > 1) {
+      trial[tricotvslocal] <-
+        lapply(trial[tricotvslocal], function(x) {
           y <- factor(x, levels = c("1", "2"), labels = c("Better", "Worse"))
           as.character(y)
         })

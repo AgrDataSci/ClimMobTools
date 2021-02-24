@@ -237,9 +237,9 @@
     
     questions <- do.call(rbind, questions)
     questions <- as.data.frame(questions, stringsAsFactors = FALSE)
-    names(questions) <- paste0("quest_", seq_len(dim(questions)[[2]]))
+    names(questions) <- paste0("nameString", seq_len(dim(questions)[[2]]))
     
-    questions$nQuest <- dim(questions)[[2]]
+    questions$nQst <- dim(questions)[[2]]
     
     questions$name <- tricotVSlocal$name
     
