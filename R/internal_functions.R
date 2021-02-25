@@ -182,11 +182,24 @@
     
     questions <- cbind(questions, questionAsked)
     
-    questions$assessmentId <- traits$code$ass_cod
+    if (!all(is.na(traits$code))) {
+      
+      questions$assessmentId <- traits$code$ass_cod
+      
+      questions$assessmentName <- traits$code$ass_desc
+      
+      questions$assessmentDay <- traits$code$ass_days  
+    }
     
-    questions$assessmentName <- traits$code$ass_desc
-    
-    questions$assessmentDay <- traits$code$ass_days
+    if (all(is.na(traits$code))) {
+      
+      questions$assessmentId <- "0000000000"
+      
+      questions$assessmentName <- "Data collection"
+      
+      questions$assessmentDay <- 0
+      
+    }
     
     questions$traitOrder  <- rep("otherTraits", length(questions$codeQst))
     
