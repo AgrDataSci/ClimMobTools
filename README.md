@@ -5,7 +5,7 @@ ClimMobTools
 <!-- badges: start -->
 [![CRAN](https://www.r-pkg.org/badges/version/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
 [![CRANchecks](https://cranchecks.info/badges/worst/ClimMobTools)](https://cran.r-project.org/web/checks/check_results_ClimMobTools.html)
-[![Travis](https://travis-ci.org/agrobioinfoservices/ClimMobTools.svg?branch=master)](https://travis-ci.org/agrobioinfoservices/ClimMobTools) [![codecov](https://codecov.io/gh/agrobioinfoservices/ClimMobTools/master.svg)](https://codecov.io/github/agrobioinfoservices/ClimMobTools?branch=master)  [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) 
+[![Travis](https://travis-ci.org/agrdatasci/ClimMobTools.svg?branch=master)](https://travis-ci.org/agrdatasci/ClimMobTools) [![codecov](https://codecov.io/gh/agrdatasci/ClimMobTools/master.svg)](https://codecov.io/github/agrdatasci/ClimMobTools?branch=master)  [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) 
 [![Downloads](https://cranlogs.r-pkg.org/badges/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
 <!-- badges: end -->
 
@@ -18,7 +18,7 @@ ClimMobTools
 
 ## Package website
 
-<https://agrobioinfoservices.github.io/ClimMobTools/>
+<https://agrdatasci.github.io/ClimMobTools/>
 
 ## Installation
 
@@ -32,14 +32,14 @@ The development version can be installed via
 
 ``` r
 library("remotes")
-install_github("agrobioinfoservices/ClimMobTools", build_vignettes = TRUE)
+install_github("agrdatasci/ClimMobTools", build_vignettes = TRUE)
 
 ```
 
 
 ## Going further
 
-The full functionality of **ClimMobTools** is illustrated in the package vignette. The vignette can be found on the [package website](https://agrobioinfoservices.github.io/ClimMobTools/) or from within `R` once the package has been installed, e.g. via
+The full functionality of **ClimMobTools** is illustrated in the package vignette. The vignette can be found on the [package website](https://agrdatasci.github.io/ClimMobTools/) or from within `R` once the package has been installed, e.g. via
 
 ``` r
 vignette("Overview", package = "ClimMobTools")
@@ -47,7 +47,7 @@ vignette("Overview", package = "ClimMobTools")
 
 ## Meta
 
-  - Please [report any issues or bugs](https://github.com/agrobioinfoservices/ClimMobTools/issues).
+  - Please [report any issues or bugs](https://github.com/agrdatasci/ClimMobTools/issues).
 
   - License: MIT.
 

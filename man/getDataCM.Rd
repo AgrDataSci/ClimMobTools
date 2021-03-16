@@ -41,8 +41,8 @@ Fetch the data from a ClimMob project using an application
 \details{
 Additional arguments: 
 
-\code{server}: a character to select from which server the data will be retrieved, either 
- "prodution" (the default) or "testing"
+\code{server}: a character to select from which server the data will be retrieved,
+  "production" (the default) or an alternative server
 }
 \examples{
 \dontrun{

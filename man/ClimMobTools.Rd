@@ -21,13 +21,13 @@ API client for 'ClimMob', an open source software for crowdsourcing
 \strong{Useful links:}
 \itemize{
 \item{Development repository: 
- \url{https://github.com/agrobioinfoservices/ClimMobTools}}
+ \url{https://github.com/agrdatasci/ClimMobTools}}
 \item{Static documentation: 
- \url{https://agrobioinfoservices.github.io/ClimMobTools/}}
+ \url{https://agrdatasci.github.io/ClimMobTools/}}
 \item{Report bugs: 
- \url{https://github.com/agrobioinfoservices/ClimMobTools/issues}}
+ \url{https://github.com/agrdatasci/ClimMobTools/issues}}
 \item{ClimMob Platform: 
- \url{https://climmob.net/climmob3/}}
+ \url{https://climmob.net}}
 }
 }
 \author{

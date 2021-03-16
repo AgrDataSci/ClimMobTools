@@ -194,7 +194,12 @@ as.data.frame.CM_list <- function(x,
       trial[rank_q] <-
         lapply(trial[rank_q], function(x) {
           y <- as.integer(x)
-          LETTERS[y]
+          y <- ifelse(y == 99, "Not observed", y)
+          y <- ifelse(y == 98, "Tie", y)
+          y <- ifelse(y == 1,  "A", y)
+          y <- ifelse(y == 2,  "B", y)
+          y <- ifelse(y == 3,  "C", y)
+          y
         })
     }
     

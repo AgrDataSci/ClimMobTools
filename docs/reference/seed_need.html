@@ -81,7 +81,7 @@ for a triadic comparison of technologies (tricot) project." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@ for a triadic comparison of technologies (tricot) project." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/agrobioinfoservices/ClimMobTools/">
+  <a href="https://github.com/agrdatasci/ClimMobTools/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -133,7 +133,7 @@ for a triadic comparison of technologies (tricot) project." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Required seed amount in a tricot project</h1>
-    <small class="dont-index">Source: <a href='https://github.com/agrobioinfoservices/ClimMobTools/blob/master/R/seed_need.R'><code>R/seed_need.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/seed_need.R'><code>R/seed_need.R</code></a></small>
     <div class="hidden name"><code>seed_need.Rd</code></div>
     </div>
 
@@ -174,30 +174,21 @@ for a triadic comparison of technologies (tricot) project.</p>
     <p>a dataframe with required number of seeds</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples">
 <span class='co'># allocate 0.2 kg of seeds per variety in a project with 500 </span>
 <span class='co'># participants and 14 varieties</span>
 <span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>500</span>,
           <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
           <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>14</span>,
-          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt;                  var   quant  unit
-#&gt;                &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1:            N bags 1512.00  unit
-#&gt; 2:  Bags per variety  108.00  unit
-#&gt; 3: Seeds per variety   22.00    kg
-#&gt; 4:       Seeds total  308.00    kg</div><div class='input'>
+          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
+
 <span class='co'># allocate 100 seedlings per variety in a project with 400 </span>
 <span class='co'># participants, 8 varieties and 3 comparisons between varieties</span>
 <span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>400</span>,
           <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
           <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>9</span>,
           <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"unit"</span>)</div><div class='output co'>#&gt;                  var     quant  unit
-#&gt;                &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1:            N bags   1206.00  unit
-#&gt; 2:  Bags per variety    134.00  unit
-#&gt; 3: Seeds per variety  13400.00  unit
-#&gt; 4:       Seeds total 120600.00  unit</div></pre>
+          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"unit"</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

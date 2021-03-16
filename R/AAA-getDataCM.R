@@ -19,8 +19,8 @@
 #' @details 
 #' Additional arguments: 
 #' 
-#' \code{server}: a character to select from which server the data will be retrieved, either 
-#'  "prodution" (the default) or "testing"
+#' \code{server}: a character to select from which server the data will be retrieved,
+#'   "production" (the default) or an alternative server 
 #' 
 #' @examples
 #' \dontrun{
@@ -51,15 +51,11 @@ getDataCM <- function(key = NULL,
     server <- "production"
   }
   
-  if (server == "production") {
-    
-    url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
-    
-  }
+  url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
   
-  if (server == "testing") {
+  if (server != "production") {
     
-    url <- "https://testing.climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
+    gsub("https://", paste0("https://", server, "."), url)
     
   }
   

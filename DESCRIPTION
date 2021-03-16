@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 0.3.6.9013
+Version: 0.3.7
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "kaue.desousa@inn.no", 
         role = c("aut", "cre"),
@@ -9,11 +9,9 @@ Authors@R: c(person("Kauê", "de Sousa",
         person("Jacob", "van Etten", role = "aut",
         comment = c(ORCID = "0000-0001-7554-2558")),
         person("Brandon", "Madriz", role = "ctb",
-        comment = "API Client implementation"),
-        person("Carlos F.", "Quiros", role = "ctb",
         comment = "API Client implementation"))
-URL: https://agrobioinfoservices.github.io/ClimMobTools/
-BugReports: https://github.com/agrobioinfoservices/ClimMobTools/issues
+URL: https://agrdatasci.github.io/ClimMobTools/
+BugReports: https://github.com/agrdatasci/ClimMobTools/issues
 Description: API client for 'ClimMob', an open source software for crowdsourcing 
     citizen science in agriculture under the 'tricot' method <https://climmob.net/>. 
     Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the 
