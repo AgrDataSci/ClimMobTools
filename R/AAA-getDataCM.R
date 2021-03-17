@@ -40,22 +40,19 @@
 #' @importFrom httr accept_json content RETRY
 #' @importFrom jsonlite fromJSON
 #' @export
-getDataCM <- function(key = NULL, 
-                      project = NULL, 
-                      as.data.frame = TRUE, ...){
+getDataCM <- function(key, 
+                      project,
+                      as.data.frame = TRUE, 
+                      server = NULL, ...){
+  
   
   dots <- list(...)
-  server <- dots[["server"]]
-  
-  if (is.null(server)) {
-    server <- "production"
-  }
   
   url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
   
-  if (server != "production") {
+  if (!is.null(server)) {
     
-    gsub("https://", paste0("https://", server, "."), url)
+    url <- gsub("https://", paste0("https://", server, "."), url)
     
   }
   

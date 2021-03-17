@@ -5,7 +5,7 @@ ClimMobTools 0.3.7 (Unreleased)
 
 * Method for `as.data.frame()` now handles ClimMob data without the assessment info.
 * `as.data.frame()` decodes values from categorical variables
-* `as.data.frame()` decodes ties and not observed values in the ranking data 
+* `as.data.frame()` decodes ties in the ranking data 
 * Handle alternative server addresses
 
 ClimMobTools 0.3.5 (2020-05-08)

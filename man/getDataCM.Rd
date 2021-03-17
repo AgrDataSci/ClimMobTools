@@ -5,7 +5,7 @@
 \alias{as.data.frame.CM_list}
 \title{Get ClimMob data}
 \usage{
-getDataCM(key = NULL, project = NULL, as.data.frame = TRUE, ...)
+getDataCM(key, project, as.data.frame = TRUE, server = NULL, ...)
 
 \method{as.data.frame}{CM_list}(x, ..., tidynames = TRUE, pivot.wider = FALSE)
 }
@@ -16,6 +16,9 @@ interface (API) key}
 \item{project}{a character for the project id}
 
 \item{as.data.frame}{logical, to return a data frame}
+
+\item{server}{optional, a character to select from which server
+the data will be retrieved}
 
 \item{...}{additional arguments passed to methods}
 

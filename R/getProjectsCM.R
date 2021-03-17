@@ -6,6 +6,8 @@
 #' @family GET functions
 #' @param key a character for the user's application programming 
 #'  interface (API) key
+#' @param server optional, a character to select from which server
+#'  the data will be retrieved
 #' @param ... additional arguments passed to methods. See details
 #' @return A data frame with the ClimMob projects 
 #' \item{project_id}{the project unique id}
@@ -19,12 +21,6 @@
 #' \item{last_registration_activity}{number of days since the submission 
 #'  of the last registration}
 #' 
-#' @details 
-#' Additional arguments: 
-#' 
-#' \code{server}: a character to select from which server the data will be retrieved,
-#'   "production" (the default) or an alternative server 
-#'  
 #' @examples
 #' \dontrun{ 
 #' # This function will not work without an API key  
@@ -39,20 +35,15 @@
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @export
-getProjectsCM <- function(key = NULL, ...){
+getProjectsCM <- function(key, server = NULL, ...){
   
   dots <- list(...)
-  server <- dots[["server"]]
+
+  url <- "https://climmob.net/climmob3/api/readProjects?Apikey="
   
-  if (is.null(server)) {
-    server <- "production"
-  }
-  
-  url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
-  
-  if (server != "production") {
+  if (!is.null(server)) {
     
-    gsub("https://", paste0("https://", server, "."), url)
+    url <- gsub("https://", paste0("https://", server, "."), url)
     
   }
   
