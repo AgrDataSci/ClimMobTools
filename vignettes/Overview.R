@@ -38,7 +38,7 @@ knitr::opts_chunk$set(
 
 ## ----plrankings, message=FALSE, eval=FALSE, echo=TRUE-------------------------
 #  library("PlackettLuce")
-#  #remotes::install_github("agrobioinfoservices/gosset", build_vignettes = TRUE)
+#  #remotes::install_github("agrdatasci/gosset", build_vignettes = TRUE)
 #  library("gosset")
 #  
 #  R <- rank_tricot(dt,

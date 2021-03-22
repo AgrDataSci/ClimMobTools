@@ -3,12 +3,10 @@ title: "ClimMobTools: API Client for the 'ClimMob' platform in R"
 package: ClimMobTools
 author:
 - name: Kauê de Sousa
-  affiliation: Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway; Bioversity International, Rome, Italy
+  affiliation: Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway <br> Bioversity International, Rome, Italy
 - name: Jacob van Etten
   affiliation: Bioversity International, Rome, Italy
 - name: Brandon Madriz
-  affiliation: Bioversity International, The Americas – Costa Rica Office, Turrialba, Costa Rica
-- name: Carlos F. Quirós
   affiliation: Bioversity International, The Americas – Costa Rica Office, Turrialba, Costa Rica
 output: html_document
 vignette: >
@@ -42,11 +40,9 @@ library("ClimMobTools")
 # the API key
 key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-dt <- getDataCM(key = key, 
+dt <- getDataCM(key = key,
                 project = "breadwheat",
-                tidynames = TRUE,
-                pivot.wider = TRUE, 
-                as.data.frame = TRUE)
+                pivot.wider = TRUE)
 
 
 names(dt) <- gsub("firstassessment_|package_|lastassessment_|registration_", "",
@@ -60,10 +56,11 @@ We can add environmental covariates from package [climatrends](https://CRAN.R-pr
 
 ```{r temperature, message=FALSE, eval=FALSE, echo=TRUE}
 library("climatrends")
+library("nasapower")
 
 dt$plantingdate <- as.Date(dt$plantingdate, format = "%Y-%m-%d")
-dt$lon <- as.numeric(dt$lon)
-dt$lat <- as.numeric(dt$lat)
+dt$lon <- as.numeric(dt$farm_geo_longitude)
+dt$lat <- as.numeric(dt$farm_geo_latitude)
 
 temp <- temperature(dt[, c("lon","lat")], 
                     day.one = dt[, "plantingdate"],
@@ -77,11 +74,11 @@ temp
 
 The Plackett-Luce model is one approach to analyse the ClimMob data[@Turner2020]. We build the farmers' rankings as an object of class 'grouped_rankings'. This allows the rankings to be linked to the environmental covariates computed previously and fit the model using `pltree()` from the package [PlackettLuce](https://CRAN.R-project.org/package=PlackettLuce). 
 
-We build the rankings using the function `rank_tricot()` from the package [gosset](https://agrobioinfoservices.github.io/gosset/). 
+We build the rankings using the function `rank_tricot()` from the package [gosset](https://agrdatasci.github.io/gosset/). 
 
 ```{r plrankings, message=FALSE, eval=FALSE, echo=TRUE}
 library("PlackettLuce")
-#remotes::install_github("agrobioinfoservices/gosset", build_vignettes = TRUE)
+#remotes::install_github("agrdatasci/gosset", build_vignettes = TRUE)
 library("gosset")
 
 R <- rank_tricot(dt, 

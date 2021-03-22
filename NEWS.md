@@ -1,4 +1,4 @@
-ClimMobTools 0.3.7 (Unreleased)
+ClimMobTools 0.3.7 (2021-03-22)
 =========================
 
 ### IMPROVEMENTS

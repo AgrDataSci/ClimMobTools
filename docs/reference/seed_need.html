@@ -174,21 +174,30 @@ for a triadic comparison of technologies (tricot) project.</p>
     <p>a dataframe with required number of seeds</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples">
+    <pre class="examples"><div class='input'>
 <span class='co'># allocate 0.2 kg of seeds per variety in a project with 500 </span>
 <span class='co'># participants and 14 varieties</span>
 <span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>500</span>,
           <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
           <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>14</span>,
-          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
-
+          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt;                  var   quant  unit
+#&gt;                &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;
+#&gt; 1:            N bags 1512.00  unit
+#&gt; 2:  Bags per variety  108.00  unit
+#&gt; 3: Seeds per variety   22.00    kg
+#&gt; 4:       Seeds total  308.00    kg</div><div class='input'>
 <span class='co'># allocate 100 seedlings per variety in a project with 400 </span>
 <span class='co'># participants, 8 varieties and 3 comparisons between varieties</span>
 <span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>400</span>,
           <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
           <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>9</span>,
           <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"unit"</span>)</pre>
+          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"unit"</span>)</div><div class='output co'>#&gt;                  var     quant  unit
+#&gt;                &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;
+#&gt; 1:            N bags   1206.00  unit
+#&gt; 2:  Bags per variety    134.00  unit
+#&gt; 3: Seeds per variety  13400.00  unit
+#&gt; 4:       Seeds total 120600.00  unit</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
