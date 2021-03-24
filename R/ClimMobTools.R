@@ -16,5 +16,7 @@
 #'  \url{https://github.com/agrdatasci/ClimMobTools/issues}}
 #' \item{ClimMob Platform: 
 #'  \url{https://climmob.net}}
+#' \item{The tricot user guide: 
+#'  \url{https://hdl.handle.net/10568/109942}}
 #' }
 "_PACKAGE"
