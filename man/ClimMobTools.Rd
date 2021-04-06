@@ -8,14 +8,15 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-API client for 'ClimMob', an open source software for crowdsourcing 
-    citizen science in agriculture under the 'tricot' method <https://climmob.net/>. 
+API client for 'ClimMob', an open source software for experimental 
+    crowdsourcing citizen science under the 'tricot' approach <https://climmob.net/>. 
     Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the 
     research paradigm on its head; instead of a few researchers designing complicated 
-    trials to compare several technologies in search of the best solutions, 
-    it enables many farmers to carry out reasonably simple experiments that 
-    taken together can offer even more information. 'ClimMobTools' enables project 
-    managers to deep explore and analyse their 'ClimMob' data in R.
+    trials to compare several technologies in search of the best solutions for the 
+    target environment, it enables many participants to carry out reasonably simple 
+    experiments that taken together can offer even more information. 
+    'ClimMobTools' enables project managers to deep explore and analyse their 
+    'ClimMob' data in R.
 }
 \seealso{
 \strong{Useful links:}
@@ -28,6 +29,8 @@ API client for 'ClimMob', an open source software for crowdsourcing
  \url{https://github.com/agrdatasci/ClimMobTools/issues}}
 \item{ClimMob Platform: 
  \url{https://climmob.net}}
+\item{The tricot user guide: 
+ \url{https://hdl.handle.net/10568/109942}}
 }
 }
 \author{

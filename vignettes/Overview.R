@@ -14,9 +14,7 @@ knitr::opts_chunk$set(
 #  
 #  dt <- getDataCM(key = key,
 #                  project = "breadwheat",
-#                  tidynames = TRUE,
-#                  pivot.wider = TRUE,
-#                  as.data.frame = TRUE)
+#                  pivot.wider = TRUE)
 #  
 #  
 #  names(dt) <- gsub("firstassessment_|package_|lastassessment_|registration_", "",
@@ -25,10 +23,11 @@ knitr::opts_chunk$set(
 
 ## ----temperature, message=FALSE, eval=FALSE, echo=TRUE------------------------
 #  library("climatrends")
+#  library("nasapower")
 #  
 #  dt$plantingdate <- as.Date(dt$plantingdate, format = "%Y-%m-%d")
-#  dt$lon <- as.numeric(dt$lon)
-#  dt$lat <- as.numeric(dt$lat)
+#  dt$lon <- as.numeric(dt$farm_geo_longitude)
+#  dt$lat <- as.numeric(dt$farm_geo_latitude)
 #  
 #  temp <- temperature(dt[, c("lon","lat")],
 #                      day.one = dt[, "plantingdate"],

@@ -4,7 +4,7 @@
 \alias{getProjectsCM}
 \title{Get ClimMob projects}
 \usage{
-getProjectsCM(key, server = NULL, ...)
+getProjectsCM(key, server = "climmob3", ...)
 }
 \arguments{
 \item{key}{a character for the user's application programming 

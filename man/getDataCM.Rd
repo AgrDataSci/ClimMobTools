@@ -5,7 +5,7 @@
 \alias{as.data.frame.CM_list}
 \title{Get ClimMob data}
 \usage{
-getDataCM(key, project, as.data.frame = TRUE, server = NULL, ...)
+getDataCM(key, project, as.data.frame = TRUE, server = "climmob3", ...)
 
 \method{as.data.frame}{CM_list}(x, ..., tidynames = TRUE, pivot.wider = FALSE)
 }

@@ -1,3 +1,10 @@
+ClimMobTools 0.3.8 (2021-04-06)
+=========================
+
+### BUG FIXES
+
+* Fix the function to set the URLs for alternative servers in ClimMob
+
 ClimMobTools 0.3.7 (2021-03-22)
 =========================
 

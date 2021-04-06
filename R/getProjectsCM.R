@@ -35,17 +35,11 @@
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @export
-getProjectsCM <- function(key, server = NULL, ...){
+getProjectsCM <- function(key, server = "climmob3", ...){
   
   dots <- list(...)
-
-  url <- "https://climmob.net/climmob3/api/readProjects?Apikey="
   
-  if (!is.null(server)) {
-    
-    url <- gsub("https://", paste0("https://", server, "."), url)
-    
-  }
+  url <- .set_url(server, extension = "readProjects?Apikey=")
   
   dat <- httr::RETRY(verb = "GET",
                      url = url,
@@ -63,10 +57,10 @@ getProjectsCM <- function(key, server = NULL, ...){
   
   dat <- dat[,c("project_cod","project_name",
                  "project_regstatus","project_creationdate",
-                 "project_numobs", "regperc","lastreg")]
+                 "project_numobs", "regtotal","lastreg")]
 
   names(dat) <- c("project_id","name","status","creation_date",
-                  "intended_participants", "registration_progress",
+                  "intended_participants", "registered_participants",
                   "last_registration_activity")
   
   dat$status <- with(dat, ifelse(status == 1, "active",
@@ -80,3 +74,29 @@ getProjectsCM <- function(key, server = NULL, ...){
   
   return(dat)
 }
+
+
+
+#' Set server URL
+#' This will set the server URL following the argument server
+#' in the main functions
+#' @param server the server name
+#' @param extension a character for the extension in the API call
+#' @noRd
+.set_url <- function(server = "climmob3", extension = NULL) {
+  
+  if (server == "avisa" | server == "rtb") {
+    url <- paste0("https://", server, ".climmob.net/api/", extension)
+    
+  }
+  
+  if (server == "climmob3") {
+    url <- paste0("https://climmob.net/climmob3/api/", extension)
+  }
+  
+  return(url)
+  
+}
+
+
+

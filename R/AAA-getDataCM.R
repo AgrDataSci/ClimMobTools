@@ -43,19 +43,13 @@
 getDataCM <- function(key, 
                       project,
                       as.data.frame = TRUE, 
-                      server = NULL, ...){
+                      server = "climmob3", ...){
   
   
   dots <- list(...)
   
-  url <- "https://climmob.net/climmob3/api/readDataOfProject?Body={}&Apikey={}"
-  
-  if (!is.null(server)) {
-    
-    url <- gsub("https://", paste0("https://", server, "."), url)
-    
-  }
-  
+  url <- .set_url(server, extension = "readDataOfProject?Body={}&Apikey={}")
+
   cmdata <- httr::RETRY(verb = "GET", 
                         url = url,
                         query = list(Body = paste0('{"project_cod":"', project, '"}'),
