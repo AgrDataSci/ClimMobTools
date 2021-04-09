@@ -11,7 +11,7 @@ getProjectsCM(key, server = "climmob3", ...)
 interface (API) key}
 
 \item{server}{optional, a character to select from which server
-the data will be retrieved}
+the data will be retrieved. See details}
 
 \item{...}{additional arguments passed to methods. See details}
 }
@@ -30,6 +30,16 @@ A data frame with the ClimMob projects
 }
 \description{
 Fetch the status of ClimMob projects
+}
+\details{
+\code{server}: the default server is "climmob" used for clients of 
+https://climmob.net/climmob3/, other options are:
+
+ "avisa" for clients of https://avisa.climmob.net/ 
+ 
+ "rtb" for clients of https://rtb.climmob.net/
+ 
+ "testing" for clients of https://testing.climmob.net/climmob3/
 }
 \examples{
 \dontrun{ 

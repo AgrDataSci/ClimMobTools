@@ -17,10 +17,14 @@
 #' \item{variable}{the variable name}
 #' \item{value}{the value for each variable}
 #' @details 
-#' Additional arguments: 
+#' \code{server}: the default server is "climmob" used for clients of 
+#' https://climmob.net/climmob3/, other options are:
 #' 
-#' \code{server}: a character to select from which server the data will be retrieved,
-#'   "production" (the default) or an alternative server 
+#'  "avisa" for clients of https://avisa.climmob.net/ 
+#'  
+#'  "rtb" for clients of https://rtb.climmob.net/
+#'  
+#'  "testing" for clients of https://testing.climmob.net/climmob3/
 #' 
 #' @examples
 #' \dontrun{

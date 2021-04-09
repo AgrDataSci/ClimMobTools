@@ -7,7 +7,7 @@
 #' @param key a character for the user's application programming 
 #'  interface (API) key
 #' @param server optional, a character to select from which server
-#'  the data will be retrieved
+#'  the data will be retrieved. See details
 #' @param ... additional arguments passed to methods. See details
 #' @return A data frame with the ClimMob projects 
 #' \item{project_id}{the project unique id}
@@ -20,6 +20,17 @@
 #'  which were registered}
 #' \item{last_registration_activity}{number of days since the submission 
 #'  of the last registration}
+#'  
+#' @details 
+#' \code{server}: the default server is "climmob" used for clients of 
+#' https://climmob.net/climmob3/, other options are:
+#' 
+#'  "avisa" for clients of https://avisa.climmob.net/ 
+#'  
+#'  "rtb" for clients of https://rtb.climmob.net/
+#'  
+#'  "testing" for clients of https://testing.climmob.net/climmob3/
+#'  
 #' 
 #' @examples
 #' \dontrun{ 
@@ -55,11 +66,11 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   
   dat <- cbind(dat, progress)
   
-  dat <- dat[,c("project_cod","project_name",
+  dat <- dat[,c("project_cod","project_name", "project_cnty",
                  "project_regstatus","project_creationdate",
                  "project_numobs", "regtotal","lastreg")]
 
-  names(dat) <- c("project_id","name","status","creation_date",
+  names(dat) <- c("project_id","name", "country", "status","creation_date",
                   "intended_participants", "registered_participants",
                   "last_registration_activity")
   
@@ -73,6 +84,7 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   class(dat) <- union("CM_df", class(dat))
   
   return(dat)
+  
 }
 
 
@@ -83,20 +95,36 @@ getProjectsCM <- function(key, server = "climmob3", ...){
 #' @param server the server name
 #' @param extension a character for the extension in the API call
 #' @noRd
-.set_url <- function(server = "climmob3", extension = NULL) {
+.set_url <- function(server = "climmob3", extension = NULL){
   
-  if (server == "avisa" | server == "rtb") {
+  other_server <- c("avisa", "rtb", "testing")
+  
+  known <- server %in% other_server
+  
+  if (known) {
+    
     url <- paste0("https://", server, ".climmob.net/api/", extension)
     
   }
   
   if (server == "climmob3") {
+    
     url <- paste0("https://climmob.net/climmob3/api/", extension)
+    
+  }
+  
+  if (isFALSE(known) & isFALSE(server == "climmob3")) {
+    
+      stop("You are trying to reach an unknown server, please choose between '", 
+         paste(c("climmob", other_server), collapse = "', '"), "'\n")
+    
   }
   
   return(url)
   
 }
 
-
+.unroll_assessments <- function(x){
+  
+}
 
