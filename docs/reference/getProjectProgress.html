@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>API Client for the 'ClimMob' platform in R — ClimMobTools • ClimMobTools</title>
+<title>Get project progress — getProjectProgress • ClimMobTools</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,17 +46,8 @@
 
 
 
-<meta property="og:title" content="API Client for the 'ClimMob' platform in R — ClimMobTools" />
-<meta property="og:description" content="
-API client for 'ClimMob', an open source software for experimental 
-    crowdsourcing citizen science under the 'tricot' approach &amp;lt;https://climmob.net/&amp;gt;. 
-    Developed by van Etten et al. (2019) &amp;lt;doi:10.1017/S0014479716000739&amp;gt;, it turns the 
-    research paradigm on its head; instead of a few researchers designing complicated 
-    trials to compare several technologies in search of the best solutions for the 
-    target environment, it enables many participants to carry out reasonably simple 
-    experiments that taken together can offer even more information. 
-    'ClimMobTools' enables project managers to deep explore and analyse their 
-    'ClimMob' data in R." />
+<meta property="og:title" content="Get project progress — getProjectProgress" />
+<meta property="og:description" content="Fetch the progress of a ClimMob project" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -140,42 +131,70 @@ API client for 'ClimMob', an open source software for experimental
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>API Client for the 'ClimMob' platform in R</h1>
-    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/ClimMobTools.R'><code>R/ClimMobTools.R</code></a></small>
-    <div class="hidden name"><code>ClimMobTools.Rd</code></div>
+    <h1>Get project progress</h1>
+    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/getProjectProgress.R'><code>R/getProjectProgress.R</code></a></small>
+    <div class="hidden name"><code>getProjectProgress.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><img src='figures/logo.png' align='right' alt='logo' width='120' /></p>
-<p>API client for 'ClimMob', an open source software for experimental 
-    crowdsourcing citizen science under the 'tricot' approach &lt;https://climmob.net/&gt;. 
-    Developed by van Etten et al. (2019) &lt;doi:10.1017/S0014479716000739&gt;, it turns the 
-    research paradigm on its head; instead of a few researchers designing complicated 
-    trials to compare several technologies in search of the best solutions for the 
-    target environment, it enables many participants to carry out reasonably simple 
-    experiments that taken together can offer even more information. 
-    'ClimMobTools' enables project managers to deep explore and analyse their 
-    'ClimMob' data in R.</p>
+    <p>Fetch the progress of a ClimMob project</p>
     </div>
 
+    <pre class="usage"><span class='fu'>getProjectProgress</span>(<span class='no'>key</span>, <span class='no'>project</span>, <span class='kw'>server</span> <span class='kw'>=</span> <span class='st'>"climmob3"</span>, <span class='no'>...</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>key</th>
+      <td><p>a character for the user's application programming 
+interface (API) key</p></td>
+    </tr>
+    <tr>
+      <th>project</th>
+      <td><p>a character with the id of one or more projects</p></td>
+    </tr>
+    <tr>
+      <th>server</th>
+      <td><p>optional, a character to select from which server
+the data will be retrieved. See details</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments passed to methods. See details</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame with the ClimMob projects</p>
+<dt>project_id</dt><dd><p>the project unique id</p></dd>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>server</code>: the default server is "climmob" used for clients of 
+https://climmob.net/climmob3/, other options are:</p>
+<p>"avisa" for clients of https://avisa.climmob.net/</p> 
+<p>"rtb" for clients of https://rtb.climmob.net/</p> 
+<p>"testing" for clients of https://testing.climmob.net/climmob3/</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><strong>Useful links:</strong></p><ul>
-<li><p>Development repository: 
- <a href='https://github.com/agrdatasci/ClimMobTools'>https://github.com/agrdatasci/ClimMobTools</a></p></li>
-<li><p>Static documentation: 
- <a href='https://agrdatasci.github.io/ClimMobTools/'>https://agrdatasci.github.io/ClimMobTools/</a></p></li>
-<li><p>Report bugs: 
- <a href='https://github.com/agrdatasci/ClimMobTools/issues'>https://github.com/agrdatasci/ClimMobTools/issues</a></p></li>
-<li><p>ClimMob Platform: 
- <a href='https://climmob.net'>https://climmob.net</a></p></li>
-<li><p>The tricot user guide: 
- <a href='https://hdl.handle.net/10568/109942'>https://hdl.handle.net/10568/109942</a></p></li>
-</ul>
-</div>
+    <div class='dont-index'><p>ClimMob website <a href='https://climmob.net/'>https://climmob.net/</a></p>
+<p>Other GET functions: 
+<code><a href='getDataCM.html'>getDataCM</a>()</code>,
+<code><a href='getProjectsCM.html'>getProjectsCM</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># This function will not work without an API key  </span>
+<span class='co'># the user API key can be obtained once a free ClimMob account </span>
+<span class='co'># is created via https://climmob.net/</span>
+
+<span class='no'>my_key</span> <span class='kw'>&lt;-</span> <span class='st'>"add_your_key"</span>
+
+<span class='fu'><a href='getProjectsCM.html'>getProjectsCM</a></span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>my_key</span>)
+
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

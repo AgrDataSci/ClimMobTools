@@ -12,15 +12,16 @@
 #' @return A data frame with the ClimMob projects 
 #' \item{project_id}{the project unique id}
 #' \item{name}{the project name}
+#' \item{country}{ISO code for the country where the project was implemented}
 #' \item{status}{the current status}
 #' \item{creation_date}{the project's creation date}
 #' \item{intended_participants}{the number of participants the project 
 #'  intended to register}
-#' \item{registration_progress}{the percentage of intended participants 
-#'  which were registered}
+#' \item{intended_participants}{the number of participants the project 
+#'  intended to register}
+#' \item{registered_participants}{the number of participants registered}
 #' \item{last_registration_activity}{number of days since the submission 
 #'  of the last registration}
-#'  
 #' @details 
 #' \code{server}: the default server is "climmob" used for clients of 
 #' https://climmob.net/climmob3/, other options are:
@@ -124,7 +125,4 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   
 }
 
-.unroll_assessments <- function(x){
-  
-}
 

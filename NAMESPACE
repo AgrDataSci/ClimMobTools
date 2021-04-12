@@ -3,6 +3,7 @@
 S3method(as.data.frame,CM_list)
 S3method(print,CM_df)
 export(getDataCM)
+export(getProjectProgress)
 export(getProjectsCM)
 export(randomise)
 export(randomize)

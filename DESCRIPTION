@@ -25,9 +25,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: 
-    R (>= 3.5.0), 
-    climatrends,
-    PlackettLuce
+    R (>= 3.5.0)
 Imports:
     httr, 
     jsonlite, 

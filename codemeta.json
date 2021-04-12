@@ -104,30 +104,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "climatrends",
-      "name": "climatrends",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=climatrends"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "PlackettLuce",
-      "name": "PlackettLuce",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=PlackettLuce"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
       "provider": {
@@ -182,7 +158,7 @@
   ],
   "releaseNotes": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/NEWS.md",
   "readme": "https://github.com/AgrDataSci/ClimMobTools/blob/master/README.md",
-  "fileSize": "1926.527KB",
+  "fileSize": "1944.532KB",
   "contIntegration": ["https://travis-ci.org/agrdatasci/ClimMobTools", "https://codecov.io/github/agrdatasci/ClimMobTools?branch=master"],
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#maturing",
   "relatedLink": ["https://agrdatasci.github.io/ClimMobTools/", "https://CRAN.R-project.org/package=ClimMobTools"],

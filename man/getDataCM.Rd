@@ -70,6 +70,7 @@ data <- getDataCM(key = my_key, project = my_project)
 ClimMob website \url{https://climmob.net/}
 
 Other GET functions: 
+\code{\link{getProjectProgress}()},
 \code{\link{getProjectsCM}()}
 }
 \author{
