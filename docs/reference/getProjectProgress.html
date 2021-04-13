@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -169,6 +169,10 @@ the data will be retrieved. See details</p></td>
 
     <p>A data frame with the ClimMob projects</p>
 <dt>project_id</dt><dd><p>the project unique id</p></dd>
+<dt>name</dt><dd><p>the project name</p></dd>
+<dt>moment</dt><dd><p>either the design, registration or data collection</p></dd>
+<dt>number_obs</dt><dd><p>number of observations collected in a given moment</p></dd>
+<dt>last_activity</dt><dd><p>last activity of the given moment</p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -192,7 +196,9 @@ https://climmob.net/climmob3/, other options are:</p>
 
 <span class='no'>my_key</span> <span class='kw'>&lt;-</span> <span class='st'>"add_your_key"</span>
 
-<span class='fu'><a href='getProjectsCM.html'>getProjectsCM</a></span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>my_key</span>)
+<span class='no'>my_project</span> <span class='kw'>&lt;-</span> <span class='st'>"project_id"</span>
+
+<span class='fu'>getProjectProgress</span>(<span class='no'>my_key</span>, <span class='no'>my_project</span>)
 
 }</div></pre>
   </div>

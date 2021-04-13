@@ -1,4 +1,4 @@
-ClimMobTools 0.3.8 (2021-04-06)
+ClimMobTools 0.3.9 (2021-04-12)
 =========================
 
 ### IMPROVEMENTS
