@@ -63,6 +63,10 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   
   dat <- jsonlite::fromJSON(dat)
   
+  if (length(dat) == 0) {
+    return(cat("No project associated with this API key \n"))
+  }
+  
   progress <- dat$progress
   
   dat <- cbind(dat, progress)
@@ -98,7 +102,7 @@ getProjectsCM <- function(key, server = "climmob3", ...){
 #' @noRd
 .set_url <- function(server = "climmob3", extension = NULL){
   
-  other_server <- c("avisa", "rtb", "testing")
+  other_server <- c("avisa", "rtb")
   
   known <- server %in% other_server
   
@@ -108,13 +112,19 @@ getProjectsCM <- function(key, server = "climmob3", ...){
     
   }
   
+  if (server == "testing") {
+    
+    url <- paste0("https://", server, ".climmob.net/climmob3/api/", extension)
+    
+  }
+  
   if (server == "climmob3") {
     
     url <- paste0("https://climmob.net/climmob3/api/", extension)
     
   }
   
-  if (isFALSE(known) & isFALSE(server == "climmob3")) {
+  if (isFALSE(known) & isFALSE(server == "climmob3") & isFALSE(server == "testing")) {
     
       stop("You are trying to reach an unknown server, please choose between '", 
          paste(c("climmob", other_server), collapse = "', '"), "'\n")

@@ -52,12 +52,11 @@ as.data.frame.CM_list <- function(x,
     
     # get the names of assessments questions
     assess_q <- dt[["specialfields"]]
-    #assess_q <- assess_q[, "name"]
-    
+
     # check if overall VS local is present
     tricotvslocal <- grepl("Performance", assess_q$type)
     
-    # get the ranking questions
+    # get the strings of ranking questions
     rank_q <- assess_q$name[!tricotvslocal]
     
     # and the overall vs local question
@@ -65,7 +64,6 @@ as.data.frame.CM_list <- function(x,
     
     # get variables names from assessments
     assess <- dt[["assessments"]]
-    
     
     if(length(assess) > 0) {
       
@@ -78,6 +76,9 @@ as.data.frame.CM_list <- function(x,
       assess_name <- dt[["assessments"]][, "desc"]
       # the names of questions
       looknames <- assess[, "name"]
+      # the strings to use to decode values
+      rtable <- do.call("rbind", dt$assessments$fields)
+      rtable <- rtable[!is.na(rtable$rtable), c("name", "rtable")]
       
       # get codes from multiple choice variables
       assess_lkp <- dt$assessments$lkptables
@@ -93,54 +94,49 @@ as.data.frame.CM_list <- function(x,
       assess_id <- character()
       assess_name <- character()
       looknames <- character()
+      rtable <- data.frame()
       lkp <- list()
     }
     
     # add codes from registration
     reg_lkp <- .decode_lkptable(dt$registry$lkptables)
-    
     lkp <- c(reg_lkp, lkp)
     
+    # also the table strings
+    reg_rtable <- dt$registry$fields[,c("name","rtable")]
+    reg_rtable <- reg_rtable[!is.na(reg_rtable$rtable), ]
+    rtable <- rbind(rtable, reg_rtable)
+    rtable$rtable <- gsub("_lkp","_",rtable$rtable)
+    
+    # remove tricot questions
+    rtable <- rtable[!grepl("char_", rtable$name), ]
     # remove lkp table with farmers names
-    keep <- !grepl("qst163", names(lkp))
+    rtable <- rtable[!grepl("qst163", rtable$name), ]
     
-    lkp <- lkp[keep]
-    
-    # paste the ids of each assessments
-    looknames <- c(regs_name,
-                   paste(rep(assess_id, each = length(looknames)), 
-                         looknames, sep = "_"))
-    
+    # add assessment code
+    rtable$assess <- do.call("rbind", strsplit(rtable$rtable, "_"))[,1]
+    rtable$name <- paste(rtable$assess, rtable$name, sep = "_")
     
     # trial data
     trial <- dt[["data"]]
     
-    # get the values from the trial data
-    trial <- lapply(looknames, function(x){
-      i <- names(trial) %in% x
-      y <- trial[i]
-      y
-    })
+    # replace codes by labels in multichoice questions 
+    n_rtable <- nrow(rtable)
     
-    trial <- do.call("cbind", trial)
-    
-    # now replace codes from lkp tables in the trial data
-    names(lkp) <- gsub("_opts$","",names(lkp))
-    
-    keep <- names(lkp) %in% names(trial)
-    
-    lkp <- lkp[keep]
-    
-    # remove assessment questions
-    keep <- !names(lkp) %in% assess_q$name
-    
-    lkp <- lkp[keep]
-    
-    nm_lkp <- names(lkp)
-    
-    for(i in seq_along(lkp)){
-      l <- lkp[[i]]
-      trial[[nm_lkp[i]]] <- factor(trial[[nm_lkp[i]]], levels = l$id, labels = l$label)
+    for (i in seq_len(n_rtable)) {
+      
+      string_i <- rtable[i, "rtable"]
+      var_i <- rtable[i, "name"]
+      l <- match(string_i, names(lkp))
+      l <- lkp[[l]]
+      
+      for (j in seq_along(l$id)) {
+        
+        trial[var_i] <- gsub(l$id[j], l$label[j], trial[[var_i]])
+        
+      }
+      
+      trial[var_i] <- gsub(" ", "; ", trial[[var_i]])
       
     }
     
@@ -316,7 +312,7 @@ as.data.frame.CM_list <- function(x,
   assess_name <- sort(tolower(assess_name))
   output$moment <- factor(output$moment, levels = c("package",
                                                     "registration",
-                                                    assess_name))
+                                                    rev(assess_name)))
   
   
   # reorder moment and ids

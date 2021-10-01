@@ -1,22 +1,19 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "ClimMobTools",
   "description": "API client for 'ClimMob', an open source software for experimental \n    crowdsourcing citizen science under the 'tricot' approach <https://climmob.net/>. \n    Developed by van Etten et al. (2019) <doi:10.1017/S0014479716000739>, it turns the \n    research paradigm on its head; instead of a few researchers designing complicated \n    trials to compare several technologies in search of the best solutions for the \n    target environment, it enables many participants to carry out reasonably simple \n    experiments that taken together can offer even more information. \n    'ClimMobTools' enables project managers to deep explore and analyse their \n    'ClimMob' data in R.",
   "name": "ClimMobTools: API Client for the 'ClimMob' Platform",
-  "codeRepository": "https://github.com/agrobioinfoservices/ClimMobTools",
+  "codeRepository": "https://agrdatasci.github.io/ClimMobTools/",
   "issueTracker": "https://github.com/agrdatasci/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.9",
+  "version": "0.4.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
+  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -45,8 +42,6 @@
       "familyName": "Madriz"
     }
   ],
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -95,14 +90,14 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5.0"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "climatrends",
       "name": "climatrends",
@@ -114,7 +109,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=climatrends"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "PlackettLuce",
       "name": "PlackettLuce",
@@ -126,7 +121,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=PlackettLuce"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
@@ -138,7 +133,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -150,7 +145,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "Matrix",
       "name": "Matrix",
@@ -162,12 +157,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Matrix"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "RSpectra",
       "name": "RSpectra",
@@ -178,19 +173,8 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=RSpectra"
-    }
-  ],
-  "releaseNotes": "https://github.com/agrobioinfoservices/ClimMobTools/blob/master/NEWS.md",
-  "readme": "https://github.com/AgrDataSci/ClimMobTools/blob/master/README.md",
-  "fileSize": "1943.787KB",
-  "contIntegration": ["https://travis-ci.org/agrdatasci/ClimMobTools", "https://codecov.io/github/agrdatasci/ClimMobTools?branch=master"],
-  "developmentStatus": "https://www.tidyverse.org/lifecycle/#maturing",
-  "relatedLink": ["https://agrdatasci.github.io/ClimMobTools/", "https://CRAN.R-project.org/package=ClimMobTools"],
-  "keywords": [
-    "agriculture-research",
-    "citizen-science",
-    "crowdsourcing",
-    "randomized-controlled-trials",
-    "r"
-  ]
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "1945.393KB"
 }
