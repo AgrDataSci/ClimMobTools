@@ -12,49 +12,103 @@
 #' consecutive combinations also relatively balanced and A-optimal
 #' 
 #' @author Jacob van Etten
-#' @param ncomp an integer for the number of items each observer compares
-#' @param nobservers an integer for the number of observers
-#' @param nitems an integer for the number of items tested in the project
+#' @param ncomp an integer for the number of items to be assigned to each package
+#' @param npackages an integer for the number of trial packages to be produced
 #' @param itemnames a character for the name of items tested in the project
+#' @param availability optional, a vector with integers indicating the 
+#'  number of packages available for each \var{itemnames}
+#' @param proportions optional, a numeric vector with the desired proportions
+#'  for each \var{itemnames}
+#' @param comp define  
 #' @return A dataframe with the randomised design
 #' @examples 
-#' ni <- 3
-#' no <- 10
-#' nv <- 4
-#' inames <- c("mango","banana","grape","apple")
-#'  
-#' randomise(ncomp = ni,
-#'           nobservers = no,
-#'           nitems = nv,
-#'           itemnames = inames)
+#' ncomp <- 3
+#' npackages <- 100
+#' itemnames <- c("apple","banana","grape","mango", "orange", "kiwi", "pineapple")
+#' comp <- 10
+#' availability <- c(50, 50, 150, 150, 150, 150, 20)
+#' proportions <- c(0.1, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125)
+#' 
+#' table(unlist(randomise(ncomp = ncomp,
+#'                        npackages = npackages,
+#'                        itemnames = itemnames)))
+#' 
+#' table(unlist(randomise(ncomp = ncomp,
+#'                        npackages = npackages,
+#'                        itemnames = itemnames,
+#'                        availability = availability)))
+#' 
+#' table(unlist(randomise(ncomp = ncomp,
+#'                        npackages = npackages,
+#'                        itemnames = itemnames,
+#'                        availability = availability,
+#'                        proportions = proportions)))
+#' 
+#' table(unlist(randomise(ncomp = ncomp,
+#'                        npackages = npackages,
+#'                        itemnames = itemnames,
+#'                        proportions = proportions)))
+#' 
+#' randomise(ncomp = ncomp,
+#'           npackages = 30,
+#'           itemnames = itemnames,
+#'           proportions = proportions)
 #'           
 #' @aliases randomize
 #' @importFrom Matrix Diagonal
 #' @importFrom methods as
 #' @importFrom RSpectra eigs
 #' @export
-randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL, 
-                      itemnames = NULL) {
+randomise <- function(ncomp = 3, 
+                      npackages, 
+                      itemnames, 
+                      comp = 10, 
+                      availability = NULL,
+                      proportions = NULL) {
   
-  if (is.null(nobservers)) {
-    stop("nobservers is missing with no default")
+  nitems <- length(itemnames)
+  
+  # check inputs
+  if (!is.null(availability) & length(availability) != nitems) {
+    stop("nitems is different than length of vector with availability")
   }
-  
-  if (is.null(nitems)) {
-    stop("nitems is missing with no default")
-  }
-  
-  if (is.null(itemnames)) {
-    stop("itemnames is missing with no default")
-  }
-  
-  if (nitems != length(itemnames)) {
-    stop("nitems is different than provided itemnames")
-  }
-  
+
   if (nitems < 3) {
-    stop("nitems must be higher than 2")
+    stop("nitems must be larger than 2")
   }
+  
+  nneeded <- npackages * ncomp
+  
+  if (!is.null(availability)) {
+    
+    if (sum(availability) < nneeded) {
+      stop("availability is not sufficient: smaller than npackages * ncomp \n")
+    }
+    if (length(availability) != nitems) {
+      stop("length of vector availability should be nitems \n")
+    }
+  }
+  
+  if (!is.null(proportions)) {
+    
+    if (length(proportions) != nitems) {
+      stop("length of vector proportions should be nitems")
+      
+    }
+    
+    if (sum(proportions) != 1) {
+      
+      proportions <- proportions / sum(proportions)
+      warning("sum of proportions is not 1; values have been rescaled \n")
+      
+    }
+  }
+  
+  # depth1 is the number of rows after the procedure starts to compare options with the Kirchoff index
+  depth1 <- floor(nitems / ncomp * 2)
+  
+  # in the second round, it is also how far it 'looks back' in the sequential balancing
+  depth2 <- min(20, floor(nitems / ncomp * 4))
   
   # Varieties indicated by integers
   varieties <- seq_len(nitems)
@@ -62,108 +116,238 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   # Full set of all combinations
   varcombinations <- t((.combn(varieties, ncomp)))
   
-  # if the full set of combinations is small and can be covered at least once
-  # the set will include each combination at least once
-  ncomb <- dim(varcombinations)[1]
-  n <- floor(nobservers / ncomb)
-  nfixed <- ncomb * n
-  vars1 <-
-    varcombinations[c(rep(1:(dim(varcombinations)[1]), times = n)), ]
-  
-  # the remaining combinations are sampled randomly but in a balanced way
-  # this means that no combination enters more than once
-  nremain <- nobservers - nfixed
-  
-  # create set to get to full number of observers
-  vars2 <- matrix(nrow = nremain, ncol = ncomp)
-  
-  # set up array with set of combinations
-  varcomb <- matrix(0, nrow = nitems, ncol = nitems)
-  
-  if (dim(vars2)[1] > 0.5) {
+  if (is.null(availability) & is.null(proportions)) {
     
-    # select combinations for the vars2 set that optimize design
-    for (i in 1:nremain) {
+    # if the full set of combinations is small and can be covered at least once
+    # the set will include each combination at least once
+    ncomb <- dim(varcombinations)[1]
+    n <- floor(npackages / ncomb)
+    nfixed <- ncomb * n
+    vars1 <- varcombinations[c(rep(1:(dim(varcombinations)[1]), times = n)), ]
+    
+    # the remaining combinations are sampled randomly but in a balanced way
+    # this means that no combination enters more than once
+    nremain <- npackages - nfixed
+    
+    # create set to get to full number of observers
+    vars2 <- matrix(nrow = nremain, ncol = ncomp)
+    
+    # set up array with set of combinations
+    varcomb <- matrix(0, nrow = nitems, ncol = nitems)
+    
+    if (dim(vars2)[1] > 0.5) {
       
-      # calculate frequency of each variety
-      sumcomb <- rowSums(varcomb) + colSums(varcomb)
-      
-      # priority of each combination is equal to Shannon index of varieties 
-      # in each combination
-      prioritycomb <- apply(varcombinations, 1, function(x){ 
-        .getShannonVector(x, sumcomb, nitems)
-      })
-      
-      # highest priority to be selected is the combination which has the lowest 
-      # Shannon index
-      selected <- which(prioritycomb == min(prioritycomb))
-      
-      # if there are ties, find out which combination reduces Kirchhoff index most
-      
-      if (length(selected) > 1 & i > 25) {
+      # select combinations for the vars2 set that optimize design
+      for (i in 1:nremain) {
         
-        reduce <- max(2, min(10, round(5000/nobservers), round(200/nitems)))
+        # calculate frequency of each variety
+        sumcomb <- (rowSums(varcomb) + colSums(varcomb)) / 2 
         
-        # randomly subsample from selected if there are too many combinations to check
-        if (length(selected) > reduce) {
-          selected <- sample(selected, reduce)
+        # priority of each combination is equal to Shannon index of varieties 
+        # in each combination
+        prioritycomb <- apply(varcombinations, 1, function(x){ 
+          .getShannonVector(x, sumcomb, nitems)
+        })
+        
+        # highest priority to be selected is the combination which has the lowest 
+        # Shannon index
+        selected <- which(prioritycomb == min(prioritycomb))
+        
+        # if there are ties, find out which combination reduces Kirchhoff index most
+        
+        if (length(selected) > 1 & i > depth1) {
+          
+          reduce <- max(2, min(comp, round(5000/npackages), round(200/nitems)))
+          
+          # randomly subsample from selected if there are too many combinations to check
+          if (length(selected) > reduce) {
+            selected <- sample(selected, reduce)
+          }
+          
+          # get a nitems x nitems matrix with number of connections
+          
+          # calculate Kirchhoff index and select smallest value
+          khi <- vector(length = length(selected))
+          for (k in 1:length(selected)) {
+            
+            evalgraph <- varcomb
+            index <- t(.combn(varcombinations[selected[k],], 2))
+            evalgraph[index] <- evalgraph[index] + 1
+            khi[k] <- .KirchhoffIndex(evalgraph)
+            
+          }
+          
+          selected <- selected[which(khi == min(khi))]
+          
         }
         
-        # get a nitems x nitems matrix with number of connections
-        
-        # calculate Kirchhoff index and select smallest value
-        khi <- vector(length = length(selected))
-        for (k in 1:length(selected)) {
-          
-          evalgraph <- varcomb
-          index <- t(.combn(varcombinations[selected[k],], 2))
-          evalgraph[index] <- evalgraph[index] + 1
-          khi[k] <- .KirchhoffIndex(evalgraph)
-          
+        # if there are still ties between ranks of combinations, selected randomly 
+        # from the ties
+        if (length(selected) > 1) { 
+          selected <- sample(selected, 1)
         }
         
-        selected <- selected[which(khi == min(khi))]
+        # assign the selected combination
+        vars2[i,] <- varcombinations[selected,]
+        
+        varcomb[t(.combn(varcombinations[selected,],2))] <- 
+          varcomb[t(.combn(varcombinations[selected,],2))] + 1
+        
+        # remove used combination
+        varcombinations <- varcombinations[-selected,]
         
       }
-      
-      # if there are still ties between ranks of combinations, selected randomly 
-      # from the ties
-      if (length(selected) > 1) { 
-        selected <- sample(selected, 1)
-      }
-      
-      # assign the selected combination
-      vars2[i,] <- varcombinations[selected,]
-      
-      varcomb[t(.combn(varcombinations[selected,],2))] <- 
-        varcomb[t(.combn(varcombinations[selected,],2))] + 1
-      
-      # remove used combination
-      varcombinations <- varcombinations[-selected,]
-      
     }
+    
+    # merge vars1 and vars2 to create the full set of combinations
+    vars <- rbind(vars1, vars2)
+    
+    # calculate allocations available to each item
+    allocations <- as.integer(table(vars))
+    
   }
   
-  # merge vars1 and vars2 to create the full set of combinations
-  vars <- rbind(vars1, vars2)
+  if (!is.null(availability) | !is.null(proportions)) {
+    
+    #create the objects available or proportions is they are not available
+    if (is.null(availability)) {
+      available <- rep(npackages, times = nitems)
+      availability <- rep(npackages, times = nitems)
+    } else {
+        available <- availability
+      }
+    if (is.null(proportions)) {
+      proportions <- rep(1/nitems, times = nitems) #available / sum(available) 
+    }
+    
+    #order vector from low availability to high as .smart.round will favour right size of vector
+    #to resolve dilemmas, it will add more of the items that are more abundant
+    names(available) <- varieties
+    available <- sort(available)
+    proportions <- proportions[as.integer(names(available))]    
+    
+    # calculate the packages that are needed - this will round later numbers to higher values 
+    # if needed to fill the quota
+    needed <- .smart.round((nneeded * proportions) / sum(proportions)) 
+    
+    # prepare inputs into loop
+    allocations <- rep(0, times = nitems)
+    names(allocations) <- names(available) #just to check, can be removed
+    tremain <- 1 
+    
+    while(tremain > 0) {
+      
+      allocate <- pmin(available, needed)
+      available <- available - allocate
+      
+      allocations <- allocations + allocate
+      tremaining <- nneeded - sum(allocations)
+      
+      needed <- available > 0
+      needed <- needed * (tremaining / sum(needed))
+      needed <- .smart.round(needed)
+      
+      tremain <- tremaining 
+      
+    }
+    
+    #reorder the vector with allocations back to original order
+    allocations <- allocations[match(1:nitems, as.integer(names(available)))] #should be in ascending order
+    
+    # prepare variables
+    ncomb <- dim(varcombinations)[1]
+    n <- floor(npackages / ncomb)
+    nfixed <- ncomb * n
+    
+    # create set to get to full number of observers
+    vars <- matrix(nrow = npackages, ncol = ncomp)
+    
+    # set up array with set of combinations
+    varcomb <- matrix(0, nrow = nitems, ncol = nitems)
+    
+    if (dim(vars)[1] > 0.5) {
+      
+      # select combinations for the vars set that optimize design
+      for (i in 1:npackages) {
+        
+        # calculate frequency of each variety and define input for Shannon function, which prefers
+        # low and even values
+        varfreq <- (rowSums(varcomb) + colSums(varcomb)) / 2
+        sumcomb <- (varfreq / allocations) * mean(allocations) #adjust for unequal required allocations
+        
+        # priority of each combination is equal to Shannon index of varieties 
+        # in each combination
+        prioritycomb <- apply(varcombinations, 1, function(x){ 
+          .getShannonVector(x, sumcomb, nitems)
+        })
+        
+        # highest priority to be selected is the combination which has the lowest 
+        # Shannon index
+        selected <- which(prioritycomb == min(prioritycomb))
+        
+        # if there are ties, find out which combination reduces Kirchhoff index most
+        
+        if (length(selected) > 1 & i > depth1) {
+          
+          reduce <- max(2, min(length(selected), comp, round(5000/npackages), round(200/nitems)))
+          
+          # randomly subsample from selected if there are too many combinations to check
+          if (length(selected) > reduce) {
+            selected <- sample(selected, reduce)
+          }
+          
+          # get a nitems x nitems matrix with number of connections
+          
+          # calculate Kirchhoff index and select smallest value
+          khi <- vector(length = length(selected))
+          for (k in 1:length(selected)) {
+            
+            evalgraph <- varcomb
+            index <- t(.combn(varcombinations[selected[k],], 2))
+            evalgraph[index] <- evalgraph[index] + 1
+            khi[k] <- .KirchhoffIndex(evalgraph)
+            
+          }
+          
+          selected <- selected[which(khi == min(khi))]
+          
+        }
+        
+        # if there are still ties between ranks of combinations, selected randomly 
+        # from the ties
+        if (length(selected) > 1) { 
+          selected <- sample(selected, 1)
+        }
+        
+        # assign the selected combination
+        vars[i,] <- varcombinations[selected,]
+        
+        varcomb[t(.combn(varcombinations[selected,],2))] <- 
+          varcomb[t(.combn(varcombinations[selected,],2))] + 1
+        
+      }
+    }
+    
+  }
   
-  # create empy object to contain ordered combinations of vars
-  varOrdered <- matrix(NA, nrow = nobservers, ncol = ncomp)
+  # create empty object to contain ordered combinations of vars
+  varOrdered <- matrix(NA, nrow = npackages, ncol = ncomp)
   
   # set up array with set of combinations
   varcomb <- matrix(0, nrow = nitems, ncol = nitems)
   
   # fill first row
-  selected <- sample(1:nobservers, 1)
+  selected <- sample(1:npackages, 1)
   varcomb[t(.combn(vars[selected,],2))] <- 1
   varOrdered[1,] <- vars[selected,]
   vars <- vars[-selected,]
   
   # optimize the order of overall design by repeating a similar procedure to the above
-  for (i in 2:(nobservers-1)) {
+  for (i in 2:(npackages-1)) {
     
     # calculate frequency of each variety
-    sumcomb <- rowSums(varcomb) + colSums(varcomb)
+    sumcomb <- (rowSums(varcomb) + colSums(varcomb)) / 2 
+    sumcomb <- (sumcomb / allocations) * mean(allocations) 
     
     # priority of each combination is equal to Shannon index of varieties 
     # in each combination
@@ -176,9 +360,9 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
     selected <- which(prioritycomb == min(prioritycomb))
     
     # if there are ties, find out which combination reduces Kirchhoff index most
-    if (length(selected) > 1 & i > 25) {
+    if (length(selected) > 1 & i > depth1) {
       
-      reduce <- max(2, min(10, round(5000/nobservers), round(200/nitems)))
+      reduce <- max(2, min(comp, round(5000/npackages), round(200/nitems)))
       
       # randomly subsample from selected if there are too many combinations to check
       if (length(selected) > reduce) {
@@ -189,8 +373,8 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
       sumcombMatrix <- varcomb * 0
       
       # in this case, get matrix to calculate Kirchhoff index only for 
-      # last 10 observers
-      for (j in max(1,i-10):(i-1)) {
+      # last depth2 observers
+      for (j in max(1,i-depth2):(i-1)) {
         index <- t(.combn(varOrdered[j,],2))
         sumcombMatrix[index] <- sumcombMatrix[index] + 1
         
@@ -228,7 +412,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   }
   
   # assign last one
-  varOrdered[nobservers,] <- vars
+  varOrdered[npackages,] <- vars
   
   # Equally distribute positions to achieve order balance
   # First create matrix with frequency of position of each of nitems
@@ -238,7 +422,7 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   # Shannon is good here, because evenness values are proportional
   # the H denominator in the Shannon formula is the same
   
-  for (i in 1:nobservers) {
+  for (i in 1:npackages) {
     
     varOrdered_all <- .getPerms(varOrdered[i,])
     varOrdered_Shannon <- apply(varOrdered_all, 1, function(x) {
@@ -255,18 +439,18 @@ randomise <- function(ncomp = 3, nobservers = NULL, nitems = NULL,
   
   # The varOrdered matrix has the indices of the elements
   # Create the final matrix
-  finalresults <- matrix(NA, ncol = ncomp, nrow = nobservers)
+  finalresults <- matrix(NA, ncol = ncomp, nrow = npackages)
   
   # loop over the rows and columns of the final matrix and put
   # the elements randomized
   # with the indexes in varOrdered
-  for (i in seq_len(nobservers)){
+  for (i in seq_len(npackages)){
     for (j in seq_len(ncomp)){
       finalresults[i,j] <- itemnames[varOrdered[i,j]]
     }
   }
   
-  dimnames(finalresults) <- list(seq_len(nobservers), 
+  dimnames(finalresults) <- list(seq_len(npackages), 
                                  paste0("item_", LETTERS[1:ncomp]))
   
   finalresults <- as.data.frame(finalresults, stringsAsFactors = FALSE)
@@ -349,7 +533,6 @@ randomize <- function(...){
   
 }
 
-
 .combn <- function (x, m, FUN = NULL, simplify = TRUE, ...) 
 {
   stopifnot(length(m) == 1L, is.numeric(m))
@@ -425,4 +608,13 @@ randomize <- function(...){
     dim(out) <- dim.use
   }
   out
+}
+
+# Rounding values to closest integer while retaining the same sum
+# From https://stackoverflow.com/questions/32544646/round-vector-of-numerics-to-integer-while-preserving-their-sum
+.smart.round <- function(x) {
+  y <- floor(x)
+  indices <- tail(order(x-y), round(sum(x)) - sum(y))
+  y[indices] <- y[indices] + 1
+  y
 }

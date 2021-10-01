@@ -7,11 +7,7 @@
 seed_need(nobservers = 100, ncomp = 3, nitems = 10, nseeds = 0.15, unit = "kg")
 }
 \arguments{
-\item{nobservers}{an integer for the number of observers}
-
-\item{ncomp}{an integer for the number of items each observer compares}
-
-\item{nitems}{an integer for the number of items tested in the project}
+\item{ncomp}{an integer for the number of items to be assigned to each package}
 
 \item{nseeds}{an integer for the metric of seeds each bag receives}
 

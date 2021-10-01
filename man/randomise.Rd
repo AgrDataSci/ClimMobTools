@@ -5,16 +5,29 @@
 \alias{randomize}
 \title{Randomised group of items}
 \usage{
-randomise(ncomp = 3, nobservers = NULL, nitems = NULL, itemnames = NULL)
+randomise(
+  ncomp = 3,
+  npackages,
+  itemnames,
+  comp = 10,
+  availability = NULL,
+  proportions = NULL
+)
 }
 \arguments{
-\item{ncomp}{an integer for the number of items each observer compares}
+\item{ncomp}{an integer for the number of items to be assigned to each package}
 
-\item{nobservers}{an integer for the number of observers}
-
-\item{nitems}{an integer for the number of items tested in the project}
+\item{npackages}{an integer for the number of trial packages to be produced}
 
 \item{itemnames}{a character for the name of items tested in the project}
+
+\item{comp}{define}
+
+\item{availability}{optional, a vector with integers indicating the 
+number of packages available for each \var{itemnames}}
+
+\item{proportions}{optional, a numeric vector with the desired proportions
+for each \var{itemnames}}
 }
 \value{
 A dataframe with the randomised design
@@ -32,15 +45,43 @@ combinations and is A-optimal. Then this pool is ordered to make subsets of
 consecutive combinations also relatively balanced and A-optimal
 }
 \examples{
-ni <- 3
-no <- 10
-nv <- 4
-inames <- c("mango","banana","grape","apple")
- 
-randomise(ncomp = ni,
-          nobservers = no,
-          nitems = nv,
-          itemnames = inames)
+ncomp <- 3
+npackages <- 100
+nitems <- 7
+itemnames <- c("apple","banana","grape","mango", "orange", "kiwi", "pineapple")
+comp <- 10
+availability <- c(50, 50, 150, 150, 150, 150, 20)
+proportions <- c(0.1, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125)
+
+table(unlist(randomise(ncomp = ncomp,
+                       npackages = npackages,
+                       nitems = nitems,
+                       itemnames = itemnames)))
+
+table(unlist(randomise(ncomp = ncomp,
+                       npackages = npackages,
+                       nitems = nitems,
+                       itemnames = itemnames,
+                       availability = availability)))
+
+table(unlist(randomise(ncomp = ncomp,
+                       npackages = npackages,
+                       nitems = nitems,
+                       itemnames = itemnames,
+                       availability = availability,
+                       proportions = proportions)))
+
+table(unlist(randomise(ncomp = ncomp,
+                       npackages = npackages,
+                       nitems = nitems,
+                       itemnames = itemnames,
+                       proportions = proportions)))
+
+randomise(ncomp = ncomp,
+          npackages = 30,
+          nitems = nitems,
+          itemnames = itemnames,
+          proportions = proportions)
           
 }
 \author{
