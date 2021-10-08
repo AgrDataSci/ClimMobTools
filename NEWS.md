@@ -1,3 +1,11 @@
+ClimMobTools 0.4.1 (2021-10-10)
+=========================
+
+### IMPROVEMENTS
+
+* `randomise()` deals with unbalanced proportions of technologies, meaning that we can test a whole set of technologies even when not all have equal availability 
+
+
 ClimMobTools 0.3.9 (2021-04-12)
 =========================
 

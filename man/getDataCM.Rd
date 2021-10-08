@@ -24,7 +24,7 @@ the data will be retrieved. See details}
 
 \item{x}{an object of class \code{CM_list}}
 
-\item{tidynames}{logical, if \code{TRUE} suppress ODK strings}
+\item{tidynames}{logical, \code{TRUE} tries to make clean names}
 
 \item{pivot.wider}{logical, if \code{TRUE} return a wider object 
 where each observer is a row}

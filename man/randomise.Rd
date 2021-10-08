@@ -47,7 +47,6 @@ consecutive combinations also relatively balanced and A-optimal
 \examples{
 ncomp <- 3
 npackages <- 100
-nitems <- 7
 itemnames <- c("apple","banana","grape","mango", "orange", "kiwi", "pineapple")
 comp <- 10
 availability <- c(50, 50, 150, 150, 150, 150, 20)
@@ -55,31 +54,26 @@ proportions <- c(0.1, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125)
 
 table(unlist(randomise(ncomp = ncomp,
                        npackages = npackages,
-                       nitems = nitems,
                        itemnames = itemnames)))
 
 table(unlist(randomise(ncomp = ncomp,
                        npackages = npackages,
-                       nitems = nitems,
                        itemnames = itemnames,
                        availability = availability)))
 
 table(unlist(randomise(ncomp = ncomp,
                        npackages = npackages,
-                       nitems = nitems,
                        itemnames = itemnames,
                        availability = availability,
                        proportions = proportions)))
 
 table(unlist(randomise(ncomp = ncomp,
                        npackages = npackages,
-                       nitems = nitems,
                        itemnames = itemnames,
                        proportions = proportions)))
 
 randomise(ncomp = ncomp,
           npackages = 30,
-          nitems = nitems,
           itemnames = itemnames,
           proportions = proportions)
           

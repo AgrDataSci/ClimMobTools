@@ -1,6 +1,6 @@
 #' @rdname getDataCM
 #' @param x an object of class \code{CM_list}
-#' @param tidynames logical, if \code{TRUE} suppress ODK strings
+#' @param tidynames logical, \code{TRUE} tries to make clean names
 #' @param pivot.wider logical, if \code{TRUE} return a wider object 
 #'  where each observer is a row
 #' @param ... additional arguments passed to methods
@@ -12,46 +12,46 @@ as.data.frame.CM_list <- function(x,
                                   tidynames = TRUE,
                                   pivot.wider = FALSE) {
   
-  dt <- list()
+  dat <- list()
   # 'specialfields', the assessment questions
-  dt[["specialfields"]] <- x[["specialfields"]]
+  dat[["specialfields"]] <- x[["specialfields"]]
   
   # 'project', the project details
-  dt[["project"]] <- x[["project"]]
+  dat[["project"]] <- x[["project"]]
   
   # 'registry', the questions during participant registration
-  dt[["registry"]] <- x[["registry"]]
+  dat[["registry"]] <- x[["registry"]]
   
   # importantfields
-  dt[["importantfields"]] <- x[["importantfields"]]
+  dat[["importantfields"]] <- x[["importantfields"]]
   
   # 'assessments', the survey in trial data assessment
-  dt[["assessments"]] <- x[["assessments"]]
+  dat[["assessments"]] <- x[["assessments"]]
   
   # 'packages', the packages info
-  dt[["packages"]] <- x[["packages"]]
+  dat[["packages"]] <- x[["packages"]]
   
   # 'data', the trial data assessment
-  dt[["data"]] <- x[["data"]]
+  dat[["data"]] <- x[["data"]]
   
   # get the project name
-  project_name <- dt[["project"]]$project_cod
+  project_name <- dat[["project"]]$project_cod
   
   # get variables names from participant registration
-  regs <- dt[["registry"]]
+  regs <- dat[["registry"]]
   
   regs <- regs[["fields"]]
   
   regs_name <- paste0("REG_", regs[, "name"])
   
-  has_data <- length(dt[["data"]]) > 0
+  has_data <- length(dat[["data"]]) > 0
   
-  ncomp <- dt$project$project_numcom
+  ncomp <- dat$project$project_numcom
   
   if (isTRUE(has_data)) {
     
     # get the names of assessments questions
-    assess_q <- dt[["specialfields"]]
+    assess_q <- dat[["specialfields"]]
 
     # check if overall VS local is present
     tricotvslocal <- grepl("Performance", assess_q$type)
@@ -63,7 +63,7 @@ as.data.frame.CM_list <- function(x,
     tricotvslocal <- assess_q$name[tricotvslocal]
     
     # get variables names from assessments
-    assess <- dt[["assessments"]]
+    assess <- dat[["assessments"]]
     
     if(length(assess) > 0) {
       
@@ -71,17 +71,17 @@ as.data.frame.CM_list <- function(x,
       assess <- data.frame(assess, stringsAsFactors = FALSE)
       assess <- assess[!duplicated(assess[, "name"]), ]
       # the ids for assessments
-      assess_id <- paste0("ASS", dt[["assessments"]][, "code"])
+      assess_id <- paste0("ASS", dat[["assessments"]][, "code"])
       # and the description
-      assess_name <- dt[["assessments"]][, "desc"]
+      assess_name <- dat[["assessments"]][, "desc"]
       # the names of questions
       looknames <- assess[, "name"]
       # the strings to use to decode values
-      rtable <- do.call("rbind", dt$assessments$fields)
+      rtable <- do.call("rbind", dat$assessments$fields)
       rtable <- rtable[!is.na(rtable$rtable), c("name", "rtable")]
       
       # get codes from multiple choice variables
-      assess_lkp <- dt$assessments$lkptables
+      assess_lkp <- dat$assessments$lkptables
       lkp <- list()
       for(i in seq_along(assess_lkp)){
         l <- .decode_lkptable(assess_lkp[[i]])
@@ -99,11 +99,11 @@ as.data.frame.CM_list <- function(x,
     }
     
     # add codes from registration
-    reg_lkp <- .decode_lkptable(dt$registry$lkptables)
+    reg_lkp <- .decode_lkptable(dat$registry$lkptables)
     lkp <- c(reg_lkp, lkp)
     
     # also the table strings
-    reg_rtable <- dt$registry$fields[,c("name","rtable")]
+    reg_rtable <- dat$registry$fields[,c("name","rtable")]
     reg_rtable <- reg_rtable[!is.na(reg_rtable$rtable), ]
     rtable <- rbind(rtable, reg_rtable)
     rtable$rtable <- gsub("_lkp","_",rtable$rtable)
@@ -114,13 +114,14 @@ as.data.frame.CM_list <- function(x,
     rtable <- rtable[!grepl("qst163", rtable$name), ]
     
     # add assessment code
-    rtable$assess <- do.call("rbind", strsplit(rtable$rtable, "_"))[,1]
+    assesscode <- lapply(strsplit(rtable$rtable, "_"), function(x) x[1])
+    rtable$assess <- do.call("rbind", assesscode)
     rtable$name <- paste(rtable$assess, rtable$name, sep = "_")
     
     # trial data
-    trial <- dt[["data"]]
+    trial <- dat[["data"]]
     
-    # replace codes by labels in multichoice questions 
+    # replace codes by labels in multi choice questions 
     n_rtable <- nrow(rtable)
     
     for (i in seq_len(n_rtable)) {
@@ -130,19 +131,21 @@ as.data.frame.CM_list <- function(x,
       l <- match(string_i, names(lkp))
       l <- lkp[[l]]
       
+      trial[var_i] <- gsub(" ", "; ", trial[[var_i]])
+      
       for (j in seq_along(l$id)) {
         
         trial[var_i] <- gsub(l$id[j], l$label[j], trial[[var_i]])
         
       }
       
-      trial[var_i] <- gsub(" ", "; ", trial[[var_i]])
+      
       
     }
     
     # split geolocation info
     # check if geographic location is available
-    geoTRUE <- grepl("farmgoelocation|geopoint|gps", names(trial))
+    geoTRUE <- grepl("farmgoelocation|geopoint|gps|geotrial|pointofdel", names(trial))
     
     # if is available, then split the vector as lon lat
     if(any(geoTRUE)){
@@ -157,7 +160,7 @@ as.data.frame.CM_list <- function(x,
         newname <- names(geo)[[i]]
         newname <- gsub("farmgoelocation", "_farm_geo", newname)
         newname <- gsub("__", "_", newname)
-        newname <- paste0(newname, c("_longitude","_latitude"))
+        newname <- paste0(newname, c("_longitude","_latitude", "_elevation","_gps_precision"))
         
         lonlat <- geo[i]
         
@@ -172,7 +175,7 @@ as.data.frame.CM_list <- function(x,
         
         lonlat[lonlat == "NA"] <- NA
         
-        lonlat <- lonlat[, c(2,1)]
+        lonlat <- lonlat[, c(2,1,3,4)]
         
         lonlat <- as.data.frame(lonlat, stringsAsFactors = FALSE)
         
@@ -236,7 +239,7 @@ as.data.frame.CM_list <- function(x,
   }
   
   # comparisons and package
-  comps <- dt[["packages"]][, "comps"]
+  comps <- dat[["packages"]][, "comps"]
   
   if (ncomp == 3) {
     comps <- lapply(comps, function(x) {
@@ -260,7 +263,7 @@ as.data.frame.CM_list <- function(x,
   
   comps <- as.data.frame(comps, stringsAsFactors = FALSE)
   
-  pack <- cbind(dt[["packages"]][, c("package_id","farmername")], comps)
+  pack <- cbind(dat[["packages"]][, c("package_id","farmername")], comps)
   
   # add project name
   pack$project_name <- project_name
