@@ -59,9 +59,9 @@
 #' @importFrom methods as
 #' @importFrom RSpectra eigs
 #' @export
-randomise <- function(ncomp = 3, 
-                      npackages, 
+randomise <- function(npackages, 
                       itemnames, 
+                      ncomp = 3,
                       comp = 10, 
                       availability = NULL,
                       proportions = NULL) {

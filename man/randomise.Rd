@@ -6,20 +6,20 @@
 \title{Randomised group of items}
 \usage{
 randomise(
-  ncomp = 3,
   npackages,
   itemnames,
+  ncomp = 3,
   comp = 10,
   availability = NULL,
   proportions = NULL
 )
 }
 \arguments{
-\item{ncomp}{an integer for the number of items to be assigned to each package}
-
 \item{npackages}{an integer for the number of trial packages to be produced}
 
 \item{itemnames}{a character for the name of items tested in the project}
+
+\item{ncomp}{an integer for the number of items to be assigned to each package}
 
 \item{comp}{define}
 

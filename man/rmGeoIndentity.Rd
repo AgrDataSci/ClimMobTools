@@ -2,27 +2,30 @@
 % Please edit documentation in R/rmGeoIdentity.R
 \name{rmGeoIndentity}
 \alias{rmGeoIndentity}
-\title{Remove geographical identity
-Build a buffer around the a set of geographical coordinates 
- and take a random point around the buffer. The fuction is can 
- used to omit the precise location of tricot participants 
- but keeping a close distance to its agro-environment}
+\title{Remove geographical identity}
 \usage{
 rmGeoIndentity(lonlat, dist = 0.015, nQuadSegs = 2L, ...)
 }
 \arguments{
 \item{lonlat}{a data.frame or matrix with geographical coordinates long lat}
 
-\item{dist}{numeric, buffer distance for all \code{lonlat}}
+\item{dist}{numeric, buffer distance for all \var{lonlat}}
 
 \item{nQuadSegs}{integer, number of segments per quadrant}
 
 \item{...}{further arguments passed to \code{\link[sf]{sf}} methods}
 }
 \description{
-Remove geographical identity
 Build a buffer around the a set of geographical coordinates 
- and take a random point around the buffer. The fuction is can 
+ and take a random point around the buffer. The function is 
  used to omit the precise location of tricot participants 
  but keeping a close distance to its agro-environment
+}
+\examples{
+xy <- matrix(c(11.097799, 60.801090,
+               11.161298, 60.804199,
+               11.254428, 60.822457),
+             nrow = 3, ncol = 2, byrow = TRUE)
+rmGeoIndentity(xy)
+ 
 }

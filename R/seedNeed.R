@@ -5,6 +5,7 @@
 #' 
 #' @author Kauê de Sousa
 #' @param unit optional, a character specifying the metric unit used
+#' @param nitems number of items tested in the project
 #' @param nseeds an integer for the metric of seeds each bag receives
 #' @inheritParams randomise
 #' @return a dataframe with required number of seeds
@@ -12,24 +13,24 @@
 #'   
 #' # allocate 0.2 kg of seeds per variety in a project with 500 
 #' # participants and 14 varieties
-#' seed_need(nobservers = 500,
+#' seedNeed(npackages = 500,
 #'           ncomp = 3,
 #'           nitems = 14, 
 #'           nseeds = 0.2)
 #' 
 #' # allocate 100 seedlings per variety in a project with 400 
 #' # participants, 8 varieties and 3 comparisons between varieties
-#' seed_need(nobservers = 400,
+#' seedNeed(npackages = 400,
 #'           ncomp = 3,
 #'           nitems = 9, 
 #'           nseeds = 100,
 #'           unit = "unit")
 #' @export
-seed_need <- function(nobservers = 100, ncomp = 3, 
-                      nitems = 10, nseeds = 0.15, unit = "kg") {
+seedNeed <- function(npackages = 100, 
+                     ncomp = 3, nitems = 10, nseeds = 0.15, unit = "kg") {
   
   # number of bags in total 
-  nbags <- nobservers * ncomp
+  nbags <- npackages * ncomp
   
   # number of bags per item
   bagsvar <- ceiling(nbags / nitems)
