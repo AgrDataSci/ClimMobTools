@@ -13,14 +13,33 @@
 #'                11.161298, 60.804199,
 #'                11.254428, 60.822457),
 #'              nrow = 3, ncol = 2, byrow = TRUE)
+#' 
 #' rmGeoIndentity(xy)
+#' 
+#' # the function handles NAs by keeping then 
+#' # in a logic vector to reconstruct the matrix
+#' xy2 <- matrix(c(11.097799, 60.801090,
+#'                 NA, NA,
+#'                 11.161298, 60.804199,
+#'                 11.254428, 60.822457,
+#'                 11.254428, NA),
+#'               nrow = 5, ncol = 2, byrow = TRUE)
+#' 
+#' rmGeoIndentity(xy2)
 #'  
 #' @importFrom sf st_point st_sfc st_buffer st_sample
 #' @export
 rmGeoIndentity <- function(lonlat, dist = 0.015, nQuadSegs = 2L, ...){
   
   lonlat <- as.matrix(lonlat)
+  
   n <- nrow(lonlat)
+  
+  # check NAs in lonlat
+  anyNAs <- is.na(lonlat[,1]) | is.na(lonlat[,2])
+  
+  # put all both xy as NA
+  lonlat[anyNAs, ] <- NA
   
   # split lonlat by rows
   lonlat <- split(lonlat, seq_len(n))
@@ -36,12 +55,11 @@ rmGeoIndentity <- function(lonlat, dist = 0.015, nQuadSegs = 2L, ...){
   # set the buffer around the points
   lonlatb <- sf::st_buffer(lonlat,
                            dist = dist,
-                           nQuadSegs = nQuadSegs, 
-                           ...)
+                           nQuadSegs = nQuadSegs)
   
   result <- split(lonlatb, seq_len(n))
   
-  result <- lapply(result, function(x){
+  result[!anyNAs] <- lapply(result[!anyNAs], function(x){
     sf::st_sample(x, size = 1, type = "random", by_polygon = TRUE)
   })
   
@@ -49,12 +67,14 @@ rmGeoIndentity <- function(lonlat, dist = 0.015, nQuadSegs = 2L, ...){
   
   result <- sf::st_sfc(result)
   
-  result <- matrix(unlist(result), ncol = 2, nrow = n, byrow = TRUE)
+  r <- matrix(NA, nrow = n, ncol = 2)
   
-  result <- as.data.frame(result)
+  r[!anyNAs, ] <- matrix(unlist(result), ncol = 2, nrow = sum(!anyNAs), byrow = TRUE)
   
-  names(result) <- c("x", "y")
+  r <- as.data.frame(r)
   
-  return(result)
+  names(r) <- c("x", "y")
+  
+  return(r)
   
 }
