@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -115,7 +115,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/agrdatasci/ClimMobTools/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -142,10 +142,17 @@
  programming interface (API) key</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getDataCM</span>(<span class='no'>key</span>, <span class='no'>project</span>, <span class='kw'>as.data.frame</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>server</span> <span class='kw'>=</span> <span class='st'>"climmob3"</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>getDataCM</span><span class='op'>(</span>
+  <span class='va'>key</span>,
+  <span class='va'>project</span>,
+  as.data.frame <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  as.text <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  server <span class='op'>=</span> <span class='st'>"climmob3"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for CM_list</span>
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>tidynames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pivot.wider</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, tidynames <span class='op'>=</span> <span class='cn'>TRUE</span>, pivot.wider <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,6 +171,10 @@ interface (API) key</p></td>
       <td><p>logical, to return a data frame</p></td>
     </tr>
     <tr>
+      <th>as.text</th>
+      <td><p>logical, to return a text file that can be parsed to json</p></td>
+    </tr>
+    <tr>
       <th>server</th>
       <td><p>optional, a character to select from which server
 the data will be retrieved. See details</p></td>
@@ -178,19 +189,19 @@ the data will be retrieved. See details</p></td>
     </tr>
     <tr>
       <th>tidynames</th>
-      <td><p>logical, if <code>TRUE</code> suppress ODK strings</p></td>
+      <td><p>logical, <code>TRUE</code> make clean column names</p></td>
     </tr>
     <tr>
       <th>pivot.wider</th>
       <td><p>logical, if <code>TRUE</code> return a wider object 
-where each observer is a row</p></td>
+where each tricot package is a row</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class 'CM_list' or a data.frame with class "CM_df" with the 
-variables:</p>
+    <p>An object of class 'CM_list' or a text file or 
+ a data.frame with class "CM_df" with the variables:</p>
 <dt>id</dt><dd><p>the participant's package id</p></dd>
 <dt>moment</dt><dd><p>the data collection moment</p></dd>
 <dt>variable</dt><dd><p>the variable name</p></dd>
@@ -209,20 +220,25 @@ https://climmob.net/climmob3/, other options are:</p>
 <p>Other GET functions: 
 <code><a href='getProjectProgress.html'>getProjectProgress</a>()</code>,
 <code><a href='getProjectsCM.html'>getProjectsCM</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Kauê de Sousa</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
-<span class='co'># This function will not work without an API key  </span>
-<span class='co'># the user API key can be obtained once a free ClimMob account </span>
-<span class='co'># is created via https://climmob.net/</span>
-
-<span class='no'>my_key</span> <span class='kw'>&lt;-</span> <span class='st'>"add_your_key"</span>
-<span class='no'>my_project</span> <span class='kw'>&lt;-</span> <span class='st'>"my_climmob_project"</span>
-
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>getDataCM</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>my_key</span>, <span class='kw'>project</span> <span class='kw'>=</span> <span class='no'>my_project</span>)
-
-}</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># This function will not work without an API key  </span></span>
+<span class='r-in'><span class='co'># the user API key can be obtained once a free ClimMob account </span></span>
+<span class='r-in'><span class='co'># is created via https://climmob.net/</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>my_key</span> <span class='op'>&lt;-</span> <span class='st'>"add_your_key"</span></span>
+<span class='r-in'><span class='va'>my_project</span> <span class='op'>&lt;-</span> <span class='st'>"my_climmob_project"</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'>getDataCM</span><span class='op'>(</span>key <span class='op'>=</span> <span class='va'>my_key</span>, project <span class='op'>=</span> <span class='va'>my_project</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -238,7 +254,7 @@ https://climmob.net/climmob3/, other options are:</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

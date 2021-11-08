@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get ClimMob projects — getProjectsCM • ClimMobTools</title>
+<title>Remove geographical identity — rmGeoIndentity • ClimMobTools</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,11 @@
 
 
 
-<meta property="og:title" content="Get ClimMob projects — getProjectsCM" />
-<meta property="og:description" content="Fetch the status of ClimMob projects" />
+<meta property="og:title" content="Remove geographical identity — rmGeoIndentity" />
+<meta property="og:description" content="Build a buffer around the a set of geographical coordinates 
+ and take a random point around the buffer. The function is 
+ used to omit the precise location of tricot participants 
+ but keeping a close distance to its agro-environment" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -131,81 +134,71 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get ClimMob projects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/getProjectsCM.R'><code>R/getProjectsCM.R</code></a></small>
-    <div class="hidden name"><code>getProjectsCM.Rd</code></div>
+    <h1>Remove geographical identity</h1>
+    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/rmGeoIdentity.R'><code>R/rmGeoIdentity.R</code></a></small>
+    <div class="hidden name"><code>rmGeoIndentity.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Fetch the status of ClimMob projects</p>
+    <p>Build a buffer around the a set of geographical coordinates 
+ and take a random point around the buffer. The function is 
+ used to omit the precise location of tricot participants 
+ but keeping a close distance to its agro-environment</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getProjectsCM</span><span class='op'>(</span><span class='va'>key</span>, server <span class='op'>=</span> <span class='st'>"climmob3"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>rmGeoIndentity</span><span class='op'>(</span><span class='va'>lonlat</span>, dist <span class='op'>=</span> <span class='fl'>0.015</span>, nQuadSegs <span class='op'>=</span> <span class='fl'>2L</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>key</th>
-      <td><p>a character for the user's application programming 
-interface (API) key</p></td>
+      <th>lonlat</th>
+      <td><p>a data.frame or matrix with geographical coordinates long lat</p></td>
     </tr>
     <tr>
-      <th>server</th>
-      <td><p>optional, a character to select from which server
-the data will be retrieved. See details</p></td>
+      <th>dist</th>
+      <td><p>numeric, buffer distance for all <var>lonlat</var></p></td>
+    </tr>
+    <tr>
+      <th>nQuadSegs</th>
+      <td><p>integer, number of segments per quadrant</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments passed to methods. See details</p></td>
+      <td><p>further arguments passed to <code><a href='https://r-spatial.github.io/sf/reference/sf.html'>sf</a></code> methods</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A data frame with the ClimMob projects</p>
-<dt>project_id</dt><dd><p>the project unique id</p></dd>
-<dt>name</dt><dd><p>the project name</p></dd>
-<dt>country</dt><dd><p>ISO code for the country where the project was implemented</p></dd>
-<dt>status</dt><dd><p>the current status</p></dd>
-<dt>creation_date</dt><dd><p>the project's creation date</p></dd>
-<dt>intended_participants</dt><dd><p>the number of participants the project 
- intended to register</p></dd>
-<dt>intended_participants</dt><dd><p>the number of participants the project 
- intended to register</p></dd>
-<dt>registered_participants</dt><dd><p>the number of participants registered</p></dd>
-<dt>last_registration_activity</dt><dd><p>number of days since the submission 
- of the last registration</p></dd>
-
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p><code>server</code>: the default server is "climmob" used for clients of 
-https://climmob.net/climmob3/, other options are:</p>
-<p>"avisa" for clients of https://avisa.climmob.net/</p> 
-<p>"rtb" for clients of https://rtb.climmob.net/</p> 
-<p>"testing" for clients of https://testing.climmob.net/climmob3/</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>ClimMob website <a href='https://climmob.net/'>https://climmob.net/</a></p>
-<p>Other GET functions: 
-<code><a href='getDataCM.html'>getDataCM</a>()</code>,
-<code><a href='getProjectProgress.html'>getProjectProgress</a>()</code></p></div>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Kauê de Sousa</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> </span>
-<span class='r-in'><span class='co'># This function will not work without an API key  </span></span>
-<span class='r-in'><span class='co'># the user API key can be obtained once a free ClimMob account </span></span>
-<span class='r-in'><span class='co'># is created via https://climmob.net/</span></span>
+    <pre class="examples"><span class='r-in'><span class='va'>xy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11.097799</span>, <span class='fl'>60.801090</span>,</span>
+<span class='r-in'>               <span class='fl'>11.161298</span>, <span class='fl'>60.804199</span>,</span>
+<span class='r-in'>               <span class='fl'>11.254428</span>, <span class='fl'>60.822457</span><span class='op'>)</span>,</span>
+<span class='r-in'>             nrow <span class='op'>=</span> <span class='fl'>3</span>, ncol <span class='op'>=</span> <span class='fl'>2</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='va'>my_key</span> <span class='op'>&lt;-</span> <span class='st'>"add_your_key"</span></span>
+<span class='r-in'><span class='fu'>rmGeoIndentity</span><span class='op'>(</span><span class='va'>xy</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x        y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 11.10416 60.80445</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 11.16589 60.80275</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 11.25493 60.82776</span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'>getProjectsCM</span><span class='op'>(</span>key <span class='op'>=</span> <span class='va'>my_key</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># the function handles NAs by keeping then </span></span>
+<span class='r-in'><span class='co'># in a logic vector to reconstruct the matrix</span></span>
+<span class='r-in'><span class='va'>xy2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11.097799</span>, <span class='fl'>60.801090</span>,</span>
+<span class='r-in'>                <span class='cn'>NA</span>, <span class='cn'>NA</span>,</span>
+<span class='r-in'>                <span class='fl'>11.161298</span>, <span class='fl'>60.804199</span>,</span>
+<span class='r-in'>                <span class='fl'>11.254428</span>, <span class='fl'>60.822457</span>,</span>
+<span class='r-in'>                <span class='fl'>11.254428</span>, <span class='cn'>NA</span><span class='op'>)</span>,</span>
+<span class='r-in'>              nrow <span class='op'>=</span> <span class='fl'>5</span>, ncol <span class='op'>=</span> <span class='fl'>2</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='op'>}</span></span>
-<span class='r-in'></span>
+<span class='r-in'><span class='fu'>rmGeoIndentity</span><span class='op'>(</span><span class='va'>xy2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x        y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 11.10923 60.80803</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 11.15826 60.80211</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 11.24379 60.82099</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       NA       NA</span>
+<span class='r-in'> </span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

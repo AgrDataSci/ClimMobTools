@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Randomised group of items — randomise • ClimMobTools</title>
+<title>Required seed amount in a tricot project — seedNeed • ClimMobTools</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,17 +46,9 @@
 
 
 
-<meta property="og:title" content="Randomised group of items — randomise" />
-<meta property="og:description" content="Set a randomised group of items for crowdsourcing citizen science.
-Generate designs for ranking of options. It is designed for tricot trials 
-specifically (comparing 3 options), but it will also work with comparisons 
-of any other number of options. 
-The design strives for approximate A optimality, this means that it is robust 
-to missing observations. It also strives for balance for positions of each option.
-Options are equally divided between first, second, third, etc. position. 
-The strategy is to create a &quot;pool&quot; of combinations that does not repeat 
-combinations and is A-optimal. Then this pool is ordered to make subsets of 
-consecutive combinations also relatively balanced and A-optimal" />
+<meta property="og:title" content="Required seed amount in a tricot project — seedNeed" />
+<meta property="og:description" content="Calculate the required amount of seeds (or other technology) required 
+for a triadic comparison of technologies (tricot) project." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -140,32 +132,17 @@ consecutive combinations also relatively balanced and A-optimal" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Randomised group of items</h1>
-    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/randomise.R'><code>R/randomise.R</code></a></small>
-    <div class="hidden name"><code>randomise.Rd</code></div>
+    <h1>Required seed amount in a tricot project</h1>
+    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/seedNeed.R'><code>R/seedNeed.R</code></a></small>
+    <div class="hidden name"><code>seedNeed.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Set a randomised group of items for crowdsourcing citizen science.
-Generate designs for ranking of options. It is designed for tricot trials 
-specifically (comparing 3 options), but it will also work with comparisons 
-of any other number of options. 
-The design strives for approximate A optimality, this means that it is robust 
-to missing observations. It also strives for balance for positions of each option.
-Options are equally divided between first, second, third, etc. position. 
-The strategy is to create a "pool" of combinations that does not repeat 
-combinations and is A-optimal. Then this pool is ordered to make subsets of 
-consecutive combinations also relatively balanced and A-optimal</p>
+    <p>Calculate the required amount of seeds (or other technology) required 
+for a triadic comparison of technologies (tricot) project.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>randomise</span><span class='op'>(</span>
-  <span class='va'>npackages</span>,
-  <span class='va'>itemnames</span>,
-  ncomp <span class='op'>=</span> <span class='fl'>3</span>,
-  availability <span class='op'>=</span> <span class='cn'>NULL</span>,
-  proportions <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>seedNeed</span><span class='op'>(</span>npackages <span class='op'>=</span> <span class='fl'>100</span>, ncomp <span class='op'>=</span> <span class='fl'>3</span>, nitems <span class='op'>=</span> <span class='fl'>10</span>, nseeds <span class='op'>=</span> <span class='fl'>0.15</span>, unit <span class='op'>=</span> <span class='st'>"kg"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,57 +152,58 @@ consecutive combinations also relatively balanced and A-optimal</p>
       <td><p>an integer for the number of trial packages to be produced</p></td>
     </tr>
     <tr>
-      <th>itemnames</th>
-      <td><p>a character for the name of items tested in the project</p></td>
-    </tr>
-    <tr>
       <th>ncomp</th>
       <td><p>an integer for the number of items to be assigned to each package</p></td>
     </tr>
     <tr>
-      <th>availability</th>
-      <td><p>optional, a vector with integers indicating the 
-number of packages available for each <var>itemnames</var></p></td>
+      <th>nitems</th>
+      <td><p>number of items tested in the project</p></td>
     </tr>
     <tr>
-      <th>proportions</th>
-      <td><p>optional, a numeric vector with the desired proportions
-for each <var>itemnames</var></p></td>
+      <th>nseeds</th>
+      <td><p>an integer for the metric of seeds each bag receives</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>additional arguments passed to methods</p></td>
+      <th>unit</th>
+      <td><p>optional, a character specifying the metric unit used</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with the randomised design</p>
+    <p>a dataframe with required number of seeds</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Jacob van Etten</p>
+    <p>Kauê de Sousa</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>ncomp</span> <span class='op'>&lt;-</span> <span class='fl'>3</span></span>
-<span class='r-in'><span class='va'>npackages</span> <span class='op'>&lt;-</span> <span class='fl'>100</span></span>
-<span class='r-in'><span class='va'>itemnames</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"apple"</span>,<span class='st'>"banana"</span>,<span class='st'>"grape"</span>,<span class='st'>"mango"</span>, <span class='st'>"orange"</span>, <span class='st'>"kiwi"</span>, <span class='st'>"pineapple"</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>availability</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>50</span>, <span class='fl'>50</span>, <span class='fl'>150</span>, <span class='fl'>150</span>, <span class='fl'>150</span>, <span class='fl'>150</span>, <span class='fl'>20</span><span class='op'>)</span></span>
+    <pre class="examples"><span class='r-in'>  </span>
+<span class='r-in'><span class='co'># allocate 0.2 kg of seeds per variety in a project with 500 </span></span>
+<span class='r-in'><span class='co'># participants and 14 varieties</span></span>
+<span class='r-in'><span class='fu'>seedNeed</span><span class='op'>(</span>npackages <span class='op'>=</span> <span class='fl'>500</span>,</span>
+<span class='r-in'>          ncomp <span class='op'>=</span> <span class='fl'>3</span>,</span>
+<span class='r-in'>          nitems <span class='op'>=</span> <span class='fl'>14</span>, </span>
+<span class='r-in'>          nseeds <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  var   quant  unit</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:            N bags 1512.00  unit</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:  Bags per variety  108.00  unit</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3: Seeds per variety   22.00    kg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4:       Seeds total  308.00    kg</span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'>randomise</span><span class='op'>(</span>ncomp <span class='op'>=</span> <span class='va'>ncomp</span>,</span>
-<span class='r-in'>                       npackages <span class='op'>=</span> <span class='va'>npackages</span>,</span>
-<span class='r-in'>                       itemnames <span class='op'>=</span> <span class='va'>itemnames</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>     apple    banana     grape      kiwi     mango    orange pineapple </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>        42        43        43        43        44        42        43 </span>
-<span class='r-in'></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'>randomise</span><span class='op'>(</span>ncomp <span class='op'>=</span> <span class='va'>ncomp</span>,</span>
-<span class='r-in'>                       npackages <span class='op'>=</span> <span class='va'>npackages</span>,</span>
-<span class='r-in'>                       itemnames <span class='op'>=</span> <span class='va'>itemnames</span>,</span>
-<span class='r-in'>                       availability <span class='op'>=</span> <span class='va'>availability</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>     apple    banana     grape      kiwi     mango    orange pineapple </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>        46        46        47        47        47        47        20 </span>
-<span class='r-in'>          </span>
+<span class='r-in'><span class='co'># allocate 100 seedlings per variety in a project with 400 </span></span>
+<span class='r-in'><span class='co'># participants, 8 varieties and 3 comparisons between varieties</span></span>
+<span class='r-in'><span class='fu'>seedNeed</span><span class='op'>(</span>npackages <span class='op'>=</span> <span class='fl'>400</span>,</span>
+<span class='r-in'>          ncomp <span class='op'>=</span> <span class='fl'>3</span>,</span>
+<span class='r-in'>          nitems <span class='op'>=</span> <span class='fl'>9</span>, </span>
+<span class='r-in'>          nseeds <span class='op'>=</span> <span class='fl'>100</span>,</span>
+<span class='r-in'>          unit <span class='op'>=</span> <span class='st'>"unit"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  var     quant  unit</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:            N bags   1206.00  unit</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:  Bags per variety    134.00  unit</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3: Seeds per variety  13400.00  unit</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4:       Seeds total 120600.00  unit</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

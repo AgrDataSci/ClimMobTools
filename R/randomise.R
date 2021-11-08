@@ -19,15 +19,13 @@
 #'  number of packages available for each \var{itemnames}
 #' @param proportions optional, a numeric vector with the desired proportions
 #'  for each \var{itemnames}
-#' @param comp define  
+#' @param ... additional arguments passed to methods  
 #' @return A dataframe with the randomised design
 #' @examples 
 #' ncomp <- 3
 #' npackages <- 100
 #' itemnames <- c("apple","banana","grape","mango", "orange", "kiwi", "pineapple")
-#' comp <- 10
 #' availability <- c(50, 50, 150, 150, 150, 150, 20)
-#' proportions <- c(0.1, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125)
 #' 
 #' table(unlist(randomise(ncomp = ncomp,
 #'                        npackages = npackages,
@@ -37,22 +35,6 @@
 #'                        npackages = npackages,
 #'                        itemnames = itemnames,
 #'                        availability = availability)))
-#' 
-#' table(unlist(randomise(ncomp = ncomp,
-#'                        npackages = npackages,
-#'                        itemnames = itemnames,
-#'                        availability = availability,
-#'                        proportions = proportions)))
-#' 
-#' table(unlist(randomise(ncomp = ncomp,
-#'                        npackages = npackages,
-#'                        itemnames = itemnames,
-#'                        proportions = proportions)))
-#' 
-#' randomise(ncomp = ncomp,
-#'           npackages = 30,
-#'           itemnames = itemnames,
-#'           proportions = proportions)
 #'           
 #' @aliases randomize
 #' @importFrom Matrix Diagonal
@@ -61,10 +43,18 @@
 #' @export
 randomise <- function(npackages, 
                       itemnames, 
-                      ncomp = 3,
-                      comp = 10, 
+                      ncomp = 3, 
                       availability = NULL,
-                      proportions = NULL) {
+                      proportions = NULL, 
+                      ...) {
+  
+  dots <- list(...)
+  
+  comp <- dots[["comp"]]
+  
+  if (is.null(comp)) {
+    comp <- 10
+  }
   
   nitems <- length(itemnames)
   

@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -113,7 +113,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/agrdatasci/ClimMobTools/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,13 +134,30 @@
       <small>Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="climmobtools-039-2021-04-12" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.9">
-<a href="#climmobtools-039-2021-04-12" class="anchor"></a>ClimMobTools 0.3.9 (2021-04-12)<small> Unreleased </small>
+    <div id="climmobtools-042-2021-11-08" class="section level1">
+<h1 class="page-header" data-toc-text="0.4.2">
+<a href="#climmobtools-042-2021-11-08" class="anchor"></a>ClimMobTools 0.4.2 (2021-11-08)<small> Unreleased </small>
 </h1>
 <div id="improvements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#improvements" class="anchor"></a>IMPROVEMENTS</h3>
+<ul>
+<li>
+<code><a href="../reference/randomise.html">randomise()</a></code> deals with unbalanced proportions of technologies, meaning that we can test a whole set of technologies even when not all have equal availability</li>
+<li>
+<code>rmGeoIdentity()</code> is added to offer an approach to remove geographical identity of participants</li>
+<li>
+<code><a href="../reference/rankTricot.html">rankTricot()</a></code> builds a PlackettLuce rankings using the tricot data</li>
+</ul>
+</div>
+</div>
+    <div id="climmobtools-039-2021-04-12" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.9">
+<a href="#climmobtools-039-2021-04-12" class="anchor"></a>ClimMobTools 0.3.9 (2021-04-12)<small> 2021-04-13 </small>
+</h1>
+<div id="improvements-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#improvements-1" class="anchor"></a>IMPROVEMENTS</h3>
 <ul>
 <li>New function <code><a href="../reference/getProjectProgress.html">getProjectProgress()</a></code> returns the progress in a given project</li>
 </ul>
@@ -157,9 +174,9 @@
 <h1 class="page-header" data-toc-text="0.3.7">
 <a href="#climmobtools-037-2021-03-22" class="anchor"></a>ClimMobTools 0.3.7 (2021-03-22)<small> 2021-03-23 </small>
 </h1>
-<div id="improvements-1" class="section level3">
+<div id="improvements-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#improvements-1" class="anchor"></a>IMPROVEMENTS</h3>
+<a href="#improvements-2" class="anchor"></a>IMPROVEMENTS</h3>
 <ul>
 <li>Method for <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> now handles ClimMob data without the assessment info.</li>
 <li>
@@ -196,7 +213,7 @@
 <a href="#changes-in-behaviour-1" class="anchor"></a>CHANGES IN BEHAVIOUR</h3>
 <ul>
 <li>Migrating functions from <strong>ClimMobTools</strong> to <strong>gosset</strong> and <strong>climatrends</strong>. ClimMobTools will keep only the functions exclusively related to the ‘ClimMob’ platform. Other functions are transferred to <strong>gosset</strong> and <strong>climatrends</strong> to provide a better environment for data handling, analysis and visualization.</li>
-<li>Retain function <code><a href="../reference/getDataCM.html">getDataCM()</a></code>, <code>getProjectCM()</code>, <code><a href="../reference/randomise.html">randomise()</a></code> and <code><a href="../reference/seed_need.html">seed_need()</a></code>
+<li>Retain function <code><a href="../reference/getDataCM.html">getDataCM()</a></code>, <code>getProjectCM()</code>, <code><a href="../reference/randomise.html">randomise()</a></code> and <code>seed_need()</code>
 </li>
 <li>Changes in package description</li>
 <li>A S3 method <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> is provided to coerce CM_list into a data frame</li>
@@ -209,9 +226,9 @@
 <h1 class="page-header" data-toc-text="0.2.8">
 <a href="#climobtools-028" class="anchor"></a>CliMobTools 0.2.8<small> Unreleased </small>
 </h1>
-<div id="improvements-2" class="section level3">
+<div id="improvements-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#improvements-2" class="anchor"></a>IMPROVEMENTS</h3>
+<a href="#improvements-3" class="anchor"></a>IMPROVEMENTS</h3>
 <ul>
 <li>
 <code>temperature</code> and <code>rainfall</code> now deals with one single lonlat point</li>
@@ -222,9 +239,9 @@
 <h1 class="page-header" data-toc-text="0.2.7">
 <a href="#climobtools-027" class="anchor"></a>CliMobTools 0.2.7<small> Unreleased </small>
 </h1>
-<div id="improvements-3" class="section level3">
+<div id="improvements-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#improvements-3" class="anchor"></a>IMPROVEMENTS</h3>
+<a href="#improvements-4" class="anchor"></a>IMPROVEMENTS</h3>
 <ul>
 <li>Update <code>build_rankings</code> to work with the new implementations of PlackettLuce v0.2-8</li>
 </ul>
@@ -263,7 +280,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

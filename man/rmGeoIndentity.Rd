@@ -26,6 +26,18 @@ xy <- matrix(c(11.097799, 60.801090,
                11.161298, 60.804199,
                11.254428, 60.822457),
              nrow = 3, ncol = 2, byrow = TRUE)
+
 rmGeoIndentity(xy)
+
+# the function handles NAs by keeping then 
+# in a logic vector to reconstruct the matrix
+xy2 <- matrix(c(11.097799, 60.801090,
+                NA, NA,
+                11.161298, 60.804199,
+                11.254428, 60.822457,
+                11.254428, NA),
+              nrow = 5, ncol = 2, byrow = TRUE)
+
+rmGeoIndentity(xy2)
  
 }

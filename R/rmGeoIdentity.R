@@ -69,7 +69,10 @@ rmGeoIndentity <- function(lonlat, dist = 0.015, nQuadSegs = 2L, ...){
   
   r <- matrix(NA, nrow = n, ncol = 2)
   
-  r[!anyNAs, ] <- matrix(unlist(result), ncol = 2, nrow = sum(!anyNAs), byrow = TRUE)
+  r[!anyNAs, ] <- matrix(unlist(result),
+                         ncol = 2, 
+                         nrow = sum(!anyNAs), 
+                         byrow = TRUE)
   
   r <- as.data.frame(r)
   

@@ -1,8 +1,8 @@
 #' @rdname getDataCM
 #' @param x an object of class \code{CM_list}
-#' @param tidynames logical, \code{TRUE} tries to make clean names
+#' @param tidynames logical, \code{TRUE} make clean column names
 #' @param pivot.wider logical, if \code{TRUE} return a wider object 
-#'  where each observer is a row
+#'  where each tricot package is a row
 #' @param ... additional arguments passed to methods
 #' @importFrom methods as
 #' @method as.data.frame CM_list
@@ -65,7 +65,7 @@ as.data.frame.CM_list <- function(x,
     # get variables names from assessments
     assess <- dat[["assessments"]]
     
-    if(length(assess) > 0) {
+    if (length(assess) > 0) {
       
       assess <- do.call("rbind", assess[, "fields"])
       assess <- data.frame(assess, stringsAsFactors = FALSE)
@@ -204,11 +204,17 @@ as.data.frame.CM_list <- function(x,
     
     # replace numbers in question about overall vs local 
     if (length(tricotvslocal) > 1) {
-      trial[tricotvslocal] <-
-        lapply(trial[tricotvslocal], function(x) {
-          y <- factor(x, levels = c("1", "2"), labels = c("Better", "Worse"))
-          as.character(y)
-        })
+      
+      if (all(c(1, 2) %in% unlist(trial[tricotvslocal]))) {
+      
+        trial[tricotvslocal] <-
+          lapply(trial[tricotvslocal], function(x) {
+            y <- factor(x, levels = c("1", "2"), labels = c("Better", "Worse"))
+            as.character(y)
+          })
+        
+      }
+      
     }
     
     # reshape it into a long format 

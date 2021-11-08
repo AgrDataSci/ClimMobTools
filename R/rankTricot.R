@@ -1,15 +1,8 @@
 #' Build Plackett-Luce rankings from tricot dataset 
 #'
-#' Create an object of class "rankings" from tricot data. Tricot stands 
-#' for "triadic comparison of technologies". Is a methodology to carry out 
-#' large agronomic field experiments allowing the comparison between many 
-#' alternative technologies, in many different environments. Each participant
-#' evaluates a set of three randomised technologies from a larger set. A 
-#' comparison with a local item can be added as additional rankings with the 
-#' argument \code{additional.rank}.
+#' Create an object of class "rankings" from tricot data.
 #'
 #' @author Kauê de Sousa and Jacob van Etten, with ideas from Heather Turner
-#' @family rank functions
 #' @param data a data.frame with columns specified by items and input values
 #' @param items a character or numerical vector for indexing the column(s) 
 #' containing the item names in \code{data} 
@@ -20,7 +13,7 @@
 #' tricot items and the local item
 #' @param ... additional arguments passed to methods. See details
 #' @return a PlackettLuce "rankings" object, which is a matrix of dense rankings 
-#' @seealso \code{\link[PlackettLuce]{rankings}}, \code{\link{breadwheat}}
+#' @seealso \code{\link[PlackettLuce]{rankings}}
 #' @references 
 #' 
 #' van Etten J., et al. (2019). Experimental Agriculture, 55(S1), 275–296.
@@ -39,9 +32,9 @@
 #' 
 #' # first build rankings with only tricot items
 #' # and return an object of class 'rankings'
-#' R <- rank_tricot(data = beans,
-#'                  items = c(1:3),
-#'                  input = c(4:5))
+#' R <- rankTricot(data = beans,
+#'                 items = c(1:3),
+#'                 input = c(4:5))
 #' head(R)
 #' 
 #' ############################################################
@@ -49,11 +42,11 @@
 #' # pass the comparison with local item as an additional rankings, then
 #' # each of the 3 varieties are compared separately with the local item
 #' # and return an object of class grouped_rankings
-#' G <- rank_tricot(data = beans,
-#'                  items = c(1:3),
-#'                  input = c(4:5),
-#'                  group = TRUE,
-#'                  additional.rank = beans[c(6:8)])
+#' G <- rankTricot(data = beans,
+#'                 items = c(1:3),
+#'                 input = c(4:5),
+#'                 group = TRUE,
+#'                 additional.rank = beans[c(6:8)])
 #' 
 #' head(G)
 #' 

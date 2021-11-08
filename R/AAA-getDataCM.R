@@ -8,10 +8,11 @@
 #' @author Kauê de Sousa
 #' @param project a character for the project id
 #' @param as.data.frame logical, to return a data frame
+#' @param as.text logical, to return a text file that can be parsed to json
 #' @param ... additional arguments passed to methods. See details
 #' @inheritParams getProjectsCM
-#' @return An object of class 'CM_list' or a data.frame with class "CM_df" with the 
-#' variables:
+#' @return An object of class 'CM_list' or a text file or 
+#'  a data.frame with class "CM_df" with the variables:
 #' \item{id}{the participant's package id}
 #' \item{moment}{the data collection moment}
 #' \item{variable}{the variable name}
@@ -47,6 +48,7 @@
 getDataCM <- function(key, 
                       project,
                       as.data.frame = TRUE, 
+                      as.text = FALSE,
                       server = "climmob3", ...){
   
   
@@ -62,6 +64,10 @@ getDataCM <- function(key,
                         terminate_on = c(403, 404))
   
   cmdata <- httr::content(cmdata, as = "text")
+  
+  if (as.text) {
+    return(cmdata)
+  }
   
   cmdata <- jsonlite::fromJSON(cmdata)
   

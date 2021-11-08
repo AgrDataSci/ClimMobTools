@@ -5,7 +5,14 @@
 \alias{as.data.frame.CM_list}
 \title{Get ClimMob data}
 \usage{
-getDataCM(key, project, as.data.frame = TRUE, server = "climmob3", ...)
+getDataCM(
+  key,
+  project,
+  as.data.frame = TRUE,
+  as.text = FALSE,
+  server = "climmob3",
+  ...
+)
 
 \method{as.data.frame}{CM_list}(x, ..., tidynames = TRUE, pivot.wider = FALSE)
 }
@@ -17,6 +24,8 @@ interface (API) key}
 
 \item{as.data.frame}{logical, to return a data frame}
 
+\item{as.text}{logical, to return a text file that can be parsed to json}
+
 \item{server}{optional, a character to select from which server
 the data will be retrieved. See details}
 
@@ -24,14 +33,14 @@ the data will be retrieved. See details}
 
 \item{x}{an object of class \code{CM_list}}
 
-\item{tidynames}{logical, \code{TRUE} tries to make clean names}
+\item{tidynames}{logical, \code{TRUE} make clean column names}
 
 \item{pivot.wider}{logical, if \code{TRUE} return a wider object 
-where each observer is a row}
+where each tricot package is a row}
 }
 \value{
-An object of class 'CM_list' or a data.frame with class "CM_df" with the 
-variables:
+An object of class 'CM_list' or a text file or 
+ a data.frame with class "CM_df" with the variables:
 \item{id}{the participant's package id}
 \item{moment}{the data collection moment}
 \item{variable}{the variable name}

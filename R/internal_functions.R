@@ -335,4 +335,62 @@
   
 }
 
+#' Is a tibble object
+#' @param object an object to have its class tested
+#' @return a logical value where TRUE indicates that the 
+#' object is of class "tbl_df"
+#' @examples
+#' .is_tibble(airquality)
+#' @noRd
+.is_tibble <- function(object) {
+  
+  c("tbl_df") %in% class(object)
+  
+}
+
+#' Decode rankings
+#' @param items a matrix with items
+#' @param rankings a matrix with rankings
+#' @return a matrix with decoded rankings 
+#' @examples
+#' i <- as.data.frame(matrix(NA, nrow = 10, ncol = 5))
+#' names(i) <- paste0("Item",1:5)
+#' 
+#' r <- as.data.frame(matrix(NA, nrow = 10, ncol = 5))
+#' names(r) <- paste0("Position_Item",1:5)
+#' 
+#' for(s in 1:10) {
+#'   i[s,] <- sample(LETTERS[1:5])
+#'   r[s,] <- sample(1:5)
+#' }
+#' 
+#' .decode_ranking(i, r)
+#' @noRd
+.decode_ranking <- function(items, rankings) {
+  
+  nc <- ncol(rankings)
+  nr <- nrow(rankings)
+  
+  rankings <- split(rankings, rownames(rankings))
+  
+  index <- lapply(rankings, function(y) {
+    
+    order(y, na.last = NA)
+    
+  })
+  
+  index <- do.call("rbind", index)
+  
+  ranks <- matrix(NA, nrow = nr, ncol = nc)
+  
+  for (z in seq_len(nc)) {
+    
+    ranks[, z ] <- items[cbind(1:nr, index[, z])]
+    
+  }
+  
+  return(ranks)
+  
+}
+
 

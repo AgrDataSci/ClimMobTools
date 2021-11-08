@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 0.4.1-9004
+Version: 0.4.2
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "kaue.desousa@inn.no", 
         role = c("aut", "cre"),
@@ -40,5 +40,5 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0)
 Language: en-GB
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
