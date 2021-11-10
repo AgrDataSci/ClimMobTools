@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2.0001</span>
       </span>
     </div>
 
@@ -92,11 +92,11 @@
       <h1 data-toc-skip>ClimMobTools: API Client for the ‘ClimMob’ platform in R</h1>
                         <h4 class="author">Kauê de Sousa</h4>
             <address class="author_afil">
-      Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway <br> Bioversity International, Rome, Italy<br><h4 class="author">Jacob van Etten</h4>
+      Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway <br> Digital Inclusion, Bioversity International, Montpelier, France<br><h4 class="author">Jacob van Etten</h4>
             <address class="author_afil">
-      Bioversity International, Rome, Italy<br><h4 class="author">Brandon Madriz</h4>
+      Digital Inclusion, Bioversity International, Montpelier, France<br><h4 class="author">Brandon Madriz</h4>
             <address class="author_afil">
-      Bioversity International, The Americas – Costa Rica Office, Turrialba, Costa Rica<br><small class="dont-index">Source: <a href="https://github.com/agrdatasci/ClimMobTools/blob/master/vignettes/Overview.Rmd"><code>vignettes/Overview.Rmd</code></a></small>
+      MrBot Software Solutions, Cartago, Costa Rica<br><small class="dont-index">Source: <a href="https://github.com/agrdatasci/ClimMobTools/blob/master/vignettes/Overview.Rmd"><code>vignettes/Overview.Rmd</code></a></small>
       <div class="hidden name"><code>Overview.Rmd</code></div>
 
     </address>
@@ -121,13 +121,13 @@
 <span class="co"># the API key</span>
 <span class="va">key</span> <span class="op">&lt;-</span> <span class="st">"d39a3c66-5822-4930-a9d4-50e7da041e77"</span>
 
-<span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDataCM.html">getDataCM</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">key</span>,
-                project <span class="op">=</span> <span class="st">"breadwheat"</span>,
-                pivot.wider <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDataCM.html">getDataCM</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">key</span>,
+                 project <span class="op">=</span> <span class="st">"breadwheat"</span>,
+                 pivot.wider <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"firstassessment_|package_|lastassessment_|registration_"</span>, <span class="st">""</span>,
-                  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"firstassessment_|package_|lastassessment_|registration_"</span>, <span class="st">""</span>,
+                   <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="tricot-data-with-environmental-covariates" class="section level1">
 <h1 class="hasAnchor">
@@ -137,12 +137,12 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/climatrends">"climatrends"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/nasapower/">"nasapower"</a></span><span class="op">)</span>
 
-<span class="va">dt</span><span class="op">$</span><span class="va">plantingdate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">plantingdate</span>, format <span class="op">=</span> <span class="st">"%Y-%m-%d"</span><span class="op">)</span>
-<span class="va">dt</span><span class="op">$</span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">farm_geo_longitude</span><span class="op">)</span>
-<span class="va">dt</span><span class="op">$</span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">farm_geo_latitude</span><span class="op">)</span>
+<span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span>, format <span class="op">=</span> <span class="st">"%Y-%m-%d"</span><span class="op">)</span>
+<span class="va">dat</span><span class="op">$</span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_longitude</span><span class="op">)</span>
+<span class="va">dat</span><span class="op">$</span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_latitude</span><span class="op">)</span>
 
-<span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://agrdatasci.github.io/climatrends/reference/temperature.html">temperature</a></span><span class="op">(</span><span class="va">dt</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>,<span class="st">"lat"</span><span class="op">)</span><span class="op">]</span>, 
-                    day.one <span class="op">=</span> <span class="va">dt</span><span class="op">[</span>, <span class="st">"plantingdate"</span><span class="op">]</span>,
+<span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://agrdatasci.github.io/climatrends/reference/temperature.html">temperature</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>,<span class="st">"lat"</span><span class="op">)</span><span class="op">]</span>, 
+                    day.one <span class="op">=</span> <span class="va">dat</span><span class="op">[</span>, <span class="st">"plantingdate"</span><span class="op">]</span>,
                     span <span class="op">=</span> <span class="fl">80</span><span class="op">)</span>
 
 <span class="va">temp</span></code></pre></div>
@@ -151,21 +151,19 @@
 <h1 class="hasAnchor">
 <a href="#tricot-data-into-rankings" class="anchor"></a>Tricot data into rankings</h1>
 <p>The Plackett-Luce model is one approach to analyse the ClimMob data<span class="citation"><sup>2</sup></span>. We build the farmers’ rankings as an object of class ‘grouped_rankings’. This allows the rankings to be linked to the environmental covariates computed previously and fit the model using <code><a href="https://hturner.github.io/PlackettLuce/reference/pltree.html">pltree()</a></code> from the package <a href="https://CRAN.R-project.org/package=PlackettLuce">PlackettLuce</a>.</p>
-<p>We build the rankings using the function <code><a href="https://agrdatasci.github.io/gosset/reference/rank_tricot.html">rank_tricot()</a></code> from the package <a href="https://agrdatasci.github.io/gosset/">gosset</a>.</p>
+<p>We build the rankings using the function <code><a href="../reference/rankTricot.html">rankTricot()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://hturner.github.io/PlackettLuce/">"PlackettLuce"</a></span><span class="op">)</span>
-<span class="co">#remotes::install_github("agrdatasci/gosset", build_vignettes = TRUE)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/gosset/">"gosset"</a></span><span class="op">)</span>
 
-<span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://agrdatasci.github.io/gosset/reference/rank_tricot.html">rank_tricot</a></span><span class="op">(</span><span class="va">dt</span>, 
-                 items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span><span class="op">)</span>, 
-                 input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span><span class="op">)</span>,
-                 group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rankTricot.html">rankTricot</a></span><span class="op">(</span><span class="va">dat</span>, 
+                items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span><span class="op">)</span>, 
+                input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span><span class="op">)</span>,
+                group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">R</span>, <span class="va">temp</span><span class="op">)</span>
+<span class="va">pld</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">R</span>, <span class="va">temp</span><span class="op">)</span>
 
 <span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hturner.github.io/PlackettLuce/reference/pltree.html">pltree</a></span><span class="op">(</span><span class="va">R</span> <span class="op">~</span> <span class="va">maxNT</span> <span class="op">+</span> <span class="va">maxDT</span>, 
-             data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
+             data <span class="op">=</span> <span class="va">pld</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span>
 

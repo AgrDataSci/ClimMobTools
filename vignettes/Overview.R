@@ -12,43 +12,41 @@ knitr::opts_chunk$set(
 #  # the API key
 #  key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
 #  
-#  dt <- getDataCM(key = key,
-#                  project = "breadwheat",
-#                  pivot.wider = TRUE)
+#  dat <- getDataCM(key = key,
+#                   project = "breadwheat",
+#                   pivot.wider = TRUE)
 #  
 #  
-#  names(dt) <- gsub("firstassessment_|package_|lastassessment_|registration_", "",
-#                    names(dt))
+#  names(dat) <- gsub("firstassessment_|package_|lastassessment_|registration_", "",
+#                     names(dat))
 #  
 
 ## ----temperature, message=FALSE, eval=FALSE, echo=TRUE------------------------
 #  library("climatrends")
 #  library("nasapower")
 #  
-#  dt$plantingdate <- as.Date(dt$plantingdate, format = "%Y-%m-%d")
-#  dt$lon <- as.numeric(dt$farm_geo_longitude)
-#  dt$lat <- as.numeric(dt$farm_geo_latitude)
+#  dat$plantingdate <- as.Date(dat$plantingdate, format = "%Y-%m-%d")
+#  dat$lon <- as.numeric(dat$farm_geo_longitude)
+#  dat$lat <- as.numeric(dat$farm_geo_latitude)
 #  
-#  temp <- temperature(dt[, c("lon","lat")],
-#                      day.one = dt[, "plantingdate"],
+#  temp <- temperature(dat[, c("lon","lat")],
+#                      day.one = dat[, "plantingdate"],
 #                      span = 80)
 #  
 #  temp
 
 ## ----plrankings, message=FALSE, eval=FALSE, echo=TRUE-------------------------
 #  library("PlackettLuce")
-#  #remotes::install_github("agrdatasci/gosset", build_vignettes = TRUE)
-#  library("gosset")
 #  
-#  R <- rank_tricot(dt,
-#                   items = c("item_A","item_B","item_C"),
-#                   input = c("overallperf_pos","overallperf_neg"),
-#                   group = TRUE)
+#  R <- rankTricot(dat,
+#                  items = c("item_A","item_B","item_C"),
+#                  input = c("overallperf_pos","overallperf_neg"),
+#                  group = TRUE)
 #  
-#  dat <- cbind(R, temp)
+#  pld <- cbind(R, temp)
 #  
 #  pl <- pltree(R ~ maxNT + maxDT,
-#               data = dat)
+#               data = pld)
 #  
 #  summary(pl)
 #  

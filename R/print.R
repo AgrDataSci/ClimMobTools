@@ -58,7 +58,13 @@ print.CM_df <- function(x, ...){
   
 }
 
-
+#' Tail of data frame
+#' 
+#' @param x a data frame
+#' @param n number of rows to print
+#' @param addrownums logical 
+#' @return the last n rows of the data frame 
+#' @noRd
 .tail <- function(x, n = 5L, addrownums = TRUE, ...) {
   stopifnot(length(n) == 1L)
   nrx <- nrow(x)

@@ -40,6 +40,7 @@
 #' @importFrom Matrix Diagonal
 #' @importFrom methods as
 #' @importFrom RSpectra eigs
+#' @importFrom utils tail
 #' @export
 randomise <- function(npackages, 
                       itemnames, 
@@ -604,7 +605,9 @@ randomize <- function(...){
 # From https://stackoverflow.com/questions/32544646/round-vector-of-numerics-to-integer-while-preserving-their-sum
 .smart.round <- function(x) {
   y <- floor(x)
-  indices <- tail(order(x-y), round(sum(x)) - sum(y))
+  indices <- utils::tail(order(x-y), round(sum(x)) - sum(y))
   y[indices] <- y[indices] + 1
   y
 }
+
+

@@ -17,7 +17,7 @@
 #' @references 
 #' 
 #' van Etten J., et al. (2019). Experimental Agriculture, 55(S1), 275–296.
-#' \url{https://doi.org/10.1017/S0014479716000739}
+#' \doi{10.1017/S0014479716000739}
 #' 
 #' @details 
 #' full.output: logical, to return a list with a "rankings", 

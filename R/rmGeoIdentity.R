@@ -29,7 +29,7 @@
 #'  
 #' @importFrom sf st_point st_sfc st_buffer st_sample
 #' @export
-rmGeoIndentity <- function(lonlat, dist = 0.015, nQuadSegs = 2L, ...){
+rmGeoIdentity <- function(lonlat, dist = 0.015, nQuadSegs = 2L, ...){
   
   lonlat <- as.matrix(lonlat)
   

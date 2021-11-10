@@ -7,7 +7,7 @@
   "codeRepository": "https://agrdatasci.github.io/ClimMobTools/",
   "issueTracker": "https://github.com/agrdatasci/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.4.2",
+  "version": "0.4.2.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -186,7 +186,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=sf"
     },
+    "10": {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    },
     "SystemRequirements": null
   },
-  "fileSize": "2015.508KB"
+  "fileSize": "3065.158KB"
 }

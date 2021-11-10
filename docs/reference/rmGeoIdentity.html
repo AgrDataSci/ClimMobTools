@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Required seed amount in a tricot project — seed_need • ClimMobTools</title>
+<title>Remove geographical identity — rmGeoIdentity • ClimMobTools</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,11 @@
 
 
 
-<meta property="og:title" content="Required seed amount in a tricot project — seed_need" />
-<meta property="og:description" content="Calculate the required amount of seeds (or other technology) required 
-for a triadic comparison of technologies (tricot) project." />
+<meta property="og:title" content="Remove geographical identity — rmGeoIdentity" />
+<meta property="og:description" content="Build a buffer around the a set of geographical coordinates 
+ and take a random point around the buffer. The function is 
+ used to omit the precise location of tricot participants 
+ but keeping a close distance to its agro-environment" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -81,7 +83,7 @@ for a triadic comparison of technologies (tricot) project." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2.0001</span>
       </span>
     </div>
 
@@ -89,7 +91,7 @@ for a triadic comparison of technologies (tricot) project." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -115,7 +117,7 @@ for a triadic comparison of technologies (tricot) project." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/agrdatasci/ClimMobTools/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,72 +134,64 @@ for a triadic comparison of technologies (tricot) project." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Required seed amount in a tricot project</h1>
-    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/seed_need.R'><code>R/seed_need.R</code></a></small>
-    <div class="hidden name"><code>seed_need.Rd</code></div>
+    <h1>Remove geographical identity</h1>
+    <small class="dont-index">Source: <a href='https://github.com/agrdatasci/ClimMobTools/blob/master/R/rmGeoIdentity.R'><code>R/rmGeoIdentity.R</code></a></small>
+    <div class="hidden name"><code>rmGeoIdentity.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate the required amount of seeds (or other technology) required 
-for a triadic comparison of technologies (tricot) project.</p>
+    <p>Build a buffer around the a set of geographical coordinates 
+ and take a random point around the buffer. The function is 
+ used to omit the precise location of tricot participants 
+ but keeping a close distance to its agro-environment</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"kg"</span>)</pre>
+    <pre class="usage"><span class='fu'>rmGeoIdentity</span><span class='op'>(</span><span class='va'>lonlat</span>, dist <span class='op'>=</span> <span class='fl'>0.015</span>, nQuadSegs <span class='op'>=</span> <span class='fl'>2L</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>nobservers</th>
-      <td><p>an integer for the number of observers</p></td>
+      <th>lonlat</th>
+      <td><p>a data.frame or matrix with geographical coordinates long lat</p></td>
     </tr>
     <tr>
-      <th>ncomp</th>
-      <td><p>an integer for the number of items each observer compares</p></td>
+      <th>dist</th>
+      <td><p>numeric, buffer distance for all <var>lonlat</var></p></td>
     </tr>
     <tr>
-      <th>nitems</th>
-      <td><p>an integer for the number of items tested in the project</p></td>
+      <th>nQuadSegs</th>
+      <td><p>integer, number of segments per quadrant</p></td>
     </tr>
     <tr>
-      <th>nseeds</th>
-      <td><p>an integer for the metric of seeds each bag receives</p></td>
-    </tr>
-    <tr>
-      <th>unit</th>
-      <td><p>optional, a character specifying the metric unit used</p></td>
+      <th>...</th>
+      <td><p>further arguments passed to <code><a href='https://r-spatial.github.io/sf/reference/sf.html'>sf</a></code> methods</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a dataframe with required number of seeds</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># allocate 0.2 kg of seeds per variety in a project with 500 </span>
-<span class='co'># participants and 14 varieties</span>
-<span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>500</span>,
-          <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-          <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>14</span>,
-          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div><div class='output co'>#&gt;                  var   quant  unit
-#&gt;                &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1:            N bags 1512.00  unit
-#&gt; 2:  Bags per variety  108.00  unit
-#&gt; 3: Seeds per variety   22.00    kg
-#&gt; 4:       Seeds total  308.00    kg</div><div class='input'>
-<span class='co'># allocate 100 seedlings per variety in a project with 400 </span>
-<span class='co'># participants, 8 varieties and 3 comparisons between varieties</span>
-<span class='fu'>seed_need</span>(<span class='kw'>nobservers</span> <span class='kw'>=</span> <span class='fl'>400</span>,
-          <span class='kw'>ncomp</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-          <span class='kw'>nitems</span> <span class='kw'>=</span> <span class='fl'>9</span>,
-          <span class='kw'>nseeds</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"unit"</span>)</div><div class='output co'>#&gt;                  var     quant  unit
-#&gt;                &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1:            N bags   1206.00  unit
-#&gt; 2:  Bags per variety    134.00  unit
-#&gt; 3: Seeds per variety  13400.00  unit
-#&gt; 4:       Seeds total 120600.00  unit</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>xy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11.097799</span>, <span class='fl'>60.801090</span>,</span>
+<span class='r-in'>               <span class='fl'>11.161298</span>, <span class='fl'>60.804199</span>,</span>
+<span class='r-in'>               <span class='fl'>11.254428</span>, <span class='fl'>60.822457</span><span class='op'>)</span>,</span>
+<span class='r-in'>             nrow <span class='op'>=</span> <span class='fl'>3</span>, ncol <span class='op'>=</span> <span class='fl'>2</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>rmGeoIndentity</span><span class='op'>(</span><span class='va'>xy</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in rmGeoIndentity(xy):</span> could not find function "rmGeoIndentity"</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># the function handles NAs by keeping then </span></span>
+<span class='r-in'><span class='co'># in a logic vector to reconstruct the matrix</span></span>
+<span class='r-in'><span class='va'>xy2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11.097799</span>, <span class='fl'>60.801090</span>,</span>
+<span class='r-in'>                <span class='cn'>NA</span>, <span class='cn'>NA</span>,</span>
+<span class='r-in'>                <span class='fl'>11.161298</span>, <span class='fl'>60.804199</span>,</span>
+<span class='r-in'>                <span class='fl'>11.254428</span>, <span class='fl'>60.822457</span>,</span>
+<span class='r-in'>                <span class='fl'>11.254428</span>, <span class='cn'>NA</span><span class='op'>)</span>,</span>
+<span class='r-in'>              nrow <span class='op'>=</span> <span class='fl'>5</span>, ncol <span class='op'>=</span> <span class='fl'>2</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>rmGeoIndentity</span><span class='op'>(</span><span class='va'>xy2</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in rmGeoIndentity(xy2):</span> could not find function "rmGeoIndentity"</span>
+<span class='r-in'> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -213,7 +207,7 @@ for a triadic comparison of technologies (tricot) project.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
