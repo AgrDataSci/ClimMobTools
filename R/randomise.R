@@ -72,7 +72,7 @@ randomise <- function(npackages,
   
   if (!is.null(availability)) {
     
-    if (sum(availability) < nneeded) {
+    if (sum(availability) <= nneeded) {
       stop("availability is not sufficient: smaller than npackages * ncomp \n")
     }
     if (length(availability) != nitems) {
@@ -445,6 +445,20 @@ randomise <- function(npackages,
                                  paste0("item_", LETTERS[1:ncomp]))
   
   finalresults <- as.data.frame(finalresults, stringsAsFactors = FALSE)
+  
+  r <- table(unlist(finalresults))[itemnames] 
+  
+  if (!all(r <= availability)) {
+    
+    few <- itemnames[!r <= availability]
+    nfew <- availability[!r <= availability]
+    nmin <- r[!r <= availability]
+    
+    stop("You indicated the availability of ", paste(nfew, collapse = ", "), " packages for ", 
+         paste(few, collapse = ", "), " but you require a minimum of ", 
+         paste(nmin, collapse = ", "), " for the given items \n" )
+    
+  }
   
   class(finalresults) <- union("CM_df", class(finalresults))
   
