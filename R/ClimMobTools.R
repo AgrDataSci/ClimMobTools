@@ -3,8 +3,6 @@
 #' @name ClimMobTools
 #' @author Kauê de Sousa and Jacob van Etten and Brandon Madriz
 #' @docType package
-#' @import climatrends
-#' @import PlackettLuce
 #' @seealso
 #'\strong{Useful links:}
 #' \itemize{

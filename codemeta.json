@@ -7,7 +7,7 @@
   "codeRepository": "https://agrdatasci.github.io/ClimMobTools/",
   "issueTracker": "https://github.com/agrdatasci/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.4.2.2",
+  "version": "0.4.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -99,30 +99,6 @@
     },
     "2": {
       "@type": "SoftwareApplication",
-      "identifier": "climatrends",
-      "name": "climatrends",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=climatrends"
-    },
-    "3": {
-      "@type": "SoftwareApplication",
-      "identifier": "PlackettLuce",
-      "name": "PlackettLuce",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=PlackettLuce"
-    },
-    "4": {
-      "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
       "provider": {
@@ -133,7 +109,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    "5": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -145,7 +121,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    "6": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "Matrix",
       "name": "Matrix",
@@ -157,12 +133,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Matrix"
     },
-    "7": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "8": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "RSpectra",
       "name": "RSpectra",
@@ -174,7 +150,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=RSpectra"
     },
-    "9": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "sf",
       "name": "sf",
@@ -186,12 +162,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=sf"
     },
-    "10": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
     "SystemRequirements": null
   },
-  "fileSize": "3065.622KB"
+  "fileSize": "2224.042KB"
 }

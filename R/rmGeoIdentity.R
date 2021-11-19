@@ -14,7 +14,7 @@
 #'                11.254428, 60.822457),
 #'              nrow = 3, ncol = 2, byrow = TRUE)
 #' 
-#' rmGeoIndentity(xy)
+#' rmGeoIdentity(xy)
 #' 
 #' # the function handles NAs by keeping then 
 #' # in a logic vector to reconstruct the matrix
@@ -25,7 +25,7 @@
 #'                 11.254428, NA),
 #'               nrow = 5, ncol = 2, byrow = TRUE)
 #' 
-#' rmGeoIndentity(xy2)
+#' rmGeoIdentity(xy2)
 #'  
 #' @importFrom sf st_point st_sfc st_buffer st_sample
 #' @export

@@ -51,7 +51,6 @@
  and take a random point around the buffer. The function is 
  used to omit the precise location of tricot participants 
  but keeping a close distance to its agro-environment" />
-<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -83,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2.0001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -176,8 +175,11 @@
 <span class='r-in'>               <span class='fl'>11.254428</span>, <span class='fl'>60.822457</span><span class='op'>)</span>,</span>
 <span class='r-in'>             nrow <span class='op'>=</span> <span class='fl'>3</span>, ncol <span class='op'>=</span> <span class='fl'>2</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'>rmGeoIndentity</span><span class='op'>(</span><span class='va'>xy</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in rmGeoIndentity(xy):</span> could not find function "rmGeoIndentity"</span>
+<span class='r-in'><span class='fu'>rmGeoIdentity</span><span class='op'>(</span><span class='va'>xy</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x        y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 11.10416 60.80445</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 11.16589 60.80275</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 11.25493 60.82776</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># the function handles NAs by keeping then </span></span>
 <span class='r-in'><span class='co'># in a logic vector to reconstruct the matrix</span></span>
@@ -188,8 +190,13 @@
 <span class='r-in'>                <span class='fl'>11.254428</span>, <span class='cn'>NA</span><span class='op'>)</span>,</span>
 <span class='r-in'>              nrow <span class='op'>=</span> <span class='fl'>5</span>, ncol <span class='op'>=</span> <span class='fl'>2</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'>rmGeoIndentity</span><span class='op'>(</span><span class='va'>xy2</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in rmGeoIndentity(xy2):</span> could not find function "rmGeoIndentity"</span>
+<span class='r-in'><span class='fu'>rmGeoIdentity</span><span class='op'>(</span><span class='va'>xy2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x        y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 11.10923 60.80803</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 11.15826 60.80211</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 11.24379 60.82099</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       NA       NA</span>
 <span class='r-in'> </span>
 </pre>
   </div>

@@ -12,8 +12,7 @@
 #' @param additional.rank optional, a data frame for the comparisons between 
 #' tricot items and the local item
 #' @param ... additional arguments passed to methods. See details
-#' @return a PlackettLuce "rankings" object, which is a matrix of dense rankings 
-#' @seealso \code{\link[PlackettLuce]{rankings}}
+#' @return a PlackettLuce "rankings" or "grouped_rankings" object 
 #' @references 
 #' 
 #' van Etten J., et al. (2019). Experimental Agriculture, 55(S1), 275–296.
@@ -24,33 +23,32 @@
 #' a "grouped_rankings" and the ordered items
 #' 
 #' @examples
-#' # beans data where each observer compares 3 varieties randomly distributed
-#' # from a list of 11 and additionally compares these 3 varieties
-#' # with their local variety
-#' library("PlackettLuce")
-#' data("beans", package = "PlackettLuce")
+#'   # beans data where each observer compares 3 varieties randomly distributed
+#'   # from a list of 11 and additionally compares these 3 varieties
+#'   # with their local variety
+#'   # library("PlackettLuce")
+#'   # data("beans", package = "PlackettLuce")
+#'   # 
+#'   # # first build rankings with only tricot items
+#'   # # and return an object of class 'rankings'
+#'   # R <- rankTricot(data = beans,
+#'   #                 items = c(1:3),
+#'   #                 input = c(4:5))
+#'   # head(R)
+#'   # 
+#'   # ############################################################
+#'   # 
+#'   # # pass the comparison with local item as an additional rankings, then
+#'   # # each of the 3 varieties are compared separately with the local item
+#'   # # and return an object of class grouped_rankings
+#'   # G <- rankTricot(data = beans,
+#'   #                 items = c(1:3),
+#'   #                 input = c(4:5),
+#'   #                 group = TRUE,
+#'   #                 additional.rank = beans[c(6:8)])
+#'   # 
+#'   # head(G)
 #' 
-#' # first build rankings with only tricot items
-#' # and return an object of class 'rankings'
-#' R <- rankTricot(data = beans,
-#'                 items = c(1:3),
-#'                 input = c(4:5))
-#' head(R)
-#' 
-#' ############################################################
-#' 
-#' # pass the comparison with local item as an additional rankings, then
-#' # each of the 3 varieties are compared separately with the local item
-#' # and return an object of class grouped_rankings
-#' G <- rankTricot(data = beans,
-#'                 items = c(1:3),
-#'                 input = c(4:5),
-#'                 group = TRUE,
-#'                 additional.rank = beans[c(6:8)])
-#' 
-#' head(G)
-#' 
-#' @importFrom PlackettLuce as.rankings group
 #' @export
 rankTricot <- function(data, items, input, 
                        group = FALSE, 
@@ -116,8 +114,10 @@ rankTricot <- function(data, items, input,
     
     }
     
-    R <- PlackettLuce::as.rankings(r)
+    a <- list(x = r)
     
+    R <- do.call("as.rankings", args = a)
+
     # if full output is required, for internal use
     # put r into the ordering format
     if (isTRUE(full.output)) {
@@ -145,7 +145,10 @@ rankTricot <- function(data, items, input,
     itemnames <- sort(unique(as.vector(r)))
     
     # make a PlackettLuce rankings
-    R <- PlackettLuce::as.rankings(r, input = "ordering", items = itemnames)
+    a <- list(x = r, 
+              input = "ordering",
+              items = itemnames)
+    R <- do.call("as.rankings", args = a)
     
   }
   
@@ -163,7 +166,11 @@ rankTricot <- function(data, items, input,
   
   # and into a grouped_rankings
   gi <- rep(seq_len(n), (nrow(R) / n))
-  G <- PlackettLuce::group(R, index = gi)
+  
+  a <- list(x = R, 
+            index = gi)
+  
+  G <- do.call("group", args = a) 
   
   # check if all data is required
   if (isTRUE(full.output)) {
@@ -301,12 +308,12 @@ rankTricot <- function(data, items, input,
   
   # add local to itemnames
   itemnames <- dimnames(R)[[2]]
-  itemnames <- unique(c("Local", itemnames))
+  itemnames <- unique(c("Local Check", itemnames))
   
   paired <- list()
   
   for (p in seq_len(ncomp)) {
-    ordering <- matrix("Local", nrow = n, ncol = 2)
+    ordering <- matrix("Local Check", nrow = n, ncol = 2)
     worse <- add[, p] == 2
     # name of winner
     ordering[!worse, 1] <- i[, p][!worse]
@@ -318,7 +325,10 @@ rankTricot <- function(data, items, input,
   # we then convert these orderings to sub-rankings of the full set of items
   # and combine them with the rankings
   paired <- lapply(paired, function(x) {
-    x <- PlackettLuce::as.rankings(x, input = "ordering", items = itemnames)
+    a <- list(x = x,
+              input = "ordering",
+              items = itemnames)
+    x <- do.call("as.rankings", args = a)
   })
   
   paired <- do.call("rbind", paired)
@@ -328,3 +338,5 @@ rankTricot <- function(data, items, input,
   return(R)
   
 }
+
+

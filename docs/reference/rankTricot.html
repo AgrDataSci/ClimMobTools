@@ -48,7 +48,6 @@
 
 <meta property="og:title" content="Build Plackett-Luce rankings from tricot dataset — rankTricot" />
 <meta property="og:description" content="Create an object of class &quot;rankings&quot; from tricot data." />
-<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -80,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2.0001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -176,7 +175,7 @@ tricot items and the local item</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a PlackettLuce "rankings" object, which is a matrix of dense rankings</p>
+    <p>a PlackettLuce "rankings" or "grouped_rankings" object</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>full.output: logical, to return a list with a "rankings", 
@@ -185,57 +184,37 @@ a "grouped_rankings" and the ordered items</p>
 
     <p>van Etten J., et al. (2019). Experimental Agriculture, 55(S1), 275–296.
 doi: <a href='https://doi.org/10.1017/S0014479716000739'>10.1017/S0014479716000739</a></p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='https://hturner.github.io/PlackettLuce/reference/rankings.html'>rankings</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Kauê de Sousa and Jacob van Etten, with ideas from Heather Turner</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='co'># beans data where each observer compares 3 varieties randomly distributed</span></span>
-<span class='r-in'><span class='co'># from a list of 11 and additionally compares these 3 varieties</span></span>
-<span class='r-in'><span class='co'># with their local variety</span></span>
-<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://hturner.github.io/PlackettLuce/'>"PlackettLuce"</a></span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"beans"</span>, package <span class='op'>=</span> <span class='st'>"PlackettLuce"</span><span class='op'>)</span></span>
+    <pre class="examples"><span class='r-in'>  <span class='co'># beans data where each observer compares 3 varieties randomly distributed</span></span>
+<span class='r-in'>  <span class='co'># from a list of 11 and additionally compares these 3 varieties</span></span>
+<span class='r-in'>  <span class='co'># with their local variety</span></span>
+<span class='r-in'>  <span class='co'># library("PlackettLuce")</span></span>
+<span class='r-in'>  <span class='co'># data("beans", package = "PlackettLuce")</span></span>
+<span class='r-in'>  <span class='co'># </span></span>
+<span class='r-in'>  <span class='co'># # first build rankings with only tricot items</span></span>
+<span class='r-in'>  <span class='co'># # and return an object of class 'rankings'</span></span>
+<span class='r-in'>  <span class='co'># R &lt;- rankTricot(data = beans,</span></span>
+<span class='r-in'>  <span class='co'>#                 items = c(1:3),</span></span>
+<span class='r-in'>  <span class='co'>#                 input = c(4:5))</span></span>
+<span class='r-in'>  <span class='co'># head(R)</span></span>
+<span class='r-in'>  <span class='co'># </span></span>
+<span class='r-in'>  <span class='co'># ############################################################</span></span>
+<span class='r-in'>  <span class='co'># </span></span>
+<span class='r-in'>  <span class='co'># # pass the comparison with local item as an additional rankings, then</span></span>
+<span class='r-in'>  <span class='co'># # each of the 3 varieties are compared separately with the local item</span></span>
+<span class='r-in'>  <span class='co'># # and return an object of class grouped_rankings</span></span>
+<span class='r-in'>  <span class='co'># G &lt;- rankTricot(data = beans,</span></span>
+<span class='r-in'>  <span class='co'>#                 items = c(1:3),</span></span>
+<span class='r-in'>  <span class='co'>#                 input = c(4:5),</span></span>
+<span class='r-in'>  <span class='co'>#                 group = TRUE,</span></span>
+<span class='r-in'>  <span class='co'>#                 additional.rank = beans[c(6:8)])</span></span>
+<span class='r-in'>  <span class='co'># </span></span>
+<span class='r-in'>  <span class='co'># head(G)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># first build rankings with only tricot items</span></span>
-<span class='r-in'><span class='co'># and return an object of class 'rankings'</span></span>
-<span class='r-in'><span class='va'>R</span> <span class='op'>&lt;-</span> <span class='fu'>rankTricot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>beans</span>,</span>
-<span class='r-in'>                items <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>,</span>
-<span class='r-in'>                input <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>R</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "PM2 Don Rey &gt; SJC 730-79 &gt; BRT 103-182"  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] "INTA Centro Sur &gt; INTA Sequia &gt; INTA ..."</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] "INTA Ferroso &gt; INTA Matagalpa &gt; BRT  ..."</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "INTA Rojo &gt; INTA Centro Sur &gt; ALS 0532-6"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "PM2 Don Rey &gt; INTA Sequia &gt; SJC 730-79"  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] "ALS 0532-6 &gt; INTA Matagalpa &gt; INTA Rojo" </span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'>############################################################</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># pass the comparison with local item as an additional rankings, then</span></span>
-<span class='r-in'><span class='co'># each of the 3 varieties are compared separately with the local item</span></span>
-<span class='r-in'><span class='co'># and return an object of class grouped_rankings</span></span>
-<span class='r-in'><span class='va'>G</span> <span class='op'>&lt;-</span> <span class='fu'>rankTricot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>beans</span>,</span>
-<span class='r-in'>                items <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>,</span>
-<span class='r-in'>                input <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>,</span>
-<span class='r-in'>                group <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
-<span class='r-in'>                additional.rank <span class='op'>=</span> <span class='va'>beans</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>G</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                 1 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  "PM2 Don Rey &gt; SJ ..., Local &gt; BRT 103-182, ..." </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                 2 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    "INTA Centro Sur  ..., Local &gt; INTA Rojo, ..." </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                 3 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> "INTA Ferroso &gt; I ..., INTA Ferroso &gt; Local, ..." </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                 4 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> "INTA Rojo &gt; INTA ..., INTA Centro Sur  ..., ..." </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                 5 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  "PM2 Don Rey &gt; IN ..., INTA Sequia &gt; Local, ..." </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                 6 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   "ALS 0532-6 &gt; INT ..., ALS 0532-6 &gt; Local, ..." </span>
 <span class='r-in'></span>
 </pre>
   </div>

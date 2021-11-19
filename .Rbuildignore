@@ -12,3 +12,4 @@
 ^dev$
 ^logo\.svg$
 ^codemeta\.json$
+^tic\.R$

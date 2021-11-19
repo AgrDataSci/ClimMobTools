@@ -5,7 +5,9 @@ ClimMobTools
 <!-- badges: start -->
 [![CRAN](https://www.r-pkg.org/badges/version/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
 [![CRANchecks](https://cranchecks.info/badges/worst/ClimMobTools)](https://cran.r-project.org/web/checks/check_results_ClimMobTools.html)
-[![Travis](https://travis-ci.org/agrdatasci/ClimMobTools.svg?branch=master)](https://travis-ci.org/agrdatasci/ClimMobTools) [![codecov](https://codecov.io/gh/agrdatasci/ClimMobTools/master.svg)](https://codecov.io/github/agrdatasci/ClimMobTools?branch=master)  [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) 
+[![tic](https://github.com/agrdatasci/ClimMobTools/workflows/tic/badge.svg?branch=master)](https://github.com/agrdatasci/ClimMobTools/actions)
+[![codecov](https://codecov.io/gh/agrdatasci/ClimMobTools/master.svg)](https://codecov.io/github/agrdatasci/ClimMobTools?branch=master)  
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) 
 [![Downloads](https://cranlogs.r-pkg.org/badges/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
 <!-- badges: end -->
 

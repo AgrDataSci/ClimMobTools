@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 0.4.2.0002
+Version: 0.4.3
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "kaue.desousa@inn.no", 
         role = c("aut", "cre"),
@@ -24,10 +24,7 @@ Description: API client for 'ClimMob', an open source software for experimental
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: false
-Depends: 
-    R (>= 3.5.0),
-    climatrends,
-    PlackettLuce
+Depends: R (>= 3.5.0)
 Imports:
     httr, 
     jsonlite, 
