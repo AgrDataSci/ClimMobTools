@@ -72,7 +72,10 @@ randomise <- function(npackages,
   
   if (!is.null(availability)) {
     
-    if (sum(availability) <= nneeded) {
+    maxav <- which.max(availability)[1]
+    availability[maxav] <- availability[maxav] + 1
+    
+    if (sum(availability) < nneeded) {
       stop("availability is not sufficient: smaller than npackages * ncomp \n")
     }
     if (length(availability) != nitems) {
