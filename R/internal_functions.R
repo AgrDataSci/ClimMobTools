@@ -147,15 +147,17 @@
 #' 
 #' @param x a list of arguments given by ClimMob
 #' @return a list with data frames for:
-#'  traits: characteristics to be analysed, 
-#'  tricotVSlocal:  the comparison between tested items and the local item
-#'  covariates:  the explanatory variables
+#'  traits: characteristics to be analysed 
+#'  tricotVSlocal: the comparison between tested items and the local item
+#'  covariates: the explanatory variables
+#'  linearreg: strings for the variables to be used in linear regression
 #' @noRd
 .decode_pars <- function(x) {
 
   traits <- x[["Characteristics"]]
   tricotVSlocal  <- x[["Performance"]]
   covariates  <- x[["Explanatory"]]
+  linear <- x[["linearRegression"]]
   
   result <- list()
   
@@ -241,6 +243,8 @@
     
     result[["traits"]] <- questions
     
+  }else{
+    result[["traits"]] <- character(0L)
   }
   
   if (length(tricotVSlocal) > 0) {
@@ -293,6 +297,56 @@
     
     result[["covariates"]] <- character(0L)
     
+  }
+  
+  if (length(linear) > 0){
+    
+    questions <- lapply(linear$vars, function(y) {
+      unlist(y)
+    })
+    
+    questions <- do.call(rbind, questions)
+    questions <- as.data.frame(questions, stringsAsFactors = FALSE)
+    names(questions) <- paste0("nameString", seq_len(dim(questions)[[2]]))
+    
+    questions$nQst <- dim(questions)[[2]]
+    
+    questions$name <- linear$name
+    
+    questions$codeQst <- linear$codeQst
+    
+    
+    questionAsked <- do.call(rbind, linear$questionAsked)
+    questionAsked <- as.data.frame(questionAsked, stringsAsFactors = FALSE)
+    names(questionAsked) <- paste0("questionAsked", seq_len(questions$nQst[1]))
+    
+    questions <- cbind(questions, questionAsked)
+    
+    if (!all(is.na(linear$code))) {
+      
+      questions$assessmentId <- linear$code$ass_cod
+      
+      questions$assessmentName <- linear$code$ass_desc
+      
+      questions$assessmentDay <- linear$code$ass_days  
+    }
+    
+    if (all(is.na(linear$code))) {
+      
+      questions$assessmentId <- "0000000000"
+      
+      questions$assessmentName <- "Data collection"
+      
+      questions$assessmentDay <- 0
+      
+    }
+    
+    rownames(questions) <- 1:nrow(questions)
+    
+    result[["linear"]] <- questions
+    
+  }else{
+    result[["linear"]] <- character(0L)
   }
   
   return(result)
