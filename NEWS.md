@@ -4,7 +4,7 @@ ClimMobTools 0.4.3 (2021-11-20)
 ### BUG FIXES
 
 * Fix an issue in `randomise()` to check for unbalanced designs
-* Remove dependency to "PlackettLuce" and "climatrends" do to errors in CRAN check for Windows
+* Remove dependency to "PlackettLuce" and "climatrends" to avoid errors in CRAN check for Windows
 
 
 ClimMobTools 0.4.2 (2021-11-08)
