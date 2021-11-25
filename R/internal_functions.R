@@ -244,7 +244,9 @@
     result[["traits"]] <- questions
     
   }else{
+    
     result[["traits"]] <- character(0L)
+    
   }
   
   if (length(tricotVSlocal) > 0) {
@@ -265,7 +267,9 @@
     result[["tricotVSlocal"]] <- questions
     
   }else{
+    
     result[["tricotVSlocal"]] <- character(0L)
+    
   }
   
   if (length(covariates) > 0) {
@@ -299,7 +303,7 @@
     
   }
   
-  if (length(linear) > 0){
+  if (length(linear) > 0) {
     
     questions <- lapply(linear$vars, function(y) {
       unlist(y)
@@ -346,7 +350,9 @@
     result[["linear"]] <- questions
     
   }else{
+    
     result[["linear"]] <- character(0L)
+    
   }
   
   return(result)
