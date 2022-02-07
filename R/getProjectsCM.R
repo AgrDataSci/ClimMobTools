@@ -26,12 +26,9 @@
 #' \code{server}: the default server is "climmob" used for clients of 
 #' https://climmob.net/climmob3/, other options are:
 #' 
-#'  "avisa" for clients of https://avisa.climmob.net/ 
+#'  "1000farms" for clients of https://1000farms.climmob.net/ 
 #'  
 #'  "rtb" for clients of https://rtb.climmob.net/
-#'  
-#'  "testing" for clients of https://testing.climmob.net/climmob3/
-#'  
 #' 
 #' @examples
 #' \dontrun{ 
@@ -39,9 +36,9 @@
 #' # the user API key can be obtained once a free ClimMob account 
 #' # is created via https://climmob.net/
 #' 
-#' my_key <- "add_your_key"
+#' # my_key <- "add_your_key"
 #' 
-#' getProjectsCM(key = my_key)
+#' # getProjectsCM(key = my_key)
 #' 
 #' }
 #' 
@@ -69,15 +66,17 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   
   progress <- dat$progress
   
-  dat <- cbind(dat, progress)
+  owner <- dat$owner
   
-  dat <- dat[,c("project_cod","project_name", "project_cnty",
-                 "project_regstatus","project_creationdate",
-                 "project_numobs", "regtotal","lastreg")]
+  names(owner) <- paste0("owner_", names(owner))
+  
+  dat <- cbind(dat, progress, owner)
+  
+  dat <- dat[,c("project_cod", "project_name", "owner_user_name", "project_cnty",
+                 "project_regstatus","project_creationdate")]
 
-  names(dat) <- c("project_id","name", "country", "status","creation_date",
-                  "intended_participants", "registered_participants",
-                  "last_registration_activity")
+  names(dat) <- c("project_id", "project_name", "user_owner",
+                  "country", "status","creation_date")
   
   dat$status <- with(dat, ifelse(status == 1, "active",
                                  ifelse(status == 2, "concluded", "not_started")))
@@ -102,7 +101,7 @@ getProjectsCM <- function(key, server = "climmob3", ...){
 #' @noRd
 .set_url <- function(server = "climmob3", extension = NULL){
   
-  other_server <- c("avisa", "rtb")
+  other_server <- c("1000farms", "avisa", "rtb")
   
   known <- server %in% other_server
   

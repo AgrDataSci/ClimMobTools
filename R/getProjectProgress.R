@@ -21,26 +21,21 @@
 #' \code{server}: the default server is "climmob" used for clients of 
 #' https://climmob.net/climmob3/, other options are:
 #' 
-#'  "avisa" for clients of https://avisa.climmob.net/ 
+#'  "1000farms" for clients of https://1000farms.climmob.net/ 
 #'  
 #'  "rtb" for clients of https://rtb.climmob.net/
 #'  
-#'  "testing" for clients of https://testing.climmob.net/climmob3/
-#'  
-#' 
 #' @examples
-#' \dontrun{ 
 #' # This function will not work without an API key  
 #' # the user API key can be obtained once a free ClimMob account 
 #' # is created via https://climmob.net/
 #' 
-#' my_key <- "add_your_key"
+#' # my_key <- "add_your_key"
 #' 
-#' my_project <- "project_id"
+#' # my_project <- "project_id"
 #' 
-#' getProjectProgress(my_key, my_project)
+#' # getProjectProgress(my_key, my_project)
 #' 
-#' }
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @export

@@ -7,6 +7,7 @@
 #' @family GET functions
 #' @author Kauê de Sousa
 #' @param project a character for the project id
+#' @param userowner a character for user name of project's owner
 #' @param as.data.frame logical, to return a data frame
 #' @param as.text logical, to return a text file that can be parsed to json
 #' @param ... additional arguments passed to methods. See details
@@ -21,25 +22,24 @@
 #' \code{server}: the default server is "climmob" used for clients of 
 #' https://climmob.net/climmob3/, other options are:
 #' 
-#'  "avisa" for clients of https://avisa.climmob.net/ 
+#'  "1000farms" for clients of https://1000farms.climmob.net/ 
 #'  
 #'  "rtb" for clients of https://rtb.climmob.net/
-#'  
-#'  "testing" for clients of https://testing.climmob.net/climmob3/
 #' 
 #' @examples
-#' \dontrun{
 #' 
 #' # This function will not work without an API key  
 #' # the user API key can be obtained once a free ClimMob account 
 #' # is created via https://climmob.net/
 #' 
-#' my_key <- "add_your_key"
-#' my_project <- "my_climmob_project"
+#' # my_key <- "add_your_key"
+#' # my_project <- "my_climmob_project"
+#' # my_userowner <- "userowner"
 #' 
-#' data <- getDataCM(key = my_key, project = my_project)
+#' # data <- getDataCM(key = my_key,
+#' #                   project = my_project, 
+#' #                   userowner = my_userowner)
 #' 
-#' }
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @importFrom httr accept_json content RETRY
@@ -47,6 +47,7 @@
 #' @export
 getDataCM <- function(key, 
                       project,
+                      userowner,
                       as.data.frame = TRUE, 
                       as.text = FALSE,
                       server = "climmob3", ...){
@@ -58,8 +59,9 @@ getDataCM <- function(key,
 
   cmdata <- httr::RETRY(verb = "GET", 
                         url = url,
-                        query = list(Body = paste0('{"project_cod":"', project, '"}'),
-                                    Apikey = key),
+                        query = list(Body = paste0('{"project_cod":"', project, '",
+                                                   "user_owner":"',userowner,'"}'),
+                                     Apikey = key),
                         httr::accept_json(), 
                         terminate_on = c(403, 404))
   
