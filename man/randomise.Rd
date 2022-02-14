@@ -46,18 +46,18 @@ consecutive combinations also relatively balanced and A-optimal
 }
 \examples{
 ncomp <- 3
-npackages <- 100
-itemnames <- c("apple","banana","grape","mango", "orange", "kiwi", "pineapple")
-availability <- c(50, 50, 150, 150, 150, 150, 20)
+npackages <- 20
+itemnames <- c("apple","banana","grape","mango", "orange")
+availability <- c(5, 8, 50, 50, 50)
 
-table(unlist(randomise(ncomp = ncomp,
-                       npackages = npackages,
-                       itemnames = itemnames)))
+randomise(ncomp = ncomp,
+          npackages = npackages,
+          itemnames = itemnames)
 
-table(unlist(randomise(ncomp = ncomp,
-                       npackages = npackages,
-                       itemnames = itemnames,
-                       availability = availability)))
+randomise(ncomp = ncomp,
+          npackages = npackages,
+          itemnames = itemnames,
+          availability = availability)
           
 }
 \author{
