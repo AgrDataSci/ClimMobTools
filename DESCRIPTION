@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 0.4.3-003
+Version: 0.4.4
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "kaue.desousa@inn.no", 
         role = c("aut", "cre"),
@@ -40,4 +40,3 @@ Suggests:
 Language: en-GB
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
-

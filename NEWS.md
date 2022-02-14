@@ -1,3 +1,12 @@
+ClimMobTools 0.4.4 (2021-02-14)
+=========================
+
+### IMPROVEMENTS
+
+* Add argument `userowner =` to  `getDataCM()` to specify the owner of a given ClimMob project
+
+
+
 ClimMobTools 0.4.3 (2021-11-20)
 =========================
 
