@@ -48,6 +48,7 @@
 
 <meta property="og:title" content="Get project progress — getProjectProgress" />
 <meta property="og:description" content="Fetch the progress of a ClimMob project" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -79,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3-001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -177,9 +178,8 @@ the data will be retrieved. See details</p></td>
 
     <p><code>server</code>: the default server is "climmob" used for clients of 
 https://climmob.net/climmob3/, other options are:</p>
-<p>"avisa" for clients of https://avisa.climmob.net/</p> 
-<p>"rtb" for clients of https://rtb.climmob.net/</p> 
-<p>"testing" for clients of https://testing.climmob.net/climmob3/</p>
+<p>"1000farms" for clients of https://1000farms.climmob.net/</p> 
+<p>"rtb" for clients of https://rtb.climmob.net/</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>ClimMob website <a href='https://climmob.net/'>https://climmob.net/</a></p>
@@ -191,18 +191,16 @@ https://climmob.net/climmob3/, other options are:</p>
     <p>Kauê de Sousa</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> 
-<span class='co'># This function will not work without an API key  </span>
+    <pre class="examples"><span class='co'># This function will not work without an API key  </span>
 <span class='co'># the user API key can be obtained once a free ClimMob account </span>
 <span class='co'># is created via https://climmob.net/</span>
 
-<span class='va'>my_key</span> <span class='op'>&lt;-</span> <span class='st'>"add_your_key"</span>
+<span class='co'># my_key &lt;- "add_your_key"</span>
 
-<span class='va'>my_project</span> <span class='op'>&lt;-</span> <span class='st'>"project_id"</span>
+<span class='co'># my_project &lt;- "project_id"</span>
 
-<span class='fu'>getProjectProgress</span><span class='op'>(</span><span class='va'>my_key</span>, <span class='va'>my_project</span><span class='op'>)</span>
+<span class='co'># getProjectProgress(my_key, my_project)</span>
 
-<span class='op'>}</span>
 
 </pre>
   </div>
