@@ -20,26 +20,24 @@
 #' \item{value}{the value for each variable}
 #' @details 
 #' \code{server}: the default server is "climmob" used for clients of 
-#' https://climmob.net/climmob3/, other options are:
+#' \url{https://climmob.net/climmob3/}, other options are:
 #' 
-#'  "1000farms" for clients of https://1000farms.climmob.net/ 
+#'  "1000farms" for clients of \url{https://1000farms.climmob.net/} 
 #'  
-#'  "rtb" for clients of https://rtb.climmob.net/
+#'  "rtb" for clients of \url{https://rtb.climmob.net/}
 #' 
-#' @examples
+#' @examplesIf interactive()
 #' 
-#' # This function will not work without an API key  
-#' # the user API key can be obtained once a free ClimMob account 
+#' # This function only works with an API key
+#' # the API key can be obtained once a free ClimMob account
 #' # is created via https://climmob.net/
 #' 
-#' # my_key <- "add_your_key"
-#' # my_project <- "my_climmob_project"
-#' # my_userowner <- "userowner"
+#' my_key <- "92cec84d-44f5-4858-9ef0-bd872496311c"
 #' 
-#' # data <- getDataCM(key = my_key,
-#' #                   project = my_project, 
-#' #                   userowner = my_userowner)
-#' 
+#' getDataCM(key = my_key,
+#'           project = "testmark",
+#'           userowner = "kauedesousa",
+#'           server = "testing")
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @importFrom httr accept_json content RETRY
@@ -77,7 +75,8 @@ getDataCM <- function(key,
   # if not then return a warning message
   if (length(cmdata) < 7) {
     pstring <- paste0("'",project,"'")
-    stop("Project ", pstring, " was found but has no associated data. \n")
+    message("Project ", pstring, " was found but has no associated data. \n")
+    return(project)
   }
   
   class(cmdata) <- union("CM_list", class(cmdata))

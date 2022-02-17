@@ -1,3 +1,45 @@
+#' Set server URL
+#' This will set the server URL following the argument server
+#' in the main functions
+#' @param server the server name
+#' @param extension a character for the extension in the API call
+#' @noRd
+.set_url <- function(server = "climmob3", extension = NULL){
+  
+  other_server <- c("1000farms", "avisa", "rtb", "1000FARMS", "AVISA")
+  
+  known <- server %in% other_server
+  
+  if (known) {
+    
+    url <- paste0("https://", server, ".climmob.net/api/", extension)
+    
+  }
+  
+  if (server == "testing") {
+    
+    url <- paste0("https://", server, ".climmob.net/climmob3/api/", extension)
+    
+  }
+  
+  if (server == "climmob3") {
+    
+    url <- paste0("https://climmob.net/climmob3/api/", extension)
+    
+  }
+  
+  if (isFALSE(known) & isFALSE(server == "climmob3") & isFALSE(server == "testing")) {
+    
+    stop("You are trying to reach an unknown server, please choose between '", 
+         paste(c("climmob", other_server), collapse = "', '"), "'\n")
+    
+  }
+  
+  return(url)
+  
+}
+
+
 #' Get ClimMob projects 
 #'
 #' Fetch the status of ClimMob projects
@@ -9,38 +51,29 @@
 #' @param server optional, a character to select from which server
 #'  the data will be retrieved. See details
 #' @param ... additional arguments passed to methods. See details
-#' @return A data frame with the ClimMob projects 
-#' \item{project_id}{the project unique id}
-#' \item{name}{the project name}
-#' \item{country}{ISO code for the country where the project was implemented}
-#' \item{status}{the current status}
-#' \item{creation_date}{the project's creation date}
-#' \item{intended_participants}{the number of participants the project 
-#'  intended to register}
-#' \item{intended_participants}{the number of participants the project 
-#'  intended to register}
-#' \item{registered_participants}{the number of participants registered}
-#' \item{last_registration_activity}{number of days since the submission 
-#'  of the last registration}
 #' @details 
 #' \code{server}: the default server is "climmob" used for clients of 
-#' https://climmob.net/climmob3/, other options are:
+#' \url{https://climmob.net/climmob3/}, other options are:
 #' 
-#'  "1000farms" for clients of https://1000farms.climmob.net/ 
+#'  "1000farms" for clients of \url{https://1000farms.climmob.net/} 
 #'  
-#'  "rtb" for clients of https://rtb.climmob.net/
+#'  "rtb" for clients of \url{https://rtb.climmob.net/}
 #' 
-#' @examples
-#' \dontrun{ 
-#' # This function will not work without an API key  
-#' # the user API key can be obtained once a free ClimMob account 
+#' @return A data.frame with the variables:
+#' \item{project_id}{the project's id}
+#' \item{project_name}{the project's name}
+#' \item{user_owner}{the account name that owns the project}
+#' \item{country}{the country of project's implementation}
+#' \item{status}{the current status}
+#' \item{creation_date}{date where the project was created}
+#' @examplesIf interactive()
+#' # This function only works with an API key
+#' # the API key can be obtained once a free ClimMob account
 #' # is created via https://climmob.net/
 #' 
-#' # my_key <- "add_your_key"
+#' my_key <- "92cec84d-44f5-4858-9ef0-bd872496311c"
 #' 
-#' # getProjectsCM(key = my_key)
-#' 
-#' }
+#' getProjectsCM(key = my_key, server = "testing")
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @export
@@ -91,47 +124,5 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   
 }
 
-
-
-#' Set server URL
-#' This will set the server URL following the argument server
-#' in the main functions
-#' @param server the server name
-#' @param extension a character for the extension in the API call
-#' @noRd
-.set_url <- function(server = "climmob3", extension = NULL){
-  
-  other_server <- c("1000farms", "avisa", "rtb")
-  
-  known <- server %in% other_server
-  
-  if (known) {
-    
-    url <- paste0("https://", server, ".climmob.net/api/", extension)
-    
-  }
-  
-  if (server == "testing") {
-    
-    url <- paste0("https://", server, ".climmob.net/climmob3/api/", extension)
-    
-  }
-  
-  if (server == "climmob3") {
-    
-    url <- paste0("https://climmob.net/climmob3/api/", extension)
-    
-  }
-  
-  if (isFALSE(known) & isFALSE(server == "climmob3") & isFALSE(server == "testing")) {
-    
-      stop("You are trying to reach an unknown server, please choose between '", 
-         paste(c("climmob", other_server), collapse = "', '"), "'\n")
-    
-  }
-  
-  return(url)
-  
-}
 
 

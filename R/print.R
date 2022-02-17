@@ -58,6 +58,16 @@ print.CM_df <- function(x, ...){
   
 }
 
+#' @method print CM_list
+#' @export
+print.CM_list <- function(x, ...){
+  
+  x <- x[[1]]
+
+  print(x)
+  
+}
+
 #' Tail of data frame
 #' 
 #' @param x a data frame

@@ -16,43 +16,35 @@ the data will be retrieved. See details}
 \item{...}{additional arguments passed to methods. See details}
 }
 \value{
-A data frame with the ClimMob projects 
-\item{project_id}{the project unique id}
-\item{name}{the project name}
-\item{country}{ISO code for the country where the project was implemented}
+A data.frame with the variables:
+\item{project_id}{the project's id}
+\item{project_name}{the project's name}
+\item{user_owner}{the account name that owns the project}
+\item{country}{the country of project's implementation}
 \item{status}{the current status}
-\item{creation_date}{the project's creation date}
-\item{intended_participants}{the number of participants the project 
- intended to register}
-\item{intended_participants}{the number of participants the project 
- intended to register}
-\item{registered_participants}{the number of participants registered}
-\item{last_registration_activity}{number of days since the submission 
- of the last registration}
+\item{creation_date}{date where the project was created}
 }
 \description{
 Fetch the status of ClimMob projects
 }
 \details{
 \code{server}: the default server is "climmob" used for clients of 
-https://climmob.net/climmob3/, other options are:
+\url{https://climmob.net/climmob3/}, other options are:
 
- "1000farms" for clients of https://1000farms.climmob.net/ 
+ "1000farms" for clients of \url{https://1000farms.climmob.net/} 
  
- "rtb" for clients of https://rtb.climmob.net/
+ "rtb" for clients of \url{https://rtb.climmob.net/}
 }
 \examples{
-\dontrun{ 
-# This function will not work without an API key  
-# the user API key can be obtained once a free ClimMob account 
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# This function only works with an API key
+# the API key can be obtained once a free ClimMob account
 # is created via https://climmob.net/
 
-# my_key <- "add_your_key"
+my_key <- "92cec84d-44f5-4858-9ef0-bd872496311c"
 
-# getProjectsCM(key = my_key)
-
-}
-
+getProjectsCM(key = my_key, server = "testing")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 ClimMob website \url{https://climmob.net/}

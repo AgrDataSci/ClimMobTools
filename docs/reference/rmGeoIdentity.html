@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -169,6 +169,9 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame with the anonymised coordinates long lat</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='va'>xy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11.097799</span>, <span class='fl'>60.801090</span>,
@@ -178,8 +181,8 @@
 
 <span class='fu'>rmGeoIdentity</span><span class='op'>(</span><span class='va'>xy</span><span class='op'>)</span>
 
-<span class='co'># the function handles NAs by keeping then </span>
-<span class='co'># in a logic vector to reconstruct the matrix</span>
+<span class='co'># the function also handles NAs</span>
+
 <span class='va'>xy2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11.097799</span>, <span class='fl'>60.801090</span>,
                 <span class='cn'>NA</span>, <span class='cn'>NA</span>,
                 <span class='fl'>11.161298</span>, <span class='fl'>60.804199</span>,
@@ -201,7 +204,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kauê de Sousa, Jacob van Etten.</p>
+  <p>Developed by Kauê de Sousa, Jacob van Etten, Brandon Madriz.</p>
 </div>
 
 <div class="pkgdown">

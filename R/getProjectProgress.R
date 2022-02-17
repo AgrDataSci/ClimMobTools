@@ -4,120 +4,121 @@
 #'
 #' @author Kauê de Sousa
 #' @family GET functions
-#' @param key a character for the user's application programming 
-#'  interface (API) key
-#' @param project a character with the id of one or more projects
-#' @param server optional, a character to select from which server
-#'  the data will be retrieved. See details
-#' @param ... additional arguments passed to methods. See details
-#' @return A data frame with the ClimMob projects 
-#' \item{project_id}{the project unique id}
-#' \item{name}{the project name}
-#' \item{moment}{either the design, registration or data collection}
-#' \item{number_obs}{number of observations collected in a given moment}
-#' \item{last_activity}{last activity of the given moment}
-#'  
+#' @inheritParams getDataCM
+#' @return A list with number of submissions per assessment and 
+#'  submissions per assessment per enumerator
 #' @details 
 #' \code{server}: the default server is "climmob" used for clients of 
-#' https://climmob.net/climmob3/, other options are:
+#' \url{https://climmob.net/climmob3/}, other options are:
 #' 
-#'  "1000farms" for clients of https://1000farms.climmob.net/ 
+#'  "1000farms" for clients of \url{https://1000farms.climmob.net/} 
 #'  
-#'  "rtb" for clients of https://rtb.climmob.net/
+#'  "rtb" for clients of \url{https://rtb.climmob.net/}
 #'  
-#' @examples
-#' # This function will not work without an API key  
-#' # the user API key can be obtained once a free ClimMob account 
+#' @examplesIf interactive()
+#' # This function only works with an API key
+#' # the API key can be obtained once a free ClimMob account
 #' # is created via https://climmob.net/
 #' 
-#' # my_key <- "add_your_key"
-#' 
-#' # my_project <- "project_id"
-#' 
-#' # getProjectProgress(my_key, my_project)
+#' my_key <- "92cec84d-44f5-4858-9ef0-bd872496311c"
+#'  
+#' getProjectProgress(key = my_key,
+#'                    project = "testmark",
+#'                    userowner = "kauedesousa",
+#'                    server = "testing")
 #' 
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @export
-getProjectProgress <- function(key, project, server = "climmob3", ...){
+getProjectProgress <- function(key, project, userowner, server = "climmob3"){
   
-  dots <- list(...)
+  url <- .set_url(server, extension = "readDataOfProject?Body={}&Apikey={}")
   
-  url <- .set_url(server, extension = "readProjects?Apikey=")
-  
-  dat <- httr::RETRY(verb = "GET",
+  dat <- httr::RETRY(verb = "GET", 
                      url = url,
-                     query = list(Apikey = key),
-                     httr::accept_json(),
+                     query = list(Body = paste0('{"project_cod":"', project, '",
+                                                   "user_owner":"',userowner,'"}'),
+                                  Apikey = key),
+                     httr::accept_json(), 
                      terminate_on = c(403, 404))
-
+  
   dat <- httr::content(dat, as = "text")
   
   dat <- jsonlite::fromJSON(dat)
+  
+  # check if the given project has data
+  # if not then return a warning message
+  if (length(dat) < 7) {
+    pstring <- paste0("'",project,"'")
+    message("Project ", pstring, " was found but has no associated data. \n")
+    return(project)
+  }
+  
+  result <- .project_progress(dat)
+  
+  return(result)
+  
+}
 
-  progress <- dat$progress
+#' Get the progress data 
+#' @param x a list with the climmob data
+#' @noRd
+.project_progress <- function(x) {
   
-  dat <- cbind(dat, progress)
+  assess_code <- x$assessments[["code"]]
+  assess_name <- x$assessments[["desc"]]
+  assess_day  <- x$assessments[["intervalindays"]]
   
-  dat <- dat[,c("project_cod","project_name", "project_cnty",
-                "project_regstatus","project_creationdate",
-                "project_numobs", "regtotal","lastreg",
-                "assessments")]
+  # run over assessments and collect number of submissions
+  nsubs <- data.frame(assessment = "Registration",
+                      interval_in_days = 1,
+                      n_entries = length(x$data$REG__submitted_by))
   
+  enumerators <- data.frame(assessment = "Registration",
+                            table(x$data$REG__submitted_by))
   
-  p <- project %in% dat$project_cod
+  names(enumerators)[2:3] <- c("enumerator", "n_entries")
   
-  if (isFALSE(p)) {
-    stop("Unknown project '", project, "' please check the project id with getProjectsCM() \n")
+  for (i in seq_along(assess_code)) {
+    
+    sub_i <- x$data[,paste0("ASS", assess_code[i], "__submitted_by")]
+    
+    y <- data.frame(assessment = assess_name[i],
+                    interval_in_days = 0,
+                    n_entries = sum(!is.na(sub_i)))
+    
+    nsubs <- rbind(nsubs, y)
+    
+    if(sum(!is.na(sub_i)) > 0) {
+      
+      enum_i <- data.frame(assessment = assess_name[i], 
+                           table(sub_i))
+      
+      names(enum_i)[2:3] <- c("enumerator", "n_entries")
+      
+      enumerators <- rbind(enumerators, enum_i)
+      
+    }
+    
   }
   
-  p <- which(dat$project_cod %in% project)
+  enumerators$enumerator <- as.character(enumerators$enumerator)
   
-  assessments <- dat$assessments[[p]]
+  nsubs$interval_in_days <- as.integer(nsubs$interval_in_days)
   
-  newnames <- c("project_id", "name", "moment", "number_obs", "last_activity")
+  nsubs <- nsubs[order(nsubs$interval_in_days), ]
   
-  if (length(assessments) == 0) {
-    progress <- NULL
-  } 
+  rownames(nsubs) <- 1:nrow(nsubs)
   
-  if (length(assessments) > 1) {
-    
-    progress <- data.frame(project_id = dat[p, "project_cod"],
-                           project_name = dat[p, "project_name"],
-                           assessments[,c("ass_desc","submissions","lastass")])
-    
-    names(progress) <- newnames
-    
-  }
+  class(nsubs) <- union("CM_df", class(nsubs))
+  class(enumerators) <- union("CM_df", class(enumerators))
   
-  design <- dat[p ,c("project_cod","project_name", 
-                     "project_numobs", "project_creationdate")]
+  r <- list(submissions = nsubs,
+            enumerators = enumerators)
   
-  design$moment <- "Design"
+  class(r) <- union("CM_list", class(r))
   
-  design <- design[c(1:2,5,3:4)]
-  
-  names(design) <- newnames
-  
-  regis <- dat[p ,c("project_cod","project_name", 
-                    "regtotal","lastreg")]
-  
-  regis$moment <- "Registration"
-  
-  regis <- regis[c(1:2,5,3:4)]
-  
-  names(regis) <- newnames
-  
-  dat <- rbind(design, regis, progress)
-  
-  dat <- as.data.frame(dat, stringsAsFactors = FALSE)
-  
-  rownames(dat) <- 1:nrow(dat)
-  
-  class(dat) <- union("CM_df", class(dat))
-  
-  return(dat)
+  return(r)
   
 }
 

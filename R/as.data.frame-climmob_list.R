@@ -46,9 +46,9 @@ as.data.frame.CM_list <- function(x,
   
   has_data <- length(dat[["data"]]) > 0
   
-  ncomp <- dat$project$project_numcom
-  
   if (isTRUE(has_data)) {
+    
+    ncomp <- dat$project$project_numcom
     
     # get the names of assessments questions
     assess_q <- dat[["specialfields"]]

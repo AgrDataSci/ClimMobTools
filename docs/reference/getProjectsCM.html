@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -163,26 +163,20 @@ the data will be retrieved. See details</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with the ClimMob projects</p>
-<dt>project_id</dt><dd><p>the project unique id</p></dd>
-<dt>name</dt><dd><p>the project name</p></dd>
-<dt>country</dt><dd><p>ISO code for the country where the project was implemented</p></dd>
+    <p>A data.frame with the variables:</p>
+<dt>project_id</dt><dd><p>the project's id</p></dd>
+<dt>project_name</dt><dd><p>the project's name</p></dd>
+<dt>user_owner</dt><dd><p>the account name that owns the project</p></dd>
+<dt>country</dt><dd><p>the country of project's implementation</p></dd>
 <dt>status</dt><dd><p>the current status</p></dd>
-<dt>creation_date</dt><dd><p>the project's creation date</p></dd>
-<dt>intended_participants</dt><dd><p>the number of participants the project 
- intended to register</p></dd>
-<dt>intended_participants</dt><dd><p>the number of participants the project 
- intended to register</p></dd>
-<dt>registered_participants</dt><dd><p>the number of participants registered</p></dd>
-<dt>last_registration_activity</dt><dd><p>number of days since the submission 
- of the last registration</p></dd>
+<dt>creation_date</dt><dd><p>date where the project was created</p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>server</code>: the default server is "climmob" used for clients of 
-https://climmob.net/climmob3/, other options are:</p>
-<p>"1000farms" for clients of https://1000farms.climmob.net/</p> 
-<p>"rtb" for clients of https://rtb.climmob.net/</p>
+<a href='https://climmob.net/climmob3/'>https://climmob.net/climmob3/</a>, other options are:</p>
+<p>"1000farms" for clients of <a href='https://1000farms.climmob.net/'>https://1000farms.climmob.net/</a></p> 
+<p>"rtb" for clients of <a href='https://rtb.climmob.net/'>https://rtb.climmob.net/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>ClimMob website <a href='https://climmob.net/'>https://climmob.net/</a></p>
@@ -194,17 +188,15 @@ https://climmob.net/climmob3/, other options are:</p>
     <p>Kauê de Sousa</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> 
-<span class='co'># This function will not work without an API key  </span>
-<span class='co'># the user API key can be obtained once a free ClimMob account </span>
+    <pre class="examples"><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># interactive()</span>
+<span class='co'># This function only works with an API key</span>
+<span class='co'># the API key can be obtained once a free ClimMob account</span>
 <span class='co'># is created via https://climmob.net/</span>
 
-<span class='co'># my_key &lt;- "add_your_key"</span>
+<span class='va'>my_key</span> <span class='op'>&lt;-</span> <span class='st'>"92cec84d-44f5-4858-9ef0-bd872496311c"</span>
 
-<span class='co'># getProjectsCM(key = my_key)</span>
-
+<span class='fu'>getProjectsCM</span><span class='op'>(</span>key <span class='op'>=</span> <span class='va'>my_key</span>, server <span class='op'>=</span> <span class='st'>"testing"</span><span class='op'>)</span>
 <span class='op'>}</span>
-
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -217,7 +209,7 @@ https://climmob.net/climmob3/, other options are:</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kauê de Sousa, Jacob van Etten.</p>
+  <p>Developed by Kauê de Sousa, Jacob van Etten, Brandon Madriz.</p>
 </div>
 
 <div class="pkgdown">

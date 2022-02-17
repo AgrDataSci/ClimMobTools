@@ -15,6 +15,9 @@ rmGeoIdentity(lonlat, dist = 0.015, nQuadSegs = 2L, ...)
 
 \item{...}{further arguments passed to \code{\link[sf]{sf}} methods}
 }
+\value{
+A data frame with the anonymised coordinates long lat
+}
 \description{
 Build a buffer around the a set of geographical coordinates 
  and take a random point around the buffer. The function is 
@@ -29,8 +32,8 @@ xy <- matrix(c(11.097799, 60.801090,
 
 rmGeoIdentity(xy)
 
-# the function handles NAs by keeping then 
-# in a logic vector to reconstruct the matrix
+# the function also handles NAs
+
 xy2 <- matrix(c(11.097799, 60.801090,
                 NA, NA,
                 11.161298, 60.804199,

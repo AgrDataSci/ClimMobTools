@@ -4,50 +4,48 @@
 \alias{getProjectProgress}
 \title{Get project progress}
 \usage{
-getProjectProgress(key, project, server = "climmob3", ...)
+getProjectProgress(key, project, userowner, server = "climmob3")
 }
 \arguments{
 \item{key}{a character for the user's application programming 
 interface (API) key}
 
-\item{project}{a character with the id of one or more projects}
+\item{project}{a character for the project id}
+
+\item{userowner}{a character for user name of project's owner}
 
 \item{server}{optional, a character to select from which server
 the data will be retrieved. See details}
-
-\item{...}{additional arguments passed to methods. See details}
 }
 \value{
-A data frame with the ClimMob projects 
-\item{project_id}{the project unique id}
-\item{name}{the project name}
-\item{moment}{either the design, registration or data collection}
-\item{number_obs}{number of observations collected in a given moment}
-\item{last_activity}{last activity of the given moment}
+A list with number of submissions per assessment and 
+ submissions per assessment per enumerator
 }
 \description{
 Fetch the progress of a ClimMob project
 }
 \details{
 \code{server}: the default server is "climmob" used for clients of 
-https://climmob.net/climmob3/, other options are:
+\url{https://climmob.net/climmob3/}, other options are:
 
- "1000farms" for clients of https://1000farms.climmob.net/ 
+ "1000farms" for clients of \url{https://1000farms.climmob.net/} 
  
- "rtb" for clients of https://rtb.climmob.net/
+ "rtb" for clients of \url{https://rtb.climmob.net/}
 }
 \examples{
-# This function will not work without an API key  
-# the user API key can be obtained once a free ClimMob account 
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# This function only works with an API key
+# the API key can be obtained once a free ClimMob account
 # is created via https://climmob.net/
 
-# my_key <- "add_your_key"
+my_key <- "92cec84d-44f5-4858-9ef0-bd872496311c"
+ 
+getProjectProgress(key = my_key,
+                   project = "testmark",
+                   userowner = "kauedesousa",
+                   server = "testing")
 
-# my_project <- "project_id"
-
-# getProjectProgress(my_key, my_project)
-
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 ClimMob website \url{https://climmob.net/}
