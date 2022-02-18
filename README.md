@@ -15,7 +15,7 @@ ClimMobTools
 
 ## Overview
 
-**ClimMobTools** the API Client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for crowdsourcing citizen science in agriculture. Developed by [van Etten et al. (2019)](https://doi.org/10.1017/S0014479716000739) for the rapid assessment of on-farm evaluation trails in small-scale agriculture. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many farmers to carry out reasonably simple experiments that taken together can offer even more information.
+**ClimMobTools** the API Client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for decentralized large-N trials with the 'tricot' approach. Developed by [van Etten et al. (2019)](https://doi.org/10.1017/S0014479716000739) 'tricot' turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information.
 
 ## Package website
 
