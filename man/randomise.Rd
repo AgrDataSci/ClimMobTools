@@ -60,6 +60,10 @@ randomise(ncomp = ncomp,
           availability = availability)
           
 }
+\references{
+Bailey and Cameron (2004). Combinations of optimal designs. 
+  \url{https://webspace.maths.qmul.ac.uk/l.h.soicher/designtheory.org/library/preprints/optimal.pdf}
+}
 \author{
 Jacob van Etten
 }

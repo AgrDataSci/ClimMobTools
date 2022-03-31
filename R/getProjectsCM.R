@@ -56,8 +56,6 @@
 #' \url{https://climmob.net/climmob3/}, other options are:
 #' 
 #'  "1000farms" for clients of \url{https://1000farms.climmob.net/} 
-#'  
-#'  "rtb" for clients of \url{https://rtb.climmob.net/}
 #' 
 #' @return A data.frame with the variables:
 #' \item{project_id}{the project's id}

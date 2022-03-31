@@ -7,13 +7,19 @@
   "codeRepository": "https://agrdatasci.github.io/ClimMobTools/",
   "issueTracker": "https://github.com/agrdatasci/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.4.5.1",
+  "version": "0.4.5.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "runtimePlatform": "R version 4.1.3 (2022-03-10)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -173,5 +179,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "2338.347KB"
+  "fileSize": "2332.528KB"
 }

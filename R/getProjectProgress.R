@@ -13,8 +13,6 @@
 #' 
 #'  "1000farms" for clients of \url{https://1000farms.climmob.net/} 
 #'  
-#'  "rtb" for clients of \url{https://rtb.climmob.net/}
-#'  
 #' @examplesIf interactive()
 #' # This function only works with an API key
 #' # the API key can be obtained once a free ClimMob account

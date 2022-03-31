@@ -31,9 +31,7 @@ Fetch the status of ClimMob projects
 \code{server}: the default server is "climmob" used for clients of 
 \url{https://climmob.net/climmob3/}, other options are:
 
- "1000farms" for clients of \url{https://1000farms.climmob.net/} 
- 
- "rtb" for clients of \url{https://rtb.climmob.net/}
+ "1000farms" for clients of \url{https://1000farms.climmob.net/}
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
