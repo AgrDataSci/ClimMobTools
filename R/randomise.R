@@ -19,7 +19,10 @@
 #'  number of packages available for each \var{itemnames}
 #' @param proportions optional, a numeric vector with the desired proportions
 #'  for each \var{itemnames}
-#' @param ... additional arguments passed to methods  
+#' @param ... additional arguments passed to methods 
+#' @references 
+#'  Bailey and Cameron (2004). Combinations of optimal designs. 
+#'   \url{https://webspace.maths.qmul.ac.uk/l.h.soicher/designtheory.org/library/preprints/optimal.pdf}
 #' @return A dataframe with the randomised design
 #' @examples 
 #' ncomp <- 3
