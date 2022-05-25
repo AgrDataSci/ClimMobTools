@@ -165,6 +165,7 @@ as.data.frame.CM_list <- function(x,
         lonlat <- geo[i]
         
         lonlat[is.na(lonlat)] <- c("NA NA NA NA")
+        lonlat[lonlat == "None"] <- c("NA NA NA NA")
         lonlat[lonlat == ""] <- c("NA NA NA NA")
         
         lonlat <- t(apply(lonlat, 1, function(x) {
