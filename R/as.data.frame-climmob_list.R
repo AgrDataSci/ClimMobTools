@@ -52,7 +52,7 @@ as.data.frame.CM_list <- function(x,
     
     # get the names of assessments questions
     assess_q <- dat[["specialfields"]]
-
+    
     # check if overall VS local is present
     tricotvslocal <- grepl("Performance", assess_q$type)
     
@@ -206,7 +206,7 @@ as.data.frame.CM_list <- function(x,
     if (length(tricotvslocal) > 1) {
       
       if (all(c(1, 2) %in% unlist(trial[tricotvslocal]))) {
-      
+        
         trial[tricotvslocal] <-
           lapply(trial[tricotvslocal], function(x) {
             y <- factor(x, levels = c("1", "2"), labels = c("Better", "Worse"))
