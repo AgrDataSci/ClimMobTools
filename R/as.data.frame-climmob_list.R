@@ -168,11 +168,13 @@ as.data.frame.CM_list <- function(x,
         lonlat[lonlat == "None"] <- c("NA NA NA NA")
         lonlat[lonlat == ""] <- c("NA NA NA NA")
         
-        lonlat <- t(apply(lonlat, 1, function(x) {
+        lonlat <- apply(lonlat, 1, function(xx) {
           
-          unlist(strsplit(x, " "))
+          strsplit(xx, " ")[[1]]
           
-        }))
+        })
+        
+        lonlat <- do.call("rbind", lonlat)
         
         lonlat[lonlat == "NA"] <- NA
         
