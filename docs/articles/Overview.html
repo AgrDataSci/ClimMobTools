@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,23 +40,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -71,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/agrdatasci/ClimMobTools/">
+  <a href="https://github.com/agrdatasci/ClimMobTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -86,17 +82,26 @@
 
       
 
-      </header><script src="Overview_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>ClimMobTools: API Client for the ‘ClimMob’ platform in R</h1>
-                        <h4 class="author">Kauê de Sousa</h4>
+      <h1 data-toc-skip>ClimMobTools: API Client for the ‘ClimMob’
+platform in R</h1>
+                        <h4 data-toc-skip class="author">Kauê de
+Sousa</h4>
             <address class="author_afil">
-      Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway <br> Digital Inclusion, Bioversity International, Montpelier, France<br><h4 class="author">Jacob van Etten</h4>
+      Department of Agricultural Sciences, Inland Norway University of
+Applied Sciences, Hamar, Norway <br> Digital Inclusion, Bioversity
+International, Montpelier,
+France<br><h4 data-toc-skip class="author">Jacob
+van Etten</h4>
             <address class="author_afil">
-      Digital Inclusion, Bioversity International, Montpelier, France<br><h4 class="author">Brandon Madriz</h4>
+      Digital Inclusion, Bioversity International, Montpelier,
+France<br><h4 data-toc-skip class="author">Brandon
+Madriz</h4>
             <address class="author_afil">
-      MrBot Software Solutions, Cartago, Costa Rica<br><small class="dont-index">Source: <a href="https://github.com/agrdatasci/ClimMobTools/blob/master/vignettes/Overview.Rmd"><code>vignettes/Overview.Rmd</code></a></small>
+      MrBot Software Solutions, Cartago, Costa
+Rica<br><small class="dont-index">Source: <a href="https://github.com/agrdatasci/ClimMobTools/blob/HEAD/vignettes/Overview.Rmd" class="external-link"><code>vignettes/Overview.Rmd</code></a></small>
       <div class="hidden name"><code>Overview.Rmd</code></div>
 
     </address>
@@ -106,80 +111,110 @@
 
     
     
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p><strong>ClimMobTools</strong> the API Client for the ‘ClimMob’ platform in R. <a href="https://climmob.net/">ClimMob</a> is an open source software for crowdsourcing citizen science in agriculture under the tricot approach<span class="citation"><sup>1</sup></span>. The approach aims the rapid assessment of technologies in the target environment. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information.</p>
+<div class="section level3">
+<h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h3>
+<p><strong>ClimMobTools</strong> the API Client for the ‘ClimMob’
+platform in R. <a href="https://climmob.net/" class="external-link">ClimMob</a> is an open
+source software for crowdsourcing citizen science in agriculture under
+the tricot approach<span class="citation"><sup>1</sup></span>. The
+approach aims the rapid assessment of technologies in the target
+environment. Tricot turns the research paradigm on its head; instead of
+a few researchers designing complicated trials to compare several
+technologies in search of the best solutions, it enables many
+participants to carry out reasonably simple experiments that taken
+together can offer even more information.</p>
 </div>
-<div id="usage" class="section level1">
-<h1 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h1>
-<p>The <code>breadwheat</code> is a dataframe from crowdsourcing citizen science trials of bread wheat (<em>Triticum aestivum</em> L.) varieties in India. This is a sample data available at the <a href="https://climmob.net/">ClimMob</a> that can be fetched using the function <code><a href="../reference/getDataCM.html">getDataCM()</a></code> from <strong>ClimMobTools</strong> and an API key from the ClimMob user’s account.</p>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<p>The <code>breadwheat</code> is a dataframe from crowdsourcing citizen
+science trials of bread wheat (<em>Triticum aestivum</em> L.) varieties
+in India. This is a sample data available at the <a href="https://climmob.net/" class="external-link">ClimMob</a> that can be fetched using the
+function <code><a href="../reference/getDataCM.html">getDataCM()</a></code> from <strong>ClimMobTools</strong> and
+an API key from the ClimMob user’s account.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/ClimMobTools/">"ClimMobTools"</a></span><span class="op">)</span>
-
-<span class="co"># the API key</span>
-<span class="va">key</span> <span class="op">&lt;-</span> <span class="st">"d39a3c66-5822-4930-a9d4-50e7da041e77"</span>
-
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDataCM.html">getDataCM</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">key</span>,
-                 project <span class="op">=</span> <span class="st">"breadwheat"</span>,
-                 pivot.wider <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"firstassessment_|package_|lastassessment_|registration_"</span>, <span class="st">""</span>,
-                   <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/ClimMobTools/" class="external-link">"ClimMobTools"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the API key</span></span>
+<span><span class="va">key</span> <span class="op">&lt;-</span> <span class="st">"d39a3c66-5822-4930-a9d4-50e7da041e77"</span></span>
+<span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDataCM.html">getDataCM</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">key</span>,</span>
+<span>                 project <span class="op">=</span> <span class="st">"breadwheat"</span>,</span>
+<span>                 pivot.wider <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"firstassessment_|package_|lastassessment_|registration_"</span>, <span class="st">""</span>,</span>
+<span>                   <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="tricot-data-with-environmental-covariates" class="section level1">
-<h1 class="hasAnchor">
-<a href="#tricot-data-with-environmental-covariates" class="anchor"></a>Tricot data with environmental covariates</h1>
-<p>We can add environmental covariates from package <a href="https://CRAN.R-project.org/package=climatrends">climatrends</a>. Here we use function <code><a href="https://agrdatasci.github.io/climatrends/reference/temperature.html">temperature()</a></code> to compute the temperature indices for the first 80 days after planting.</p>
+<div class="section level2">
+<h2 id="tricot-data-with-environmental-covariates">Tricot data with environmental covariates<a class="anchor" aria-label="anchor" href="#tricot-data-with-environmental-covariates"></a>
+</h2>
+<p>We can add environmental covariates from package <a href="https://CRAN.R-project.org/package=climatrends" class="external-link">climatrends</a>.
+Here we use function <code><a href="https://agrdatasci.github.io/climatrends/reference/temperature.html" class="external-link">temperature()</a></code> to compute the
+temperature indices for the first 80 days after planting.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/climatrends/">"climatrends"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/nasapower/">"nasapower"</a></span><span class="op">)</span>
-
-<span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span>, format <span class="op">=</span> <span class="st">"%Y-%m-%d"</span><span class="op">)</span>
-<span class="va">dat</span><span class="op">$</span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_longitude</span><span class="op">)</span>
-<span class="va">dat</span><span class="op">$</span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_latitude</span><span class="op">)</span>
-
-<span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://agrdatasci.github.io/climatrends/reference/temperature.html">temperature</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>,<span class="st">"lat"</span><span class="op">)</span><span class="op">]</span>, 
-                    day.one <span class="op">=</span> <span class="va">dat</span><span class="op">[</span>, <span class="st">"plantingdate"</span><span class="op">]</span>,
-                    span <span class="op">=</span> <span class="fl">80</span><span class="op">)</span>
-
-<span class="va">temp</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/climatrends/" class="external-link">"climatrends"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/nasapower/" class="external-link">"nasapower"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span>, format <span class="op">=</span> <span class="st">"%Y-%m-%d"</span><span class="op">)</span></span>
+<span><span class="va">dat</span><span class="op">$</span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_longitude</span><span class="op">)</span></span>
+<span><span class="va">dat</span><span class="op">$</span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_latitude</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://agrdatasci.github.io/climatrends/reference/temperature.html" class="external-link">temperature</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>,<span class="st">"lat"</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>                    day.one <span class="op">=</span> <span class="va">dat</span><span class="op">[</span>, <span class="st">"plantingdate"</span><span class="op">]</span>,</span>
+<span>                    span <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">temp</span></span></code></pre></div>
 </div>
-<div id="tricot-data-into-rankings" class="section level1">
-<h1 class="hasAnchor">
-<a href="#tricot-data-into-rankings" class="anchor"></a>Tricot data into rankings</h1>
-<p>The Plackett-Luce model is one approach to analyse the ClimMob data<span class="citation"><sup>2</sup></span>. We build the farmers’ rankings as an object of class ‘grouped_rankings’. This allows the rankings to be linked to the environmental covariates computed previously and fit the model using <code><a href="https://hturner.github.io/PlackettLuce/reference/pltree.html">pltree()</a></code> from the package <a href="https://CRAN.R-project.org/package=PlackettLuce">PlackettLuce</a>.</p>
-<p>We build the rankings using the function <code><a href="../reference/rankTricot.html">rankTricot()</a></code>.</p>
+<div class="section level2">
+<h2 id="tricot-data-into-rankings">Tricot data into rankings<a class="anchor" aria-label="anchor" href="#tricot-data-into-rankings"></a>
+</h2>
+<p>The Plackett-Luce model is one approach to analyse the ClimMob
+data<span class="citation"><sup>2</sup></span>. We build the farmers’
+rankings as an object of class ‘grouped_rankings’. This allows the
+rankings to be linked to the environmental covariates computed
+previously and fit the model using <code><a href="https://hturner.github.io/PlackettLuce/reference/pltree.html" class="external-link">pltree()</a></code> from the
+package <a href="https://CRAN.R-project.org/package=PlackettLuce" class="external-link">PlackettLuce</a>.</p>
+<p>We build the rankings using the function
+<code><a href="../reference/rankTricot.html">rankTricot()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://hturner.github.io/PlackettLuce/">"PlackettLuce"</a></span><span class="op">)</span>
-
-<span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rankTricot.html">rankTricot</a></span><span class="op">(</span><span class="va">dat</span>, 
-                items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span><span class="op">)</span>, 
-                input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span><span class="op">)</span>,
-                group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="va">pld</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">R</span>, <span class="va">temp</span><span class="op">)</span>
-
-<span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hturner.github.io/PlackettLuce/reference/pltree.html">pltree</a></span><span class="op">(</span><span class="va">R</span> <span class="op">~</span> <span class="va">maxNT</span> <span class="op">+</span> <span class="va">maxDT</span>, 
-             data <span class="op">=</span> <span class="va">pld</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://hturner.github.io/PlackettLuce/" class="external-link">"PlackettLuce"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rankTricot.html">rankTricot</a></span><span class="op">(</span><span class="va">dat</span>, </span>
+<span>                items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span><span class="op">)</span>, </span>
+<span>                input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span><span class="op">)</span>,</span>
+<span>                group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pld</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">R</span>, <span class="va">temp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hturner.github.io/PlackettLuce/reference/pltree.html" class="external-link">pltree</a></span><span class="op">(</span><span class="va">R</span> <span class="op">~</span> <span class="va">maxNT</span> <span class="op">+</span> <span class="va">maxDT</span>, </span>
+<span>             data <span class="op">=</span> <span class="va">pld</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body" line-spacing="2">
 <div id="ref-vanEtten2019tricot" class="csl-entry">
 <div class="csl-left-margin">1. </div>
-<div class="csl-right-inline">van Etten, J., Beza, E., Calderer, L., Van Duijvendijk, K., <em>et al.</em> <span class="nocase">First experiences with a novel farmer citizen science approach: crowdsourcing participatory variety selection through on-farm triadic comparisons of technologies (tricot)</span>. <em>Experimental Agriculture</em> <strong>55</strong>, 275–296 (2019).</div>
+<div class="csl-right-inline">van
+Etten, J., Beza, E., Calderer, L., Van Duijvendijk, K., <em>et al.</em>
+<a href="https://doi.org/10.1017/S0014479716000739" class="external-link"><span class="nocase">First experiences with a novel farmer citizen science
+approach: crowdsourcing participatory variety selection through on-farm
+triadic comparisons of technologies (tricot)</span></a>.
+<em>Experimental Agriculture</em> <strong>55</strong>, 275–296
+(2019).</div>
 </div>
 <div id="ref-Turner2020" class="csl-entry">
 <div class="csl-left-margin">2. </div>
-<div class="csl-right-inline">Turner, H. L., Etten, J. van, Firth, D. &amp; Kosmidis, I. <span class="nocase">Modelling rankings in R: the PlackettLuce package</span>. <em>Computational Statistics</em> (2020). doi:<a href="https://doi.org/10.1007/s00180-020-00959-3">10.1007/s00180-020-00959-3</a>
+<div class="csl-right-inline">Turner, H. L., Etten, J. van, Firth, D. &amp;
+Kosmidis, I. <span class="nocase">Modelling rankings in R: the
+PlackettLuce package</span>. <em>Computational Statistics</em> (2020).
+doi:<a href="https://doi.org/10.1007/s00180-020-00959-3" class="external-link">10.1007/s00180-020-00959-3</a>
 </div>
 </div>
 </div>
@@ -197,11 +232,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kauê de Sousa, Jacob van Etten, Brandon Madriz.</p>
+  <p></p>
+<p>Developed by Kauê de Sousa, Jacob van Etten, Brandon Madriz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -209,6 +246,8 @@
 
   
 
+
+  
 
   </body>
 </html>

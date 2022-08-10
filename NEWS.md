@@ -1,3 +1,10 @@
+ClimMobTools 0.4.6 (2022-08-11)
+=========================
+### IMPROVEMENTS
+
+* Adds the function `getTraitList()`
+* Fix the call in `getProjectsCM()` to adapt to the new version of ClimMob
+
 ClimMobTools 0.4.5 (2021-02-14)
 =========================
 
