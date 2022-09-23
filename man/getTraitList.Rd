@@ -26,11 +26,12 @@ This function helps in identifying the traits
  into a PlackettLuce ranking
 }
 \examples{
+\dontshow{if (interactive() ) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
-library("gosset")
+require("gosset")
 
 data("breadwheat", package = "gosset")
 
 getTraitList(breadwheat, c("_best", "_worst"))
-
+\dontshow{\}) # examplesIf}
 }

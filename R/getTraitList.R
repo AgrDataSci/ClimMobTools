@@ -11,9 +11,9 @@
 #' @param trait.labels an optional character with clean trait labels
 #' @param ... additional arguments, not implemented yet
 #' @return a list with trait validation data
-#' @examples 
+#' @examplesIf interactive() 
 #' 
-#' library("gosset")
+#' require("gosset")
 #' 
 #' data("breadwheat", package = "gosset")
 #' 

@@ -4,10 +4,10 @@
 \alias{rmGeoIdentity}
 \title{Remove geographical identity}
 \usage{
-rmGeoIdentity(lonlat, dist = 0.015, nQuadSegs = 2L, ...)
+rmGeoIdentity(longlat, dist = 0.015, nQuadSegs = 2L, ...)
 }
 \arguments{
-\item{lonlat}{a data.frame or matrix with geographical coordinates long lat}
+\item{longlat}{a data.frame or matrix with geographical coordinates long lat}
 
 \item{dist}{numeric, buffer distance for all \var{lonlat}}
 
@@ -16,7 +16,7 @@ rmGeoIdentity(lonlat, dist = 0.015, nQuadSegs = 2L, ...)
 \item{...}{further arguments passed to \code{\link[sf]{sf}} methods}
 }
 \value{
-A data frame with the anonymised coordinates long lat
+A data frame with the random coordinates long lat whithin a pre-defined buffer
 }
 \description{
 Build a buffer around the a set of geographical coordinates 
@@ -25,6 +25,7 @@ Build a buffer around the a set of geographical coordinates
  but keeping a close distance to its agro-environment
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 xy <- matrix(c(11.097799, 60.801090,
                11.161298, 60.804199,
                11.254428, 60.822457),
@@ -32,7 +33,7 @@ xy <- matrix(c(11.097799, 60.801090,
 
 rmGeoIdentity(xy)
 
-# the function also handles NAs
+#' the function also handles NAs
 
 xy2 <- matrix(c(11.097799, 60.801090,
                 NA, NA,
@@ -42,5 +43,5 @@ xy2 <- matrix(c(11.097799, 60.801090,
               nrow = 5, ncol = 2, byrow = TRUE)
 
 rmGeoIdentity(xy2)
- 
+\dontshow{\}) # examplesIf}
 }

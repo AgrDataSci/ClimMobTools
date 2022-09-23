@@ -346,6 +346,10 @@ as.data.frame.CM_list <- function(x,
     
     output <- output[,c("id", variable_levels)]
     
+    names(output) <- gsub("overallpos", "overall_pos", names(output))
+    
+    names(output) <- gsub("overallneg", "overall_neg", names(output))
+    
   }
   
   row.names(output) <- seq_along(output$id)

@@ -5,12 +5,12 @@
 #'  used to omit the precise location of tricot participants 
 #'  but keeping a close distance to its agro-environment
 #'   
-#' @param lonlat a data.frame or matrix with geographical coordinates long lat
+#' @param longlat a data.frame or matrix with geographical coordinates long lat
 #' @param dist numeric, buffer distance for all \var{lonlat}
 #' @param nQuadSegs integer, number of segments per quadrant
 #' @param ... further arguments passed to \code{\link[sf]{sf}} methods
-#' @return A data frame with the anonymised coordinates long lat
-#' @examples 
+#' @return A data frame with the random coordinates long lat whithin a pre-defined buffer
+#' @examplesIf interactive()
 #' xy <- matrix(c(11.097799, 60.801090,
 #'                11.161298, 60.804199,
 #'                11.254428, 60.822457),
@@ -18,7 +18,7 @@
 #' 
 #' rmGeoIdentity(xy)
 #' 
-#' # the function also handles NAs
+#' #' the function also handles NAs
 #' 
 #' xy2 <- matrix(c(11.097799, 60.801090,
 #'                 NA, NA,
@@ -28,58 +28,60 @@
 #'               nrow = 5, ncol = 2, byrow = TRUE)
 #' 
 #' rmGeoIdentity(xy2)
-#'  
-#' @importFrom sf st_point st_sfc st_buffer st_sample
+#' 
 #' @export
-rmGeoIdentity <- function(lonlat, dist = 0.015, nQuadSegs = 2L, ...){
-  
-  lonlat <- as.matrix(lonlat)
-  
-  n <- nrow(lonlat)
-  
+rmGeoIdentity <- function(longlat, dist = 0.015, nQuadSegs = 2L, ...){
+
+  longlat <- as.matrix(longlat)
+
+  n <- nrow(longlat)
+
   # check NAs in lonlat
-  anyNAs <- is.na(lonlat[,1]) | is.na(lonlat[,2])
-  
+  anyNAs <- is.na(longlat[,1]) | is.na(longlat[,2])
+
   # put all both xy as NA
-  lonlat[anyNAs, ] <- NA
-  
+  longlat[anyNAs, ] <- NA
+
   # split lonlat by rows
-  lonlat <- split(lonlat, seq_len(n))
-  
+  longlat <- split(longlat, seq_len(n))
+
   # transform into sf points
-  lonlat <- lapply(lonlat, function(l) {
-    sf::st_point(l)
+  longlat <- lapply(longlat, function(l) {
+    a <- list(x = l)
+    do.call("st_point", a)
   })
-  
+
   # and then into a geometry list column
-  lonlat <- sf::st_sfc(lonlat)
+  longlat <- do.call("st_sfc", longlat)
+
+  args <- list(x = longlat,
+               dist = dist, 
+               nQuadSegs = nQuadSegs)
   
-  # set the buffer around the points
-  lonlatb <- sf::st_buffer(lonlat,
-                           dist = dist,
-                           nQuadSegs = nQuadSegs)
+  lonlatb <- do.call("st_buffer", args)
   
   result <- split(lonlatb, seq_len(n))
-  
+
   result[!anyNAs] <- lapply(result[!anyNAs], function(x){
-    sf::st_sample(x, size = 1, type = "random", by_polygon = TRUE)
+    a <- list(x = x, size = 1, type = "random", by_polygon = TRUE)
+    do.call("st_sample", a)
   })
-  
+
   result <- do.call(rbind, result)
-  
-  result <- sf::st_sfc(result)
-  
+
+  result <- do.call("st_sfc", result)
+
   r <- matrix(NA, nrow = n, ncol = 2)
-  
+
   r[!anyNAs, ] <- matrix(unlist(result),
-                         ncol = 2, 
-                         nrow = sum(!anyNAs), 
+                         ncol = 2,
+                         nrow = sum(!anyNAs),
                          byrow = TRUE)
-  
+
   r <- as.data.frame(r)
-  
+
   names(r) <- c("long", "lat")
-  
+
   return(r)
-  
+
 }
