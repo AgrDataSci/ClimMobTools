@@ -31,7 +31,8 @@
   if (isFALSE(known) & isFALSE(server == "climmob3") & isFALSE(server == "testing")) {
     
     stop("You are trying to reach an unknown server, please choose between '", 
-         paste(c("climmob", other_server), collapse = "', '"), "'\n")
+         paste(c("climmob3", unique(toupper(other_server))),
+               collapse = "', '"), "'\n")
     
   }
   
@@ -100,11 +101,13 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   
   dat <- cbind(dat, owner)
   
-  dat <- dat[,c("project_cod", "project_name", "owner_user_name", 
-                "project_cnty", "project_creationdate")]
+  dat <- dat[,c("project_cod", "project_name", "project_pi", 
+                "owner_user_name", "project_piemail", "project_tags",
+                "project_numobs", "project_cnty", "project_creationdate")]
 
-  names(dat) <- c("project_id", "project_name", "user_owner",
-                  "country", "creation_date")
+  names(dat) <- c("project_id", "project_name", "coordinator",
+                  "user_owner", "email", "keywords", 
+                  "npackages", "country", "creation_date")
   
   dat$creation_date <- with(dat, as.Date(creation_date, origin = "1970-01-01"))
 
