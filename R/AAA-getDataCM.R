@@ -74,7 +74,7 @@ getDataCM <- function(key,
   if (length(cmdata) < 7) {
     pstring <- paste0("'",project,"'")
     message("Project ", pstring, " was found but has no associated data. \n")
-    return(project)
+    cmdata <- list()
   }
   
   class(cmdata) <- union("CM_list", class(cmdata))
