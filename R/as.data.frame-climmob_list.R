@@ -44,6 +44,12 @@ as.data.frame.CM_list <- function(x,
   
   regs_name <- paste0("REG_", regs[, "name"])
   
+  # get some info on the trial
+  trial_tech <- dat$packages$comps[[1]]$technologies[[1]]$tech_name
+  trial_pi <- dat$project$project_pi
+  trial_country <- dat$project$project_cnty
+  
+  
   has_data <- length(dat[["data"]]) > 0
   
   if (isTRUE(has_data)) {
@@ -274,6 +280,9 @@ as.data.frame.CM_list <- function(x,
   
   # add project name
   pack$project_name <- project_name
+  pack$technology <- trial_tech
+  pack$coordinator <- trial_pi
+  pack$country <- trial_country
   
   pack <- .set_long(pack, "package_id")
   
