@@ -49,8 +49,12 @@ as.data.frame.CM_list <- function(x,
   trial_pi <- dat$project$project_pi
   trial_country <- dat$project$project_cnty
   
-  
   has_data <- length(dat[["data"]]) > 0
+  
+  if (isFALSE(has_data)) {
+    message("Project ", project_name, " has no associated data. \n")
+    return(data.frame())
+  }
   
   if (isTRUE(has_data)) {
     

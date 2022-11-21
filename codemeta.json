@@ -7,7 +7,7 @@
   "codeRepository": "https://agrdatasci.github.io/ClimMobTools/",
   "issueTracker": "https://github.com/agrdatasci/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -191,5 +191,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "1217.168KB"
+  "fileSize": "1217.505KB"
 }

@@ -113,6 +113,8 @@ getProjectsCM <- function(key, server = "climmob3", ...){
 
   dat <- as.data.frame(dat, stringsAsFactors = FALSE)
   
+  dat$server <- server
+  
   class(dat) <- union("CM_df", class(dat))
   
   return(dat)
