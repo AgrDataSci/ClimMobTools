@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0</span>
       </span>
     </div>
 
@@ -90,10 +90,10 @@ platform in R</h1>
                         <h4 data-toc-skip class="author">Kauê de
 Sousa</h4>
             <address class="author_afil">
-      Department of Agricultural Sciences, Inland Norway University of
-Applied Sciences, Hamar, Norway <br> Digital Inclusion, Bioversity
-International, Montpelier,
-France<br><h4 data-toc-skip class="author">Jacob
+      Digital Inclusion, Bioversity International, Montpelier, France
+<br> Department of Agricultural Sciences, Inland Norway University of
+Applied Sciences, Hamar,
+Norway<br><h4 data-toc-skip class="author">Jacob
 van Etten</h4>
             <address class="author_afil">
       Digital Inclusion, Bioversity International, Montpelier,
@@ -135,12 +135,16 @@ function <code><a href="../reference/getDataCM.html">getDataCM()</a></code> from
 an API key from the ClimMob user’s account.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/ClimMobTools/" class="external-link">"ClimMobTools"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://hturner.github.io/PlackettLuce/" class="external-link">"PlackettLuce"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/climatrends/" class="external-link">"climatrends"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/nasapower/" class="external-link">"nasapower"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># the API key</span></span>
 <span><span class="va">key</span> <span class="op">&lt;-</span> <span class="st">"d39a3c66-5822-4930-a9d4-50e7da041e77"</span></span>
 <span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDataCM.html">getDataCM</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">key</span>,</span>
 <span>                 project <span class="op">=</span> <span class="st">"breadwheat"</span>,</span>
+<span>                 userowner <span class="op">=</span> <span class="st">"gosset"</span>,</span>
 <span>                 pivot.wider <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -154,10 +158,7 @@ an API key from the ClimMob user’s account.</p>
 Here we use function <code><a href="https://agrdatasci.github.io/climatrends/reference/temperature.html" class="external-link">temperature()</a></code> to compute the
 temperature indices for the first 80 days after planting.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/climatrends/" class="external-link">"climatrends"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/nasapower/" class="external-link">"nasapower"</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span>, format <span class="op">=</span> <span class="st">"%Y-%m-%d"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">plantingdate</span>, format <span class="op">=</span> <span class="st">"%Y-%m-%d"</span><span class="op">)</span></span>
 <span><span class="va">dat</span><span class="op">$</span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_longitude</span><span class="op">)</span></span>
 <span><span class="va">dat</span><span class="op">$</span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">farm_geo_latitude</span><span class="op">)</span></span>
 <span></span>
@@ -165,7 +166,20 @@ temperature indices for the first 80 days after planting.</p>
 <span>                    day.one <span class="op">=</span> <span class="va">dat</span><span class="op">[</span>, <span class="st">"plantingdate"</span><span class="op">]</span>,</span>
 <span>                    span <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">temp</span></span></code></pre></div>
+<span><span class="va">temp</span></span>
+<span><span class="co">#&gt;      maxDT minDT maxNT minNT   DTR    SU    TR   CFD  WSDI  CSDI  T10p  T90p</span></span>
+<span><span class="co">#&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1:   30.75 20.65 17.67  4.63    15     2     0     0     3     2  5.50 27.74</span></span>
+<span><span class="co">#&gt; 2:   29.15 20.65 16.52  4.63    15     0     0     0     4     2  5.50 27.46</span></span>
+<span><span class="co">#&gt; 3:   32.76 20.65 18.49  4.63    15     7     0     0     8     2  5.50 29.16</span></span>
+<span><span class="co">#&gt; 4:   29.15 20.65 16.52  4.63    15     0     0     0     3     2  5.50 27.27</span></span>
+<span><span class="co">#&gt; 5:   29.15 20.65 16.52  4.63    15     0     0     0     4     2  5.50 26.22</span></span>
+<span><span class="co">#&gt; ---                                                                         </span></span>
+<span><span class="co">#&gt; 489: 29.15 20.65 16.52  4.63    15     0     0     0     3     2  5.50 27.27</span></span>
+<span><span class="co">#&gt; 490: 29.15 20.65 16.52  4.63    15     0     0     0     3     2  5.50 27.27</span></span>
+<span><span class="co">#&gt; 491: 32.76 20.65 17.67  4.63    15     5     0     0     6     2  5.50 28.41</span></span>
+<span><span class="co">#&gt; 492: 29.15 20.65 16.52  4.63    15     0     0     0     3     2  5.50 27.27</span></span>
+<span><span class="co">#&gt; 493: 29.15 20.65 16.52  4.63    15     0     0     0     3     2  5.50 27.27</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="tricot-data-into-rankings">Tricot data into rankings<a class="anchor" aria-label="anchor" href="#tricot-data-into-rankings"></a>
@@ -179,9 +193,7 @@ package <a href="https://CRAN.R-project.org/package=PlackettLuce" class="externa
 <p>We build the rankings using the function
 <code><a href="../reference/rankTricot.html">rankTricot()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://hturner.github.io/PlackettLuce/" class="external-link">"PlackettLuce"</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rankTricot.html">rankTricot</a></span><span class="op">(</span><span class="va">dat</span>, </span>
+<code class="sourceCode R"><span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rankTricot.html">rankTricot</a></span><span class="op">(</span><span class="va">dat</span>, </span>
 <span>                items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span><span class="op">)</span>, </span>
 <span>                input <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"overallperf_pos"</span>,<span class="st">"overallperf_neg"</span><span class="op">)</span>,</span>
 <span>                group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -192,8 +204,66 @@ package <a href="https://CRAN.R-project.org/package=PlackettLuce" class="externa
 <span>             data <span class="op">=</span> <span class="va">pld</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`2`</span></span>
+<span><span class="co">#&gt; Call: PlackettLuce(rankings = y, weights = weights, na.action = NULL, </span></span>
+<span><span class="co">#&gt;     start = start)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;           Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span><span class="co">#&gt; CSW18       0.0000         NA      NA       NA    </span></span>
+<span><span class="co">#&gt; WR544      -3.3246     0.4380  -7.590 3.20e-14 ***</span></span>
+<span><span class="co">#&gt; PBW343     -0.6595     0.4512  -1.462 0.143852    </span></span>
+<span><span class="co">#&gt; HP1633     -3.4306     0.4323  -7.936 2.09e-15 ***</span></span>
+<span><span class="co">#&gt; HW2045     -3.5339     0.4396  -8.039 9.03e-16 ***</span></span>
+<span><span class="co">#&gt; DBW17      -1.4614     0.4132  -3.537 0.000405 ***</span></span>
+<span><span class="co">#&gt; HD2985     -2.0511     0.4413  -4.648 3.35e-06 ***</span></span>
+<span><span class="co">#&gt; DPW621-50  -2.0924     0.4376  -4.782 1.74e-06 ***</span></span>
+<span><span class="co">#&gt; HD2824     -3.1032     0.4347  -7.138 9.46e-13 ***</span></span>
+<span><span class="co">#&gt; RAJ4120    -3.0018     0.4331  -6.932 4.16e-12 ***</span></span>
+<span><span class="co">#&gt; PBW550     -3.2180     0.4269  -7.537 4.79e-14 ***</span></span>
+<span><span class="co">#&gt; K0307      -3.4931     0.4458  -7.835 4.67e-15 ***</span></span>
+<span><span class="co">#&gt; HI1563     -3.4131     0.4425  -7.713 1.23e-14 ***</span></span>
+<span><span class="co">#&gt; PBW502     -3.1382     0.4539  -6.914 4.71e-12 ***</span></span>
+<span><span class="co">#&gt; HD2932     -2.7048     0.4320  -6.261 3.83e-10 ***</span></span>
+<span><span class="co">#&gt; K9107       0.2791     0.4794   0.582 0.560486    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual deviance:  766.05 on 855 degrees of freedom</span></span>
+<span><span class="co">#&gt; AIC:  796.05 </span></span>
+<span><span class="co">#&gt; Number of iterations: 25</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`3`</span></span>
+<span><span class="co">#&gt; Call: PlackettLuce(rankings = y, weights = weights, na.action = NULL, </span></span>
+<span><span class="co">#&gt;     start = start)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;           Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span><span class="co">#&gt; CSW18       0.0000         NA      NA       NA    </span></span>
+<span><span class="co">#&gt; WR544      -2.1327     0.4498  -4.741 2.13e-06 ***</span></span>
+<span><span class="co">#&gt; PBW343      0.2557     0.4366   0.586 0.558045    </span></span>
+<span><span class="co">#&gt; HP1633     -2.1386     0.4676  -4.574 4.79e-06 ***</span></span>
+<span><span class="co">#&gt; HW2045     -1.9125     0.4482  -4.267 1.98e-05 ***</span></span>
+<span><span class="co">#&gt; DBW17      -0.7026     0.4481  -1.568 0.116904    </span></span>
+<span><span class="co">#&gt; HD2985     -1.1698     0.4286  -2.729 0.006343 ** </span></span>
+<span><span class="co">#&gt; DPW621-50  -1.5821     0.4475  -3.535 0.000408 ***</span></span>
+<span><span class="co">#&gt; HD2824     -2.5380     0.4852  -5.231 1.69e-07 ***</span></span>
+<span><span class="co">#&gt; RAJ4120    -2.5301     0.4974  -5.087 3.64e-07 ***</span></span>
+<span><span class="co">#&gt; PBW550     -2.1052     0.4693  -4.486 7.26e-06 ***</span></span>
+<span><span class="co">#&gt; K0307      -2.3455     0.4467  -5.251 1.51e-07 ***</span></span>
+<span><span class="co">#&gt; HI1563     -2.3205     0.4502  -5.154 2.54e-07 ***</span></span>
+<span><span class="co">#&gt; PBW502     -1.9471     0.4245  -4.586 4.51e-06 ***</span></span>
+<span><span class="co">#&gt; HD2932     -1.5077     0.4469  -3.374 0.000741 ***</span></span>
+<span><span class="co">#&gt; K9107       1.1110     0.5217   2.129 0.033215 *  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual deviance:  559.08 on 594 degrees of freedom</span></span>
+<span><span class="co">#&gt; AIC:  589.08 </span></span>
+<span><span class="co">#&gt; Number of iterations: 15</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Overview_files/figure-html/plrankings-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

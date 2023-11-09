@@ -1,3 +1,11 @@
+ClimMobTools 1.0 (2023-11-10)
+=========================
+
+### BUG FIXES
+
+* Fix an issue in `randomize()` to allocate blocks 
+
+
 ClimMobTools 0.4.6 (2022-08-11)
 =========================
 

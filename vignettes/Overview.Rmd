@@ -3,7 +3,7 @@ title: "ClimMobTools: API Client for the 'ClimMob' platform in R"
 package: ClimMobTools
 author:
 - name: Kauê de Sousa
-  affiliation: Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway <br> Digital Inclusion, Bioversity International, Montpelier, France
+  affiliation: Digital Inclusion, Bioversity International, Montpelier, France <br> Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway
 - name: Jacob van Etten
   affiliation: Digital Inclusion, Bioversity International, Montpelier, France
 - name: Brandon Madriz
@@ -13,6 +13,9 @@ vignette: >
   %\VignetteIndexEntry{ClimMobTools}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteDepends{PlackettLuce}
+  %\VignetteDepends{climatrends}
+  %\VignetteDepends{nasapower}
 bibliography: ["ClimMobTools.bib"]
 csl: citation_style.csl
 ---
@@ -24,6 +27,11 @@ knitr::opts_chunk$set(
   comment = "#>",
   purl = TRAVIS
 )
+
+library("ClimMobTools")
+library("PlackettLuce")
+library("climatrends")
+library("nasapower")
 ```
 
 ## Overview
@@ -34,14 +42,18 @@ knitr::opts_chunk$set(
 
 The `breadwheat` is a dataframe from crowdsourcing citizen science trials of bread wheat (*Triticum aestivum* L.) varieties in India. This is a sample data available at the [ClimMob](https://climmob.net/) that can be fetched using the function `getDataCM()` from **ClimMobTools** and an API key from the ClimMob user's account.
 
-```{r fetch, message=FALSE, eval=FALSE, echo=TRUE}
+```{r fetch, message=FALSE, eval=TRUE, echo=TRUE}
 library("ClimMobTools")
+library("PlackettLuce")
+library("climatrends")
+library("nasapower")
 
 # the API key
 key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
 dat <- getDataCM(key = key,
                  project = "breadwheat",
+                 userowner = "gosset",
                  pivot.wider = TRUE)
 
 
@@ -54,10 +66,7 @@ names(dat) <- gsub("firstassessment_|package_|lastassessment_|registration_", ""
 
 We can add environmental covariates from package [climatrends](https://CRAN.R-project.org/package=climatrends). Here we use function `temperature()` to compute the temperature indices for the first 80 days after planting. 
 
-```{r temperature, message=FALSE, eval=FALSE, echo=TRUE}
-library("climatrends")
-library("nasapower")
-
+```{r temperature, message=FALSE, eval=TRUE, echo=TRUE}
 dat$plantingdate <- as.Date(dat$plantingdate, format = "%Y-%m-%d")
 dat$lon <- as.numeric(dat$farm_geo_longitude)
 dat$lat <- as.numeric(dat$farm_geo_latitude)
@@ -76,9 +85,7 @@ The Plackett-Luce model is one approach to analyse the ClimMob data[@Turner2020]
 
 We build the rankings using the function `rankTricot()`. 
 
-```{r plrankings, message=FALSE, eval=FALSE, echo=TRUE}
-library("PlackettLuce")
-
+```{r plrankings, message=FALSE, eval=TRUE, echo=TRUE}
 R <- rankTricot(dat, 
                 items = c("item_A","item_B","item_C"), 
                 input = c("overallperf_pos","overallperf_neg"),

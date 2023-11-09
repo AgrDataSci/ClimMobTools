@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0</span>
       </span>
     </div>
 
@@ -99,25 +99,26 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
-<span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11.097799</span>, <span class="fl">60.801090</span>,</span>
-<span>               <span class="fl">11.161298</span>, <span class="fl">60.804199</span>,</span>
-<span>               <span class="fl">11.254428</span>, <span class="fl">60.822457</span><span class="op">)</span>,</span>
-<span>             nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">rmGeoIdentity</span><span class="op">(</span><span class="va">xy</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#' the function also handles NAs</span></span>
-<span></span>
-<span><span class="va">xy2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11.097799</span>, <span class="fl">60.801090</span>,</span>
-<span>                <span class="cn">NA</span>, <span class="cn">NA</span>,</span>
-<span>                <span class="fl">11.161298</span>, <span class="fl">60.804199</span>,</span>
-<span>                <span class="fl">11.254428</span>, <span class="fl">60.822457</span>,</span>
-<span>                <span class="fl">11.254428</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
-<span>              nrow <span class="op">=</span> <span class="fl">5</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">rmGeoIdentity</span><span class="op">(</span><span class="va">xy2</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11.097799</span>, <span class="fl">60.801090</span>,</span></span>
+<span class="r-in"><span>               <span class="fl">11.161298</span>, <span class="fl">60.804199</span>,</span></span>
+<span class="r-in"><span>               <span class="fl">11.254428</span>, <span class="fl">60.822457</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">rmGeoIdentity</span><span class="op">(</span><span class="va">xy</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#' the function also handles NAs</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">xy2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11.097799</span>, <span class="fl">60.801090</span>,</span></span>
+<span class="r-in"><span>                <span class="cn">NA</span>, <span class="cn">NA</span>,</span></span>
+<span class="r-in"><span>                <span class="fl">11.161298</span>, <span class="fl">60.804199</span>,</span></span>
+<span class="r-in"><span>                <span class="fl">11.254428</span>, <span class="fl">60.822457</span>,</span></span>
+<span class="r-in"><span>                <span class="fl">11.254428</span>, <span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>              nrow <span class="op">=</span> <span class="fl">5</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">rmGeoIdentity</span><span class="op">(</span><span class="va">xy2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

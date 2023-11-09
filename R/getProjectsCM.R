@@ -69,9 +69,9 @@
 #' # the API key can be obtained once a free ClimMob account
 #' # is created via https://climmob.net/
 #' 
-#' my_key <- "92cec84d-44f5-4858-9ef0-bd872496311c"
+#' my_key <- "ff05a174-28d0-4a40-ab5a-35dc486133a6"
 #' 
-#' getProjectsCM(key = my_key, server = "testing")
+#' getProjectsCM(key = my_key, server = "1000FARMS")
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @export

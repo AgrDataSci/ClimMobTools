@@ -29,13 +29,22 @@
 #' # This function only works with an API key
 #' # the API key can be obtained once a free ClimMob account
 #' # is created via https://climmob.net/
-#' 
-#' my_key <- "92cec84d-44f5-4858-9ef0-bd872496311c"
+#'  
+#' library("ClimMobTools")
+#' my_key <- "ff05a174-28d0-4a40-ab5a-35dc486133a6"
 #' 
 #' getDataCM(key = my_key,
-#'           project = "testmark",
-#'           userowner = "kauedesousa",
-#'           server = "testing")
+#'           project = "beanaru23",
+#'           userowner = "student",
+#'           server = "1000farms")
+#'           
+#' # get in the wide format
+#' 
+#' getDataCM(key = my_key,
+#'           project = "beanaru23",
+#'           userowner = "student",
+#'           server = "1000farms",
+#'           pivot.wider = TRUE)
 #' 
 #' @seealso ClimMob website \url{https://climmob.net/}
 #' @importFrom httr accept_json content RETRY
@@ -87,3 +96,8 @@ getDataCM <- function(key,
   return(cmdata)
   
 }
+
+
+
+
+

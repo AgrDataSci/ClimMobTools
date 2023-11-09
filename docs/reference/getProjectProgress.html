@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0</span>
       </span>
     </div>
 
@@ -113,19 +113,21 @@ the data will be retrieved. See details</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
-<span><span class="co"># This function only works with an API key</span></span>
-<span><span class="co"># the API key can be obtained once a free ClimMob account</span></span>
-<span><span class="co"># is created via https://climmob.net/</span></span>
-<span></span>
-<span><span class="va">my_key</span> <span class="op">&lt;-</span> <span class="st">"92cec84d-44f5-4858-9ef0-bd872496311c"</span></span>
-<span> </span>
-<span><span class="fu">getProjectProgress</span><span class="op">(</span>key <span class="op">=</span> <span class="va">my_key</span>,</span>
-<span>                   project <span class="op">=</span> <span class="st">"testmark"</span>,</span>
-<span>                   userowner <span class="op">=</span> <span class="st">"kauedesousa"</span>,</span>
-<span>                   server <span class="op">=</span> <span class="st">"testing"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="op">}</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span><span class="co"># This function only works with an API key</span></span></span>
+<span class="r-in"><span><span class="co"># the API key can be obtained once a free ClimMob account</span></span></span>
+<span class="r-in"><span><span class="co"># is created via https://climmob.net/</span></span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://agrdatasci.github.io/ClimMobTools/" class="external-link">"ClimMobTools"</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">my_key</span> <span class="op">&lt;-</span> <span class="st">"ff05a174-28d0-4a40-ab5a-35dc486133a6"</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">getProjectProgress</span><span class="op">(</span>key <span class="op">=</span> <span class="va">my_key</span>,</span></span>
+<span class="r-in"><span>                   project <span class="op">=</span> <span class="st">"beanaru23"</span>,</span></span>
+<span class="r-in"><span>                   userowner <span class="op">=</span> <span class="st">"student"</span>,</span></span>
+<span class="r-in"><span>                   server <span class="op">=</span> <span class="st">"1000FARMS"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

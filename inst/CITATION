@@ -1,0 +1,20 @@
+bibentry(bibtype = "Article",
+  title = "{ClimMob: Software to Support Experimental Citizen Science in Agriculture}",
+  doi = "10.2139/ssrn.4463406",
+  url = "http://dx.doi.org/10.2139/ssrn.4463406",
+  year = "2023",
+  publisher = "{Elsevier BV}",
+  author = c(person("Carlos", "Quirós"),
+  person("Kauê", "de Sousa"), 
+    person("Jonathan", "Steinke"),
+    person("Brandon", "Madriz"),
+    person("Marie-Angélique", "Laporte"),
+    person("Elizabeth","Arnaud"),
+    person("Rhys","Manners"),
+    person("Berta","Ortiz-Crespo"),
+    person("Anna","Müller"),
+    person("Jacob","van Etten")),
+  journal = "{SSRN} Electronic Journal",
+  textVersion = "Carlos Quirós, Kauê de Sousa, Jonathan Steinke, Brandon Madriz, Marie-Angélique Laporte, Elizabeth Arnaud, Rhys Manners, Berta Ortiz-Crespo, Anna Müller, Jacob van Etten. ClimMob: Software to Support Experimental Citizen Science in Agriculture. SSRN http://dx.doi.org/10.2139/ssrn.4463406")
+  
+  

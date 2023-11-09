@@ -4,9 +4,7 @@ ClimMobTools
 
 <!-- badges: start -->
 [![CRAN](https://www.r-pkg.org/badges/version/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
-[![CRANchecks](https://cranchecks.info/badges/worst/ClimMobTools)](https://cran.r-project.org/web/checks/check_results_ClimMobTools.html)
-[![codecov](https://codecov.io/gh/agrdatasci/ClimMobTools/master.svg)](https://codecov.io/github/agrdatasci/ClimMobTools?branch=master)  
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) 
+[![CRANchecks](https://badges.cranchecks.info/worst/ClimMobTools.svg)](https://cran.r-project.org/web/checks/check_results_ClimMobTools.html)
 [![Downloads](https://cranlogs.r-pkg.org/badges/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
 <!-- badges: end -->
 

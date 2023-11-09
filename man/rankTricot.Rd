@@ -4,7 +4,15 @@
 \alias{rankTricot}
 \title{Build Plackett-Luce rankings from tricot dataset}
 \usage{
-rankTricot(data, items, input, group = FALSE, additional.rank = NULL, ...)
+rankTricot(
+  data,
+  items,
+  input,
+  group = FALSE,
+  validate.rankings = FALSE,
+  additional.rank = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{a data.frame with columns specified by items and input values}
@@ -17,6 +25,9 @@ containing the values in \code{data} to be ranked}
 
 \item{group}{logical, if \code{TRUE} return an object of class "grouped_rankings"}
 
+\item{validate.rankings}{logical, if \code{TRUE} implements a check on ranking consistency 
+looking for possible ties, NA or letters other than A, B, C. These entries are set to 0}
+
 \item{additional.rank}{optional, a data frame for the comparisons between 
 tricot items and the local item}
 
@@ -26,7 +37,7 @@ tricot items and the local item}
 a PlackettLuce "rankings" or "grouped_rankings" object
 }
 \description{
-Create an object of class "rankings" from tricot data.
+Create an object of class "rankings" from tricot data
 }
 \details{
 full.output: logical, to return a list with a "rankings", 
@@ -42,7 +53,7 @@ if (require("PlackettLuce")){
   
   # first build rankings with only tricot items
   # and return an object of class 'rankings'
-  R <- rankTricot(data = beans,
+  R = rankTricot(data = beans,
                   items = c(1:3),
                   input = c(4:5))
   head(R)
@@ -52,7 +63,7 @@ if (require("PlackettLuce")){
   # pass the comparison with local item as an additional rankings, then
   # each of the 3 varieties are compared separately with the local item
   # and return an object of class grouped_rankings
-  G <- rankTricot(data = beans,
+  G = rankTricot(data = beans,
                   items = c(1:3),
                   input = c(4:5),
                   group = TRUE,

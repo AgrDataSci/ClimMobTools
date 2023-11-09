@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 0.5.003
+Version: 1.0
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "desousa.kaue@gmail.com", 
         role = c("aut", "cre"),
@@ -26,17 +26,21 @@ Depends: R (>= 3.5.0)
 Imports:
     httr, 
     jsonlite, 
+    lpSolve,
     Matrix, 
     methods, 
     RSpectra,
+    stats,
     utils
 Suggests:
+    climatrends,
     gosset,
     knitr,
+    nasapower,
     rmarkdown,
     sf,
     PlackettLuce,
     testthat (>= 2.1.0)
-Language: en-GB
+Language: en-US
 RoxygenNote: 7.2.1
 VignetteBuilder: knitr
