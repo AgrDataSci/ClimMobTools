@@ -120,6 +120,3 @@ getProjectsCM <- function(key, server = "climmob3", ...){
   return(dat)
   
 }
-
-
-

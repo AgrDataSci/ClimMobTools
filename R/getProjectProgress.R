@@ -120,4 +120,3 @@ getProjectProgress <- function(key, project, userowner, server = "climmob3"){
   return(r)
   
 }
-

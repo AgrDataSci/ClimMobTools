@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-API client for 'ClimMob', an open source software for decentralized large-N trials with the 'tricot' approach \url{https://climmob.net/}. Developed by van Etten et al. (2016) \doi{10.1017/S0014479716000739}, it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions for the target environment, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information. 'ClimMobTools' enables project managers to deep explore and analyse their 'ClimMob' data in R.
+API client for 'ClimMob', an open source software for decentralized large-N trials with the 'tricot' approach \url{https://climmob.net/}. Developed by Quiros et al. (2023) \doi{10.2139/ssrn.4463406}, it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions for the target environment, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information. 'ClimMobTools' enables project managers to deep explore and analyse their 'ClimMob' data in R.
 }
 \seealso{
 \strong{Useful links:}

@@ -96,8 +96,3 @@ getDataCM <- function(key,
   return(cmdata)
   
 }
-
-
-
-
-

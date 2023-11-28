@@ -1,3 +1,10 @@
+ClimMobTools 1.1 (2023-11-28)
+=========================
+
+### BUG FIXES
+
+* Fix an issue in `.smart.round()` to handle `NA` in the `randomize()` function  
+
 ClimMobTools 1.0 (2023-11-10)
 =========================
 

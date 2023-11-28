@@ -234,6 +234,3 @@
   return(ranks)
   
 }
-
-
-
