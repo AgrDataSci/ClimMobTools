@@ -8,7 +8,7 @@ Authors@R: c(person("Kauê", "de Sousa",
         comment = c(ORCID = "0000-0002-7571-7845")), 
         person("Jacob", "van Etten", role = "aut",
         comment = c(ORCID = "0000-0001-7554-2558")),
-        person("Brandon", "Madriz", role = "aut"))
+        person("Brandon", "Madriz", role = "ctb"))
 URL: https://agrdatasci.github.io/ClimMobTools/
 BugReports: https://github.com/agrdatasci/ClimMobTools/issues
 Description: API client for 'ClimMob', an open source software for decentralized 
