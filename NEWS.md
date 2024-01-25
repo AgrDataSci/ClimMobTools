@@ -1,3 +1,10 @@
+ClimMobTools 1.2 (2024-01-25)
+=========================
+
+### BUG FIXES
+
+* Improves indexing of technologies aliases in `ClimMobTools:::as.data.frame()`
+
 ClimMobTools 1.1 (2023-11-28)
 =========================
 

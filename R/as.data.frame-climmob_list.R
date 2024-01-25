@@ -258,23 +258,11 @@ as.data.frame.CM_list <- function(x,
   # comparisons and package
   comps <- dat[["packages"]][, "comps"]
   
-  if (ncomp == 3) {
-    comps <- lapply(comps, function(x) {
-      x <- unique(unlist(x$technologies))
-      x <- x[-1]
-      names(x) <- paste0("item_", LETTERS[1:length(x)])
-      x
-    })
-  }
-  
-  if (ncomp > 3) {
-    comps <- lapply(comps, function(x) {
-      x <- unique(unlist(x$technologies))
-      x <- x[-1]
-      names(x) <- paste0("item_", 1:length(x))
-      x
-    })
-  }
+  comps <- lapply(comps, function(x) {
+    x <- do.call("rbind", x$technologies)[,"alias_name"]
+    names(x) <- paste0("item_", LETTERS[1:length(x)])
+    x
+  })
   
   comps <- do.call("rbind", comps)
   
