@@ -2,14 +2,14 @@
 % Please edit documentation in R/getTraitList.R
 \name{getTraitList}
 \alias{getTraitList}
-\title{Organise trait ranks in a ClimMob data}
+\title{Organize trait ranks in a ClimMob data}
 \usage{
 getTraitList(data, pattern, trait.labels = NULL, ...)
 }
 \arguments{
-\item{data}{a data.frame with the ClimMob data}
+\item{data}{data.frame, the ClimMob data}
 
-\item{pattern}{a character with the tricot ranking pattern}
+\item{pattern}{character, the tricot ranking pattern}
 
 \item{trait.labels}{an optional character with clean trait labels}
 

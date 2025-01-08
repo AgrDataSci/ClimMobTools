@@ -2,8 +2,8 @@
 % Please edit documentation in R/ClimMobTools.R
 \docType{package}
 \name{ClimMobTools}
-\alias{ClimMobTools}
 \alias{ClimMobTools-package}
+\alias{ClimMobTools}
 \title{API Client for the 'ClimMob' platform in R}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}

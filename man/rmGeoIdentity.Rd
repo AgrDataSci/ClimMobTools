@@ -26,7 +26,7 @@ Build a buffer around the a set of geographical coordinates
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-xy <- matrix(c(11.097799, 60.801090,
+xy = matrix(c(11.097799, 60.801090,
                11.161298, 60.804199,
                11.254428, 60.822457),
              nrow = 3, ncol = 2, byrow = TRUE)
@@ -35,7 +35,7 @@ rmGeoIdentity(xy)
 
 #' the function also handles NAs
 
-xy2 <- matrix(c(11.097799, 60.801090,
+xy2 = matrix(c(11.097799, 60.801090,
                 NA, NA,
                 11.161298, 60.804199,
                 11.254428, 60.822457,

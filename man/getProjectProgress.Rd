@@ -7,15 +7,13 @@
 getProjectProgress(key, project, userowner, server = "climmob3")
 }
 \arguments{
-\item{key}{a character for the user's application programming 
-interface (API) key}
+\item{key}{character, the user's API key}
 
-\item{project}{a character for the project id}
+\item{project}{character, the project id}
 
-\item{userowner}{a character for user name of project's owner}
+\item{userowner}{character, username of project's owner}
 
-\item{server}{optional, a character to select from which server
-the data will be retrieved. See details}
+\item{server}{character, to indicate from which server the data will be retrieved. See details}
 }
 \value{
 A list with number of submissions per assessment and 
@@ -37,10 +35,10 @@ Fetch the progress of a ClimMob project
 # is created via https://climmob.net/
  
 library("ClimMobTools")
-my_key <- "ff05a174-28d0-4a40-ab5a-35dc486133a6"
+my_key = "ff05a174-28d0-4a40-ab5a-35dc486133a6"
 
 getProjectProgress(key = my_key,
-                   project = "beanaru23",
+                   project = "gina2024",
                    userowner = "student",
                    server = "1000FARMS")
 

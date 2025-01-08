@@ -18,19 +18,17 @@ getDataCM(
 \method{as.data.frame}{CM_list}(x, ..., tidynames = TRUE, pivot.wider = FALSE)
 }
 \arguments{
-\item{key}{a character for the user's application programming 
-interface (API) key}
+\item{key}{character, the user's API key}
 
-\item{project}{a character for the project id}
+\item{project}{character, the project id}
 
-\item{userowner}{a character for user name of project's owner}
+\item{userowner}{character, username of project's owner}
 
-\item{as.data.frame}{logical, to return a data frame}
+\item{as.data.frame}{logical, to return a data frame, as.data.frame = FALSE returns a list}
 
 \item{as.text}{logical, to return a text file that can be parsed to json}
 
-\item{server}{optional, a character to select from which server
-the data will be retrieved. See details}
+\item{server}{character, to indicate from which server the data will be retrieved. See details}
 
 \item{...}{additional arguments passed to methods}
 
@@ -67,19 +65,19 @@ Fetch the data from a ClimMob project using an application
 # is created via https://climmob.net/
  
 library("ClimMobTools")
-my_key <- "ff05a174-28d0-4a40-ab5a-35dc486133a6"
+my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
 getDataCM(key = my_key,
-          project = "beanaru23",
-          userowner = "student",
-          server = "1000farms")
+          project = "breadwheat",
+          userowner = "gosset",
+          server = "climmob3")
           
 # get in the wide format
 
 getDataCM(key = my_key,
-          project = "beanaru23",
-          userowner = "student",
-          server = "1000farms",
+          project = "breadwheat",
+          userowner = "gosset",
+          server = "climmob3",
           pivot.wider = TRUE)
 \dontshow{\}) # examplesIf}
 }

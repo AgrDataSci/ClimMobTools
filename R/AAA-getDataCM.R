@@ -6,8 +6,8 @@
 #' @rdname getDataCM
 #' @family GET functions
 #' @author Kauê de Sousa
-#' @param project a character for the project id
-#' @param userowner a character for user name of project's owner
+#' @param project character, the project id
+#' @param userowner character, username of project's owner
 #' @param as.data.frame logical, to return a data frame, as.data.frame = FALSE returns a list
 #' @param as.text logical, to return a text file that can be parsed to json
 #' @param ... additional arguments passed to methods. See details
