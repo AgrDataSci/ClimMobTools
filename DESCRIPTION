@@ -1,14 +1,14 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 1.2
+Version: 1.3
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "desousa.kaue@gmail.com", 
         role = c("aut", "cre"),
         comment = c(ORCID = "0000-0002-7571-7845")), 
         person("Jacob", "van Etten", role = "aut",
         comment = c(ORCID = "0000-0001-7554-2558")),
-        person("Brandon", "Madriz", role = "ctb"))
+        person("Brandon", "Madriz", role = "aut"))
 URL: https://agrdatasci.github.io/ClimMobTools/
 BugReports: https://github.com/agrdatasci/ClimMobTools/issues
 Description: API client for 'ClimMob', an open source software for decentralized 

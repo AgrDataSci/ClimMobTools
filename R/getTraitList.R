@@ -1,4 +1,4 @@
-#' Organise trait ranks in a ClimMob data
+#' Organize trait ranks in a ClimMob data
 #' 
 #' This function helps in identifying the traits 
 #'  assessed in the tricot project and validates 

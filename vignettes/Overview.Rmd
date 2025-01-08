@@ -3,7 +3,7 @@ title: "ClimMobTools: API Client for the 'ClimMob' platform in R"
 package: ClimMobTools
 author:
 - name: Kauê de Sousa
-  affiliation: Digital Inclusion, Bioversity International, Montpelier, France <br> Department of Agricultural Sciences, Inland Norway University of Applied Sciences, Hamar, Norway
+  affiliation: Digital Inclusion, Bioversity International, Montpellier, France <br> Department of Agricultural Sciences, University of Inland Norway, Hamar, Norway
 - name: Jacob van Etten
   affiliation: Digital Inclusion, Bioversity International, Montpelier, France
 - name: Brandon Madriz
@@ -14,39 +14,26 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteDepends{PlackettLuce}
-  %\VignetteDepends{climatrends}
-  %\VignetteDepends{nasapower}
 bibliography: ["ClimMobTools.bib"]
 csl: citation_style.csl
 ---
 
 ```{r setup, include=FALSE}
-TRAVIS <- !identical(tolower(Sys.getenv("TRAVIS")), "true")
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  purl = TRAVIS
-)
-
 library("ClimMobTools")
 library("PlackettLuce")
-library("climatrends")
-library("nasapower")
 ```
 
 ## Overview
 
-**ClimMobTools** the API Client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for for decentralized large-N trials with the 'tricot' approach[@vanEtten2019tricot]. The approach aims the rapid assessment of technologies in the target environment. Tricot turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information.
+**ClimMobTools** is the API client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is open-source software for decentralized large-N trials using the 'tricot' approach[@vanEtten2019tricot]. This approach facilitates the rapid assessment of technologies in target environments. Tricot turns the research paradigm on its head: instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that, taken together, can offer even more information.
 
-# Usage
+## Usage
 
-The `breadwheat` is a dataframe from crowdsourcing citizen science trials of bread wheat (*Triticum aestivum* L.) varieties in India. This is a sample data available at the [ClimMob](https://climmob.net/) that can be fetched using the function `getDataCM()` from **ClimMobTools** and an API key from the ClimMob user's account.
+The `breadwheat` dataset is a dataframe from crowdsourced citizen science trials of bread wheat (*Triticum aestivum* L.) varieties in India. This sample data is available on the [ClimMob](https://climmob.net/) platform and can be fetched using the `getDataCM()` function from **ClimMobTools**, along with an API key from the ClimMob user's account.
 
 ```{r fetch, message=FALSE, eval=TRUE, echo=TRUE}
 library("ClimMobTools")
 library("PlackettLuce")
-library("climatrends")
-library("nasapower")
 
 # the API key
 key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
@@ -62,46 +49,21 @@ names(dat) <- gsub("firstassessment_|package_|lastassessment_|registration_", ""
 
 ```
 
-# Tricot data with environmental covariates
-
-We can add environmental covariates from package [climatrends](https://CRAN.R-project.org/package=climatrends). Here we use function `temperature()` to compute the temperature indices for the first 80 days after planting. 
-
-```{r temperature, message=FALSE, eval=TRUE, echo=TRUE}
-dat$plantingdate <- as.Date(dat$plantingdate, format = "%Y-%m-%d")
-dat$lon <- as.numeric(dat$farm_geo_longitude)
-dat$lat <- as.numeric(dat$farm_geo_latitude)
-
-temp <- temperature(dat[, c("lon","lat")], 
-                    day.one = dat[, "plantingdate"],
-                    span = 80)
-
-temp
-```
-
-
 # Tricot data into rankings
 
-The Plackett-Luce model is one approach to analyse the ClimMob data[@Turner2020]. We build the farmers' rankings as an object of class 'grouped_rankings'. This allows the rankings to be linked to the environmental covariates computed previously and fit the model using `pltree()` from the package [PlackettLuce](https://CRAN.R-project.org/package=PlackettLuce). 
-
-We build the rankings using the function `rankTricot()`. 
+The Plackett-Luce model is one approach to analyze the ClimMob data[@Turner2020]. We build the farmers' rankings as an object of class `rankings` from the package [PlackettLuce](https://CRAN.R-project.org/package=PlackettLuce). We build the rankings using the function `rankTricot()`.
 
 ```{r plrankings, message=FALSE, eval=TRUE, echo=TRUE}
-R <- rankTricot(dat, 
+R = rankTricot(dat, 
                 items = c("item_A","item_B","item_C"), 
-                input = c("overallperf_pos","overallperf_neg"),
-                group = TRUE)
+                input = c("overallperf_pos","overallperf_neg"))
 
-pld <- cbind(R, temp)
+mod = PlackettLuce(R)
 
-pl <- pltree(R ~ maxNT + maxDT, 
-             data = pld)
-
-summary(pl)
-
-plot(pl)
-
+summary(mod)
 ```
 
+For more analytical insights, please visit the documentation of the [gosset](https://cran.r-project.org/package=gosset) package.
 
 # References
 

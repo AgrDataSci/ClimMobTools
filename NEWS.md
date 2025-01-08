@@ -1,3 +1,10 @@
+ClimMobTools 1.3 (2025-01-9)
+=========================
+
+### BUG FIXES
+
+* Fixes issues in vignetted building reported by CRAN.
+
 ClimMobTools 1.2 (2024-01-25)
 =========================
 
