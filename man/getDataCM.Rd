@@ -61,8 +61,7 @@ Fetch the data from a ClimMob project using an application
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # This function only works with an API key
-# the API key can be obtained once a free ClimMob account
-# is created via https://climmob.net/
+# the API key can be obtained from your ClimMob account
  
 library("ClimMobTools")
 my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
@@ -82,8 +81,6 @@ getDataCM(key = my_key,
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-ClimMob website \url{https://climmob.net/}
-
 Other GET functions: 
 \code{\link{getProjectProgress}()},
 \code{\link{getProjectsCM}()}

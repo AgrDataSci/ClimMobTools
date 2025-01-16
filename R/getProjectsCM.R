@@ -64,14 +64,12 @@
 #' \item{creation_date}{date where the project was created}
 #' @examplesIf interactive()
 #' # This function only works with an API key
-#' # the API key can be obtained once a free ClimMob account
-#' # is created via https://climmob.net/
+#' # the API key can be obtained from your ClimMob account
 #' 
 #' my_key = "ff05a174-28d0-4a40-ab5a-35dc486133a6"
 #' 
 #' getProjectsCM(key = my_key, server = "1000FARMS")
 #' 
-#' @seealso ClimMob website \url{https://climmob.net/}
 #' @export
 getProjectsCM = function(key, server = "climmob3", ...){
   

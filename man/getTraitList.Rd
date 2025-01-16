@@ -27,7 +27,6 @@ This function helps in identifying the traits
 }
 \examples{
 \dontshow{if (interactive() ) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-
 require("gosset")
 
 data("breadwheat", package = "gosset")

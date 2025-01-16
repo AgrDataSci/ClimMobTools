@@ -12,7 +12,6 @@
 #' @param ... additional arguments, not implemented yet
 #' @return a list with trait validation data
 #' @examplesIf interactive() 
-#' 
 #' require("gosset")
 #' 
 #' data("breadwheat", package = "gosset")

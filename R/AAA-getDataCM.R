@@ -27,8 +27,7 @@
 #' @examplesIf interactive()
 #' 
 #' # This function only works with an API key
-#' # the API key can be obtained once a free ClimMob account
-#' # is created via https://climmob.net/
+#' # the API key can be obtained from your ClimMob account
 #'  
 #' library("ClimMobTools")
 #' my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
@@ -46,7 +45,6 @@
 #'           server = "climmob3",
 #'           pivot.wider = TRUE)
 #' 
-#' @seealso ClimMob website \url{https://climmob.net/}
 #' @importFrom httr accept_json content RETRY
 #' @importFrom jsonlite fromJSON
 #' @export

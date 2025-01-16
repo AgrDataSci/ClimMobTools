@@ -15,11 +15,6 @@
 #' tricot items and the local item
 #' @param ... additional arguments passed to methods. See details
 #' @return a PlackettLuce "rankings" or "grouped_rankings" object 
-#' @references 
-#' 
-#' van Etten J., et al. (2019). Experimental Agriculture, 55(S1), 275–296.
-#' \doi{10.1017/S0014479716000739}
-#' 
 #' @details 
 #' full.output: logical, to return a list with a "rankings", 
 #' a "grouped_rankings" and the ordered items

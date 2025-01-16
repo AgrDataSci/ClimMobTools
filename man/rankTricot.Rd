@@ -73,10 +73,6 @@ if (require("PlackettLuce")){
 }
 \dontshow{\}) # examplesIf}
 }
-\references{
-van Etten J., et al. (2019). Experimental Agriculture, 55(S1), 275–296.
-\doi{10.1017/S0014479716000739}
-}
 \author{
 Kauê de Sousa and Jacob van Etten, with ideas from Heather Turner
 }
