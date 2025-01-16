@@ -16,13 +16,13 @@ rmGeoIdentity(longlat, dist = 0.015, nQuadSegs = 2L, ...)
 \item{...}{further arguments passed to \code{\link[sf]{sf}} methods}
 }
 \value{
-A data frame with the random coordinates long lat whithin a pre-defined buffer
+A data frame with the random coordinates long lat within the buffer
 }
 \description{
 Build a buffer around the a set of geographical coordinates 
  and take a random point around the buffer. The function is 
  used to omit the precise location of tricot participants 
- but keeping a close distance to its agro-environment
+ but keeping a close distance to the trial environment.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

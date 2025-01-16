@@ -52,10 +52,7 @@ Fetch the data from a ClimMob project using an application
  programming interface (API) key
 }
 \details{
-\code{server}: the default server is "climmob" used for clients of 
-\url{https://climmob.net/climmob3/}, other options are:
-
- "1000farms" for clients of \url{https://1000farms.climmob.net/}
+\code{server}: options are: "climmob" or "1000farms"
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

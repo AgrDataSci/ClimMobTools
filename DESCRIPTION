@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 1.3
+Version: 1.4
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "desousa.kaue@gmail.com", 
         role = c("aut", "cre"),

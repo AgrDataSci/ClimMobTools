@@ -3,13 +3,13 @@
 #' Build a buffer around the a set of geographical coordinates 
 #'  and take a random point around the buffer. The function is 
 #'  used to omit the precise location of tricot participants 
-#'  but keeping a close distance to its agro-environment
+#'  but keeping a close distance to the trial environment.
 #'   
 #' @param longlat a data.frame or matrix with geographical coordinates long lat
 #' @param dist numeric, buffer distance for all \var{lonlat}
 #' @param nQuadSegs integer, number of segments per quadrant
 #' @param ... further arguments passed to \code{\link[sf]{sf}} methods
-#' @return A data frame with the random coordinates long lat whithin a pre-defined buffer
+#' @return A data frame with the random coordinates long lat within the buffer
 #' @examplesIf interactive()
 #' xy = matrix(c(11.097799, 60.801090,
 #'                11.161298, 60.804199,

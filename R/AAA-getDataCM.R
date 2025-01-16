@@ -19,11 +19,8 @@
 #' \item{variable}{the variable name}
 #' \item{value}{the value for each variable}
 #' @details 
-#' \code{server}: the default server is "climmob" used for clients of 
-#' \url{https://climmob.net/climmob3/}, other options are:
+#' \code{server}: options are: "climmob" or "1000farms" 
 #' 
-#'  "1000farms" for clients of \url{https://1000farms.climmob.net/} 
-#'  
 #' @examplesIf interactive()
 #' 
 #' # This function only works with an API key
