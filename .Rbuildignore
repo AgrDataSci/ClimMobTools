@@ -13,3 +13,4 @@
 ^logo\.svg$
 ^codemeta\.json$
 ^tic\.R$
+^LICENSE\.md$
