@@ -56,7 +56,8 @@
 #'  "1000farms" for clients of \url{https://1000farms.climmob.net/} 
 #' 
 #' @return A data.frame with the variables:
-#' \item{project_id}{the project's id}
+#' \item{project_id}{the ClimMob single id in the server database}
+#' \item{project_code}{the project's code from the ClimMob user}
 #' \item{project_name}{the project's name}
 #' \item{user_owner}{the account name that owns the project}
 #' \item{country}{the country of project's implementation}
@@ -97,11 +98,11 @@ getProjectsCM = function(key, server = "climmob3", ...){
   
   dat = cbind(dat, owner)
   
-  dat = dat[,c("project_cod", "project_name", "project_pi", 
+  dat = dat[,c("project_id", "project_cod", "project_name", "project_pi", 
                "owner_user_name", "project_piemail", "project_tags",
                "project_numobs", "project_cnty", "project_creationdate")]
   
-  names(dat) = c("project_id", "project_name", "coordinator",
+  names(dat) = c("project_id", "project_code", "project_name", "coordinator",
                  "user_owner", "email", "keywords", 
                  "npackages", "country", "creation_date")
   

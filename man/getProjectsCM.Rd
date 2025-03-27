@@ -15,7 +15,8 @@ getProjectsCM(key, server = "climmob3", ...)
 }
 \value{
 A data.frame with the variables:
-\item{project_id}{the project's id}
+\item{project_id}{the ClimMob single id in the server database}
+\item{project_code}{the project's code from the ClimMob user}
 \item{project_name}{the project's name}
 \item{user_owner}{the account name that owns the project}
 \item{country}{the country of project's implementation}

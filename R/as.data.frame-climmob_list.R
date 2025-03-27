@@ -34,9 +34,6 @@ as.data.frame.CM_list = function(x,
   # 'data', the trial data assessment
   dat[["data"]] = x[["data"]]
   
-  # get the project name
-  project_name = dat[["project"]]$project_cod
-  
   # get variables names from participant registration
   regs = dat[["registry"]]
   
@@ -45,9 +42,11 @@ as.data.frame.CM_list = function(x,
   regs_name = paste0("REG_", regs[, "name"])
   
   # get some info on the trial
-  trial_tech = dat$packages$comps[[1]]$technologies[[1]]$tech_name
-  trial_pi = dat$project$project_pi
-  trial_country = dat$project$project_cnty
+  trial_tech = dat[["project"]]$comps[[1]]$technologies[[1]]$tech_name
+  trial_pi = dat[["project"]]$project_pi
+  trial_country = dat[["project"]]$project_cnty
+  project_name = dat[["project"]]$project_cod
+  project_id = dat[["project"]]$project_id
   
   has_data = length(dat[["data"]]) > 0
   
@@ -271,6 +270,7 @@ as.data.frame.CM_list = function(x,
   pack = cbind(dat[["packages"]][, c("package_id","farmername")], comps)
   
   # add project name
+  pack$project_id = project_id
   pack$project_name = project_name
   pack$technology = trial_tech
   pack$coordinator = trial_pi
