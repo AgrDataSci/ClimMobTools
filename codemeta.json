@@ -88,18 +88,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "nasapower",
-      "name": "nasapower",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=nasapower"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
       "provider": {
@@ -225,7 +213,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "1187.08KB",
+  "fileSize": "1187.065KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",

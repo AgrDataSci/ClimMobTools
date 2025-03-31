@@ -36,7 +36,6 @@ Suggests:
     climatrends,
     gosset,
     knitr,
-    nasapower,
     rmarkdown,
     sf,
     PlackettLuce,
