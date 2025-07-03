@@ -10,29 +10,9 @@
 as.data.frame.CM_list = function(x, 
                                  ...,
                                  tidynames = TRUE,
-                                 pivot.wider = FALSE) {
+                                 pivot.wider = TRUE) {
   
-  dat = list()
-  # 'specialfields', the assessment questions
-  dat[["specialfields"]] = x[["specialfields"]]
-  
-  # 'project', the project details
-  dat[["project"]] = x[["project"]]
-  
-  # 'registry', the questions during participant registration
-  dat[["registry"]] = x[["registry"]]
-  
-  # importantfields
-  dat[["importantfields"]] = x[["importantfields"]]
-  
-  # 'assessments', the survey in trial data assessment
-  dat[["assessments"]] = x[["assessments"]]
-  
-  # 'packages', the packages info
-  dat[["packages"]] = x[["packages"]]
-  
-  # 'data', the trial data assessment
-  dat[["data"]] = x[["data"]]
+  dat = x
   
   # get variables names from participant registration
   regs = dat[["registry"]]
@@ -42,13 +22,13 @@ as.data.frame.CM_list = function(x,
   regs_name = paste0("REG_", regs[, "name"])
   
   # get some info on the trial
-  trial_tech = dat[["project"]]$comps[[1]]$technologies[[1]]$tech_name
-  trial_pi = dat[["project"]]$project_pi
-  trial_country = dat[["project"]]$project_cnty
-  project_name = dat[["project"]]$project_cod
-  project_id = dat[["project"]]$project_id
+  trial_tech = dat$combination$elements[[1]]$technology_name
+  trial_pi = dat$project$project_pi
+  trial_country = dat$project$project_cnty
+  project_name = dat$project$project_cod
+  project_id = dat$project$project_id
   
-  has_data = length(dat[["data"]]) > 0
+  has_data = nrow(dat[["data"]]) > 1
   
   if (isFALSE(has_data)) {
     message("Project ", project_name, " has no associated data. \n")
@@ -75,7 +55,6 @@ as.data.frame.CM_list = function(x,
     assess = dat[["assessments"]]
     
     if (length(assess) > 0) {
-      
       assess = do.call("rbind", assess[, "fields"])
       assess = data.frame(assess, stringsAsFactors = FALSE)
       assess = assess[!duplicated(assess[, "name"]), ]
@@ -96,8 +75,6 @@ as.data.frame.CM_list = function(x,
         l = .decode_lkptable(assess_lkp[[i]])
         lkp = c(lkp, l)
       }
-      
-      
     } else {
       assess = data.frame()
       assess_id = character()
@@ -147,9 +124,6 @@ as.data.frame.CM_list = function(x,
         trial[var_i] = gsub(l$id[j], l$label[j], trial[[var_i]])
         
       }
-      
-      
-      
     }
     
     # split geolocation info
@@ -157,7 +131,7 @@ as.data.frame.CM_list = function(x,
     geoTRUE = grepl("farmgoelocation|geopoint|gps|geotrial|pointofdel", names(trial))
     
     # if is available, then split the vector as lon lat
-    if(any(geoTRUE)){
+    if (any(geoTRUE)) {
       
       geo_which = which(geoTRUE)
       
@@ -165,7 +139,17 @@ as.data.frame.CM_list = function(x,
       
       trial = trial[!geoTRUE]
       
-      for (i in seq_along(geo_which)){
+      keep = unlist(lapply(geo[1:ncol(geo)], function(x) all(is.na(x))))
+      
+      geo = geo[, !keep]
+      
+      if(ncol(geo) == 0) geoTRUE = FALSE
+      
+    }
+    
+    if(any(geoTRUE)){
+      
+      for (i in seq_len(ncol(geo))){
         newname = names(geo)[[i]]
         newname = gsub("farmgoelocation", "_farm_geo", newname)
         newname = gsub("__", "_", newname)
@@ -185,7 +169,7 @@ as.data.frame.CM_list = function(x,
         
         lonlat[lonlat == "NA"] = NA
         
-        lonlat = lonlat[, c(2,1,3,4)]
+        lonlat = lonlat[, c(2, 1, 3, 4)]
         
         lonlat = as.data.frame(lonlat, stringsAsFactors = FALSE)
         
@@ -196,6 +180,17 @@ as.data.frame.CM_list = function(x,
         trial = cbind(trial, lonlat)
         
       }
+      
+      # for some odd reason the json file comes with empty long lat columns 
+      # I will remove those just for the sake of not having so much confusion in the data
+      longlat = grep("_longitude|_latitude|_elevation|_precision", names(trial))
+      
+      rmv = unlist(lapply(trial[longlat], function(x) all(is.na(x))))
+      
+      longlat = longlat[rmv]
+      
+      trial = trial[, -longlat]
+      
     }
     
     # replace numbers in trial results by LETTERS
@@ -233,26 +228,18 @@ as.data.frame.CM_list = function(x,
     
     trial = cbind(trial[packid], trial[!packid])
     
-    trial = .set_long(trial, "REG_qst162")
-    
-    trial$moment = "registration"
-    
     # remove possible space in assess name
-    assess_name = gsub(" ", "", assess_name)
+    assess_name = tolower(gsub(" |-", "", assess_name))
     
     # add which moment the data was taken
     for (i in seq_along(assess_id)) {
-      trial$moment = ifelse(grepl(assess_id[i], trial$variable),
-                            tolower(assess_name[i]),
-                            trial$moment)
+      names(trial) = ifelse(grepl(assess_id[i], names(trial)),
+                            gsub(assess_id[i], assess_name[i], names(trial)),
+                            names(trial))
       
     }
     
-  } else {
-    trial = data.frame()
-    assess_id = 1
-    assess_name = character()
-  }
+  } 
   
   # comparisons and package
   comps = dat[["packages"]][, "comps"]
@@ -267,93 +254,92 @@ as.data.frame.CM_list = function(x,
   
   comps = as.data.frame(comps, stringsAsFactors = FALSE)
   
+  names(comps) = paste0("package_", names(comps))
+  
   pack = cbind(dat[["packages"]][, c("package_id","farmername")], comps)
   
   # add project name
-  pack$project_id = project_id
-  pack$project_name = project_name
-  pack$technology = trial_tech
-  pack$coordinator = trial_pi
-  pack$country = trial_country
+  pack = cbind(project_id = project_id, 
+               project_code = project_name, 
+               project_technology = trial_tech,
+               project_coordinator = trial_pi,
+               project_country = trial_country,
+               pack)
   
-  pack = .set_long(pack, "package_id")
+  names(trial)[names(trial) == "REG_qst162"] = "package_id"
   
-  pack[, "moment"] = "package"
-  
-  trial = rbind(pack, trial)
+  trial = merge(pack, trial, by = "package_id", all.x = TRUE)
   
   # check if ids from ODK names are required to be removed 
   if (isTRUE(tidynames)) {
     
-    trial[, "variable"] = gsub("REG_", "", trial[, "variable"])
+    ovl = which(grepl("perf_overallchar|perf_overallper", names(trial)))
     
-    for (i in seq_along(assess_id)) {
-      trial[, "variable"] = gsub(paste0(assess_id[i], "_"), "", 
-                                 trial[, "variable"])
-    }
-    
-    ovl = which(grepl("perf_overallchar", trial[, "variable"]))
-    
-    trial[ovl, "variable"] = sapply(trial[ovl, "variable"], function(x) {
+    names(trial)[ovl] = as.vector(sapply(names(trial)[ovl], function(x) {
       x = strsplit(x, split = "_")
-      x = paste0("item_", LETTERS[as.integer(x[[1]][3])], "_vs_local")
+      x = paste0(x[[1]][1], "_item_", LETTERS[as.integer(x[[1]][4])], "_vs_local")
       x
-    })
+    }))
     
-    trial[, "variable"] = gsub("char_", "", trial[, "variable"])
+    names(trial) = gsub("REG_", "registration_", names(trial))
     
-    trial[, "variable"] = gsub("stmt_", "pos", trial[, "variable"])
+    names(trial) = gsub("char_", "", names(trial))
     
-    trial[, "variable"] = gsub("clm_", "survey_", trial[, "variable"])
+    names(trial) = gsub("stmt_", "pos", names(trial))
     
-    trial[, "variable"] = gsub("^_","", trial[, "variable"])
+    names(trial) = gsub("clm_", "survey_", names(trial))
     
-    i = trial[, "variable"] == "farmername"
+    names(trial) = gsub("^_","", names(trial))
     
-    trial[i, "variable"] = "participant_name"
+    names(trial) = gsub("__","_", names(trial))
+    
+    names(trial) = gsub("__","_", names(trial))
+    
+    names(trial)[names(trial) == "farmername"] = "registration_participant_name"
     
   }
   
-  output = trial[, c("id","moment","variable","value")]
+  output = trial
+  
+  rmv = "originid|rowuuid|qst163|clc_after|clc_before|instancename|id_string|surveyid|deviceimei|_active"
   
   # remove some ODK variables
-  output = output[!grepl("originid|rowuuid|qst163", output[[3]]), ]
+  output = output[, !grepl(rmv, names(output)) ]
   
-  # reorder rows and make sure that packages and registration comes first
-  assess_name = sort(tolower(assess_name))
-  output$moment = factor(output$moment, levels = c("package",
-                                                   "registration",
-                                                   rev(assess_name)))
+  # reorder columns and make sure that packages and registration comes first
+  assess_name = paste0(union(c("project", "package", "registration"), assess_name), "_")
   
+  ord = unique(as.vector(unlist(sapply(assess_name, function(x) {
+    grep(x, names(output))
+  }))))
+  
+  output = output[, ord]
+  
+  names(output) = gsub("_qst_", "_", names(output))
   
   # reorder moment and ids
   o = order(output$moment)
   output = output[o, ]
   
-  output$id = as.integer(output$id)
-  o = order(output$id)
-  output = output[o, ]
-  
-  # if required, put the data in wide format
-  if (isTRUE(pivot.wider)) {
+  if(isFALSE(pivot.wider)){
+    trial = .set_long(output, "package_id")
     
-    output$variable = paste(output$moment, output$variable, sep = "_")
+    tags = strsplit(trial$variable, "_")
     
-    variable_levels = unique(output$variable)
+    moments = unlist(lapply(tags, function(x) x[[1]]))
     
-    output = output[, -2]
+    variables = unlist(lapply(tags, function(x) {paste(x[-1], collapse = "_")}))
     
-    output = .set_wide(output, "id")
+    trial$variable = variables
     
-    output = output[,c("id", variable_levels)]
+    trial$moment = moments
     
-    names(output) = gsub("overallpos", "overall_pos", names(output))
+    trial = trial[,c("id", "moment", "variable", "value")]
     
-    names(output) = gsub("overallneg", "overall_neg", names(output))
-    
+    output = trial
   }
-  
-  row.names(output) = seq_along(output$id)
+
+  row.names(output) = seq_len(nrow(output))
   
   class(output) = union("CM_df", class(output))
   

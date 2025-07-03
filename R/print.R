@@ -62,10 +62,23 @@ print.CM_df = function(x, ...){
 #' @export
 print.CM_list = function(x, ...){
   
-  x = x[[1]]
+  summary_df = data.frame(
+    "Principal Investigator" = x$project$project_pi,
+    "Country" = x$project$project_cnty,
+    "Creation Date" = as.Date(x$project$project_creationdate),
+    "Technology Name" = x$combination$elements[[1]]$technology_name,
+    "Packages Generated" = x$project$project_numobs,
+    "Packages Distributed" = nrow(x$data),
+    stringsAsFactors = FALSE
+  )
   
-  print(x)
+  cat("\nSummary of ClimMob", x$project$project_name, "Project \n")
+  cat("=====================================================\n")
+  for (name in names(summary_df)) {
+    cat(sprintf("%-25s: %s\n", name, summary_df[[name]]))
+  }
   
+  invisible(x)  # keep object return silent
 }
 
 #' Tail of data frame

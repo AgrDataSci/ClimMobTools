@@ -7,7 +7,7 @@
   "codeRepository": "https://agrdatasci.github.io/ClimMobTools/",
   "issueTracker": "https://github.com/agrdatasci/ClimMobTools/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "1.5",
+  "version": "1.6",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",

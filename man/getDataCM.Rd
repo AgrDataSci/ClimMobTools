@@ -15,7 +15,7 @@ getDataCM(
   ...
 )
 
-\method{as.data.frame}{CM_list}(x, ..., tidynames = TRUE, pivot.wider = FALSE)
+\method{as.data.frame}{CM_list}(x, ..., tidynames = TRUE, pivot.wider = TRUE)
 }
 \arguments{
 \item{key}{character, the user's API key}

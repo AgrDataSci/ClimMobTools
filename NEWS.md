@@ -1,3 +1,11 @@
+ClimMobTools 1.6 (2025-07-03)
+=========================
+
+### CHANGES IN BEHAVIOUR
+
+* in `as.data.frame.CM_list()` the default for pivot.wider is set to TRUE
+* 
+
 ClimMobTools 1.5 (2025-03-31)
 =========================
 
