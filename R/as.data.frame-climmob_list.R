@@ -38,12 +38,20 @@
 #' @return \code{trial_dat} the input data.frame with the cases replaced 
 #' @noRd
 .replace_multichoice_codes = function(trial_dat, x) {
+  
   # decode lookup tables
   lkp = c(.decode_lkptable(x$registry$lkptables),
           unlist(lapply(x$assessments$lkptables, .decode_lkptable), recursive = FALSE))
   
-  rtable = do.call("rbind", x$assessments$fields)
-  rtable = rtable[!is.na(rtable$rtable), c("name", "rtable")]
+  # get variables names from assessments
+  assess = x[["assessments"]]
+  
+  rtable = data.frame()
+  
+  if (length(assess) > 0) {
+    rtable = do.call("rbind", x$assessments$fields)
+    rtable = rtable[!is.na(rtable$rtable), c("name", "rtable")]
+  }
   
   reg_rtable = x$registry$fields[, c("name", "rtable")]
   reg_rtable = reg_rtable[!is.na(reg_rtable$rtable), ]
@@ -67,16 +75,22 @@
       trial_dat[[var_i]] = gsub(l$id[j], l$label[j], trial_dat[[var_i]])
     }
   }
+  
   return(trial_dat)
+  
 }
 
-#' Replace codes by factors
+#' Handle geolocation columns
 #' @param trial_dat the trial data to apply the replacement 
+#' @param pattern character, vector with the patterns in the columns to find geopoints
 #' @return \code{trial_dat} the input data.frame with the new longlat columns 
 #' @noRd
-.handle_geolocation_columns = function(trial_dat) {
+.handle_geolocation_columns = function(trial_dat, pattern = c("geotrial","farmgoelocation",
+                                                              "geopoint", "gps")) {
   
-  geoTRUE = grepl("farmgoelocation|geopoint|gps|geotrial_dat|pointofdel", names(trial_dat))
+  pattern = paste(pattern, collapse = "|")
+  
+  geoTRUE = grepl(pattern, names(trial_dat))
   
   if (!any(geoTRUE)) return(trial_dat)
   
