@@ -32,6 +32,36 @@
   
 }
 
+#' Safely extract a nested list element
+#' @param x list object
+#' @param path character vector of nested names or indices
+#' @param default value to return if path does not exist or is NULL
+#' @noRd
+.safe_extract = function(x, path, default = NA) {
+  
+  if (any(!is.na(suppressWarnings(as.integer(path))))) {
+    
+    index_integer = which(!is.na(suppressWarnings(as.integer(path))))
+   
+    # path into list to handle unnamed elements in the list
+    path = as.list(path)
+    
+    path[index_integer] = lapply(path[index_integer], as.integer)
+    
+  }
+  
+  for (p in path) {
+    
+    if (is.null(x) || is.null(x[[p]])) return(default)
+    
+    x = x[[p]]
+    
+  }
+  
+  return(if (is.null(x)) default else x)
+  
+}
+
 #' Replace codes by factors
 #' @param trial_dat the trial data to apply the replacement 
 #' @param x the climmob raw list file to identify the replacement cases
@@ -207,11 +237,11 @@
   names(comps) = paste0("package_", names(comps))
   
   pack = cbind(
-    project_id = x$project$project_id,
-    project_code = x$project$project_cod,
-    project_technology = x$combination$elements[[1]]$technology_name,
-    project_coordinator = x$project$project_pi,
-    project_country = x$project$project_cnty,
+    project_id = .safe_extract(x, c("project", "project_id")),
+    project_code = .safe_extract(x, c("project", "project_cod")), 
+    project_technology = .safe_extract(x, c("combination", "elements", 1, "technology_name")),
+    project_coordinator = .safe_extract(x, c("project", "project_pi")),
+    project_country = .safe_extract(x, c("project", "project_cnty")),
     x$packages[, c("package_id", "farmername")],
     comps
   )
