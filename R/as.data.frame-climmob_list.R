@@ -33,11 +33,11 @@
 }
 
 #' Replace codes by factors
-#' @param trial the trial data to apply the replacement 
+#' @param trial_dat the trial data to apply the replacement 
 #' @param x the climmob raw list file to identify the replacement cases
-#' @return \code{trial} the input data.frame with the cases replaced 
+#' @return \code{trial_dat} the input data.frame with the cases replaced 
 #' @noRd
-.replace_multichoice_codes = function(trial, x) {
+.replace_multichoice_codes = function(trial_dat, x) {
   # decode lookup tables
   lkp = c(.decode_lkptable(x$registry$lkptables),
           unlist(lapply(x$assessments$lkptables, .decode_lkptable), recursive = FALSE))
@@ -59,46 +59,49 @@
   for (i in seq_len(nrow(rtable))) {
     string_i = rtable[i, "rtable"]
     var_i = rtable[i, "name"]
-    if (!var_i %in% names(trial)) next
+    if (!var_i %in% names(trial_dat)) next
     l = lkp[[string_i]]
     if (is.null(l)) next
-    trial[[var_i]] = gsub(" ", "; ", trial[[var_i]])
+    trial_dat[[var_i]] = gsub(" ", "; ", trial_dat[[var_i]])
     for (j in seq_along(l$id)) {
-      trial[[var_i]] = gsub(l$id[j], l$label[j], trial[[var_i]])
+      trial_dat[[var_i]] = gsub(l$id[j], l$label[j], trial_dat[[var_i]])
     }
   }
-  return(trial)
+  return(trial_dat)
 }
 
 #' Replace codes by factors
-#' @param trial the trial data to apply the replacement 
-#' @return \code{trial} the input data.frame with the new longlat columns 
+#' @param trial_dat the trial data to apply the replacement 
+#' @return \code{trial_dat} the input data.frame with the new longlat columns 
 #' @noRd
-.handle_geolocation_columns = function(trial) {
+.handle_geolocation_columns = function(trial_dat) {
   
-  geoTRUE = grepl("farmgoelocation|geopoint|gps|geotrial|pointofdel", names(trial))
+  geoTRUE = grepl("farmgoelocation|geopoint|gps|geotrial_dat|pointofdel", names(trial_dat))
   
-  if (!any(geoTRUE)) return(trial)
+  if (!any(geoTRUE)) return(trial_dat)
   
-  geo = trial[geoTRUE]
-  trial = trial[!geoTRUE]
+  geo = trial_dat[geoTRUE]
+  trial_dat = trial_dat[!geoTRUE]
   keep = unlist(lapply(geo, function(x) !all(is.na(x))))
   geo = geo[, keep, drop = FALSE]
   
-  if (ncol(geo) == 0) return(trial)
+  if (ncol(geo) == 0) return(trial_dat)
   
   for (i in seq_len(ncol(geo))) {
+    
     newname = gsub("farmgoelocation", "_farm_geo", names(geo)[[i]])
     newname = gsub("__", "_", newname)
     newname = paste0(newname, c("_longitude", "_latitude", "_elevation", "_gps_precision"))
     
-    lonlat = geo[[i]]
+    lonlat = geo[i]
     lonlat[is.na(lonlat) | lonlat == "None" | lonlat == ""] = "NA NA NA NA"
     lonlat = t(apply(lonlat, 1, function(xx) {
-      vals = strsplit(x, " ")[[1]][1:4]
-      vals[is.na(vals)] = NA
-      vals[c(2,1,3,4)]
+      strsplit(xx, " ")[[1]][1:4]
     }))
+    
+    lonlat[lonlat == "NA"] = NA
+    
+    lonlat = lonlat[, c(2, 1, 3, 4)]
     
     lonlat = as.data.frame(lonlat, stringsAsFactors = FALSE)
     
@@ -106,17 +109,168 @@
     
     lonlat = apply(lonlat, 2, as.numeric)
     
-    trial = cbind(trial, lonlat)
+    trial_dat = cbind(trial_dat, lonlat)
     
   }
   
-  longlat = grep("_longitude|_latitude|_elevation|_precision", names(trial))
-  rmv = unlist(lapply(trial[longlat], function(x) all(is.na(x))))
+  longlat = grep("_longitude|_latitude|_elevation|_precision", names(trial_dat))
+  rmv = unlist(lapply(trial_dat[longlat], function(x) all(is.na(x))))
   longlat = longlat[rmv]
-  if (length(longlat) > 0) trial = trial[, -longlat]
+  if (length(longlat) > 0) trial_dat = trial_dat[, -longlat]
   
-  return(trial)
+  return(trial_dat)
   
+}
+
+#' Replace ranking codes into factors
+#' @param trial_dat the trial data to apply the replacement
+#' @param ncomp integer with the number of comparisons in the trial_dat design 
+#' @param specialfields data.frame with characteristics assessed in the trial_dat 
+#' @return \code{trial_dat} the input data.frame with the new recoded values 
+#' @noRd
+.replace_rankings = function(trial_dat, ncomp, specialfields) {
+  tricotvslocal = grepl("Performance", specialfields$type)
+  rank_q = specialfields$name[!tricotvslocal]
+  tricotvslocal = specialfields$name[tricotvslocal]
+  
+  if (ncomp == 3 && length(rank_q)) {
+    trial_dat[rank_q] = lapply(trial_dat[rank_q], function(x) {
+      y = as.integer(x)
+      y = ifelse(y == 99, "Not observed", y)
+      y = ifelse(y == 98, "Tie", y)
+      y = ifelse(y == 1,  "A", y)
+      y = ifelse(y == 2,  "B", y)
+      y = ifelse(y == 3,  "C", y)
+      y
+    })
+  }
+  
+  if (length(tricotvslocal) > 1 && all(c(1, 2) %in% unlist(trial_dat[tricotvslocal]))) {
+    trial_dat[tricotvslocal] = lapply(trial_dat[tricotvslocal], function(x) {
+      y = factor(x, levels = c("1", "2"), labels = c("Better", "Worse"))
+      as.character(y)
+    })
+  }
+  
+  return(trial_dat)
+}
+
+#' Replace assessment ODK code by its names 
+#' @param trial_dat the trial data to apply the replacement 
+#' @param x the climmob raw list file to identify the replacement cases
+#' @return \code{trial_dat} the input data.frame with the cases replaced in column names 
+#' @noRd
+.decode_assessments = function(trial_dat, x) {
+  assess_id = paste0("ASS", x$assessments$code)
+  assess_name = tolower(gsub(" |-", "", x$assessments$desc))
+  for (i in seq_along(assess_id)) {
+    names(trial_dat) = ifelse(grepl(assess_id[i], names(trial_dat)),
+                              gsub(assess_id[i], assess_name[i], names(trial_dat)),
+                              names(trial_dat))
+  }
+  
+  names(trial_dat) = gsub("__", "_", names(trial_dat))
+  
+  names(trial_dat) = gsub("REG_", "registration_", names(trial_dat))
+  
+  return(trial_dat)
+}
+
+#' Merge trial data with tricot packages 
+#' @param trial_dat the trial data to merge
+#' @param x the climmob raw list file 
+#' @return \code{trial_dat} the input data.frame with the package info added 
+#' @noRd
+.merge_package_info = function(trial_dat, x) {
+  comps = x$packages$comps
+  comps = lapply(comps, function(x) {
+    x = do.call("rbind", x$technologies)[, "alias_name"]
+    names(x) = paste0("item_", LETTERS[1:length(x)])
+    x
+  })
+  comps = do.call("rbind", comps)
+  comps = as.data.frame(comps, stringsAsFactors = FALSE)
+  names(comps) = paste0("package_", names(comps))
+  
+  pack = cbind(
+    project_id = x$project$project_id,
+    project_code = x$project$project_cod,
+    project_technology = x$combination$elements[[1]]$technology_name,
+    project_coordinator = x$project$project_pi,
+    project_country = x$project$project_cnty,
+    x$packages[, c("package_id", "farmername")],
+    comps
+  )
+  
+  names(pack)[names(pack) == "farmername"] = "registration_participant_name"
+  
+  names(trial_dat)[names(trial_dat) == "registration_qst162"] = "package_id"
+  
+  trial_dat = merge(pack, trial_dat, by = "package_id", all.x = TRUE)
+  
+  return(trial_dat)
+  
+}
+
+#' Clean column names
+#' @param trial_dat the trial data to clean
+#' @return \code{trial_dat} the input data.frame with the package info added 
+#' @noRd
+.clean_column_names = function(trial_dat) {
+  
+  ovl = which(grepl("perf_overallchar|perf_overallper", names(trial_dat)))
+  
+  names(trial_dat)[ovl] = as.vector(sapply(names(trial_dat)[ovl], function(x) {
+    x = strsplit(x, split = "_")
+    x = paste0(x[[1]][1], "_item_", LETTERS[as.integer(x[[1]][4])], "_vs_local")
+    x
+  }))
+  
+  names(trial_dat) = gsub("REG_", "registration_", names(trial_dat))
+  names(trial_dat) = gsub("char_", "", names(trial_dat))
+  names(trial_dat) = gsub("stmt_", "pos", names(trial_dat))
+  names(trial_dat) = gsub("clm_", "survey_", names(trial_dat))
+  names(trial_dat) = gsub("^_+", "", names(trial_dat))
+  names(trial_dat) = gsub("__+", "_", names(trial_dat))
+  names(trial_dat) = gsub("__", "_", names(trial_dat))
+  return(trial_dat)
+}
+
+#' Drop ODK system fields 
+#' @param trial_dat the trial data to clean
+#' @param pattern character, vector with the patterns in the columns to drop
+#' @return \code{trial_dat} the input data.frame with subset data
+#' @noRd
+.drop_odk_system_fields = function(trial_dat, pattern = c("originid", "rowuuid",
+                                                          "qst163", "clc_after", "clc_before",
+                                                          "instancename", "id_string", "surveyid", 
+                                                          "deviceimei", "_active", "farmername")) {
+  rmv = paste(pattern, collapse = "|")
+  
+  trial_dat = trial_dat[, !grepl(rmv, names(trial_dat))]
+  
+  return(trial_dat)
+}
+
+#' Re-order columns 
+#' @param trial_dat the trial data to clean
+#' @param x the climmob raw list file
+#' @return \code{trial_dat} the input data.frame with the re-ordered columns 
+#' @noRd
+.reorder_columns = function(trial_dat, x) {
+  assess_name = tolower(gsub(" |-", "", x$assessments$desc))
+  
+  assess_name = paste0(c("project", "package", "registration", assess_name), "_")
+  
+  ord = unique(as.vector(unlist(sapply(assess_name, function(x) {
+    grep(x, names(trial_dat))
+  }))))
+  
+  trial_dat = trial_dat[, ord]
+  
+  names(trial_dat) = gsub("_qst_", "_", names(trial_dat))
+  
+  return(trial_dat)
 }
 
 #' @rdname getDataCM
@@ -140,307 +294,24 @@ as.data.frame.CM_list = function(x,
     return(data.frame())
   }
   
-  # get variables names from participant registration
-  regs = dat[["registry"]]
+  trial = dat[["data"]]
   
-  regs = regs[["fields"]]
-  
-  regs_name = paste0("REG_", regs[, "name"])
-  
-  # get some info on the trial
-  trial_tech = dat$combination$elements[[1]]$technology_name
-  trial_pi = dat$project$project_pi
-  trial_country = dat$project$project_cnty
-  project_name = dat$project$project_cod
-  project_id = dat$project$project_id
-  
-  if (isTRUE(has_data)) {
-    
-    ncomp = dat$project$project_numcom
-    
-    # get the names of assessments questions
-    assess_q = dat[["specialfields"]]
-    
-    # check if overall VS local is present
-    tricotvslocal = grepl("Performance", assess_q$type)
-    
-    # get the strings of ranking questions
-    rank_q = assess_q$name[!tricotvslocal]
-    
-    # and the overall vs local question
-    tricotvslocal = assess_q$name[tricotvslocal]
-    
-    # get variables names from assessments
-    assess = dat[["assessments"]]
-    
-    if (length(assess) > 0) {
-      assess = do.call("rbind", assess[, "fields"])
-      assess = data.frame(assess, stringsAsFactors = FALSE)
-      assess = assess[!duplicated(assess[, "name"]), ]
-      # the ids for assessments
-      assess_id = paste0("ASS", dat[["assessments"]][, "code"])
-      # and the description
-      assess_name = dat[["assessments"]][, "desc"]
-      # the names of questions
-      looknames = assess[, "name"]
-      # the strings to use to decode values
-      rtable = do.call("rbind", dat$assessments$fields)
-      rtable = rtable[!is.na(rtable$rtable), c("name", "rtable")]
-      
-      # get codes from multiple choice variables
-      assess_lkp = dat$assessments$lkptables
-      lkp = list()
-      for(i in seq_along(assess_lkp)){
-        l = .decode_lkptable(assess_lkp[[i]])
-        lkp = c(lkp, l)
-      }
-    } else {
-      assess = data.frame()
-      assess_id = character()
-      assess_name = character()
-      looknames = character()
-      rtable = data.frame()
-      lkp = list()
-    }
-    
-    # add codes from registration
-    reg_lkp = .decode_lkptable(dat$registry$lkptables)
-    lkp = c(reg_lkp, lkp)
-    
-    # also the table strings
-    reg_rtable = dat$registry$fields[,c("name","rtable")]
-    reg_rtable = reg_rtable[!is.na(reg_rtable$rtable), ]
-    rtable = rbind(rtable, reg_rtable)
-    rtable$rtable = gsub("_lkp","_",rtable$rtable)
-    
-    # remove tricot questions
-    rtable = rtable[!grepl("char_", rtable$name), ]
-    # remove lkp table with farmers names
-    rtable = rtable[!grepl("qst163", rtable$name), ]
-    
-    # add assessment code
-    assesscode = lapply(strsplit(rtable$rtable, "_"), function(x) x[1])
-    rtable$assess = do.call("rbind", assesscode)
-    rtable$name = paste(rtable$assess, rtable$name, sep = "_")
-    
-    # trial data
-    trial = dat[["data"]]
-    
-    # replace codes by labels in multi choice questions 
-    n_rtable = nrow(rtable)
-    
-    for (i in seq_len(n_rtable)) {
-      
-      string_i = rtable[i, "rtable"]
-      var_i = rtable[i, "name"]
-      l = match(string_i, names(lkp))
-      l = lkp[[l]]
-      
-      trial[var_i] = gsub(" ", "; ", trial[[var_i]])
-      
-      for (j in seq_along(l$id)) {
-        
-        trial[var_i] = gsub(l$id[j], l$label[j], trial[[var_i]])
-        
-      }
-    }
-    
-    # split geolocation info
-    # check if geographic location is available
-    geoTRUE = grepl("farmgoelocation|geopoint|gps|geotrial|pointofdel", names(trial))
-    
-    # if is available, then split the vector as lon lat
-    if (any(geoTRUE)) {
-      
-      geo_which = which(geoTRUE)
-      
-      geo = trial[geo_which]
-      
-      trial = trial[!geoTRUE]
-      
-      keep = unlist(lapply(geo[1:ncol(geo)], function(x) all(is.na(x))))
-      
-      geo = geo[, !keep]
-      
-      if(ncol(geo) == 0) geoTRUE = FALSE
-      
-    }
-    
-    if(any(geoTRUE)){
-      
-      for (i in seq_len(ncol(geo))){
-        newname = names(geo)[[i]]
-        newname = gsub("farmgoelocation", "_farm_geo", newname)
-        newname = gsub("__", "_", newname)
-        newname = paste0(newname, c("_longitude","_latitude", "_elevation","_gps_precision"))
-        
-        lonlat = geo[i]
-        
-        lonlat[is.na(lonlat)] = c("NA NA NA NA")
-        lonlat[lonlat == "None"] = c("NA NA NA NA")
-        lonlat[lonlat == ""] = c("NA NA NA NA")
-        
-        lonlat = t(apply(lonlat, 1, function(xx) {
-          
-          strsplit(xx, " ")[[1]][1:4]
-          
-        }))
-        
-        lonlat[lonlat == "NA"] = NA
-        
-        lonlat = lonlat[, c(2, 1, 3, 4)]
-        
-        lonlat = as.data.frame(lonlat, stringsAsFactors = FALSE)
-        
-        names(lonlat) = newname
-        
-        lonlat = apply(lonlat, 2, as.numeric)
-        
-        trial = cbind(trial, lonlat)
-        
-      }
-      
-      # for some odd reason the json file comes with empty long lat columns 
-      # I will remove those just for the sake of not having so much confusion in the data
-      longlat = grep("_longitude|_latitude|_elevation|_precision", names(trial))
-      
-      rmv = unlist(lapply(trial[longlat], function(x) all(is.na(x))))
-      
-      longlat = longlat[rmv]
-      
-      # only drop columns if there's something to drop
-      if (length(longlat) > 0) {
-        trial = trial[, -longlat]
-      }
-      
-    }
-    
-    # replace numbers in trial results by LETTERS
-    if (ncomp == 3) {
-      trial[rank_q] =
-        lapply(trial[rank_q], function(x) {
-          y = as.integer(x)
-          y = ifelse(y == 99, "Not observed", y)
-          y = ifelse(y == 98, "Tie", y)
-          y = ifelse(y == 1,  "A", y)
-          y = ifelse(y == 2,  "B", y)
-          y = ifelse(y == 3,  "C", y)
-          y
-        })
-    }
-    
-    # replace numbers in question about overall vs local 
-    if (length(tricotvslocal) > 1) {
-      
-      if (all(c(1, 2) %in% unlist(trial[tricotvslocal]))) {
-        
-        trial[tricotvslocal] =
-          lapply(trial[tricotvslocal], function(x) {
-            y = factor(x, levels = c("1", "2"), labels = c("Better", "Worse"))
-            as.character(y)
-          })
-        
-      }
-      
-    }
-    
-    # reshape it into a long format 
-    # put pack id as first colunm
-    packid = grepl("REG_qst162", names(trial))
-    
-    trial = cbind(trial[packid], trial[!packid])
-    
-    # remove possible space in assess name
-    assess_name = tolower(gsub(" |-", "", assess_name))
-    
-    # add which moment the data was taken
-    for (i in seq_along(assess_id)) {
-      names(trial) = ifelse(grepl(assess_id[i], names(trial)),
-                            gsub(assess_id[i], assess_name[i], names(trial)),
-                            names(trial))
-      
-    }
-    
-  } 
-  
-  # comparisons and package
-  comps = dat[["packages"]][, "comps"]
-  
-  comps = lapply(comps, function(x) {
-    x = do.call("rbind", x$technologies)[,"alias_name"]
-    names(x) = paste0("item_", LETTERS[1:length(x)])
-    x
-  })
-  
-  comps = do.call("rbind", comps)
-  
-  comps = as.data.frame(comps, stringsAsFactors = FALSE)
-  
-  names(comps) = paste0("package_", names(comps))
-  
-  pack = cbind(dat[["packages"]][, c("package_id","farmername")], comps)
-  
-  # add project name
-  pack = cbind(project_id = project_id, 
-               project_code = project_name, 
-               project_technology = trial_tech,
-               project_coordinator = trial_pi,
-               project_country = trial_country,
-               pack)
-  
-  names(trial)[names(trial) == "REG_qst162"] = "package_id"
-  
-  trial = merge(pack, trial, by = "package_id", all.x = TRUE)
-  
-  # check if ids from ODK names are required to be removed 
+  trial = .replace_multichoice_codes(trial, dat)
+  trial = .handle_geolocation_columns(trial)
+  trial = .replace_rankings(trial, dat$project$project_numcom, dat$specialfields)
+  trial = .decode_assessments(trial, dat)
+  trial = .merge_package_info(trial, dat)
+
   if (isTRUE(tidynames)) {
-    
-    ovl = which(grepl("perf_overallchar|perf_overallper", names(trial)))
-    
-    names(trial)[ovl] = as.vector(sapply(names(trial)[ovl], function(x) {
-      x = strsplit(x, split = "_")
-      x = paste0(x[[1]][1], "_item_", LETTERS[as.integer(x[[1]][4])], "_vs_local")
-      x
-    }))
-    
-    names(trial) = gsub("REG_", "registration_", names(trial))
-    
-    names(trial) = gsub("char_", "", names(trial))
-    
-    names(trial) = gsub("stmt_", "pos", names(trial))
-    
-    names(trial) = gsub("clm_", "survey_", names(trial))
-    
-    names(trial) = gsub("^_","", names(trial))
-    
-    names(trial) = gsub("__","_", names(trial))
-    
-    names(trial) = gsub("__","_", names(trial))
-    
-    names(trial)[names(trial) == "farmername"] = "registration_participant_name"
-    
+    trial = .clean_column_names(trial)
   }
   
-  output = trial
+  trial = .drop_odk_system_fields(trial)
+  trial = .reorder_columns(trial, dat)
   
-  rmv = "originid|rowuuid|qst163|clc_after|clc_before|instancename|id_string|surveyid|deviceimei|_active"
-  
-  # remove some ODK variables
-  output = output[, !grepl(rmv, names(output)) ]
-  
-  # reorder columns and make sure that packages and registration comes first
-  assess_name = paste0(union(c("project", "package", "registration"), assess_name), "_")
-  
-  ord = unique(as.vector(unlist(sapply(assess_name, function(x) {
-    grep(x, names(output))
-  }))))
-  
-  output = output[, ord]
-  
-  names(output) = gsub("_qst_", "_", names(output))
-  
-  if(isFALSE(pivot.wider)){
-    trial = .set_long(output, "package_id")
+  if (isFALSE(pivot.wider)) {
+    
+    trial = .set_long(trial, "package_id")
     
     tags = strsplit(trial$variable, "_")
     
@@ -454,13 +325,12 @@ as.data.frame.CM_list = function(x,
     
     trial = trial[,c("id", "moment", "variable", "value")]
     
-    output = trial
   }
-
-  row.names(output) = seq_len(nrow(output))
   
-  class(output) = union("CM_df", class(output))
+  row.names(trial) = seq_len(nrow(trial))
   
-  return(output)
+  class(trial) = union("CM_df", class(trial))
+  
+  return(trial)
   
 }
