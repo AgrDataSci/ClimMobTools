@@ -3,8 +3,13 @@ ClimMobTools 1.6 (2025-07-03)
 
 ### CHANGES IN BEHAVIOUR
 
-* in `as.data.frame.CM_list()` the default for pivot.wider is set to TRUE
-* 
+* The `as.data.frame.CM_list()` method now defaults to pivot.wider = TRUE, returning a wide-format data frame by default.
+
+### IMPROVEMENTS 
+* Re-factored internal code structure for improved readability and performance.
+* Enhanced column name cleaning logic when `as.data.frame.CM_list()` tidynames = TRUE, producing more consistent and informative names.
+* Restructured column ordering in the output to prioritize project, package, and registration variables.
+* Simplified logic for reshaping and labelling assessment variables, removing the dependency on `.set_long()` when pivot.wider = TRUE.
 
 ClimMobTools 1.5 (2025-03-31)
 =========================

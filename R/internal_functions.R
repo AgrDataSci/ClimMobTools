@@ -143,40 +143,6 @@
   
 }
 
-#' Decode lkptables
-#' @param x a list 
-#' @return \code{x} as a data.frame 
-#' @noRd
-.decode_lkptable = function(x){
-  name = x[["name"]]
-  name = gsub("lkp", "", name)
-  desc = x[["desc"]]
-  desc = gsub("Lookup table ", "", desc)
-  desc = gsub("[(]", "", desc)
-  desc = gsub("[)]", "", desc)
-  fields = x[["fields"]]
-  values = x[["values"]]
-  
-  result = list()
-  
-  for(i in seq_along(name)){
-    
-    r = cbind(name = name[[i]],
-              desc = desc[[i]],
-              values[[i]])
-    
-    names(r) = c("name", "desc", "id", "label")
-    
-    r$label = .title_case(r$label)
-    
-    result[[name[[i]]]] = r
-    
-  }
-  
-  return(result)
-  
-}
-
 #' Is a tibble object
 #' @param object an object to have its class tested
 #' @return a logical value where TRUE indicates that the 

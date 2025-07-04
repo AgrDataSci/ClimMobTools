@@ -72,7 +72,7 @@ print.CM_list = function(x, ...){
     stringsAsFactors = FALSE
   )
   
-  cat("\nSummary of ClimMob", x$project$project_name, "Project \n")
+  cat("\nClimMob project:", x$project$project_name, "\n")
   cat("=====================================================\n")
   for (name in names(summary_df)) {
     cat(sprintf("%-25s: %s\n", name, summary_df[[name]]))

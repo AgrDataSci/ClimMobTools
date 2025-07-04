@@ -68,13 +68,13 @@ getDataCM(key = my_key,
           userowner = "gosset",
           server = "climmob3")
           
-# get in the wide format
+# get in the long format
 
 getDataCM(key = my_key,
           project = "breadwheat",
           userowner = "gosset",
           server = "climmob3",
-          pivot.wider = TRUE)
+          pivot.wider = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

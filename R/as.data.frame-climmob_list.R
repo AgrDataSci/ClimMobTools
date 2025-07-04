@@ -1,3 +1,124 @@
+#' Decode lkptables
+#' @param x a list 
+#' @return \code{x} as a data.frame 
+#' @noRd
+.decode_lkptable = function(x){
+  name = x[["name"]]
+  name = gsub("lkp", "", name)
+  desc = x[["desc"]]
+  desc = gsub("Lookup table ", "", desc)
+  desc = gsub("[(]", "", desc)
+  desc = gsub("[)]", "", desc)
+  fields = x[["fields"]]
+  values = x[["values"]]
+  
+  result = list()
+  
+  for(i in seq_along(name)){
+    
+    r = cbind(name = name[[i]],
+              desc = desc[[i]],
+              values[[i]])
+    
+    names(r) = c("name", "desc", "id", "label")
+    
+    r$label = .title_case(r$label)
+    
+    result[[name[[i]]]] = r
+    
+  }
+  
+  return(result)
+  
+}
+
+#' Replace codes by factors
+#' @param trial the trial data to apply the replacement 
+#' @param x the climmob raw list file to identify the replacement cases
+#' @return \code{trial} the input data.frame with the cases replaced 
+#' @noRd
+.replace_multichoice_codes = function(trial, x) {
+  # decode lookup tables
+  lkp = c(.decode_lkptable(x$registry$lkptables),
+          unlist(lapply(x$assessments$lkptables, .decode_lkptable), recursive = FALSE))
+  
+  rtable = do.call("rbind", x$assessments$fields)
+  rtable = rtable[!is.na(rtable$rtable), c("name", "rtable")]
+  
+  reg_rtable = x$registry$fields[, c("name", "rtable")]
+  reg_rtable = reg_rtable[!is.na(reg_rtable$rtable), ]
+  
+  rtable = rbind(rtable, reg_rtable)
+  rtable$rtable = gsub("_lkp", "_", rtable$rtable)
+  rtable = rtable[!grepl("char_|qst163", rtable$name), ]
+  
+  assesscode = vapply(strsplit(rtable$rtable, "_"), `[`, 1, FUN.VALUE = character(1))
+  rtable$assess = assesscode
+  rtable$name = paste(rtable$assess, rtable$name, sep = "_")
+  
+  for (i in seq_len(nrow(rtable))) {
+    string_i = rtable[i, "rtable"]
+    var_i = rtable[i, "name"]
+    if (!var_i %in% names(trial)) next
+    l = lkp[[string_i]]
+    if (is.null(l)) next
+    trial[[var_i]] = gsub(" ", "; ", trial[[var_i]])
+    for (j in seq_along(l$id)) {
+      trial[[var_i]] = gsub(l$id[j], l$label[j], trial[[var_i]])
+    }
+  }
+  return(trial)
+}
+
+#' Replace codes by factors
+#' @param trial the trial data to apply the replacement 
+#' @return \code{trial} the input data.frame with the new longlat columns 
+#' @noRd
+.handle_geolocation_columns = function(trial) {
+  
+  geoTRUE = grepl("farmgoelocation|geopoint|gps|geotrial|pointofdel", names(trial))
+  
+  if (!any(geoTRUE)) return(trial)
+  
+  geo = trial[geoTRUE]
+  trial = trial[!geoTRUE]
+  keep = unlist(lapply(geo, function(x) !all(is.na(x))))
+  geo = geo[, keep, drop = FALSE]
+  
+  if (ncol(geo) == 0) return(trial)
+  
+  for (i in seq_len(ncol(geo))) {
+    newname = gsub("farmgoelocation", "_farm_geo", names(geo)[[i]])
+    newname = gsub("__", "_", newname)
+    newname = paste0(newname, c("_longitude", "_latitude", "_elevation", "_gps_precision"))
+    
+    lonlat = geo[[i]]
+    lonlat[is.na(lonlat) | lonlat == "None" | lonlat == ""] = "NA NA NA NA"
+    lonlat = t(apply(lonlat, 1, function(xx) {
+      vals = strsplit(x, " ")[[1]][1:4]
+      vals[is.na(vals)] = NA
+      vals[c(2,1,3,4)]
+    }))
+    
+    lonlat = as.data.frame(lonlat, stringsAsFactors = FALSE)
+    
+    names(lonlat) = newname
+    
+    lonlat = apply(lonlat, 2, as.numeric)
+    
+    trial = cbind(trial, lonlat)
+    
+  }
+  
+  longlat = grep("_longitude|_latitude|_elevation|_precision", names(trial))
+  rmv = unlist(lapply(trial[longlat], function(x) all(is.na(x))))
+  longlat = longlat[rmv]
+  if (length(longlat) > 0) trial = trial[, -longlat]
+  
+  return(trial)
+  
+}
+
 #' @rdname getDataCM
 #' @param x an object of class \code{CM_list}
 #' @param tidynames logical, \code{TRUE} make clean column names
@@ -14,6 +135,11 @@ as.data.frame.CM_list = function(x,
   
   dat = x
   
+  if (nrow(dat[["data"]]) <= 1) {
+    message("Project ", dat$project$project_cod, " has no associated data. \n")
+    return(data.frame())
+  }
+  
   # get variables names from participant registration
   regs = dat[["registry"]]
   
@@ -27,13 +153,6 @@ as.data.frame.CM_list = function(x,
   trial_country = dat$project$project_cnty
   project_name = dat$project$project_cod
   project_id = dat$project$project_id
-  
-  has_data = nrow(dat[["data"]]) > 1
-  
-  if (isFALSE(has_data)) {
-    message("Project ", project_name, " has no associated data. \n")
-    return(data.frame())
-  }
   
   if (isTRUE(has_data)) {
     
@@ -189,7 +308,10 @@ as.data.frame.CM_list = function(x,
       
       longlat = longlat[rmv]
       
-      trial = trial[, -longlat]
+      # only drop columns if there's something to drop
+      if (length(longlat) > 0) {
+        trial = trial[, -longlat]
+      }
       
     }
     
@@ -316,10 +438,6 @@ as.data.frame.CM_list = function(x,
   output = output[, ord]
   
   names(output) = gsub("_qst_", "_", names(output))
-  
-  # reorder moment and ids
-  o = order(output$moment)
-  output = output[o, ]
   
   if(isFALSE(pivot.wider)){
     trial = .set_long(output, "package_id")
