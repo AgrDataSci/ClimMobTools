@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6</span>
       </span>
     </div>
 
@@ -58,9 +58,47 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.3" id="climmobtools-13-2025-01-9">ClimMobTools 1.3 (2025-01-9)<a class="anchor" aria-label="anchor" href="#climmobtools-13-2025-01-9"></a></h2>
+<h2 class="page-header" data-toc-text="1.6" id="climmobtools-16-2025-07-06">ClimMobTools 1.6 (2025-07-06)<a class="anchor" aria-label="anchor" href="#climmobtools-16-2025-07-06"></a></h2>
 <div class="section level4">
-<h4 id="bug-fixes-1-3">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3"></a></h4>
+<h4 id="changes-in-behaviour-1-6">CHANGES IN BEHAVIOUR<a class="anchor" aria-label="anchor" href="#changes-in-behaviour-1-6"></a></h4>
+<ul><li>The <code><a href="../reference/getDataCM.html">as.data.frame.CM_list()</a></code> method now defaults to pivot.wider = TRUE, returning a wide-format data frame.</li>
+<li>The <code><a href="../reference/getDataCM.html">as.data.frame.CM_list()</a></code> method has a validation line to only coerce to data.frame objects with more than 1 data point.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="improvements-1-6">IMPROVEMENTS<a class="anchor" aria-label="anchor" href="#improvements-1-6"></a></h4>
+<ul><li>Re-factored internal code structure for improved readability and performance. Introducing modular helper functions to support the <code><a href="../reference/getDataCM.html">as.data.frame.CM_list()</a></code> method, improving code clarity and reusability
+<ul><li><code>.replace_multichoice_codes()</code></li>
+<li><code>.handle_geolocation_columns()</code></li>
+<li><code>.replace_rankings()</code></li>
+<li><code>.decode_assessments()</code></li>
+<li><code>.merge_package_info()</code></li>
+<li><code>.clean_column_names()</code></li>
+<li><code>.drop_odk_system_fields()</code></li>
+<li><code>.reorder_columns()</code></li>
+<li><code>.safe_extract()</code></li>
+</ul></li>
+<li>Enhanced column name cleaning logic when <code><a href="../reference/getDataCM.html">as.data.frame.CM_list()</a></code> tidynames = TRUE, producing more consistent and informative names.</li>
+<li>Restructured column ordering in the output to prioritize project, package, and registration variables.</li>
+<li>Simplified logic for reshaping and labelling assessment variables, removing the dependency on <code>.set_long()</code> when pivot.wider = TRUE.</li>
+<li>Reordered output columns to prioritize key identifiers (<code>project</code>, <code>package</code>, <code>registration</code>, and assessments).</li>
+</ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-1-6">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-6"></a></h4>
+<ul><li>Fixed an issue where geolocation columns containing only missing values (e.g., <code>_longitude</code>, <code>_latitude</code>) would lead to the final data frame having zero columns. These are now removed conditionally and safely.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.5" id="climmobtools-15-2025-03-31">ClimMobTools 1.5 (2025-03-31)<small>2025-03-31</small><a class="anchor" aria-label="anchor" href="#climmobtools-15-2025-03-31"></a></h2>
+<div class="section level4">
+<h4 id="changes-in-behaviour-1-5">CHANGES IN BEHAVIOUR<a class="anchor" aria-label="anchor" href="#changes-in-behaviour-1-5"></a></h4>
+<ul><li>
+<code><a href="../reference/getProjectsCM.html">getProjectsCM()</a></code> adds a new variable in the output <code>project_code</code> that will represent the previous <code>project_id</code>. The new variable <code>project_id</code> will represent the id from the ClimMob server database not the id from the user list of projects.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.4" id="climmobtools-14-2025-01-15">ClimMobTools 1.4 (2025-01-15)<small>2025-01-16</small><a class="anchor" aria-label="anchor" href="#climmobtools-14-2025-01-15"></a></h2>
+<div class="section level4">
+<h4 id="bug-fixes-1-4">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4"></a></h4>
 <ul><li>Fixes issues in vignetted building reported by CRAN.</li>
 </ul></div>
 </div>

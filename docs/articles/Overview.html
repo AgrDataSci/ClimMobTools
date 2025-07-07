@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@ Rica<br><small class="dont-index">Source: <a href="https://github.com/agrdatasci
 <p><strong>ClimMobTools</strong> is the API client for the ‘ClimMob’
 platform in R. <a href="https://climmob.net/" class="external-link">ClimMob</a> is open-source
 software for decentralized large-N trials using the ‘tricot’
-approach<span class="citation"><sup>1</sup></span>. This approach
+approach<span class="citation"><sup>1,2</sup></span>. This approach
 facilitates the rapid assessment of technologies in target environments.
 Tricot turns the research paradigm on its head: instead of a few
 researchers designing complicated trials to compare several technologies
@@ -126,7 +126,7 @@ more information.</p>
 <div class="section level3">
 <h3 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h3>
-<p>The <code>breadwheat</code> dataset is a dataframe from crowdsourced
+<p>The <code>breadwheat</code> dataset is a data.frame from crowdsourced
 citizen science trials of bread wheat (<em>Triticum aestivum</em> L.)
 varieties in India. This sample data is available on the <a href="https://climmob.net/" class="external-link">ClimMob</a> platform and can be fetched
 using the <code><a href="../reference/getDataCM.html">getDataCM()</a></code> function from
@@ -137,24 +137,24 @@ user’s account.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://hturner.github.io/PlackettLuce/" class="external-link">"PlackettLuce"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># the API key</span></span>
-<span><span class="va">key</span> <span class="op">&lt;-</span> <span class="st">"d39a3c66-5822-4930-a9d4-50e7da041e77"</span></span>
+<span><span class="va">key</span> <span class="op">=</span> <span class="st">"d39a3c66-5822-4930-a9d4-50e7da041e77"</span></span>
 <span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDataCM.html">getDataCM</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">key</span>,</span>
+<span><span class="va">dat</span> <span class="op">=</span> <span class="fu"><a href="../reference/getDataCM.html">getDataCM</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">key</span>,</span>
 <span>                 project <span class="op">=</span> <span class="st">"breadwheat"</span>,</span>
-<span>                 userowner <span class="op">=</span> <span class="st">"gosset"</span>,</span>
-<span>                 pivot.wider <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                 userowner <span class="op">=</span> <span class="st">"gosset"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"firstassessment_|package_|lastassessment_|registration_"</span>, <span class="st">""</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"firstassessment_|package_|lastassessment_|registration_"</span>, <span class="st">""</span>,</span>
 <span>                   <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="tricot-data-into-rankings">Tricot data into rankings<a class="anchor" aria-label="anchor" href="#tricot-data-into-rankings"></a>
 </h2>
 <p>The Plackett-Luce model is one approach to analyze the ClimMob
-data<span class="citation"><sup>2</sup></span>. We build the farmers’
-rankings as an object of class <code>rankings</code> from the package <a href="https://CRAN.R-project.org/package=PlackettLuce" class="external-link">PlackettLuce</a>.
-We build the rankings using the function <code><a href="../reference/rankTricot.html">rankTricot()</a></code>.</p>
+data<span class="citation"><sup>3</sup></span>. We coerce the farmers’
+rankings into an object of class <code>rankings</code> from the package
+<a href="https://CRAN.R-project.org/package=PlackettLuce" class="external-link">PlackettLuce</a>
+using the function <code><a href="../reference/rankTricot.html">rankTricot()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">R</span> <span class="op">=</span> <span class="fu"><a href="../reference/rankTricot.html">rankTricot</a></span><span class="op">(</span><span class="va">dat</span>, </span>
 <span>                items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item_A"</span>,<span class="st">"item_B"</span>,<span class="st">"item_C"</span><span class="op">)</span>, </span>
@@ -207,8 +207,16 @@ triadic comparisons of technologies (tricot)</span></a>.
 <em>Experimental Agriculture</em> <strong>55</strong>, 275–296
 (2019).</div>
 </div>
-<div id="ref-Turner2020" class="csl-entry">
+<div id="ref-deSousa2024" class="csl-entry">
 <div class="csl-left-margin">2. </div>
+<div class="csl-right-inline">de
+Sousa, K., van Etten, J., Manners, R., Abidin, E., <em>et al.</em> <a href="https://doi.org/10.1007/s13593-023-00937-1" class="external-link">The tricot approach:
+An agile framework for decentralized on-farm testing supported by
+citizen science. A retrospective</a>. <em>Agronomy for Sustainable
+Development</em> <strong>44</strong>, (2024).</div>
+</div>
+<div id="ref-Turner2020" class="csl-entry">
+<div class="csl-left-margin">3. </div>
 <div class="csl-right-inline">Turner, H. L., Etten, J. van, Firth, D. &amp;
 Kosmidis, I. <span class="nocase">Modelling rankings in R: the
 PlackettLuce package</span>. <em>Computational Statistics</em> (2020).

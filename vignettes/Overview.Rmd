@@ -25,33 +25,32 @@ library("PlackettLuce")
 
 ## Overview
 
-**ClimMobTools** is the API client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is open-source software for decentralized large-N trials using the 'tricot' approach[@vanEtten2019tricot]. This approach facilitates the rapid assessment of technologies in target environments. Tricot turns the research paradigm on its head: instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that, taken together, can offer even more information.
+**ClimMobTools** is the API client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is open-source software for decentralized large-N trials using the 'tricot' approach[@vanEtten2019tricot; @deSousa2024]. This approach facilitates the rapid assessment of technologies in target environments. Tricot turns the research paradigm on its head: instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that, taken together, can offer even more information.
 
 ## Usage
 
-The `breadwheat` dataset is a dataframe from crowdsourced citizen science trials of bread wheat (*Triticum aestivum* L.) varieties in India. This sample data is available on the [ClimMob](https://climmob.net/) platform and can be fetched using the `getDataCM()` function from **ClimMobTools**, along with an API key from the ClimMob user's account.
+The `breadwheat` dataset is a data.frame from crowdsourced citizen science trials of bread wheat (*Triticum aestivum* L.) varieties in India. This sample data is available on the [ClimMob](https://climmob.net/) platform and can be fetched using the `getDataCM()` function from **ClimMobTools**, along with an API key from the ClimMob user's account.
 
 ```{r fetch, message=FALSE, eval=TRUE, echo=TRUE}
 library("ClimMobTools")
 library("PlackettLuce")
 
 # the API key
-key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
+key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-dat <- getDataCM(key = key,
+dat = getDataCM(key = key,
                  project = "breadwheat",
-                 userowner = "gosset",
-                 pivot.wider = TRUE)
+                 userowner = "gosset")
 
 
-names(dat) <- gsub("firstassessment_|package_|lastassessment_|registration_", "",
+names(dat) = gsub("firstassessment_|package_|lastassessment_|registration_", "",
                    names(dat))
 
 ```
 
 # Tricot data into rankings
 
-The Plackett-Luce model is one approach to analyze the ClimMob data[@Turner2020]. We build the farmers' rankings as an object of class `rankings` from the package [PlackettLuce](https://CRAN.R-project.org/package=PlackettLuce). We build the rankings using the function `rankTricot()`.
+The Plackett-Luce model is one approach to analyze the ClimMob data[@Turner2020]. We coerce the farmers' rankings into an object of class `rankings` from the package [PlackettLuce](https://CRAN.R-project.org/package=PlackettLuce) using the function `rankTricot()`.
 
 ```{r plrankings, message=FALSE, eval=TRUE, echo=TRUE}
 R = rankTricot(dat, 
