@@ -1,3 +1,11 @@
+ClimMobTools 1.6.1 (2025-07-07)
+=========================
+
+### BUG FIXES
+
+* Fixes an issue in handling column names with the overall characteristic. 
+
+
 ClimMobTools 1.6 (2025-07-06)
 =========================
 

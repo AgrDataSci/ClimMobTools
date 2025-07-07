@@ -273,7 +273,7 @@
   }))
   
   names(trial_dat) = gsub("REG_", "registration_", names(trial_dat))
-  names(trial_dat) = gsub("char_", "", names(trial_dat))
+  names(trial_dat) = gsub("char_", "_", names(trial_dat))
   names(trial_dat) = gsub("stmt_", "pos", names(trial_dat))
   names(trial_dat) = gsub("clm_", "survey_", names(trial_dat))
   names(trial_dat) = gsub("^_+", "", names(trial_dat))

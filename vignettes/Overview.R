@@ -7,15 +7,14 @@ library("ClimMobTools")
 library("PlackettLuce")
 
 # the API key
-key <- "d39a3c66-5822-4930-a9d4-50e7da041e77"
+key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-dat <- getDataCM(key = key,
+dat = getDataCM(key = key,
                  project = "breadwheat",
-                 userowner = "gosset",
-                 pivot.wider = TRUE)
+                 userowner = "gosset")
 
 
-names(dat) <- gsub("firstassessment_|package_|lastassessment_|registration_", "",
+names(dat) = gsub("firstassessment_|package_|lastassessment_|registration_", "",
                    names(dat))
 
 
