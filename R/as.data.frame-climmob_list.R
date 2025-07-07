@@ -207,6 +207,8 @@
 .decode_assessments = function(trial_dat, x) {
   assess_id = paste0("ASS", x$assessments$code)
   assess_name = tolower(gsub(" |-", "", x$assessments$desc))
+  assess_name = gsub("[^a-z0-9]", "", assess_name)
+  
   for (i in seq_along(assess_id)) {
     names(trial_dat) = ifelse(grepl(assess_id[i], names(trial_dat)),
                               gsub(assess_id[i], assess_name[i], names(trial_dat)),
@@ -239,7 +241,7 @@
   pack = cbind(
     project_id = .safe_extract(x, c("project", "project_id")),
     project_code = .safe_extract(x, c("project", "project_cod")), 
-    project_technology = .safe_extract(x, c("combination", "elements", 1, "technology_name")),
+    project_technology = .safe_extract(x, c("combination", "elements", 1, "technology_name", 1)),
     project_coordinator = .safe_extract(x, c("project", "project_pi")),
     project_country = .safe_extract(x, c("project", "project_cnty")),
     x$packages[, c("package_id", "farmername")],
@@ -302,8 +304,9 @@
 #' @return \code{trial_dat} the input data.frame with the re-ordered columns 
 #' @noRd
 .reorder_columns = function(trial_dat, x) {
-  assess_name = tolower(gsub(" |-", "", x$assessments$desc))
   
+  assess_name = tolower(gsub(" |-", "", x$assessments$desc))
+  assess_name = gsub("[^a-z0-9]", "", assess_name)
   assess_name = paste0(c("project", "package", "registration", assess_name), "_")
   
   ord = unique(as.vector(unlist(sapply(assess_name, function(x) {

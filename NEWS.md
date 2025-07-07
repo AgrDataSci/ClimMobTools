@@ -1,9 +1,9 @@
-ClimMobTools 1.6 (2025-07-04)
+ClimMobTools 1.6 (2025-07-06)
 =========================
 
 ### CHANGES IN BEHAVIOUR
 
-* The `as.data.frame.CM_list()` method now defaults to pivot.wider = TRUE, returning a wide-format data frame by default.
+* The `as.data.frame.CM_list()` method now defaults to pivot.wider = TRUE, returning a wide-format data frame.
 * The `as.data.frame.CM_list()` method has a validation line to only coerce to data.frame objects with more than 1 data point.
 
 ### IMPROVEMENTS
@@ -17,6 +17,7 @@ ClimMobTools 1.6 (2025-07-04)
   - `.clean_column_names()`
   - `.drop_odk_system_fields()`
   - `.reorder_columns()`
+  - `.safe_extract()`
 * Enhanced column name cleaning logic when `as.data.frame.CM_list()` tidynames = TRUE, producing more consistent and informative names.
 * Restructured column ordering in the output to prioritize project, package, and registration variables.
 * Simplified logic for reshaping and labelling assessment variables, removing the dependency on `.set_long()` when pivot.wider = TRUE.
@@ -25,8 +26,6 @@ ClimMobTools 1.6 (2025-07-04)
 ### BUG FIXES
 
 * Fixed an issue where geolocation columns containing only missing values (e.g., `_longitude`, `_latitude`) would lead to the final data frame having zero columns. These are now removed conditionally and safely.
-
-
 
 ClimMobTools 1.5 (2025-03-31)
 =========================
