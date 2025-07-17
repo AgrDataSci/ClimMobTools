@@ -1,0 +1,101 @@
+#' Extract dates from data submission
+#' @param x an object of class CM_list
+#' @return a vector with first and last dates of 
+#' data submission registered by ODK
+#' @noRd
+.get_dates_spam = function(x){
+  index = grep("submitted_date", names(x$data))
+  dates = as.Date(unlist(x$data[index]))
+  dates = as.character(c(min(dates, na.rm = TRUE), max(dates, na.rm = TRUE)))
+  list(start = dates[1],
+       end = dates[2])
+}
+
+#' Extract and clean GPS coordinates from data
+#' @param x an object of class CM_list
+#' @param return character to select the return output, options are 
+#' "bbox" or "coordinates"
+#' @noRd
+.get_trial_coordinates = function(x, return = "bbox") {
+  coords = .handle_geolocation_columns(x$data)
+  index = grep("longitude|latitude", names(coords))
+  coords = coords[, index]
+  
+  lon = grep("_longitude", names(coords))
+  lon = coords[, lon]
+  
+  lon = as.vector(apply(lon, 1, function(x){
+    # I'll take the reverse as this increases the likelihood of
+    # getting the coordinates from the trial, not the point of
+    # delivery
+    names(x)[rev(which(!is.na(x)))[1]]
+  }))
+  
+  lon[is.na(lon)] = grep("_longitude", names(coords))[1]
+  
+  lat = gsub("_longitude", "_latitude", lon)
+  
+  rownames(coords) = 1:nrow(coords)
+  
+  # keep only the selected columns, one per plot
+  lonlat = data.frame(longitude = coords[cbind(1:nrow(coords), lon)],
+                      latitude = coords[cbind(1:nrow(coords), lat)])
+  
+  lonlat[1:2] = lapply(lonlat[1:2], as.numeric)
+  
+  
+  # longlat with 0, 0 is wrong
+  lonlat$longitude[lonlat$longitude == 0 & lonlat$latitude == 0] = NA
+  lonlat$latitude[lonlat$longitude == 0 & lonlat$latitude == 0] = NA
+  
+  if(return == "coordinates") {
+    xy = rmGeoIdentity(lonlat)
+    return(xy)
+  }
+  
+  bbox = list(xmin = round(min(lonlat$longitude), 2),
+              xmax = round(max(lonlat$longitude), 2),
+              ymin = round(min(lonlat$latitude), 2),
+              ymax = round(max(lonlat$latitude), 2))
+  
+  return(bbox)
+  
+}
+
+
+#' Extract trial metadata
+#'
+#' Metadata for the export functions on data publication
+#' 
+#' @param x a list with the raw ClimMob data 
+#' @return a list with the trial metadata
+#' @export
+getTrialMetadata = function(x){
+  
+  # gender index in data
+  gender = grep("_gender1", names(x$data))[1]
+
+  list(changelog = list(version = "1.0.0", 
+                        date = Sys.Date(), 
+                        notes = "Initial release"),
+       software = list(package = "ClimMobTools", 
+                       version = utils::packageVersion("ClimMobTools")),
+       trial_id = .safe_extract(x, c("project", "project_id")),
+       trial_name = .safe_extract(x, c("project", "project_name")),
+       trial_description = .safe_extract(x, c("project", "project_abstract")),
+       trial_country = .safe_extract(x, c("project", "project_cnty")),
+       date = try(.get_dates_spam(x), silent = TRUE),
+       bbox = .get_trial_coordinates(x),
+       data_producer_name = .safe_extract(x, c("project", "project_pi")),
+       data_producer_email = .safe_extract(x, c("project", "project_piemail")),
+       data_producer_institute = .safe_extract(x, c("project", "project_affiliation"), default = NA),
+       program = .safe_extract(x, c("project", "project_program"), default = NA),
+       crop_name = .safe_extract(x, c("combination", "elements", 1, "technology_name", 1)),
+       taxon = .safe_extract(x, c("project", "taxon"), default = NA),
+       trial_objective = .safe_extract(x, c("project", "project_type")),
+       nparticipants = try(length(x$data[,gender]), silent = TRUE),
+       n_men = try(sum(x$data[, gender] %in% c("2", "Man"), na.rm = TRUE), silent = TRUE),
+       n_women = try(sum(x$data[, gender] %in% c("1", "Woman"), na.rm = TRUE), silent = TRUE))
+  
+}
+
