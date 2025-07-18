@@ -11,7 +11,7 @@
        end = dates[2])
 }
 
-#' Extract and clean GPS coordinates from data
+#' Extract GPS coordinates from data
 #' @param x an object of class CM_list
 #' @param return character to select the return output, options are 
 #' "bbox" or "coordinates"
@@ -19,27 +19,46 @@
 .get_trial_coordinates = function(x, return = "bbox") {
   coords = .handle_geolocation_columns(x$data)
   index = grep("longitude|latitude", names(coords))
-  coords = coords[, index]
   
-  lon = grep("_longitude", names(coords))
-  lon = coords[, lon]
+  if (length(index) < 2) {
+    warning("Not enough geolocation columns found.")
+    return(NULL)
+  }
   
-  lon = as.vector(apply(lon, 1, function(x){
-    # I'll take the reverse as this increases the likelihood of
-    # getting the coordinates from the trial, not the point of
-    # delivery
-    names(x)[rev(which(!is.na(x)))[1]]
-  }))
+  coords = coords[, index, drop = FALSE]
   
-  lon[is.na(lon)] = grep("_longitude", names(coords))[1]
+  # If there is only one longitude and one latitude column
+  if (sum(grepl("_longitude", names(coords))) == 1 && 
+      sum(grepl("_latitude", names(coords))) == 1) {
+    
+    lonlat = data.frame(
+      longitude = coords[[grep("_longitude", names(coords))]],
+      latitude = coords[[grep("_latitude", names(coords))]])
+    
+  }else{
   
-  lat = gsub("_longitude", "_latitude", lon)
-  
-  rownames(coords) = 1:nrow(coords)
-  
-  # keep only the selected columns, one per plot
-  lonlat = data.frame(longitude = coords[cbind(1:nrow(coords), lon)],
-                      latitude = coords[cbind(1:nrow(coords), lat)])
+    lon = grep("_longitude", names(coords))
+    lon = coords[, lon]
+    
+    lon = as.vector(apply(lon, 1, function(x){
+      # I'll take the reverse as this increases the likelihood of
+      # getting the coordinates from the trial, not the point of
+      # delivery
+      names(x)[rev(which(!is.na(x)))[1]]
+    }))
+    
+    lon[is.na(lon)] = grep("_longitude", names(coords))[1]
+    
+    lat = gsub("_longitude", "_latitude", lon)
+    
+    rownames(coords) = 1:nrow(coords)
+    
+    # keep only the selected columns, one per plot
+    lonlat = data.frame(longitude = coords[cbind(1:nrow(coords), lon)],
+                        latitude = coords[cbind(1:nrow(coords), lat)])
+    
+      
+  }
   
   lonlat[1:2] = lapply(lonlat[1:2], as.numeric)
   
@@ -69,6 +88,7 @@
 #' 
 #' @param x a list with the raw ClimMob data 
 #' @return a list with the trial metadata
+#' @importFrom utils packageVersion
 #' @export
 getTrialMetadata = function(x){
   
@@ -85,7 +105,7 @@ getTrialMetadata = function(x){
        trial_description = .safe_extract(x, c("project", "project_abstract")),
        trial_country = .safe_extract(x, c("project", "project_cnty")),
        date = try(.get_dates_spam(x), silent = TRUE),
-       bbox = .get_trial_coordinates(x),
+       bounding_box = .get_trial_coordinates(x, return = "bbox"),
        data_producer_name = .safe_extract(x, c("project", "project_pi")),
        data_producer_email = .safe_extract(x, c("project", "project_piemail")),
        data_producer_institute = .safe_extract(x, c("project", "project_affiliation"), default = NA),
