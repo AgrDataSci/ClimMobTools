@@ -82,15 +82,21 @@
 }
 
 
-#' Extract trial metadata
+#' Generate metadata for tricot trial export
 #'
-#' Metadata for the export functions on data publication
+#' Extracts and compiles key metadata from a ClimMob trial object to support
+#' standardized data documentation and publication, including fields such as 
+#' trial identifiers, geographic bounding box, crop and taxon information, 
+#' and participant statistics.
 #' 
-#' @param x a list with the raw ClimMob data 
-#' @return a list with the trial metadata
+#' @family export functions
+#' @param x An object of class \code{CM_list} containing raw ClimMob trial data.
+#' @return A named list containing metadata fields required for tricot data export,
+#' including trial name, description, dates, bounding box, participant counts, 
+#' and institutional information.
 #' @importFrom utils packageVersion
 #' @export
-getTrialMetadata = function(x){
+exportTrialMetadata = function(x){
   
   # gender index in data
   gender = grep("_gender1", names(x$data))[1]

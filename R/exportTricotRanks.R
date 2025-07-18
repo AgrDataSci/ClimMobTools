@@ -6,14 +6,16 @@
 #' based on participant responses. Compatible with Dataverse and other 
 #' FAIR data publication systems.
 #' 
-#' @param x a list with the raw ClimMob data 
+#' @family export functions
+#' @param x An object of class \code{CM_list} containing raw ClimMob trial data.
+#' @param ... Additional arguments passed to \code{getTraitList()}.
 #' @inheritParams getTraitList
 #' @inheritParams rankTricot
 #' @return A data frame in long format containing tricot rankings, 
 #' with one row per genotype and trait, including the block identifier, 
 #' plot label (A/B/C), genotype name, trait label, and assigned rank position. 
 #' @export
-getRankExport = function(x, pattern = c("_pos", "_neg"), items = NULL, ...){
+exportTricotRanks = function(x, pattern = c("_pos", "_neg"), items = NULL, ...){
   
   if (length(items) != 3) stop("Expecting three item columns, e.g., c('item_A', 'item_B', 'item_C')")
   
