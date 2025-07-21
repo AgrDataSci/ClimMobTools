@@ -15,7 +15,10 @@
 #' with one row per genotype and trait, including the block identifier, 
 #' plot label (A/B/C), genotype name, trait label, and assigned rank position. 
 #' @export
-exportTricotRanks = function(x, pattern = c("_pos", "_neg"), items = NULL, ...){
+exportTricotRanks = function(x, 
+                             pattern = c("_pos", "_neg"),
+                             items = c("package_item_A", "package_item_B", "package_item_C"), 
+                             ...){
   
   if (length(items) != 3) stop("Expecting three item columns, e.g., c('item_A', 'item_B', 'item_C')")
   
@@ -26,10 +29,10 @@ exportTricotRanks = function(x, pattern = c("_pos", "_neg"), items = NULL, ...){
   traitlabels = unlist(lapply(traits, function(x) x$trait_label))
   
   # now we build the PlackettLuce rankings
-  R = lapply(traits, function(x){
+  R = lapply(traits, function(XX){
     rankTricot(data = xdf,
                items = items,
-               input = x$string,
+               input = XX$string,
                validate.rankings = FALSE)
   })
   

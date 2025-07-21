@@ -4,7 +4,12 @@
 \alias{exportTricotRanks}
 \title{Extract and format tricot rankings for data export}
 \usage{
-exportTricotRanks(x, pattern = c("_pos", "_neg"), items = NULL, ...)
+exportTricotRanks(
+  x,
+  pattern = c("_pos", "_neg"),
+  items = c("package_item_A", "package_item_B", "package_item_C"),
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class \code{CM_list} containing raw ClimMob trial data.}

@@ -99,7 +99,7 @@
 exportTrialMetadata = function(x){
   
   # gender index in data
-  gender = grep("_gender1", names(x$data))[1]
+  gender = grep("_gender", names(x$data))[1]
 
   list(changelog = list(version = "1.0.0", 
                         date = Sys.Date(), 
