@@ -69,6 +69,7 @@
   
   if(return == "coordinates") {
     xy = rmGeoIdentity(lonlat)
+    names(xy) = c("longitude", "latitude")
     return(xy)
   }
   

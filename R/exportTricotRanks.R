@@ -22,7 +22,7 @@ exportTricotRanks = function(x,
   
   if (length(items) != 3) stop("Expecting three item columns, e.g., c('item_A', 'item_B', 'item_C')")
   
-  xdf = as.data.frame(x)
+  xdf = as.data.frame(x, ...)
   
   traits = getTraitList(xdf, pattern = pattern, ...)
   
