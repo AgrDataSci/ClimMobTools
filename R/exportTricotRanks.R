@@ -24,9 +24,19 @@ exportTricotRanks = function(x,
   
   xdf = as.data.frame(x, ...)
   
+  trial_id = xdf$project_id[1]
+  
   traits = getTraitList(xdf, pattern = pattern, ...)
   
   traitlabels = unlist(lapply(traits, function(x) x$trait_label))
+  
+  # separate trait labels from traits and collection moments
+  traitlabels = strsplit(traitlabels, "_")
+  
+  traitlabels = lapply(traitlabels, function(x){
+    c(x[1], paste(x[2:length(x)], collapse = "_"))
+  })
+  
   
   # now we build the PlackettLuce rankings
   R = lapply(traits, function(XX){
@@ -46,16 +56,21 @@ exportTricotRanks = function(x,
     
     for (j in seq_along(xdf$package_id)) {
       
+      # block id is package id + trial id
       id = xdf$package_id[j]
       
       plots = as.vector(unlist(xdf[xdf$package_id == id, items]))
       
       x = r[j, plots]
       
+      # block id is package id + trial id
+      id = paste(trial_id, id, sep = "-")
+      
       d = data.frame(block_id = id, 
                      plot = LETTERS[1:3],
                      genotype_name = plots,
-                     trait = as.vector(traitlabels[i]),
+                     collection_moment = as.vector(traitlabels[[i]][1]),
+                     trait = as.vector(traitlabels[[i]][2]),
                      rank_position = x)
       
       rank_data[[counter]] = d

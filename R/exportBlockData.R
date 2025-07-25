@@ -17,6 +17,8 @@ exportBlockData = function(x){
   
   xdf = as.data.frame(x)
   
+  xdf$package_id = paste(xdf$project_id, xdf$package_id, sep = "-")
+  
   names(xdf) = gsub("_gender1", "_gender", names(xdf))
   
   names(xdf) = gsub("package_id", "block_id", names(xdf))

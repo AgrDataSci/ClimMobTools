@@ -22,6 +22,7 @@ if available.
 \seealso{
 Other export functions: 
 \code{\link{exportTrialMetadata}()},
-\code{\link{exportTricotRanks}()}
+\code{\link{exportTricotRanks}()},
+\code{\link{exportVariablesDescription}()}
 }
 \concept{export functions}

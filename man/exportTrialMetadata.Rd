@@ -23,6 +23,7 @@ and participant statistics.
 \seealso{
 Other export functions: 
 \code{\link{exportBlockData}()},
-\code{\link{exportTricotRanks}()}
+\code{\link{exportTricotRanks}()},
+\code{\link{exportVariablesDescription}()}
 }
 \concept{export functions}

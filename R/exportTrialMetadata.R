@@ -102,11 +102,10 @@ exportTrialMetadata = function(x){
   # gender index in data
   gender = grep("_gender", names(x$data))[1]
 
-  list(changelog = list(version = "1.0.0", 
-                        date = Sys.Date(), 
-                        notes = "Initial release"),
-       software = list(package = "ClimMobTools", 
-                       version = utils::packageVersion("ClimMobTools")),
+  list(changelog = list(version = paste0("v", Sys.Date()), 
+                        notes = "Initial release",
+                        software = list(package = "ClimMobTools", 
+                                        package_version = utils::packageVersion("ClimMobTools"))),
        trial_id = .safe_extract(x, c("project", "project_id")),
        trial_name = .safe_extract(x, c("project", "project_name")),
        trial_description = .safe_extract(x, c("project", "project_abstract")),
