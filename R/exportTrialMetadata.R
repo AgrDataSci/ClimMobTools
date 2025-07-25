@@ -105,7 +105,7 @@ exportTrialMetadata = function(x){
   list(changelog = list(version = paste0("v", Sys.Date()), 
                         notes = "Initial release",
                         software = list(package = "ClimMobTools", 
-                                        package_version = utils::packageVersion("ClimMobTools"))),
+                                        package_version = as.character(utils::packageVersion("ClimMobTools")))),
        trial_id = .safe_extract(x, c("project", "project_id")),
        trial_name = .safe_extract(x, c("project", "project_name")),
        trial_description = .safe_extract(x, c("project", "project_abstract")),

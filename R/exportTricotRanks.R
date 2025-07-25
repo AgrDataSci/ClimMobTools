@@ -71,7 +71,8 @@ exportTricotRanks = function(x,
                      genotype_name = plots,
                      collection_moment = as.vector(traitlabels[[i]][1]),
                      trait = as.vector(traitlabels[[i]][2]),
-                     rank_position = x)
+                     value = x,
+                     value_type = "rank")
       
       rank_data[[counter]] = d
       counter = counter + 1

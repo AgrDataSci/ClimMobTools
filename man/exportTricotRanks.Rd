@@ -36,6 +36,7 @@ FAIR data publication systems.
 \seealso{
 Other export functions: 
 \code{\link{exportBlockData}()},
+\code{\link{exportMeasuredTraits}()},
 \code{\link{exportTrialMetadata}()},
 \code{\link{exportVariablesDescription}()}
 }
