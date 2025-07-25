@@ -30,6 +30,11 @@ exportVariablesDescription = function(x, tricot_ranks, block_data) {
   
   questions = rbind(questions, q2)
   
+  # everything with the tag "char_" is type rank
+  questions$odktype = ifelse(grepl("char_", questions$name), "rank", questions$odktype)
+  
+  questions$odktype = ifelse(grepl("clm_end|clm_start", questions$name), "datetime", questions$odktype)
+  
   questions$name = .clean_question_names(questions$name)
   
   keep = !duplicated(questions$name)
@@ -70,10 +75,16 @@ exportVariablesDescription = function(x, tricot_ranks, block_data) {
   
   for(i in seq_along(choices)){
     index = grep(paste0(choices[i], "$"), vars$variable_name)
-    values = unlist(strsplit(sort(unique(b[, choices[i]])), "; "))
-    values = paste(sort(unique(values)), collapse = "|")
+    values = unique(na.omit(trimws(unlist(strsplit(as.character(b[[choices[i]]]), ";\\s*")))))
+    values = values[values != ""]
+    values = paste(sort(values), collapse = "|")
     vars[index, "controlled_vocabulary"] = values
   }
+  
+  # add controlled vocabulary for ranks
+  vars$controlled_vocabulary = ifelse(vars$value_type == "rank",
+                                      paste(1:3, collapse = "|"),
+                                      vars$controlled_vocabulary)
   
   class(vars) = union( "CM_df", class(vars))
   
@@ -95,3 +106,5 @@ exportVariablesDescription = function(x, tricot_ranks, block_data) {
   names_vec = gsub("gender1$", "gender", names_vec)
   return(names_vec)
 }
+
+
