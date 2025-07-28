@@ -81,6 +81,8 @@ exportVariablesDescription = function(x, tricot_ranks, measured_traits, block_da
                                       paste(1:3, collapse = "|"),
                                       vars$controlled_vocabulary)
   
+  vars[is.na(vars)] = "No information provided"
+  
   class(vars) = union( "CM_df", class(vars))
   
   return(vars)
