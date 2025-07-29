@@ -8,6 +8,7 @@ exportTricotRanks(
   x,
   pattern = c("_pos", "_neg"),
   items = c("package_item_A", "package_item_B", "package_item_C"),
+  nmin = 0.2,
   ...
 )
 }
@@ -18,6 +19,8 @@ exportTricotRanks(
 
 \item{items}{a character or numerical vector for indexing the column(s) 
 containing the item names in \code{data}}
+
+\item{nmin}{Numeric to define the minimum allowed for complete cases}
 
 \item{...}{Additional arguments passed to \code{getTraitList()}.}
 }

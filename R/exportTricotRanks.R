@@ -8,6 +8,7 @@
 #' 
 #' @family export functions
 #' @param x An object of class \code{CM_list} containing raw ClimMob trial data.
+#' @param nmin Numeric to define the minimum allowed for complete cases
 #' @param ... Additional arguments passed to \code{getTraitList()}.
 #' @inheritParams getTraitList
 #' @inheritParams rankTricot
@@ -18,15 +19,24 @@
 exportTricotRanks = function(x, 
                              pattern = c("_pos", "_neg"),
                              items = c("package_item_A", "package_item_B", "package_item_C"), 
+                             nmin = 0.2,
                              ...){
   
   if (length(items) != 3) stop("Expecting three item columns, e.g., c('item_A', 'item_B', 'item_C')")
   
   xdf = as.data.frame(x, ...)
   
+  n = nrow(xdf)
+  
   trial_id = xdf$project_id[1]
   
   traits = getTraitList(xdf, pattern = pattern, ...)
+  
+  keep = unlist(lapply(traits, function(x) sum(x$keep)))
+  
+  keep = keep >= floor(n * nmin)
+  
+  traits = traits[keep]
   
   traitlabels = unlist(lapply(traits, function(x) x$trait_label))
   

@@ -108,6 +108,8 @@ exportTrialMetadata = function(x){
                         notes = "Initial release",
                         software = list(package = "ClimMobTools", 
                                         package_version = as.character(utils::packageVersion("ClimMobTools")))),
+       doi = na_default,
+       license = na_default,
        trial_id = .safe_extract(x, c("project", "project_id"), default = na_default),
        trial_name = .safe_extract(x, c("project", "project_name"), default = na_default),
        trial_description = .safe_extract(x, c("project", "project_abstract"), default = na_default),
