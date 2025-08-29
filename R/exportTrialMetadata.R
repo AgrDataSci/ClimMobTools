@@ -16,8 +16,10 @@
 #' @param return character to select the return output, options are 
 #' "bbox" or "coordinates"
 #' @noRd
-.get_trial_coordinates = function(x, return = "bbox") {
+.get_trial_coordinates = function(x, return = "bbox", ...) {
+  
   coords = .handle_geolocation_columns(x$data)
+  
   index = grep("longitude|latitude", names(coords))
   
   if (length(index) < 2) {
@@ -68,7 +70,7 @@
   lonlat$latitude[lonlat$longitude == 0 & lonlat$latitude == 0] = NA
   
   if(return == "coordinates") {
-    xy = rmGeoIdentity(lonlat)
+    xy = rmGeoIdentity(lonlat, ...)
     names(xy) = c("longitude", "latitude")
     return(xy)
   }

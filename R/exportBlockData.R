@@ -25,7 +25,7 @@ exportBlockData = function(x){
   
   # remove rankings
   patterns_to_remove = c("_pos$", "_neg$", "project", "latitude", "longitude", 
-                         "pointofdelivery", "geotrial", "participant_name", 
+                         "pointofdelivery", "geotrial", "participant_name", "farmername", 
                          "submitted_by", "_village", "_district", "telephone",
                          "_a$", "_b$", "_c$")
   
