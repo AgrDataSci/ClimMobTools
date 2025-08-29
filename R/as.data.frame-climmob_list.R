@@ -220,6 +220,7 @@
   names(trial_dat) = gsub("REG_", "registration_", names(trial_dat))
   
   return(trial_dat)
+  
 }
 
 #' Merge trial data with tricot packages 
@@ -244,15 +245,11 @@
     project_technology = .safe_extract(x, c("combination", "elements", 1, "technology_name", 1)),
     project_coordinator = .safe_extract(x, c("project", "project_pi")),
     project_country = .safe_extract(x, c("project", "project_cnty")),
-    x$packages[, c("package_id", "farmername")],
+    REG_qst162 = x$packages[, c("package_id")],
     comps
   )
   
-  names(pack)[names(pack) == "farmername"] = "registration_participant_name"
-  
-  names(trial_dat)[names(trial_dat) == "registration_qst162"] = "package_id"
-  
-  trial_dat = merge(pack, trial_dat, by = "package_id", all.x = TRUE)
+  trial_dat = merge(pack, trial_dat, by = "REG_qst162", all.x = TRUE)
   
   return(trial_dat)
   
@@ -272,6 +269,8 @@
     x
   }))
   
+  names(trial_dat) = gsub("REG_qst162", "package_id", names(trial_dat))
+  names(trial_dat) = gsub("REG_farmername", "REG_participant_name", names(trial_dat))
   names(trial_dat) = gsub("REG_", "registration_", names(trial_dat))
   names(trial_dat) = gsub("char_", "_", names(trial_dat))
   names(trial_dat) = gsub("stmt_", "pos", names(trial_dat))
@@ -279,7 +278,10 @@
   names(trial_dat) = gsub("^_+", "", names(trial_dat))
   names(trial_dat) = gsub("__+", "_", names(trial_dat))
   names(trial_dat) = gsub("__", "_", names(trial_dat))
+  names(trial_dat) = gsub("_qst_", "_", names(trial_dat))
+
   return(trial_dat)
+  
 }
 
 #' Drop ODK system fields 
@@ -290,12 +292,13 @@
 .drop_odk_system_fields = function(trial_dat, pattern = c("originid", "rowuuid",
                                                           "qst163", "clc_after", "clc_before",
                                                           "instancename", "id_string", "surveyid", 
-                                                          "deviceimei", "_active", "farmername")) {
+                                                          "deviceimei", "_active")) {
   rmv = paste(pattern, collapse = "|")
   
   trial_dat = trial_dat[, !grepl(rmv, names(trial_dat))]
   
   return(trial_dat)
+  
 }
 
 #' Re-order columns 
@@ -314,8 +317,6 @@
   }))))
   
   trial_dat = trial_dat[, ord]
-  
-  names(trial_dat) = gsub("_qst_", "_", names(trial_dat))
   
   return(trial_dat)
 }
@@ -346,17 +347,17 @@ as.data.frame.CM_list = function(x,
   trial = .replace_multichoice_codes(trial, dat)
   trial = .handle_geolocation_columns(trial)
   trial = .replace_rankings(trial, dat$project$project_numcom, dat$specialfields)
-  trial = .decode_assessments(trial, dat)
   trial = .merge_package_info(trial, dat)
 
   if (isTRUE(tidynames)) {
     trial = .clean_column_names(trial)
+    trial = .decode_assessments(trial, dat)
+    trial = .reorder_columns(trial, dat)
   }
   
   trial = .drop_odk_system_fields(trial)
-  trial = .reorder_columns(trial, dat)
-  
-  if (isFALSE(pivot.wider)) {
+
+  if (all(isFALSE(pivot.wider), isTRUE(tidynames))) {
     
     trial = .set_long(trial, "package_id")
     
