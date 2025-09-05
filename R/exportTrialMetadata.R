@@ -128,7 +128,6 @@ exportTrialMetadata = function(x){
        program = .safe_extract(x, c("project", "project_program"), default = na_default),
        crop_name = .safe_extract(x, c("combination", "elements", 1, "technology_name", 1)),
        taxon = .safe_extract(x, c("project", "taxon"), default = na_default),
-       trial_objective = if(.safe_extract(x, c("project", "project_type")) == 0) na_default,
        nparticipants = try(length(x$data[,gender]), silent = TRUE),
        n_men = try(sum(x$data[, gender] %in% c("2", "Man"), na.rm = TRUE), silent = TRUE),
        n_women = try(sum(x$data[, gender] %in% c("1", "Woman"), na.rm = TRUE), silent = TRUE))
