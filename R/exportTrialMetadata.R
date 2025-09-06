@@ -95,7 +95,7 @@
 #' @family export functions
 #' @param x An object of class \code{CM_list} containing raw ClimMob trial data.
 #' @return A named list containing metadata fields required for tricot data export,
-#' including trial name, description, dates, bounding box, participant counts, 
+#' including study (trial) name, description, dates, bounding box, participant counts, 
 #' and institutional information.
 #' @importFrom utils packageVersion
 #' @export
@@ -113,7 +113,7 @@ exportTrialMetadata = function(x){
        identifier = na_default,
        license = "https://creativecommons.org/licenses/by-sa/4.0/",
        publication_year = format(Sys.Date(), "%Y"),
-       trial = list(
+       study = list(
          id = .safe_extract(x, c("project", "project_id"), default = na_default),
          country = .safe_extract(x, c("project", "project_cnty"), default = na_default),
          title = .safe_extract(x, c("project", "project_name"), default = na_default),

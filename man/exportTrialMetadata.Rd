@@ -11,7 +11,7 @@ exportTrialMetadata(x)
 }
 \value{
 A named list containing metadata fields required for tricot data export,
-including trial name, description, dates, bounding box, participant counts, 
+including study (trial) name, description, dates, bounding box, participant counts, 
 and institutional information.
 }
 \description{
