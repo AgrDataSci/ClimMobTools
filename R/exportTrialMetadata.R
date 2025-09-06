@@ -110,27 +110,33 @@ exportTrialMetadata = function(x){
                         notes = "Initial release",
                         software = list(package = "ClimMobTools", 
                                         package_version = as.character(utils::packageVersion("ClimMobTools")))),
-       doi = na_default,
-       license = na_default,
-       trial_id = .safe_extract(x, c("project", "project_id"), default = na_default),
-       trial_country = .safe_extract(x, c("project", "project_cnty"), default = na_default),
-       trial_name = .safe_extract(x, c("project", "project_name"), default = na_default),
-       trial_type = .safe_extract(x, c("project", "trial_type"), default = na_default),
-       trial_experimental_site = .safe_extract(x, c("project", "experimental_site"), default = na_default),
-       trial_unit_of_analysis = .safe_extract(x, c("project", "unit_of_analysis"), default = na_default),
-       trial_objective = .safe_extract(x, c("project", "trial_objective"), default = na_default),
-       trial_description = .safe_extract(x, c("project", "project_abstract"), default = na_default),
+       identifier = na_default,
+       license = "https://creativecommons.org/licenses/by-sa/4.0/",
+       publication_year = format(Sys.Date(), "%Y"),
+       trial = list(
+         id = .safe_extract(x, c("project", "project_id"), default = na_default),
+         country = .safe_extract(x, c("project", "project_cnty"), default = na_default),
+         title = .safe_extract(x, c("project", "project_name"), default = na_default),
+         description = .safe_extract(x, c("project", "project_abstract"), default = na_default),
+         type = .safe_extract(x, c("project", "trial_type"), default = na_default),
+         unit_of_analysis = .safe_extract(x, c("project", "unit_of_analysis"), default = na_default),
+         objective = .safe_extract(x, c("project", "trial_objective"), default = na_default),
+         experimental_site = .safe_extract(x, c("project", "experimental_site"), default = na_default)),
        date = try(.get_dates_spam(x), silent = TRUE),
-       bounding_box = .get_trial_coordinates(x, return = "bbox"),
-       data_producer_name = .safe_extract(x, c("project", "project_pi"), default = na_default),
-       data_producer_email = .safe_extract(x, c("project", "project_piemail"), default = na_default),
-       data_producer_institute = .safe_extract(x, c("project", "project_affiliation"), default = na_default),
-       program = .safe_extract(x, c("project", "project_program"), default = na_default),
-       crop_name = .safe_extract(x, c("combination", "elements", 1, "technology_name", 1)),
-       taxon = .safe_extract(x, c("project", "taxon"), default = na_default),
-       nparticipants = try(length(x$data[,gender]), silent = TRUE),
-       n_men = try(sum(x$data[, gender] %in% c("2", "Man"), na.rm = TRUE), silent = TRUE),
-       n_women = try(sum(x$data[, gender] %in% c("1", "Woman"), na.rm = TRUE), silent = TRUE))
+       geoLocation = list(boundingBox = .get_trial_coordinates(x, return = "bbox")),
+       data_producer = list(
+         name = .safe_extract(x, c("project", "project_affiliation"), default = na_default),
+         identifier = .safe_extract(x, c("project", "ror_id"), default = na_default),
+         principal_investigator = .safe_extract(x, c("project", "project_pi"), default = na_default),
+         email = .safe_extract(x, c("project", "project_piemail"), default = na_default),
+         program = .safe_extract(x, c("project", "project_program"), default = na_default)),
+       crop = list(
+         name = .safe_extract(x, c("combination", "elements", 1, "technology_name", 1)),
+         taxon = .safe_extract(x, c("project", "taxon"), default = na_default)),
+       participants = list(
+         total = try(length(x$data[,gender]), silent = TRUE),
+         men = try(sum(x$data[, gender] %in% c("2", "Man"), na.rm = TRUE), silent = TRUE),
+         women = try(sum(x$data[, gender] %in% c("1", "Woman"), na.rm = TRUE), silent = TRUE)))
   
 }
 
