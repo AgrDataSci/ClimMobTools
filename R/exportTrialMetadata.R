@@ -49,7 +49,7 @@
       names(x)[rev(which(!is.na(x)))[1]]
     }))
     
-    lon[is.na(lon)] = grep("_longitude", names(coords))[1]
+    lon[is.na(lon)] = names(coords)[grep("_longitude", names(coords))[1]]
     
     lat = gsub("_longitude", "_latitude", lon)
     
