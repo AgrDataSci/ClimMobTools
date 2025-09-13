@@ -40,6 +40,23 @@ exportTricotRanks = function(x,
   
   traitlabels = unlist(lapply(traits, function(x) x$trait_label))
   
+  if (length(traits) == 0) {
+    warning(sprintf(
+      "No traits passed the nmin filter (%.2f, %d of %d responses). Returning empty data frame.",
+      nmin, floor(n * nmin), n
+    ))
+    return(data.frame(
+      block_id = character(), 
+      plot = character(),
+      genotype_name = character(),
+      collection_moment = character(),
+      trait = character(),
+      value = character(),
+      value_type = character()))
+  }
+  
+  
+  
   # separate trait labels from traits and collection moments
   traitlabels = strsplit(traitlabels, "_")
   
