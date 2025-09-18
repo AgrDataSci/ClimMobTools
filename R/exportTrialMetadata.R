@@ -4,7 +4,7 @@
 #' data submission registered by ODK
 #' @noRd
 .get_dates_spam = function(x){
-  index = grep("submitted_date", names(x$data))
+  index = grep("submitted_date|clm_start", names(x$data))
   dates = as.Date(unlist(x$data[index]))
   dates = as.character(c(min(dates, na.rm = TRUE), max(dates, na.rm = TRUE)))
   list(start = dates[1],
@@ -106,6 +106,11 @@ exportTrialMetadata = function(x){
   
   na_default = "No information provided"
 
+  try_na = function(expr) {
+    res = try(expr, silent = TRUE)
+    if (inherits(res, "try-error")) na_default else res
+  }
+  
   list(changelog = list(version = paste0("v", Sys.Date()), 
                         notes = "Initial release",
                         software = list(package = "ClimMobTools", 
@@ -134,9 +139,9 @@ exportTrialMetadata = function(x){
          name = .safe_extract(x, c("combination", "elements", 1, "technology_name", 1)),
          taxon = .safe_extract(x, c("project", "taxon"), default = na_default)),
        participants = list(
-         total = try(length(x$data[,gender]), silent = TRUE),
-         men = try(sum(x$data[, gender] %in% c("2", "Man"), na.rm = TRUE), silent = TRUE),
-         women = try(sum(x$data[, gender] %in% c("1", "Woman"), na.rm = TRUE), silent = TRUE)))
+         total = length(x$data[,1]),
+         men = try_na(sum(x$data[, gender] %in% c("2", "Man"), na.rm = TRUE)),
+         women = try_na(sum(x$data[, gender] %in% c("1", "Woman"), na.rm = TRUE))))
   
 }
 
