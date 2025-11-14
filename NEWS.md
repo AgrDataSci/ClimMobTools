@@ -1,6 +1,22 @@
-ClimMobTools 1.7 (2025-07-17)
+ClimMobTools 1.8 (2025-11-14)
 =========================
 
+### NEW FEATURES
+
+* Added a suite of data-export functions to simplify extraction of structured ClimMob project outputs:
+
+  - `exportBlockData()`
+  - `exportMeasuredTraits()`
+  - `exportTrialMetadata()`
+  - `exportTricotRanks()`
+  - `exportVariablesDescription()`
+
+These functions provide direct access to commonly used data structures in ClimMob projects, improving workflow efficiency for analysis and reporting.
+
+### IMPROVEMENTS
+
+* Internal codebase updated to support new export functions and maintain consistency across all data-handling utilities.
+* Minor enhancements in internal helper functions for data parsing and formatting (no behavioural changes).
 
 ClimMobTools 1.6.1 (2025-07-07)
 =========================

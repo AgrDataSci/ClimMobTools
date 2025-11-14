@@ -7,13 +7,15 @@
 #' 
 #' @family export functions
 #' @inheritParams exportTricotRanks
+#' @param ... further arguments passed to methods
 #' @return A data.frame with one row per block (participant),
 #'  excluding PII and ranking data.
+#' @seealso \code{\link[ClimMobTools]{rmGeoIdentity}}
 #' @export
-exportBlockData = function(x){
+exportBlockData = function(x, ...){
   
   # get coordinates if any 
-  coords = .get_trial_coordinates(x, return = c("coordinates"))
+  coords = .get_trial_coordinates(x, return = c("coordinates"), ...)
   
   xdf = as.data.frame(x)
   
@@ -25,7 +27,8 @@ exportBlockData = function(x){
   
   # remove rankings
   patterns_to_remove = c("_pos$", "_neg$", "project", "latitude", "longitude", 
-                         "pointofdelivery", "geotrial", "participant_name", "farmername", 
+                         "geotrial", "farmgoelocation", "geopoint", "gps", 
+                         "pointofdelivery", "participant_name", "farmername", 
                          "submitted_by", "_village", "_district", "telephone",
                          "_a$", "_b$", "_c$")
   

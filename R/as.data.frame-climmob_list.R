@@ -116,7 +116,7 @@
 #' @return \code{trial_dat} the input data.frame with the new longlat columns 
 #' @noRd
 .handle_geolocation_columns = function(trial_dat, pattern = c("geotrial","farmgoelocation",
-                                                              "geopoint", "gps")) {
+                                                              "geopoint", "gps", "pointofdelivery")) {
   
   pattern = paste(pattern, collapse = "|")
   

@@ -4,7 +4,7 @@
 \alias{rmGeoIdentity}
 \title{Remove geographical identity}
 \usage{
-rmGeoIdentity(longlat, dist = 0.015, nQuadSegs = 2L, ...)
+rmGeoIdentity(longlat, dist = 0.015, nQuadSegs = 2L, seed = NULL, ...)
 }
 \arguments{
 \item{longlat}{a data.frame or matrix with geographical coordinates long lat}
@@ -12,6 +12,9 @@ rmGeoIdentity(longlat, dist = 0.015, nQuadSegs = 2L, ...)
 \item{dist}{numeric, buffer distance for all \var{lonlat}}
 
 \item{nQuadSegs}{integer, number of segments per quadrant}
+
+\item{seed}{integer, the seed for random number generation.
+If NULL (the default), ClimMobTools will set the seed randomly}
 
 \item{...}{further arguments passed to \code{\link[sf]{sf}} methods}
 }
@@ -26,12 +29,14 @@ Build a buffer around the a set of geographical coordinates
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library("sf")
+
 xy = matrix(c(11.097799, 60.801090,
                11.161298, 60.804199,
                11.254428, 60.822457),
              nrow = 3, ncol = 2, byrow = TRUE)
 
-rmGeoIdentity(xy)
+rmGeoIdentity(xy, seed = 1501)
 
 #' the function also handles NAs
 

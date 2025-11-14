@@ -8,15 +8,19 @@
 #' @param longlat a data.frame or matrix with geographical coordinates long lat
 #' @param dist numeric, buffer distance for all \var{lonlat}
 #' @param nQuadSegs integer, number of segments per quadrant
+#' @param seed integer, the seed for random number generation.
+#'  If NULL (the default), ClimMobTools will set the seed randomly
 #' @param ... further arguments passed to \code{\link[sf]{sf}} methods
 #' @return A data frame with the random coordinates long lat within the buffer
 #' @examplesIf interactive()
+#' library("sf")
+#' 
 #' xy = matrix(c(11.097799, 60.801090,
 #'                11.161298, 60.804199,
 #'                11.254428, 60.822457),
 #'              nrow = 3, ncol = 2, byrow = TRUE)
 #' 
-#' rmGeoIdentity(xy)
+#' rmGeoIdentity(xy, seed = 1501)
 #' 
 #' #' the function also handles NAs
 #' 
@@ -29,8 +33,9 @@
 #' 
 #' rmGeoIdentity(xy2)
 #' 
+#' @importFrom stats runif
 #' @export
-rmGeoIdentity = function(longlat, dist = 0.015, nQuadSegs = 2L, ...){
+rmGeoIdentity = function(longlat, dist = 0.015, nQuadSegs = 2L, seed = NULL, ...){
   
   longlat = as.matrix(longlat)
   
@@ -61,6 +66,14 @@ rmGeoIdentity = function(longlat, dist = 0.015, nQuadSegs = 2L, ...){
   lonlatb = do.call("st_buffer", args)
   
   result = split(lonlatb, seq_len(n))
+  
+  # check if a seed is provided
+  if (is.null(seed)) {
+    seed = as.integer(stats::runif(1, 0, 1000000))
+    message("seed ", seed, " was used in the sampling \n")
+  }
+  
+  set.seed(seed)
   
   result[!anyNAs] = lapply(result[!anyNAs], function(x){
     a = list(x = x, size = 1, type = "random", by_polygon = TRUE)

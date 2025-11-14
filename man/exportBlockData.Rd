@@ -4,10 +4,12 @@
 \alias{exportBlockData}
 \title{Export block-level (participant) data}
 \usage{
-exportBlockData(x)
+exportBlockData(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{CM_list} containing raw ClimMob trial data.}
+
+\item{...}{further arguments passed to methods}
 }
 \value{
 A data.frame with one row per block (participant),
@@ -20,6 +22,8 @@ such as names, phone numbers, and location metadata. Optionally includes geoloca
 if available.
 }
 \seealso{
+\code{\link[ClimMobTools]{rmGeoIdentity}}
+
 Other export functions: 
 \code{\link{exportMeasuredTraits}()},
 \code{\link{exportTrialMetadata}()},

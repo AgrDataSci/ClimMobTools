@@ -12,13 +12,21 @@
 }
 
 #' Extract GPS coordinates from data
-#' @param x an object of class CM_list
+#' @param x an object of class CM_list or a data.frame
 #' @param return character to select the return output, options are 
 #' "bbox" or "coordinates"
 #' @noRd
 .get_trial_coordinates = function(x, return = "bbox", ...) {
   
-  coords = .handle_geolocation_columns(x$data)
+  if(any(class(x) %in% "CM_list")){
+    
+  coords = .handle_geolocation_columns(x$data) # at as.data.frame.CM_list()
+  
+  }else{
+    
+    coords = x
+    
+  }
   
   index = grep("longitude|latitude", names(coords))
   
@@ -69,6 +77,7 @@
   lonlat$longitude[lonlat$longitude == 0 & lonlat$latitude == 0] = NA
   lonlat$latitude[lonlat$longitude == 0 & lonlat$latitude == 0] = NA
   
+ 
   if(return == "coordinates") {
     xy = rmGeoIdentity(lonlat, ...)
     names(xy) = c("longitude", "latitude")
