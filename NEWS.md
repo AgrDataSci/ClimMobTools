@@ -1,3 +1,8 @@
+ClimMobTools 1.8.1 (2025-11-25)
+=========================
+
+* Housekeeping improvements
+
 ClimMobTools 1.8 (2025-11-14)
 =========================
 

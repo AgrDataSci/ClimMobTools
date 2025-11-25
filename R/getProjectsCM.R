@@ -1,7 +1,7 @@
 #' Set server URL
 #' This will set the server URL following the argument server
 #' in the main functions
-#' @param server the server name
+#' @param server the server name or server URL
 #' @param extension a character for the extension in the API call
 #' @noRd
 .set_url = function(server = "climmob3", extension = NULL){
@@ -30,9 +30,7 @@
   
   if (isFALSE(known) & isFALSE(server == "climmob3") & isFALSE(server == "testing")) {
     
-    stop("You are trying to reach an unknown server, please choose between '", 
-         paste(c("climmob3", unique(toupper(other_server))),
-               collapse = "', '"), "'\n")
+    url = paste0(server, "/api/", extension) 
     
   }
   
