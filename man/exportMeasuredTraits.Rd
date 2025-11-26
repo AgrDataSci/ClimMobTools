@@ -10,13 +10,18 @@ exportMeasuredTraits(x)
 \item{x}{An object of class \code{CM_list} containing raw ClimMob trial data.}
 }
 \value{
-A data frame with one row per genotype observation, including block ID, plot, 
-genotype name, collection moment, trait name, value, and value type.
+A data frame of class \code{CM_df} with one row per genotype observation,
+  including block ID, plot, genotype name, collection moment, trait name, value,
+  and value type. Returns an empty \code{CM_df} if no measured traits are present.
 }
 \description{
 Extracts non-ranking, plot-level trait data from a ClimMob trial object. The function 
 detects variables ending in "_a", "_b", or "_c", infers the trait and collection moment,
 and reshapes the data into long format for analysis.
+}
+\details{
+If no measured traits are found in the data (i.e., no variables ending in "_a", "_b",
+or "_c"), the function returns an empty \code{CM_df} object with valid column names.
 }
 \seealso{
 Other export functions: 
