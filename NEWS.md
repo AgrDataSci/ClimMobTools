@@ -1,7 +1,12 @@
-ClimMobTools 1.8.1 (2025-11-25)
+ClimMobTools 1.8.2 (2025-11-26)
 =========================
 
 * Housekeeping improvements
+
+* Fixes an error in `exportMeasuredTraits()` that occurred when no measured trait
+  variables (ending in `"_a"`, `"_b"`, or `"_c"`) were present in the dataset. The
+  function now returns a valid empty `CM_df` object instead of failing during the
+  binding step.
 
 ClimMobTools 1.8 (2025-11-14)
 =========================
