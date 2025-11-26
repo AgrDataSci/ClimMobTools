@@ -19,7 +19,7 @@ and reshapes the data into long format for analysis.'><!-- mathjax --><script sr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.2</span>
       </span>
     </div>
 
@@ -80,8 +80,14 @@ and reshapes the data into long format for analysis.</p>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with one row per genotype observation, including block ID, plot,
-genotype name, collection moment, trait name, value, and value type.</p>
+    <p>A data frame of class <code>CM_df</code> with one row per genotype observation,
+  including block ID, plot, genotype name, collection moment, trait name, value,
+  and value type. Returns an empty <code>CM_df</code> if no measured traits are present.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>If no measured traits are found in the data (i.e., no variables ending in "_a", "_b",
+or "_c"), the function returns an empty <code>CM_df</code> object with valid column names.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
