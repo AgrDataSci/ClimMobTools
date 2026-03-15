@@ -17,8 +17,8 @@ API client for 'ClimMob', an open source software for decentralized large-N tria
  \url{https://agrdatasci.github.io/ClimMobTools/}}
 \item{Report bugs: 
  \url{https://github.com/agrdatasci/ClimMobTools/issues}}
-\item{The tricot user guide: 
- \url{https://hdl.handle.net/10568/109942}}
+\item{The ClimMob paper: 
+ \doi{10.1016/j.compag.2023.108539}}
 }
 }
 \author{
