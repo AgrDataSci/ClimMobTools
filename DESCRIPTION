@@ -1,7 +1,7 @@
 Package: ClimMobTools
 Type: Package
 Title: API Client for the 'ClimMob' Platform
-Version: 1.9
+Version: 1.9.0
 Authors@R: c(person("Kauê", "de Sousa", 
         email = "desousa.kaue@gmail.com", 
         role = c("aut", "cre"),
@@ -18,7 +18,9 @@ Description: API client for 'ClimMob', an open source software for decentralized
     trials to compare several technologies in search of the best solutions for the 
     target environment, it enables many participants to carry out reasonably simple 
     experiments that taken together can offer even more information. 'ClimMobTools' 
-    enables project managers to deep explore and analyse their 'ClimMob' data in R.
+    lets project managers retrieve, explore and analyse their 'ClimMob' data in R, 
+    design trials with sequentially balanced incomplete blocks, and protect the 
+    privacy of participants' locations before data are shared.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: false
