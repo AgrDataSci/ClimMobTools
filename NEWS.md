@@ -1,13 +1,12 @@
-ClimMobTools (development version)
+ClimMobTools 1.9.0 (2026-10-31)
 =========================
 
-### BUG FIXES
+This release introduces a new trial design algorithm, removes four
+dependencies and fixes a bug that stopped the development version from
+installing. Designs from `randomise()` differ from earlier versions for the
+same seed.
 
-* `R/getSurvey.R` ended with scratch code that called the API and wrote a
-  file to a local path when the package was loaded, so the package could
-  not be installed. Removed. `getSurvey()` is now exported and documented.
-
-### NEW ALGORITHM
+### NEW FEATURES
 
 * `randomise()` and `randomize()` use a new design algorithm by Jacob van
   Etten. The design is sequentially balanced: every prefix stays close to
@@ -15,22 +14,26 @@ ClimMobTools (development version)
   or returned. Blocks are chosen by replication schedule, then by the exact
   A-optimality gain, with availability as a hard limit. New arguments
   `ridge`, `polish` and `schedule`. Arguments of the previous algorithm,
-  such as `comp`, are ignored with a warning. Designs differ from earlier
-  versions for the same seed.
-* The new algorithm uses base R only, so the dependencies 'lpSolve',
-  'Matrix', 'RSpectra' and 'methods' were removed.
+  such as `comp`, are ignored with a warning.
+* `getSurvey()` retrieves the survey questions of a 'ClimMob' project in a
+  given language.
+
+### DEPENDENCIES
+
+* The new design algorithm uses base R only, so 'lpSolve', 'Matrix',
+  'RSpectra' and 'methods' were removed from Imports.
 
 ### PRIVACY
 
-* Tests read the API key from the environment variable `CLIMMOB_KEY`
-  instead of a key written in the test files, and are skipped when it is
-  not set.
 * `rmGeoIdentity()` no longer prints the seed it uses. The random
   displacement does not depend on the original coordinates, so anyone who
   knows the seed can recover the exact locations. Leave `seed = NULL` for
   data that will be shared. A given seed no longer changes the caller's
   random number stream. The function now calls 'sf' by namespace, so 'sf'
   no longer needs to be attached.
+* Tests read the API key from the environment variable `CLIMMOB_KEY`
+  instead of a key written in the test files, and are skipped when it is
+  not set.
 
 ### BUG FIXES
 
@@ -38,17 +41,19 @@ ClimMobTools (development version)
   'jsonlite', so quotes in project codes or user names no longer break the
   request, and stop with a clear message when the server returns an error
   status instead of failing while parsing the response.
+* Removed scratch code at the end of `R/getSurvey.R` that ran when the
+  package was loaded.
 
-### TESTS
+### TESTS AND DOCUMENTATION
 
 * Tests now run under `R CMD check` (they were excluded in `.Rbuildignore`).
   Outdated tests for removed functions and arguments were replaced by tests
-  of the current `randomise()` design: distinct items per package, equal
-  item counts, balance across positions, a connected comparison network,
+  of the `randomise()` design: distinct items per package, equal item
+  counts, balance across positions, a connected comparison network,
   availability limits, balanced prefixes, proportions and reproducibility.
-  Added tests for `rmGeoIdentity()`. The old diagnostic script, which needs
-  'gosset', moved from `tests/` to `dev/`.
-* Added a standard R CMD check workflow for Linux, macOS and Windows.
+  Added tests for `rmGeoIdentity()`.
+* Added an R CMD check workflow for Linux, macOS and Windows, and
+  `AGENTS.md`, a guide for AI agents working on the package.
 
 ClimMobTools 1.8.2 (2025-11-26)
 =========================

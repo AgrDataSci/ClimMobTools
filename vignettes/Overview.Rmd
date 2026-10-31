@@ -31,7 +31,18 @@ library("PlackettLuce")
 
 The `breadwheat` dataset is a data.frame from crowdsourced citizen science trials of bread wheat (*Triticum aestivum* L.) varieties in India. This sample data is available on the [ClimMob](https://climmob.net/) platform and can be fetched using the `getDataCM()` function from **ClimMobTools**, along with an API key from the ClimMob user's account.
 
-```{r fetch, message=FALSE, eval=TRUE, echo=TRUE}
+```{r fetch-quiet, include=FALSE}
+# The vignette needs the ClimMob server. When it cannot be reached (for
+# example on CRAN machines without internet), the code is shown but not run
+dat = tryCatch(getDataCM(key = "d39a3c66-5822-4930-a9d4-50e7da041e77",
+                         project = "breadwheat",
+                         userowner = "gosset"),
+               error = function(e) NULL)
+online = is.data.frame(dat) && nrow(dat) > 0
+knitr::opts_chunk$set(eval = online)
+```
+
+```{r fetch, message=FALSE, echo=TRUE}
 library("ClimMobTools")
 library("PlackettLuce")
 
@@ -52,7 +63,7 @@ names(dat) = gsub("firstassessment_|package_|lastassessment_|registration_", "",
 
 The Plackett-Luce model is one approach to analyze the ClimMob data[@Turner2020]. We coerce the farmers' rankings into an object of class `rankings` from the package [PlackettLuce](https://CRAN.R-project.org/package=PlackettLuce) using the function `rankTricot()`.
 
-```{r plrankings, message=FALSE, eval=TRUE, echo=TRUE}
+```{r plrankings, message=FALSE, echo=TRUE}
 R = rankTricot(dat, 
                 items = c("item_A","item_B","item_C"), 
                 input = c("overallperf_pos","overallperf_neg"))
