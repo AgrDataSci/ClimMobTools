@@ -1,6 +1,12 @@
 ClimMobTools (development version)
 =========================
 
+### BUG FIXES
+
+* `R/getSurvey.R` ended with scratch code that called the API and wrote a
+  file to a local path when the package was loaded, so the package could
+  not be installed. Removed. `getSurvey()` is now exported and documented.
+
 ### NEW ALGORITHM
 
 * `randomise()` and `randomize()` use a new design algorithm by Jacob van

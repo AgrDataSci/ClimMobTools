@@ -122,16 +122,3 @@ getSurvey = function(key, userowner, project, language) {
     return(NULL)
   })
 }
-
-# Variables
-apiKey = "20abbf14-841a-4ae2-bc4f-5c0c051b2d8e"
-user = "bioversity"
-project = "foragenort"
-lang_code = "nor"
-
-s = getSurvey(apiKey, user, project, lang_code)
-
-write.csv(s, '/Users/kauedesousa/Library/Mobile Documents/com~apple~CloudDocs/Work/Projects/INNOFORAGES/SOP-forage/survey-climmob.csv', row.names = FALSE)
-
-
-

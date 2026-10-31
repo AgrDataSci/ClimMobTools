@@ -45,7 +45,8 @@ getProjectProgress(key = my_key,
 \seealso{
 Other GET functions: 
 \code{\link{getDataCM}()},
-\code{\link{getProjectsCM}()}
+\code{\link{getProjectsCM}()},
+\code{\link{getSurvey}()}
 }
 \author{
 Kauê de Sousa
