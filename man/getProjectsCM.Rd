@@ -45,7 +45,8 @@ getProjectsCM(key = my_key, server = "1000FARMS")
 \seealso{
 Other GET functions: 
 \code{\link{getDataCM}()},
-\code{\link{getProjectProgress}()}
+\code{\link{getProjectProgress}()},
+\code{\link{getSurvey}()}
 }
 \author{
 Kauê de Sousa

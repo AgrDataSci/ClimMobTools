@@ -1,6 +1,25 @@
 ClimMobTools (development version)
 =========================
 
+### BUG FIXES
+
+* `R/getSurvey.R` ended with scratch code that called the API and wrote a
+  file to a local path when the package was loaded, so the package could
+  not be installed. Removed. `getSurvey()` is now exported and documented.
+
+### NEW ALGORITHM
+
+* `randomise()` and `randomize()` use a new design algorithm by Jacob van
+  Etten. The design is sequentially balanced: every prefix stays close to
+  balanced, so it remains good when only the first packages are distributed
+  or returned. Blocks are chosen by replication schedule, then by the exact
+  A-optimality gain, with availability as a hard limit. New arguments
+  `ridge`, `polish` and `schedule`. Arguments of the previous algorithm,
+  such as `comp`, are ignored with a warning. Designs differ from earlier
+  versions for the same seed.
+* The new algorithm uses base R only, so the dependencies 'lpSolve',
+  'Matrix', 'RSpectra' and 'methods' were removed.
+
 ### PRIVACY
 
 * Tests read the API key from the environment variable `CLIMMOB_KEY`
@@ -26,7 +45,9 @@ ClimMobTools (development version)
   Outdated tests for removed functions and arguments were replaced by tests
   of the current `randomise()` design: distinct items per package, equal
   item counts, balance across positions, a connected comparison network,
-  availability limits and reproducibility. Added tests for `rmGeoIdentity()`.
+  availability limits, balanced prefixes, proportions and reproducibility.
+  Added tests for `rmGeoIdentity()`. The old diagnostic script, which needs
+  'gosset', moved from `tests/` to `dev/`.
 * Added a standard R CMD check workflow for Linux, macOS and Windows.
 
 ClimMobTools 1.8.2 (2025-11-26)

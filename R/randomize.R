@@ -1,626 +1,234 @@
-#' Set an experimental incomplete block design 
+#' Set an experimental incomplete block design
 #'
-#' Generate an incomplete block A-optional design. The function is optimized for 
-#' incomplete blocks of three, but it will also work with comparisons of any 
-#' other number of options. 
-#' The design strives for approximate A optimality, this means that it is robust 
-#' to missing observations. It also strives for balance for positions of each option.
-#' Options are equally divided between first, second, third, etc. position. 
-#' The strategy is to create a "pool" of combinations that does not repeat 
-#' combinations and is A-optimal. Then this pool is ordered to make subsets of 
-#' consecutive combinations also relatively balanced and A-optimal
-#' 
+#' Generate a sequentially balanced incomplete block design for tricot
+#' trials. Every prefix of the design is kept close to balanced, so the
+#' design stays good when only the first packages are distributed or
+#' returned.
+#'
+#' At each step the function
+#' \enumerate{
+#'   \item keeps only blocks whose items all have remaining quota (hard
+#'   availability);
+#'   \item prefers blocks with the most items behind their replication
+#'   schedule;
+#'   \item breaks ties by the exact A-optimality gain of the prefix,
+#'   evaluated for all tied candidates with a rank-k update of the
+#'   Laplacian inverse;
+#'   \item breaks remaining ties at random.
+#' }
+#' Item order within blocks is then balanced sequentially across positions.
+#' Call \code{set.seed()} before the function to make the design
+#' reproducible.
+#'
 #' @author Jacob van Etten
-#' @param ncomp an integer for the number of items to be assigned to each incomplete block
-#' @param npackages an integer for the number of incomplete blocks to be generated
-#' @param itemnames a character for the name of items tested in the experiment
-#' @param availability optional, a vector with integers indicating the 
-#'  number of plots available for each \var{itemnames}
-#' @param props optional, a numeric vector with the desired proportions
-#'  for each \var{itemnames}
-#' @param ... additional arguments passed to methods 
-#' @references 
-#'  Bailey and Cameron (2004). Combinations of optimal designs. 
+#' @param npackages an integer for the number of incomplete blocks (packages)
+#' @param itemnames a character vector with the unique names of the items
+#' @param ncomp an integer for the number of items in each block (default 3)
+#' @param availability optional, an integer vector with the maximum number
+#'  of plots for each item in \var{itemnames}
+#' @param props optional, a numeric vector with the desired proportions for
+#'  each item in \var{itemnames}
+#' @param ridge small ridge added to the Laplacian to handle a disconnected
+#'  early design. Disconnected components are then strongly penalised
+#' @param polish logical, if \code{TRUE} run a final local search on the
+#'  position balance of the complete design. This can reduce the position
+#'  balance of prefixes
+#' @param schedule logical, if \code{TRUE} (the default) use the replication
+#'  schedule as primary key. If \code{FALSE}, select on A-optimality alone
+#'  (slower, similar quality)
+#' @param ... arguments of the previous algorithm, such as \code{comp},
+#'  are accepted for compatibility and ignored with a warning
+#' @references
+#'  Bailey and Cameron (2004). Combinations of optimal designs.
 #'   \url{https://webspace.maths.qmul.ac.uk/l.h.soicher/designtheory.org/library/preprints/optimal.pdf}
-#' @return A dataframe with the randomized design
-#' @examples 
-#' ncomp = 3
-#' npackages = 20
-#' itemnames = c("apple","banana","grape","mango", "orange")
-#' availability = c(5, 8, 50, 50, 50)
-#' 
-#' randomize(ncomp = ncomp,
-#'           npackages = npackages,
-#'           itemnames = itemnames)
-#' 
-#' randomize(ncomp = ncomp,
-#'           npackages = npackages,
-#'           itemnames = itemnames,
-#'           availability = availability)
+#' @return A data.frame with one row per package and the columns item_A,
+#'  item_B, ...
+#' @examples
+#' set.seed(1)
+#' design = randomize(npackages = 20,
+#'                    itemnames = c("apple", "banana", "grape", "mango", "orange"))
+#' table(unlist(design))
 #'
-#' @examplesIf interactive()           
-#' # run diagnostics to certify that randomization is balanced
-#' # the number of interactions should have the lower sd as possible
-#' # this verification may not work well when technologies are 
-#' # tested in different proportions
-#' design = randomize(ncomp = ncomp,
-#'                    npackages = npackages,
-#'                    itemnames = itemnames)
-#' 
-#' design$best = "A"
-#' 
-#' design$worst = "C"
-#' 
-#' # number of times each item is tested in the 
-#' # trial design
-#' ntest = table(unlist(design[,c(1:3)]))
-#' 
-#' ntest
-#' 
-#' # put into the PlackettLuce structure to check 
-#' # number of interactions between items 
-#' r = gosset::rank_tricot(design, c(1:3), c(4:5))
-#' 
-#' bn = gosset::set_binomialfreq(r)
-#' 
-#' bn$interactions = bn$win1 + bn$win2
-#' 
-#' bn = bn[,c(1,2,5)]
-#' 
-#' bn
-#' 
+#' # limited availability of some items
+#' set.seed(1)
+#' randomize(npackages = 20,
+#'           itemnames = c("apple", "banana", "grape", "mango", "orange"),
+#'           availability = c(5, 8, 50, 50, 50))
+#'
 #' @aliases randomise
-#' @importFrom Matrix Diagonal
-#' @importFrom methods as
-#' @importFrom RSpectra eigs
-#' @importFrom utils tail
-#' @importFrom stats runif
-#' @importFrom lpSolve lp
+#' @importFrom utils combn tail
 #' @export
-randomize <- function(npackages, 
-                      itemnames, 
-                      ncomp = 3, 
-                      availability = NULL,
-                      props = NULL, 
-                      ...) {
-  
+randomize <- function(npackages, itemnames, ncomp = 3, availability = NULL,
+                      props = NULL, ridge = 1e-3, polish = FALSE,
+                      schedule = TRUE, ...) {
+
+  # arguments of the previous algorithm (such as comp) are accepted and ignored
   dots <- list(...)
-  
-  comp <- dots[["comp"]]
-  
-  if (is.null(comp)) {
-    comp <- 10
+  if (length(dots) > 0) {
+    warning("arguments ignored by randomize(): ", paste(names(dots), collapse = ", "),
+            call. = FALSE)
   }
-  
-  nitems <- length(itemnames)
-  
-  # depth1 is the number of rows after the procedure starts to compare options with the Kirchoff index
-  depth1 <- floor(nitems / ncomp )
-  
-  # Varieties indicated by integers
-  varieties <- seq_len(nitems)
-  
-  # Full set of all combinations
-  varcombinations <- .combn(varieties, ncomp)
-  
-  # check inputs
-  if (!is.null(availability) & (length(availability) != nitems)) {
-    stop("nitems is different than length of vector with availability")
-  }
-  
-  if (nitems < 3) {
-    stop("nitems must be larger than 2")
-  }
-  
-  nneeded <- npackages * ncomp
-  
-  if (!is.null(availability)) {
-    
-    if (sum(availability) < nneeded) {
-      stop("availability is not sufficient: smaller than npackages * ncomp \n")
+
+  n <- length(itemnames)
+  k <- as.integer(ncomp)
+  N <- as.integer(npackages)
+
+  # ---- input checks -------------------------------------------------------
+  if (anyDuplicated(itemnames)) stop("itemnames must be unique")
+  if (k < 2) stop("ncomp must be at least 2")
+  if (n < k) stop("number of items must be at least ncomp")
+  if (N < 1) stop("npackages must be at least 1")
+  if (is.null(props)) props <- rep(1, n)
+  if (length(props) != n) stop("length of props must equal number of items")
+  if (any(props < 0) || sum(props) <= 0) stop("props must be non-negative with a positive sum")
+  props <- props / sum(props)
+  if (is.null(availability)) availability <- rep(N, n)
+  if (length(availability) != n) stop("length of availability must equal number of items")
+  availability <- pmin(availability, N)          # an item can appear at most once per block
+  if (sum(availability) < N * k) stop("availability is smaller than npackages * ncomp")
+
+  # ---- quotas: proportional targets capped by availability (water-filling) --
+  alloc <- numeric(n)
+  left <- N * k
+  repeat {
+    free <- alloc < availability & props > 0
+    if (!any(free)) free <- alloc < availability   # fall back to items with zero props
+    w <- props * free
+    if (sum(w) == 0) w <- as.numeric(free)
+    tgt <- .smart.round(left * w / sum(w))
+    add <- pmin(tgt, availability - alloc)
+    if (sum(add) == 0) {                          # rounding stalled: add one plot at a time
+      add[which(free)[which.max((availability - alloc)[free])]] <- 1
     }
-    if (length(availability) != nitems) {
-      stop("length of vector availability should be nitems \n")
+    alloc <- alloc + add
+    left <- N * k - sum(alloc)
+    if (left <= 0) break
+  }
+
+  # ---- greedy block selection -----------------------------------------------
+  V <- t(utils::combn(n, k))                      # all candidate blocks
+  S <- k * diag(k) - 1                            # Laplacian of one block (clique)
+  used <- numeric(n)
+  L <- matrix(0, n, n)
+  blocks <- matrix(0L, N, k)
+  relaxed <- FALSE
+
+  for (i in seq_len(N)) {
+    remaining <- alloc - used
+    has_quota <- matrix(remaining[V] > 0, ncol = k)
+    ok <- rowSums(has_quota) == k
+    # an item whose remaining quota equals the remaining packages must be in
+    # this block, otherwise its quota can no longer be met (keeps the rest feasible)
+    forced <- remaining >= N - i + 1
+    if (any(forced)) ok <- ok & rowSums(matrix(forced[V], ncol = k)) == min(sum(forced), k)
+    if (!any(ok)) {                               # quotas cannot be met exactly
+      relaxed <- TRUE
+      nq <- rowSums(has_quota)
+      ok <- nq == max(nq)
     }
-  }
-  
-  if (!is.null(props)) {
-    
-    if (length(props) != nitems) {
-      stop("length of vector props should be nitems")
-      
+    if (schedule) {
+      behind <- used / pmax(alloc, 1) < (i - 1) / N
+      s <- rowSums(matrix(behind[V], ncol = k))
+    } else {
+      s <- numeric(nrow(V))
     }
-    
-    if (sum(props) != 1) {
-      
-      props <- props / sum(props)
-      warning("sum of props is not 1; values have been rescaled \n")
-      
+    s[!ok] <- -Inf
+    cand <- which(s == max(s))
+
+    if (length(cand) > 1) {
+      # trace((L + J/n + ridge I)^-1) after adding block e equals
+      # trace(M) - trace((I + S M[e,e])^-1 S M2[e,e]). Maximise the reduction.
+      M <- chol2inv(chol(L + 1 / n + ridge * diag(n)))
+      M2 <- M %*% M
+      Ik <- diag(k)
+      gain <- vapply(cand, function(cc) {
+        e <- V[cc, ]
+        sum(diag(solve(Ik + S %*% M[e, e], S %*% M2[e, e])))
+      }, numeric(1))
+      cand <- cand[gain >= max(gain) - 1e-9 * abs(max(gain))]
     }
+
+    sel <- cand[sample.int(length(cand), 1)]
+    e <- V[sel, ]
+    blocks[i, ] <- e
+    used[e] <- used[e] + 1
+    L[e, e] <- L[e, e] + S
   }
-  
-  #create the objects available or props if they are not available
-  if (is.null(availability)) {
-    availability <- rep(npackages, times = nitems)
+
+  if (relaxed) {
+    warning("availability could not be met exactly for all packages; ",
+            "some items exceed their quota")
   }
-  
-  available <- availability
-  
-  if (is.null(props)) {
-    props <- rep(1/nitems, times = nitems) #available / sum(available) 
+
+  # ---- column (position) balance: sequential greedy, random ties ------------
+  perms <- .getPerms(seq_len(k))
+  pos <- matrix(0, n, k)
+  f <- function(x) x * log(pmax(x, 1))            # convex cost, favours even counts
+  colidx <- rep(seq_len(k), each = nrow(perms))
+
+  for (i in seq_len(N)) {
+    P <- matrix(blocks[i, ][perms], ncol = k)
+    idx <- cbind(c(P), colidx)
+    cost <- rowSums(matrix(f(pos[idx] + 1) - f(pos[idx]), ncol = k))
+    w <- which(cost <= min(cost) + 1e-12)
+    b <- P[w[sample.int(length(w), 1)], ]
+    blocks[i, ] <- b
+    pos[cbind(b, seq_len(k))] <- pos[cbind(b, seq_len(k))] + 1
   }
-  
-  #order vector from low availability to high as .smart.round will favour right size of vector
-  #to resolve dilemmas, it will add more of the items that are more abundant
-  names(available) <- varieties
-  available <- sort(available)
-  props <- props[as.integer(names(available))]    
-  
-  # calculate the packages that are needed - this will round later numbers to higher values 
-  # if needed to fill the quota
-  needed <- .smart.round((nneeded * props) / sum(props)) 
-  
-  # prepare inputs into loop
-  allocations <- rep(0, times = nitems)
-  names(allocations) <- names(available) #just to check, can be removed
-  tremain <- 1 
-  
-  while(tremain > 0) {
-    
-    allocate <- pmin(available, needed)
-    available <- available - allocate
-    
-    allocations <- allocations + allocate
-    tremaining <- nneeded - sum(allocations)
-    
-    needed <- available > 0
-    needed <- needed * (tremaining / sum(needed))
-    needed <- .smart.round(needed)
-    
-    tremain <- tremaining 
-    
-  }
-  
-  #reorder the vector with allocations back to original order
-  allocations <- allocations[match(1:nitems, as.integer(names(available)))] #should be in ascending order
-  allocationsMatrix <- makeAllocationsMatrix(allocations)
-  
-  # prepare variables
-  ncomb <- dim(varcombinations)[1]
-  n <- floor(npackages / ncomb)
-  nfixed <- ncomb * n
-  n <- ceiling(npackages / ncomb)
-  
-  # make a set of variety combinations
-  # repeating the combinations if the unique combinations are not sufficient
-  vars <- varcombinations[c(rep(1:(dim(varcombinations)[1]), times = n)), ]
-  
-  # create matrix that will hold the blocks
-  blocks <- matrix(nrow = npackages, ncol = ncomp)
-  
-  # set up array with set of combinations
-  varcomb <- matrix(0, nrow = nitems, ncol = nitems)
-  
-  if (dim(vars)[1] > 0.5) {
-    
-    # select combinations for the vars set that optimize design
-    for (i in 1:npackages) {
-      
-      varcombScore <- apply(varcombinations, 1, function(x){
-        .getScoreBlocks(x, varcomb, allocationsMatrix)
-      })
-      # highest priority to be selected is the combination which has the highest score 
-      selected <- which(varcombScore >= (max(varcombScore)))
-      
-      # if there are ties, find out which combination reduces Kirchhoff index most
-      
-      if (length(selected) > 1 & i > depth1) {
-        
-        reduce <- max(2, min(length(selected), comp))
-        
-        # randomly subsample from selected if there are too many combinations to check
-        if (length(selected) > reduce) {
-          selected <- sample(selected, reduce)
-        }
-        
-        # calculate Kirchhoff index and select smallest value
-        khi <- vector(length = length(selected))
-        for (k in 1:length(selected)) {
-          
-          evalgraph <- varcomb
-          index <- .combn(varcombinations[selected[k],], 2)
-          evalgraph[index] <- evalgraph[index] + 1
-          evalgraph[cbind(index[,2], index[,1])] <- evalgraph[cbind(index[,2], index[,1])] + 1
-          khi[k] <- .KirchhoffIndex(evalgraph / (allocationsMatrix+diag(nrow(allocationsMatrix))))
-          
-        }
-        
-        selected <- selected[which(khi == min(khi))]
-        
+
+  if (polish) {                                   # optional, whole-design only
+    r <- rowSums(pos)
+    repeat {
+      changed <- FALSE
+      for (i in seq_len(N)) {
+        b <- blocks[i, ]
+        pos[cbind(b, seq_len(k))] <- pos[cbind(b, seq_len(k))] - 1
+        P <- matrix(b[perms], ncol = k)
+        idx <- cbind(c(P), colidx)
+        tr <- r[idx[, 1]] / k
+        cost <- rowSums(matrix((pos[idx] + 1 - tr)^2 - (pos[idx] - tr)^2, ncol = k))
+        cur <- which(apply(P, 1, function(p) all(p == b)))
+        nb <- if (cost[cur] > min(cost) + 1e-12) P[which.min(cost), ] else b
+        if (!all(nb == b)) changed <- TRUE
+        blocks[i, ] <- nb
+        pos[cbind(nb, seq_len(k))] <- pos[cbind(nb, seq_len(k))] + 1
       }
-      
-      # if there are still ties between ranks of combinations, selected randomly 
-      # from the ties
-      if (length(selected) > 1) { 
-        selected <- sample(selected, 1)
-      }
-      
-      # assign the selected combination
-      blocks[i,] <- varcombinations[selected,]
-      
-      index <- .combn(varcombinations[selected,],2)
-      varcomb[index] <- varcomb[index] + 1
-      varcomb[cbind(index[,2], index[,1])] <- varcomb[cbind(index[,2], index[,1])] + 1
-      
+      if (!changed) break
     }
   }
-  
-  varOrdered <- blocks
-  
-  # Equally distribute positions to achieve order balance
-  # First create matrix with frequency of position of each of nitems
-  position <- matrix(0, ncol = ncomp, nrow = nitems)
-  
-  # Sequentially reorder sets to achieve evenness in positions
-  # Shannon represents evenness here
-  # the H denominator in the Shannon formula is the same
-  
-  for (i in 1:npackages) {
-    
-    varOrdered_all <- .getPerms(varOrdered[i,])
-    varOrdered_Shannon <- apply(varOrdered_all, 1, function(x) {
-      .getShannonMatrix(x, position)
-    })
-    varOrdered_i <- varOrdered_all[which(varOrdered_Shannon ==
-                                           min(varOrdered_Shannon))[1],]
-    varOrdered[i,] <- varOrdered_i
-    pp <- position * 0
-    pp[cbind(varOrdered_i,1:ncomp)] <- 1
-    position <- position + pp
-    
-  }
-  
-  # The varOrdered matrix has the indices of the elements
-  # Create the final matrix
-  finalresults <- matrix(NA, ncol = ncomp, nrow = npackages)
-  
-  # loop over the rows and columns of the final matrix and put
-  # the elements randomized
-  # with the indexes in varOrdered
-  for (i in seq_len(npackages)){
-    for (j in seq_len(ncomp)){
-      finalresults[i,j] <- itemnames[varOrdered[i,j]]
-    }
-  }
-  
-  dimnames(finalresults) <- list(seq_len(npackages), 
-                                 paste0("item_", LETTERS[1:ncomp]))
-  
-  finalresults <- as.data.frame(finalresults, stringsAsFactors = FALSE)
-  
-  r <- table(unlist(finalresults))[itemnames] 
-  
-  if (!is.null(availability)){
-    if (!all(r <= availability)) {
-      
-      few <- itemnames[!r <= availability]
-      nfew <- availability[!r <= availability]
-      nmin <- r[!r <= availability]
-      
-      warning("You indicated the availability of ", paste(nfew, collapse = ", "), " packages for ", 
-              paste(few, collapse = ", "), " but you require a minimum of ", 
-              paste(nmin, collapse = ", "), " for the given items. \nYou could try to run the randomization again to solve this issue." )
-      
-    }
-  }
-  
-  class(finalresults) <- union("CM_df", class(finalresults))
-  
-  return(finalresults)
-  
+
+  out <- as.data.frame(matrix(itemnames[blocks], N, k,
+                              dimnames = list(seq_len(N),
+                                              paste0("item_", LETTERS[seq_len(k)]))),
+                       stringsAsFactors = FALSE)
+  class(out) <- union("CM_df", class(out))
+  out
 }
 
-#' @inheritParams randomize
+#' @rdname randomize
 #' @export
 randomise <- function(...){
-  
+
   randomize(...)
-  
-}
-# Define function for Kirchhoff index
-# This index determines which graph is connected in the most balanced way
-# In this context, lower values (lower resistance) is better
-#' @noRd
-.KirchhoffIndex <- function(x) {
-  
-  # Add a tiny bit of noise to avoid zeros
-  noise <- x * 0 + stats::runif(length(x))/length(x)^3
-  noise <- noise + t(noise)
-  x <- x + noise
-  
-  # Then some maths to get the Kirchhoff index
-  
-  # Using rARPACK:eigs, setting k to n-1 because we don't need the 
-  # last eigen value
-  Laplacian <- methods::as(Matrix::Diagonal(x = colSums(x)) - x, 
-                           "dsyMatrix")
-  
-  # RSpectra:eigs is faster than base:eigen
-  # The following would also work if we want to reduce a dependency
-  # lambda <- eigen(Laplacian)$values
-  # lambda <- lambda[-length(lambda)]
-  lambda <-
-    try(RSpectra::eigs(Laplacian,
-                       k = (dim(Laplacian)[1] - 1),
-                       tol = 0.01,
-                       retvec = FALSE)$values, silent = TRUE)
-  if(inherits(lambda, "try-error")){lambda <- Inf}
-  
-  return(sum(1 / lambda))
-  
+
 }
 
-# get all permutations
-#' @noRd
-.getPerms <- function(x) {
-  if (length(x) == 1) {
-    return(x)
+# Round to integers while preserving the sum
+.smart.round <- function(x) {
+  x[is.na(x)] <- 0
+  y <- floor(x)
+  extra <- round(sum(x)) - sum(y)
+  if (extra > 0) {
+    idx <- utils::tail(order(x - y), extra)
+    y[idx] <- y[idx] + 1
   }
-  else {
-    res <- matrix(nrow = 0, ncol = length(x))
-    for (i in seq_along(x)) {
-      res <- rbind(res, cbind(x[i], Recall(x[-i])))
-    }
-    return(res)
-  }
-}
-
-# Shannon (as evenness measure)
-#' @noRd
-.shannon <- function(x){
-  sum(ifelse(x == 0, 0, x * log(x)))
-}
-
-# Get Shannon index for order positions
-#TODO check this function!!!
-#' @noRd
-.getShannonMatrix <- function(x, position) {
-  
-  pp <- position * 0
-  pp[cbind(x, 1:length(x))] <- 1
-  pp <- position + pp
-  return(.shannon(as.vector(pp)))
-  
-}
-
-#' @noRd
-.getScoreBlocks <- function(x, varcomb, allocationsMatrix) {
-  
-  #get combinations from vector of varieties x
-  cb <- .combn(x,2)
-  
-  #get progress
-  progress <- sum(varcomb) / sum(allocationsMatrix)
-  
-  #get score pairwise
-  score1 <- varcomb[cb]/allocationsMatrix[cb] < progress
-  
-  #get score sums
-  score2 <- colSums(varcomb)[x]/colSums(allocationsMatrix)[x] < progress
-  
-  #the smallest available amount should be avoided, so this check penalizes it
-  if(any(score2 == FALSE) & min(colSums(varcomb)[x]) == min(colSums(varcomb))){score2[1] <- score2[1]-1}
-  
-  #calculate total score
-  score <- sum(score1+score2)
-  
-  return(score)
-  
-}
-
-#' @noRd
-makeAllocationsMatrix <- function(allocations){
-  
-  #prepare basic parameters and empty matrix
-  n1 <- length(allocations)
-  combs <- .combn(1:n1, 2)
-  n2 <- nrow(combs)
-  a <- matrix(0,nrow=n1, ncol=n2)
-  
-  #fill matrix with constraints on row/column sums
-  for(i in 1:n1){
-    
-    a[i,] <- (combs[,1] == i | combs[,2] == i)
-    
-  }
-  
-  #include auxiliary variable z to the matrix
-  #this variable will be maximized, pushing all values up equally
-  minShare <-  pmin(allocations[combs[,1]], allocations[combs[,2]]) / ((n1-1)/2)
-  f.con <- rbind(a, -diag(n2)) 
-  f.con <- cbind(f.con, c(rep(0, times=n1), minShare))
-  
-  # set up vector with allocations (column sums) and zeros for z constraint
-  f.rhs <- c(allocations, rep(0, times=n2)) 
-  
-  #objective function emphasizes raising the z value, which increases an equal spread
-  f.obj <- c(rep(1, times=n2), max(allocations)^2) 
-  f.dir <- rep("<=", times=n1+n2) 
-  
-  sol <- lpSolve::lp("max", f.obj, f.con, f.dir, f.rhs)
-  x <- sol$solution[1:n2]
-  result <- matrix(0, nrow=n1, ncol=n1)
-  result[combs] <- x
-  result <- result + t(result)
-  return(result)
-  
-}
-
-#' @noRd
-.combn <- function (x, m, FUN = NULL, simplify = TRUE, ...) 
-{
-  stopifnot(length(m) == 1L, is.numeric(m))
-  if (m < 0) 
-    stop("m < 0", domain = NA)
-  if (is.numeric(x) && length(x) == 1L && x > 0 && trunc(x) == 
-      x) 
-    x <- seq_len(x)
-  n <- length(x)
-  if (n < m) 
-    stop("n < m", domain = NA)
-  x0 <- x
-  if (simplify) {
-    if (is.factor(x)) 
-      x <- as.integer(x)
-  }
-  m <- as.integer(m)
-  e <- 0
-  h <- m
-  a <- seq_len(m)
-  nofun <- is.null(FUN)
-  if (!nofun && !is.function(FUN)) 
-    stop("'FUN' must be a function or NULL")
-  len.r <- length(r <- if (nofun) x[a] else FUN(x[a], ...))
-  count <- as.integer(round(choose(n, m)))
-  if (simplify) {
-    dim.use <- if (nofun) 
-      c(m, count)
-    else {
-      d <- dim(r)
-      if (length(d) > 1L) 
-        c(d, count)
-      else if (len.r > 1L) 
-        c(len.r, count)
-      else c(d, count)
-    }
-  }
-  if (simplify) 
-    out <- matrix(r, nrow = len.r, ncol = count)
-  else {
-    out <- vector("list", count)
-    out[[1L]] <- r
-  }
-  if (m > 0) {
-    i <- 2L
-    nmmp1 <- n - m + 1L
-    while (a[1L] != nmmp1) {
-      if (e < n - h) {
-        h <- 1L
-        e <- a[m]
-        j <- 1L
-      }
-      else {
-        e <- a[m - h]
-        h <- h + 1L
-        j <- 1L:h
-      }
-      a[m - h + j] <- e + j
-      r <- if (nofun) 
-        x[a]
-      else FUN(x[a], ...)
-      if (simplify) 
-        out[, i] <- r
-      else out[[i]] <- r
-      i <- i + 1L
-    }
-  }
-  if (simplify) {
-    if (is.factor(x0)) {
-      levels(out) <- levels(x0)
-      class(out) <- class(x0)
-    }
-    dim(out) <- dim.use
-  }
-  return(t(out))
-}
-
-#' Rounding values to closest integer while retaining the same sum
-#' https://stackoverflow.com/questions/32544646/round-vector-of-numerics-to-integer-while-preserving-their-sum
-#' @examples 
-#' .smart.round(c(NA, 3.5, 7.8, 9, 10.4))
-#' @noRd
-.smart.round = function(x) {
-  x[is.na(x)] = 0
-  y = floor(x)
-  indices = utils::tail(order(x - y), round(sum(x)) - sum(y))
-  y[indices] = y[indices] + 1
   y
 }
 
-# #-----------------Run an example-------------------
-# 
-# ncomp = 3
-# npackages = 238
-# vars = 15
-# proportions = rep(1, vars)/vars
-# itemnames = c(LETTERS[1:vars])
-# availability = rep(ceiling(238*3/vars), times=vars)
-# availability[2] = availability[2]*2
-# availability[5] = availability[5]/2
-# 
-# a = randomise(ncomp = ncomp,
-#               npackages = npackages,
-#               itemnames = itemnames,
-#               availability = availability)
-# 
-# 
-# a
-# 
-# #----------Diagnostics-------------
-# #the only input assumed here is table a
-# #get item names from the table
-# ua = sort(unique(c(t(a))))
-# ncomp = ncol(a)
-# 
-# comb_balance = matrix(0, nrow=length(ua), ncol=length(ua))
-# 
-# for(i in 1:nrow(a)){
-# 
-#   j = t(combn(match(a[i,], ua),2))
-#   comb_balance[j] = comb_balance[j] + 1
-# 
-# }
-# 
-# cb = comb_balance + t(comb_balance)
-# cb
-# #show total number of times options are included in packages
-# cb = rbind(cb, rowSums(cb)/2)
-# 
-# #show result nicely
-# rownames(cb) = c(ua, "Total")
-# colnames(cb) = ua
-# cb
-# #check the distances between packages that contain the same option
-# #as a measure of sequential balance
-# d = matrix(NA, nrow = length(itemnames), ncol=ncomp)
-# 
-# for(i in 1:length(ua)) {
-#   s = apply(a, 1, function(x){sum(x==ua[i])})
-#   di = diff(which(s==1))
-#   hist(di)
-#   d[i,] = c(mean(di), sd(di), max(di))
-# }
-# colnames(d) = c("mean", "sd", "max")
-# rownames(d) = ua
-# 
-# # print d nicely
-# format(as.data.frame(d), digits=3)
-# 
-# #check if options are equally distributed across columns
-# f = matrix(NA, nrow=length(ua), ncol=ncomp)
-# rownames(f) = ua
-# f
-# for(i in 1:ncomp){
-# 
-#   tai = table(a[,i])
-#   f[names(tai),i] = tai
-# 
-# }
-# 
-# f
-# comb_balance
-# # connection graph
-# g = graph_from_adjacency_matrix(comb_balance+t(comb_balance), mode = "lower", weighted = "weight")
-# g
-# plot(g, edge.width = E(g)$weight, edge.label = E(g)$weight)
-
+# All permutations of a vector, one per row
+.getPerms <- function(x) {
+  if (length(x) == 1) return(matrix(x, 1, 1))
+  res <- NULL
+  for (i in seq_along(x)) res <- rbind(res, cbind(x[i], .getPerms(x[-i])))
+  res
+}

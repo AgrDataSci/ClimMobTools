@@ -48,3 +48,10 @@ jobs:
             msg=$(tail -c 6000 "$f" | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
             echo "::error title=$(basename "$f")::${msg}"
           done
+      - name: Show installation errors as annotations
+        if: failure()
+        shell: bash
+        run: |
+          R CMD INSTALL . > install.log 2>&1 || true
+          msg=$(tail -c 5000 install.log | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+          echo "::error title=R CMD INSTALL::${msg}"

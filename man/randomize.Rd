@@ -11,87 +11,82 @@ randomize(
   ncomp = 3,
   availability = NULL,
   props = NULL,
+  ridge = 0.001,
+  polish = FALSE,
+  schedule = TRUE,
   ...
 )
+
+randomise(...)
 }
 \arguments{
-\item{npackages}{an integer for the number of incomplete blocks to be generated}
+\item{npackages}{an integer for the number of incomplete blocks (packages)}
 
-\item{itemnames}{a character for the name of items tested in the experiment}
+\item{itemnames}{a character vector with the unique names of the items}
 
-\item{ncomp}{an integer for the number of items to be assigned to each incomplete block}
+\item{ncomp}{an integer for the number of items in each block (default 3)}
 
-\item{availability}{optional, a vector with integers indicating the 
-number of plots available for each \var{itemnames}}
+\item{availability}{optional, an integer vector with the maximum number
+of plots for each item in \var{itemnames}}
 
-\item{props}{optional, a numeric vector with the desired proportions
-for each \var{itemnames}}
+\item{props}{optional, a numeric vector with the desired proportions for
+each item in \var{itemnames}}
 
-\item{...}{additional arguments passed to methods}
+\item{ridge}{small ridge added to the Laplacian to handle a disconnected
+early design. Disconnected components are then strongly penalised}
+
+\item{polish}{logical, if \code{TRUE} run a final local search on the
+position balance of the complete design. This can reduce the position
+balance of prefixes}
+
+\item{schedule}{logical, if \code{TRUE} (the default) use the replication
+schedule as primary key. If \code{FALSE}, select on A-optimality alone
+(slower, similar quality)}
+
+\item{...}{arguments of the previous algorithm, such as \code{comp},
+are accepted for compatibility and ignored with a warning}
 }
 \value{
-A dataframe with the randomized design
+A data.frame with one row per package and the columns item_A,
+item_B, ...
 }
 \description{
-Generate an incomplete block A-optional design. The function is optimized for 
-incomplete blocks of three, but it will also work with comparisons of any 
-other number of options. 
-The design strives for approximate A optimality, this means that it is robust 
-to missing observations. It also strives for balance for positions of each option.
-Options are equally divided between first, second, third, etc. position. 
-The strategy is to create a "pool" of combinations that does not repeat 
-combinations and is A-optimal. Then this pool is ordered to make subsets of 
-consecutive combinations also relatively balanced and A-optimal
+Generate a sequentially balanced incomplete block design for tricot
+trials. Every prefix of the design is kept close to balanced, so the
+design stays good when only the first packages are distributed or
+returned.
+}
+\details{
+At each step the function
+\enumerate{
+  \item keeps only blocks whose items all have remaining quota (hard
+  availability);
+  \item prefers blocks with the most items behind their replication
+  schedule;
+  \item breaks ties by the exact A-optimality gain of the prefix,
+  evaluated for all tied candidates with a rank-k update of the
+  Laplacian inverse;
+  \item breaks remaining ties at random.
+}
+Item order within blocks is then balanced sequentially across positions.
+Call \code{set.seed()} before the function to make the design
+reproducible.
 }
 \examples{
-ncomp = 3
-npackages = 20
-itemnames = c("apple","banana","grape","mango", "orange")
-availability = c(5, 8, 50, 50, 50)
+set.seed(1)
+design = randomize(npackages = 20,
+                   itemnames = c("apple", "banana", "grape", "mango", "orange"))
+table(unlist(design))
 
-randomize(ncomp = ncomp,
-          npackages = npackages,
-          itemnames = itemnames)
+# limited availability of some items
+set.seed(1)
+randomize(npackages = 20,
+          itemnames = c("apple", "banana", "grape", "mango", "orange"),
+          availability = c(5, 8, 50, 50, 50))
 
-randomize(ncomp = ncomp,
-          npackages = npackages,
-          itemnames = itemnames,
-          availability = availability)
-
-\dontshow{if (interactive()           ) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# run diagnostics to certify that randomization is balanced
-# the number of interactions should have the lower sd as possible
-# this verification may not work well when technologies are 
-# tested in different proportions
-design = randomize(ncomp = ncomp,
-                   npackages = npackages,
-                   itemnames = itemnames)
-
-design$best = "A"
-
-design$worst = "C"
-
-# number of times each item is tested in the 
-# trial design
-ntest = table(unlist(design[,c(1:3)]))
-
-ntest
-
-# put into the PlackettLuce structure to check 
-# number of interactions between items 
-r = gosset::rank_tricot(design, c(1:3), c(4:5))
-
-bn = gosset::set_binomialfreq(r)
-
-bn$interactions = bn$win1 + bn$win2
-
-bn = bn[,c(1,2,5)]
-
-bn
-\dontshow{\}) # examplesIf}
 }
 \references{
-Bailey and Cameron (2004). Combinations of optimal designs. 
+Bailey and Cameron (2004). Combinations of optimal designs.
   \url{https://webspace.maths.qmul.ac.uk/l.h.soicher/designtheory.org/library/preprints/optimal.pdf}
 }
 \author{
