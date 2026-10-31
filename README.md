@@ -13,7 +13,16 @@ ClimMobTools
 
 ## Overview
 
-**ClimMobTools** the API Client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for decentralized large-N trials with the 'tricot' approach. Developed by [van Etten et al. (2019)](https://doi.org/10.1017/S0014479716000739) 'tricot' turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information.
+**ClimMobTools** is the API client for the 'ClimMob' platform in R. [ClimMob](https://climmob.net/) is an open source software for decentralized large-N trials with the 'tricot' approach. Developed by [van Etten et al. (2019)](https://doi.org/10.1017/S0014479716000739) 'tricot' turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information.
+
+## What it does
+
+* Download project data from 'ClimMob' with `getDataCM()`, list projects with `getProjectsCM()`, check data collection with `getProjectProgress()` and retrieve questionnaires with `getSurvey()`.
+* Export tidy tables for analysis with the `export*()` functions.
+* Design new trials with `randomise()`, which builds sequentially balanced incomplete blocks so the design stays balanced even when only part of the packages are distributed or returned.
+* Displace participants' coordinates with `rmGeoIdentity()` before sharing data.
+
+Keep your API key out of scripts. Store it in the environment variable `CLIMMOB_KEY` (for example in `~/.Renviron`) and read it with `Sys.getenv("CLIMMOB_KEY")`. Rankings are analysed with [gosset](https://agrdatasci.github.io/gosset/) and [PlackettLuce](https://CRAN.R-project.org/package=PlackettLuce).
 
 ## Package website
 

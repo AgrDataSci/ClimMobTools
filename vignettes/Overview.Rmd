@@ -73,6 +73,24 @@ mod = PlackettLuce(R)
 summary(mod)
 ```
 
+# Designing a new trial
+
+`randomise()` allocates the items to the packages that each participant receives. The design is sequentially balanced, so it stays close to balanced when only the first packages are distributed or returned. Call `set.seed()` first to make the design reproducible, and keep the design with the project records.
+
+```{r design, message=FALSE, eval=TRUE, echo=TRUE}
+set.seed(123)
+design = randomise(npackages = 30,
+                   itemnames = c("Var1", "Var2", "Var3", "Var4", "Var5", "Var6"),
+                   ncomp = 3)
+
+head(design)
+
+# each variety is tested the same number of times
+table(unlist(design))
+```
+
+Use `availability` to cap the number of packages for items with limited seed, and `props` to test some items more often than others.
+
 For more analytical insights, please visit the documentation of the [gosset](https://cran.r-project.org/package=gosset) package.
 
 # References
