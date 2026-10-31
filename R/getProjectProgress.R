@@ -31,13 +31,14 @@ getProjectProgress = function(key, project, userowner, server = "climmob3"){
   
   dat = httr::RETRY(verb = "GET", 
                     url = url,
-                    query = list(Body = paste0('{"project_cod":"', project, '",
-                                                   "user_owner":"',userowner,'"}'),
+                    query = list(Body = .request_body(project, userowner),
                                  Apikey = key),
                     httr::accept_json(), 
                     terminate_on = c(403, 404))
   
-  dat = httr::content(dat, as = "text")
+  .check_response(dat)
+  
+  dat = httr::content(dat, as = "text", encoding = "UTF-8")
   
   dat = jsonlite::fromJSON(dat)
   

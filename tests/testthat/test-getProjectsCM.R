@@ -1,18 +1,11 @@
-context("test-getProjectsCM")
-
-library("ClimMobTools")
-
-test_that("error", {
-  
+test_that("an invalid key gives an error", {
+  skip_on_cran()
+  skip_if_offline("climmob.net")
   expect_error(getProjectsCM("1234"))
-  
 })
 
-p <- getProjectsCM("d39a3c66-5822-4930-a9d4-50e7da041e77")
-p <- !is.null(p)
-
-test_that("api call", {
-  
-  expect_equal(p, TRUE)
-  
+test_that("projects are listed with a valid key", {
+  skip_without_key()
+  p = getProjectsCM(climmob_key())
+  expect_false(is.null(p))
 })

@@ -13,8 +13,11 @@ rmGeoIdentity(longlat, dist = 0.015, nQuadSegs = 2L, seed = NULL, ...)
 
 \item{nQuadSegs}{integer, number of segments per quadrant}
 
-\item{seed}{integer, the seed for random number generation.
-If NULL (the default), ClimMobTools will set the seed randomly}
+\item{seed}{integer, the seed for random number generation. Leave it
+\code{NULL} (the default) for data that will be shared. The random
+displacement does not depend on the original coordinates, so anyone who
+knows the seed can reproduce it and recover the exact locations. Use a
+seed only for tests or internal reproducibility, and never publish it}
 
 \item{...}{further arguments passed to \code{\link[sf]{sf}} methods}
 }
@@ -36,7 +39,7 @@ xy = matrix(c(11.097799, 60.801090,
                11.254428, 60.822457),
              nrow = 3, ncol = 2, byrow = TRUE)
 
-rmGeoIdentity(xy, seed = 1501)
+rmGeoIdentity(xy)
 
 #' the function also handles NAs
 

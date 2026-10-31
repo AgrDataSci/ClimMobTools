@@ -1,3 +1,34 @@
+ClimMobTools (development version)
+=========================
+
+### PRIVACY
+
+* Tests read the API key from the environment variable `CLIMMOB_KEY`
+  instead of a key written in the test files, and are skipped when it is
+  not set.
+* `rmGeoIdentity()` no longer prints the seed it uses. The random
+  displacement does not depend on the original coordinates, so anyone who
+  knows the seed can recover the exact locations. Leave `seed = NULL` for
+  data that will be shared. A given seed no longer changes the caller's
+  random number stream. The function now calls 'sf' by namespace, so 'sf'
+  no longer needs to be attached.
+
+### BUG FIXES
+
+* `getDataCM()` and `getProjectProgress()` build the request body with
+  'jsonlite', so quotes in project codes or user names no longer break the
+  request, and stop with a clear message when the server returns an error
+  status instead of failing while parsing the response.
+
+### TESTS
+
+* Tests now run under `R CMD check` (they were excluded in `.Rbuildignore`).
+  Outdated tests for removed functions and arguments were replaced by tests
+  of the current `randomise()` design: distinct items per package, equal
+  item counts, balance across positions, a connected comparison network,
+  availability limits and reproducibility. Added tests for `rmGeoIdentity()`.
+* Added a standard R CMD check workflow for Linux, macOS and Windows.
+
 ClimMobTools 1.8.2 (2025-11-26)
 =========================
 

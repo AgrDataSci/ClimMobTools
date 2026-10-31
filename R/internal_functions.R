@@ -201,3 +201,30 @@
   
 }
 
+#' JSON body for project requests
+#' Built with jsonlite so that quotes or other special characters in
+#' project codes or user names cannot break the request
+#' @noRd
+.request_body = function(project, userowner) {
+  jsonlite::toJSON(list(project_cod = project, user_owner = userowner),
+                   auto_unbox = TRUE)
+}
+
+#' Stop with a clear message when the server does not return success
+#' @noRd
+.check_response = function(response) {
+  status = httr::status_code(response)
+  if (status == 401 || status == 403) {
+    stop("ClimMob refused the request (HTTP ", status, "). ",
+         "Check the API key and that you have access to this project.", call. = FALSE)
+  }
+  if (status == 404) {
+    stop("ClimMob could not find the project or user (HTTP 404). ",
+         "Check the project code and the user owner.", call. = FALSE)
+  }
+  if (status >= 400) {
+    stop("ClimMob returned HTTP ", status, ". Try again later or check the server name.",
+         call. = FALSE)
+  }
+  invisible(TRUE)
+}
