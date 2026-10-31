@@ -8,9 +8,10 @@
 ^CODE_OF_CONDUCT\.md$
 ^README\.md$
 ^CONTRIBUTING\.md$
-^tests$
 ^dev$
 ^logo\.svg$
 ^codemeta\.json$
 ^tic\.R$
 ^LICENSE\.md$
+^\.github$
+^AGENTS\.md$

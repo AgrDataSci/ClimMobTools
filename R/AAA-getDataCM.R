@@ -59,13 +59,14 @@ getDataCM = function(key,
   
   cmdata = httr::RETRY(verb = "GET", 
                        url = url,
-                       query = list(Body = paste0('{"project_cod":"', project, '",
-                                                   "user_owner":"',userowner,'"}'),
+                       query = list(Body = .request_body(project, userowner),
                                     Apikey = key),
                        httr::accept_json(), 
                        terminate_on = c(403, 404))
   
-  cmdata = httr::content(cmdata, as = "text")
+  .check_response(cmdata)
+  
+  cmdata = httr::content(cmdata, as = "text", encoding = "UTF-8")
   
   if (as.text) {
     return(cmdata)
