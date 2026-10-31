@@ -64,3 +64,30 @@ test_that("the same seed gives the same design", {
   d2 = randomise(npackages = 15, itemnames = paste0("Var", 1:5), ncomp = 3)
   expect_identical(d1, d2)
 })
+
+test_that("prefixes of the design stay balanced", {
+  set.seed(8)
+  items = paste0("V", 1:12)
+  d = randomise(npackages = 60, itemnames = items)
+  first = table(factor(unlist(d[1:20, ]), levels = items))
+  # 60 slots over 12 items in the first 20 packages: 5 each
+  expect_lte(max(first) - min(first), 2)
+})
+
+test_that("proportions set unequal replication", {
+  set.seed(9)
+  d = randomise(npackages = 30, itemnames = c("a", "b", "c", "d", "e"),
+                props = c(2, 1, 1, 1, 1))
+  counts = table(unlist(d))
+  # 90 slots, a gets 2/6 = 30, the others 15
+  expect_equal(as.vector(counts["a"]), 30)
+  expect_true(all(counts[c("b", "c", "d", "e")] == 15))
+})
+
+test_that("blocks of two items work and old arguments warn", {
+  set.seed(10)
+  d = randomise(npackages = 12, itemnames = paste0("V", 1:4), ncomp = 2)
+  expect_equal(ncol(d), 2L)
+  expect_warning(randomise(npackages = 6, itemnames = paste0("V", 1:4), comp = 10),
+                 "ignored")
+})

@@ -36,7 +36,6 @@
 #' 
 #' rmGeoIdentity(xy2)
 #' 
-#' @importFrom stats runif
 #' @export
 rmGeoIdentity = function(longlat, dist = 0.015, nQuadSegs = 2L, seed = NULL, ...){
   
