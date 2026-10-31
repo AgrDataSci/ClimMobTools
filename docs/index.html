@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="API Client for the ClimMob Platform">
-<meta property="og:description" content="API client for ClimMob, an open source software for decentralized large-N trials with the tricot approach &lt;https://climmob.net/&gt;. Developed by van Etten et al. (2019) &lt;doi:10.1017/S0014479716000739&gt;, it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions for the target environment, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information. ClimMobTools enables project managers to deep explore and analyse their ClimMob data in R.">
+<meta property="og:description" content="API client for ClimMob, an open source software for decentralized large-N trials with the tricot approach &lt;https://climmob.net/&gt;. Developed by van Etten et al. (2019) &lt;doi:10.1017/S0014479716000739&gt;, it turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions for the target environment, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information. ClimMobTools lets project managers retrieve, explore and analyse their ClimMob data in R, design trials with sequentially balanced incomplete blocks, and protect the privacy of participants' locations before data are shared.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0</span>
       </span>
     </div>
 
@@ -97,7 +97,18 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><strong>ClimMobTools</strong> the API Client for the ‘ClimMob’ platform in R. <a href="https://climmob.net/" class="external-link">ClimMob</a> is an open source software for decentralized large-N trials with the ‘tricot’ approach. Developed by <a href="https://doi.org/10.1017/S0014479716000739" class="external-link">van Etten et al. (2019)</a> ‘tricot’ turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information.</p>
+<p><strong>ClimMobTools</strong> is the API client for the ‘ClimMob’ platform in R. <a href="https://climmob.net/" class="external-link">ClimMob</a> is an open source software for decentralized large-N trials with the ‘tricot’ approach. Developed by <a href="https://doi.org/10.1017/S0014479716000739" class="external-link">van Etten et al. (2019)</a> ‘tricot’ turns the research paradigm on its head; instead of a few researchers designing complicated trials to compare several technologies in search of the best solutions, it enables many participants to carry out reasonably simple experiments that taken together can offer even more information.</p>
+</div>
+<div class="section level2">
+<h2 id="what-it-does">What it does<a class="anchor" aria-label="anchor" href="#what-it-does"></a>
+</h2>
+<ul>
+<li>Download project data from ‘ClimMob’ with <code><a href="reference/getDataCM.html">getDataCM()</a></code>, list projects with <code><a href="reference/getProjectsCM.html">getProjectsCM()</a></code>, check data collection with <code><a href="reference/getProjectProgress.html">getProjectProgress()</a></code> and retrieve questionnaires with <code><a href="reference/getSurvey.html">getSurvey()</a></code>.</li>
+<li>Export tidy tables for analysis with the <code>export*()</code> functions.</li>
+<li>Design new trials with <code><a href="reference/randomize.html">randomise()</a></code>, which builds sequentially balanced incomplete blocks so the design stays balanced even when only part of the packages are distributed or returned.</li>
+<li>Displace participants’ coordinates with <code><a href="reference/rmGeoIdentity.html">rmGeoIdentity()</a></code> before sharing data.</li>
+</ul>
+<p>Keep your API key out of scripts. Store it in the environment variable <code>CLIMMOB_KEY</code> (for example in <code>~/.Renviron</code>) and read it with <code>Sys.getenv("CLIMMOB_KEY")</code>. Rankings are analysed with <a href="https://agrdatasci.github.io/gosset/" class="external-link">gosset</a> and <a href="https://CRAN.R-project.org/package=PlackettLuce" class="external-link">PlackettLuce</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="package-website">Package website<a class="anchor" aria-label="anchor" href="#package-website"></a>

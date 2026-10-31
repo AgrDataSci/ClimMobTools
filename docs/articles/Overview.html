@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0</span>
       </span>
     </div>
 
@@ -189,6 +189,39 @@ using the function <code><a href="../reference/rankTricot.html">rankTricot()</a>
 <span><span class="co">## Residual deviance:  1339.1 on 1464 degrees of freedom</span></span>
 <span><span class="co">## AIC:  1369.1 </span></span>
 <span><span class="co">## Number of iterations: 20</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="designing-a-new-trial">Designing a new trial<a class="anchor" aria-label="anchor" href="#designing-a-new-trial"></a>
+</h2>
+<p><code><a href="../reference/randomize.html">randomise()</a></code> allocates the items to the packages that
+each participant receives. The design is sequentially balanced, so it
+stays close to balanced when only the first packages are distributed or
+returned. Call <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> first to make the design
+reproducible, and keep the design with the project records.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="../reference/randomize.html">randomise</a></span><span class="op">(</span>npackages <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>                   itemnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Var1"</span>, <span class="st">"Var2"</span>, <span class="st">"Var3"</span>, <span class="st">"Var4"</span>, <span class="st">"Var5"</span>, <span class="st">"Var6"</span><span class="op">)</span>,</span>
+<span>                   ncomp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    item_A item_B item_C</span></span>
+<span><span class="co">##     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;</span></span>
+<span><span class="co">## 1:   Var6   Var4   Var2</span></span>
+<span><span class="co">## 2:   Var1   Var3   Var5</span></span>
+<span><span class="co">## 3:   Var2   Var5   Var6</span></span>
+<span><span class="co">## 4:   Var3   Var1   Var4</span></span>
+<span><span class="co">## 5:   Var2   Var6   Var1</span></span>
+<span><span class="co">## 6:   Var5   Var4   Var3</span></span></code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># each variety is tested the same number of times</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## Var1 Var2 Var3 Var4 Var5 Var6 </span></span>
+<span><span class="co">##   15   15   15   15   15   15</span></span></code></pre>
+<p>Use <code>availability</code> to cap the number of packages for items
+with limited seed, and <code>props</code> to test some items more often
+than others.</p>
 <p>For more analytical insights, please visit the documentation of the
 <a href="https://cran.r-project.org/package=gosset" class="external-link">gosset</a>
 package.</p>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ClimMobTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0</span>
       </span>
     </div>
 
@@ -58,7 +58,39 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.8.2" id="climmobtools-182-2025-11-26">ClimMobTools 1.8.2 (2025-11-26)<a class="anchor" aria-label="anchor" href="#climmobtools-182-2025-11-26"></a></h2>
+<h2 class="page-header" data-toc-text="1.9.0" id="climmobtools-190-2026-10-31">ClimMobTools 1.9.0 (2026-10-31)<a class="anchor" aria-label="anchor" href="#climmobtools-190-2026-10-31"></a></h2>
+<p>This release introduces a new trial design algorithm, removes four dependencies and fixes a bug that stopped the development version from installing. Designs from <code><a href="../reference/randomize.html">randomise()</a></code> differ from earlier versions for the same seed.</p>
+<div class="section level4">
+<h4 id="new-features-1-9-0">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-1-9-0"></a></h4>
+<ul><li>
+<code><a href="../reference/randomize.html">randomise()</a></code> and <code><a href="../reference/randomize.html">randomize()</a></code> use a new design algorithm by Jacob van Etten. The design is sequentially balanced: every prefix stays close to balanced, so it remains good when only the first packages are distributed or returned. Blocks are chosen by replication schedule, then by the exact A-optimality gain, with availability as a hard limit. New arguments <code>ridge</code>, <code>polish</code> and <code>schedule</code>. Arguments of the previous algorithm, such as <code>comp</code>, are ignored with a warning.</li>
+<li>
+<code><a href="../reference/getSurvey.html">getSurvey()</a></code> retrieves the survey questions of a ‘ClimMob’ project in a given language.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="dependencies-1-9-0">DEPENDENCIES<a class="anchor" aria-label="anchor" href="#dependencies-1-9-0"></a></h4>
+<ul><li>The new design algorithm uses base R only, so ‘lpSolve’, ‘Matrix’, ‘RSpectra’ and ‘methods’ were removed from Imports.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="privacy-1-9-0">PRIVACY<a class="anchor" aria-label="anchor" href="#privacy-1-9-0"></a></h4>
+<ul><li>
+<code><a href="../reference/rmGeoIdentity.html">rmGeoIdentity()</a></code> no longer prints the seed it uses. The random displacement does not depend on the original coordinates, so anyone who knows the seed can recover the exact locations. Leave <code>seed = NULL</code> for data that will be shared. A given seed no longer changes the caller’s random number stream. The function now calls ‘sf’ by namespace, so ‘sf’ no longer needs to be attached.</li>
+<li>Tests read the API key from the environment variable <code>CLIMMOB_KEY</code> instead of a key written in the test files, and are skipped when it is not set.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-1-9-0">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-9-0"></a></h4>
+<ul><li>
+<code><a href="../reference/getDataCM.html">getDataCM()</a></code> and <code><a href="../reference/getProjectProgress.html">getProjectProgress()</a></code> build the request body with ‘jsonlite’, so quotes in project codes or user names no longer break the request, and stop with a clear message when the server returns an error status instead of failing while parsing the response.</li>
+<li>Removed scratch code at the end of <code>R/getSurvey.R</code> that ran when the package was loaded.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="tests-and-documentation-1-9-0">TESTS AND DOCUMENTATION<a class="anchor" aria-label="anchor" href="#tests-and-documentation-1-9-0"></a></h4>
+<ul><li>Tests now run under <code>R CMD check</code> (they were excluded in <code>.Rbuildignore</code>). Outdated tests for removed functions and arguments were replaced by tests of the <code><a href="../reference/randomize.html">randomise()</a></code> design: distinct items per package, equal item counts, balance across positions, a connected comparison network, availability limits, balanced prefixes, proportions and reproducibility. Added tests for <code><a href="../reference/rmGeoIdentity.html">rmGeoIdentity()</a></code>.</li>
+<li>Added an R CMD check workflow for Linux, macOS and Windows, and <code>AGENTS.md</code>, a guide for AI agents working on the package.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.8.2" id="climmobtools-182-2025-11-26">ClimMobTools 1.8.2 (2025-11-26)<small>2025-11-27</small><a class="anchor" aria-label="anchor" href="#climmobtools-182-2025-11-26"></a></h2>
 <ul><li><p>Housekeeping improvements</p></li>
 <li><p>Fixes an error in <code><a href="../reference/exportMeasuredTraits.html">exportMeasuredTraits()</a></code> that occurred when no measured trait variables (ending in <code>"_a"</code>, <code>"_b"</code>, or <code>"_c"</code>) were present in the dataset. The function now returns a valid empty <code>CM_df</code> object instead of failing during the binding step.</p></li>
 </ul></div>
