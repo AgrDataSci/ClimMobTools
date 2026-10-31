@@ -20,7 +20,7 @@ exportTricotRanks(
 \item{items}{a character or numerical vector for indexing the column(s) 
 containing the item names in \code{data}}
 
-\item{nmin}{Numeric to define the minimum allowed for complete cases}
+\item{nmin}{numeric, the minimum number of complete cases required}
 
 \item{...}{Additional arguments passed to \code{getTraitList()}.}
 }

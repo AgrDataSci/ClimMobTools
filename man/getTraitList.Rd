@@ -2,7 +2,7 @@
 % Please edit documentation in R/getTraitList.R
 \name{getTraitList}
 \alias{getTraitList}
-\title{Organize trait ranks in a ClimMob data}
+\title{Organize trait ranks in ClimMob data}
 \usage{
 getTraitList(data, pattern, trait.labels = NULL, ...)
 }

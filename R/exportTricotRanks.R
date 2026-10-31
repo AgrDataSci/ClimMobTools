@@ -8,7 +8,7 @@
 #' 
 #' @family export functions
 #' @param x An object of class \code{CM_list} containing raw ClimMob trial data.
-#' @param nmin Numeric to define the minimum allowed for complete cases
+#' @param nmin numeric, the minimum number of complete cases required
 #' @param ... Additional arguments passed to \code{getTraitList()}.
 #' @inheritParams getTraitList
 #' @inheritParams rankTricot

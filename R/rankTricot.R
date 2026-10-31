@@ -183,7 +183,7 @@ rankTricot = function(data,
 #' Validate rankings
 #' 
 #' This check ranking consistency making sure that 
-#' no NAs or ties are mantained in the final PlackettLuce ranking
+#' no NAs or ties are maintained in the final PlackettLuce ranking
 #' 
 #' @param x data.frame with two columns indicating the tricot rankings
 #' @noRd

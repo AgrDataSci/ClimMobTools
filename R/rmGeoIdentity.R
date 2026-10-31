@@ -1,12 +1,12 @@
 #' Remove geographical identity
 #' 
-#' Build a buffer around the a set of geographical coordinates 
+#' Build a buffer around a set of geographical coordinates 
 #'  and take a random point around the buffer. The function is 
 #'  used to omit the precise location of tricot participants 
-#'  but keeping a close distance to the trial environment.
+#'  while keeping a close distance to the trial environment.
 #'   
 #' @param longlat a data.frame or matrix with geographical coordinates long lat
-#' @param dist numeric, buffer distance for all \var{lonlat}
+#' @param dist numeric, buffer distance for all \var{longlat}
 #' @param nQuadSegs integer, number of segments per quadrant
 #' @param seed integer, the seed for random number generation. Leave it
 #'  \code{NULL} (the default) for data that will be shared. The random

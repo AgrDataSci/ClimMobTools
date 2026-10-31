@@ -323,7 +323,7 @@
 
 #' @rdname getDataCM
 #' @param x an object of class \code{CM_list}
-#' @param tidynames logical, \code{TRUE} make clean column names
+#' @param tidynames logical, if \code{TRUE}, makes clean column names
 #' @param pivot.wider logical, if \code{TRUE} return a wider object 
 #'  where each tricot package is a row
 #' @param ... additional arguments passed to methods

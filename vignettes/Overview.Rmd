@@ -5,7 +5,7 @@ author:
 - name: Kauê de Sousa
   affiliation: Digital Inclusion, Bioversity International, Montpellier, France <br> Department of Agricultural Sciences, University of Inland Norway, Hamar, Norway
 - name: Jacob van Etten
-  affiliation: Digital Inclusion, Bioversity International, Montpelier, France
+  affiliation: Digital Inclusion, Bioversity International, Montpellier, France
 - name: Brandon Madriz
   affiliation: MrBot Software Solutions, Cartago, Costa Rica
 output: html_document

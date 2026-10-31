@@ -21,7 +21,7 @@ A data.frame with the variables:
 \item{user_owner}{the account name that owns the project}
 \item{country}{the country of project's implementation}
 \item{status}{the current status}
-\item{creation_date}{date where the project was created}
+\item{creation_date}{date when the project was created}
 }
 \description{
 Fetch the status of ClimMob projects
