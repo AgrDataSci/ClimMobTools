@@ -34,7 +34,7 @@ getDataCM(
 
 \item{x}{an object of class \code{CM_list}}
 
-\item{tidynames}{logical, \code{TRUE} make clean column names}
+\item{tidynames}{logical, if \code{TRUE}, makes clean column names}
 
 \item{pivot.wider}{logical, if \code{TRUE} return a wider object 
 where each tricot package is a row}

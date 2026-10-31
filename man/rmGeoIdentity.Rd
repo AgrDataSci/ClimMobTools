@@ -9,7 +9,7 @@ rmGeoIdentity(longlat, dist = 0.015, nQuadSegs = 2L, seed = NULL, ...)
 \arguments{
 \item{longlat}{a data.frame or matrix with geographical coordinates long lat}
 
-\item{dist}{numeric, buffer distance for all \var{lonlat}}
+\item{dist}{numeric, buffer distance for all \var{longlat}}
 
 \item{nQuadSegs}{integer, number of segments per quadrant}
 
@@ -25,10 +25,10 @@ seed only for tests or internal reproducibility, and never publish it}
 A data frame with the random coordinates long lat within the buffer
 }
 \description{
-Build a buffer around the a set of geographical coordinates 
+Build a buffer around a set of geographical coordinates 
  and take a random point around the buffer. The function is 
  used to omit the precise location of tricot participants 
- but keeping a close distance to the trial environment.
+ while keeping a close distance to the trial environment.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

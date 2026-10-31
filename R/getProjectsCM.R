@@ -80,7 +80,7 @@
 #' \item{user_owner}{the account name that owns the project}
 #' \item{country}{the country of project's implementation}
 #' \item{status}{the current status}
-#' \item{creation_date}{date where the project was created}
+#' \item{creation_date}{date when the project was created}
 #' @examplesIf interactive()
 #' # This function only works with an API key
 #' # the API key can be obtained from your ClimMob account

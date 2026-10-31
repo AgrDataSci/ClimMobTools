@@ -46,6 +46,8 @@ same seed.
 
 ### TESTS AND DOCUMENTATION
 
+* Corrected typos and unclear wording in the help pages and the vignette.
+
 * Tests now run under `R CMD check` (they were excluded in `.Rbuildignore`).
   Outdated tests for removed functions and arguments were replaced by tests
   of the `randomise()` design: distinct items per package, equal item
