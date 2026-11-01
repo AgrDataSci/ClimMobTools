@@ -3,9 +3,13 @@ ClimMobTools
 ============
 
 <!-- badges: start -->
-[![CRAN](https://www.r-pkg.org/badges/version/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
-[![CRANchecks](https://badges.cranchecks.info/worst/ClimMobTools.svg)](https://cran.r-project.org/web/checks/check_results_ClimMobTools.html)
-[![Downloads](https://cranlogs.r-pkg.org/badges/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools) 
+[![CRAN](https://www.r-pkg.org/badges/version/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools)
+[![CRAN checks](https://badges.cranchecks.info/worst/ClimMobTools.svg)](https://cran.r-project.org/web/checks/check_results_ClimMobTools.html)
+[![Downloads](https://cranlogs.r-pkg.org/badges/ClimMobTools)](https://cran.r-project.org/package=ClimMobTools)
+[![R-CMD-check](https://github.com/AgrDataSci/ClimMobTools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AgrDataSci/ClimMobTools/actions/workflows/R-CMD-check.yaml)
+[![ProjStatus](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AgrDataSci/ClimMobTools/blob/master/LICENSE.md)
 <!-- badges: end -->
 
 *ClimMobTools*: API Client for the 'ClimMob' platform in R <img align="right" src="man/figures/logo.png">
