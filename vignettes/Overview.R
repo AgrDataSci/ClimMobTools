@@ -7,9 +7,9 @@ library("ClimMobTools")
 library("PlackettLuce")
 
 # the API key
-key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
+my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-dat = getDataCM(key = key,
+dat = getDataCM(key = my_key,
                  project = "breadwheat",
                  userowner = "gosset")
 

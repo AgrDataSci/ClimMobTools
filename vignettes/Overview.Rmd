@@ -34,7 +34,8 @@ The `breadwheat` dataset is a data.frame from crowdsourced citizen science trial
 ```{r fetch-quiet, include=FALSE}
 # The vignette needs the ClimMob server. When it cannot be reached (for
 # example on CRAN machines without internet), the code is shown but not run
-dat = tryCatch(getDataCM(key = "d39a3c66-5822-4930-a9d4-50e7da041e77",
+my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
+dat = tryCatch(getDataCM(key = my_key,
                          project = "breadwheat",
                          userowner = "gosset"),
                error = function(e) NULL)
@@ -47,9 +48,9 @@ library("ClimMobTools")
 library("PlackettLuce")
 
 # the API key
-key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
+my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-dat = getDataCM(key = key,
+dat = getDataCM(key = my_key,
                  project = "breadwheat",
                  userowner = "gosset")
 
