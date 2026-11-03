@@ -85,9 +85,10 @@
 #' # This function only works with an API key
 #' # the API key can be obtained from your ClimMob account
 #' 
+#' library("ClimMobTools")
 #' my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 #' 
-#' getProjectsCM(key = my_key, server = "1000FARMS")
+#' getProjectsCM(key = my_key, server = "climmob3")
 #' 
 #' @export
 getProjectsCM = function(key, server = "climmob3", ...){

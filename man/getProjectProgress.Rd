@@ -37,9 +37,9 @@ library("ClimMobTools")
 my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
 getProjectProgress(key = my_key,
-                   project = "gina2024",
-                   userowner = "student",
-                   server = "1000FARMS")
+                   project = "breadwheat",
+                   userowner = "gosset",
+                   server = "climmob3")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
