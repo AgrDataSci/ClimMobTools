@@ -37,9 +37,10 @@ Fetch the status of ClimMob projects
 # This function only works with an API key
 # the API key can be obtained from your ClimMob account
 
-my_key = "ff05a174-28d0-4a40-ab5a-35dc486133a6"
+library("ClimMobTools")
+my_key = "d39a3c66-5822-4930-a9d4-50e7da041e77"
 
-getProjectsCM(key = my_key, server = "1000FARMS")
+getProjectsCM(key = my_key, server = "climmob3")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
