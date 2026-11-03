@@ -97,13 +97,7 @@ getProjectsCM = function(key, server = "climmob3", ...){
   
   url = .set_url(server, extension = "readProjects?Apikey=")
   
-  dat = httr::RETRY(verb = "GET",
-                    url = url,
-                    query = list(Apikey = key),
-                    httr::accept_json(),
-                    terminate_on = c(403, 404))
-  
-  dat = httr::content(dat, as = "text")
+  dat = .get_cm_json(url, query = list(Apikey = key))
   
   dat = jsonlite::fromJSON(dat)
   

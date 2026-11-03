@@ -53,6 +53,8 @@ Fetch the data from a ClimMob project using an application
 }
 \details{
 \code{server}: options are: "climmob" or "1000farms"
+
+ClimMob builds a project's data export the first time it is requested, or after new data arrive. While it does so, the function waits and asks again, up to \code{getOption("ClimMobTools.tries", 10)} times with \code{getOption("ClimMobTools.wait", 30)} seconds between requests.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

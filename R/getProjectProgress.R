@@ -29,16 +29,9 @@ getProjectProgress = function(key, project, userowner, server = "climmob3"){
   
   url = .set_url(server, extension = "readDataOfProject?Body={}&Apikey={}")
   
-  dat = httr::RETRY(verb = "GET", 
-                    url = url,
-                    query = list(Body = .request_body(project, userowner),
-                                 Apikey = key),
-                    httr::accept_json(), 
-                    terminate_on = c(403, 404))
-  
-  .check_response(dat)
-  
-  dat = httr::content(dat, as = "text", encoding = "UTF-8")
+  dat = .get_cm_json(url,
+                     query = list(Body = .request_body(project, userowner),
+                                  Apikey = key))
   
   dat = jsonlite::fromJSON(dat)
   

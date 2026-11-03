@@ -1,3 +1,16 @@
+ClimMobTools (development version)
+==================================
+
+### BUG FIXES
+
+* `getDataCM()`, `getProjectProgress()` and `getProjectsCM()` no longer
+  fail with "lexical error: invalid char in json text" while 'ClimMob' is
+  still building a project's data export. They wait and try again, up to
+  `getOption("ClimMobTools.tries", 10)` times with
+  `getOption("ClimMobTools.wait", 30)` seconds between requests. Other
+  non-JSON responses, such as an invalid API key, now give a clear error.
+* Examples use the public `breadwheat` project on the `climmob3` server.
+
 ClimMobTools 1.9.0 (2026-10-31)
 =========================
 

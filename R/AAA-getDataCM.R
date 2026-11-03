@@ -21,6 +21,8 @@
 #' @details 
 #' \code{server}: options are: "climmob" or "1000farms" 
 #' 
+#' ClimMob builds a project's data export the first time it is requested, or after new data arrive. While it does so, the function waits and asks again, up to \code{getOption("ClimMobTools.tries", 10)} times with \code{getOption("ClimMobTools.wait", 30)} seconds between requests.
+#' 
 #' @examplesIf interactive()
 #' 
 #' # This function only works with an API key
@@ -57,16 +59,9 @@ getDataCM = function(key,
   
   url = .set_url(server, extension = "readDataOfProject?Body={}&Apikey={}")
   
-  cmdata = httr::RETRY(verb = "GET", 
-                       url = url,
-                       query = list(Body = .request_body(project, userowner),
-                                    Apikey = key),
-                       httr::accept_json(), 
-                       terminate_on = c(403, 404))
-  
-  .check_response(cmdata)
-  
-  cmdata = httr::content(cmdata, as = "text", encoding = "UTF-8")
+  cmdata = .get_cm_json(url,
+                        query = list(Body = .request_body(project, userowner),
+                                     Apikey = key))
   
   if (as.text) {
     return(cmdata)

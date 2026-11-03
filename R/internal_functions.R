@@ -228,3 +228,48 @@
   }
   invisible(TRUE)
 }
+
+#' Request JSON from ClimMob and wait while the export is being built
+#' ClimMob builds a project's data export the first time it is requested,
+#' or after new data arrive. While it does so the server answers with a
+#' plain-text notice instead of JSON. This helper waits and asks again
+#' until the JSON is ready, then returns it as text
+#' @param url the API url
+#' @param query a list with the query parameters
+#' @param tries maximum number of requests
+#' @param wait seconds to wait between requests
+#' @noRd
+.get_cm_json = function(url, query,
+                        tries = getOption("ClimMobTools.tries", 10),
+                        wait = getOption("ClimMobTools.wait", 30)) {
+  for (attempt in seq_len(tries)) {
+    response = httr::RETRY(verb = "GET",
+                           url = url,
+                           query = query,
+                           httr::accept_json(),
+                           terminate_on = c(401, 403, 404))
+    .check_response(response)
+    txt = httr::content(response, as = "text", encoding = "UTF-8")
+    if (isTRUE(jsonlite::validate(txt))) {
+      return(txt)
+    }
+    if (!.is_generating(txt)) {
+      stop("ClimMob returned an unexpected response: ",
+           substr(trimws(txt), 1, 200), call. = FALSE)
+    }
+    if (attempt < tries) {
+      message("ClimMob is still preparing the data. Trying again in ",
+              wait, " seconds (attempt ", attempt, " of ", tries, ")")
+      Sys.sleep(wait)
+    }
+  }
+  stop("ClimMob is still preparing the data after ", tries, " attempts. ",
+       "Try again in a few minutes, or raise options(ClimMobTools.tries) ",
+       "or options(ClimMobTools.wait).", call. = FALSE)
+}
+
+#' Is the server response the notice that the export is being built?
+#' @noRd
+.is_generating = function(txt) {
+  grepl("generat", txt, ignore.case = TRUE)
+}
